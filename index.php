@@ -53,10 +53,6 @@ require __DIR__ . '/includes/header.php';
         <span class="pill"><?= icon('shopping-bag', 15) ?> Farm to Market</span>
         <span class="pill"><?= icon('users', 15) ?> Youth-Led</span>
       </div>
-      <div class="hero-actions">
-        <a href="<?= SITE_URL ?>/about.php" class="btn btn-hero-cta">Discover Our Story <span class="cta-dot"><?= icon('arrow-right', 15) ?></span></a>
-        <a href="<?= SITE_URL ?>/products.php" class="btn btn-outline"><?= icon('shopping-bag', 16) ?> Shop BetterLife Farm</a>
-      </div>
     </div>
   </div>
 </section>
