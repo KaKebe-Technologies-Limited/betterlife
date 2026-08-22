@@ -68,6 +68,6 @@ $footerPrograms = $pdo->query("SELECT title, slug FROM programs WHERE status = 1
 </footer>
 
 <a href="#top" class="back-to-top" aria-label="Back to top"><?= icon('arrow-right', 18) ?></a>
-<script src="<?= SITE_URL ?>/assets/js/main.js"></script>
+<script src="<?= SITE_URL ?>/assets/js/main.js?v=<?= @filemtime(__DIR__ . '/../assets/js/main.js') ?: time() ?>"></script>
 </body>
 </html>

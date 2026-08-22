@@ -43,9 +43,9 @@ require __DIR__ . '/includes/header.php';
       <span class="hero-dot dot-blue"></span>
       <span class="hero-dot dot-outline"></span>
       <div class="diagonal-grid">
-        <?php foreach ($heroImages as $i => $img): ?>
-          <div class="diagonal-capsule <?= $i % 2 === 0 ? 'tint-green' : 'tint-blue' ?>">
-            <img src="<?= asset_url($img) ?>" alt="BetterLife International" style="animation-delay:-<?= $i * 2 ?>s;">
+        <?php foreach ($heroImages as $i => $img): $row = intdiv($i, 2); ?>
+          <div class="diagonal-capsule row-<?= $row ?> <?= $i % 2 === 0 ? 'tint-green' : 'tint-blue' ?>">
+            <img src="<?= asset_url($img) ?>" alt="BetterLife International" style="animation-delay:-<?= $i * 1.2 ?>s;">
           </div>
         <?php endforeach; ?>
       </div>
