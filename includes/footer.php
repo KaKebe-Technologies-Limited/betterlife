@@ -1,0 +1,64 @@
+<?php
+$logo = setting($pdo, 'logo', 'assets/img/logo.png');
+
+$footerPrograms = $pdo->query("SELECT title, slug FROM programs WHERE status = 1 ORDER BY sort_order LIMIT 5")->fetchAll();
+?>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <img src="<?= asset_url($logo) ?>" alt="<?= h(setting($pdo, 'site_name')) ?>">
+          <span><?= h(setting($pdo, 'site_name')) ?></span>
+        </div>
+        <p style="font-size:14px;"><?= h(setting($pdo, 'footer_about')) ?></p>
+        <div class="footer-social">
+          <?php if ($fb = setting($pdo, 'facebook')): ?><a href="<?= h($fb) ?>" target="_blank" rel="noopener">f</a><?php endif; ?>
+          <?php if ($tw = setting($pdo, 'twitter')): ?><a href="<?= h($tw) ?>" target="_blank" rel="noopener">𝕏</a><?php endif; ?>
+          <?php if ($ig = setting($pdo, 'instagram')): ?><a href="<?= h($ig) ?>" target="_blank" rel="noopener">◎</a><?php endif; ?>
+          <?php if ($yt = setting($pdo, 'youtube')): ?><a href="<?= h($yt) ?>" target="_blank" rel="noopener">▶</a><?php endif; ?>
+        </div>
+      </div>
+
+      <div>
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="<?= SITE_URL ?>/about.php">About Us</a></li>
+          <li><a href="<?= SITE_URL ?>/programs.php">Our Programs</a></li>
+          <li><a href="<?= SITE_URL ?>/products.php">BetterLife Farm</a></li>
+          <li><a href="<?= SITE_URL ?>/team.php">Our Team</a></li>
+          <li><a href="<?= SITE_URL ?>/blog.php">Blog</a></li>
+          <li><a href="<?= SITE_URL ?>/contact.php">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Our Programs</h4>
+        <ul class="footer-links">
+          <?php foreach ($footerPrograms as $p): ?>
+            <li><a href="<?= SITE_URL ?>/programs.php#<?= h($p['slug']) ?>"><?= h($p['title']) ?></a></li>
+          <?php endforeach; ?>
+        </ul>
+      </div>
+
+      <div>
+        <h4>Stay Connected</h4>
+        <p style="font-size:14px;">Get program updates, farm news and stories from the communities we work with.</p>
+        <form class="footer-newsletter" action="<?= SITE_URL ?>/newsletter-submit.php" method="post">
+          <input type="email" name="email" placeholder="Your email address" required>
+          <button type="submit" aria-label="Subscribe">➔</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; <?= date('Y') ?> <?= h(setting($pdo, 'site_name')) ?>. All rights reserved.</span>
+      <span>Built with purpose in Uganda 🇺🇬 &middot; <a href="<?= ADMIN_URL ?>/login.php">Admin</a></span>
+    </div>
+  </div>
+</footer>
+
+<a href="#top" class="back-to-top" aria-label="Back to top">↑</a>
+<script src="<?= SITE_URL ?>/assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+# Prevent execution of scripts inside the uploads directory (defense in depth
+# in case a malicious file ever gets past the upload whitelist).
+<FilesMatch "\.(php|phtml|php\d|pl|py|cgi|asp|aspx|sh)$">
+  Require all denied
+</FilesMatch>
