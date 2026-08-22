@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($logo = handle_image_upload($_FILES['logo'] ?? [], 'settings', $errors)) {
         $stmtUpsert->execute(['logo', $logo]);
     }
-    foreach ([1, 2, 3, 4] as $n) {
+    foreach ([1, 2, 3, 4, 5, 6] as $n) {
         if ($heroImg = handle_image_upload($_FILES["hero_image_$n"] ?? [], 'settings', $errors)) {
             $stmtUpsert->execute(["hero_image_$n", $heroImg]);
         }
@@ -117,9 +117,9 @@ $v = fn($k) => h(setting($pdo, $k));
         <div class="form-group full"><label>Hero Title</label><input type="text" name="hero_title" class="form-control" value="<?= $v('hero_title') ?>"></div>
         <div class="form-group full"><label>Hero Subtitle</label><textarea name="hero_subtitle" class="form-control"><?= h(setting($pdo, 'hero_subtitle')) ?></textarea></div>
       </div>
-      <label style="display:block;margin:8px 0 12px;">Hero Photos (4 shown in the homepage image grid)</label>
+      <label style="display:block;margin:8px 0 12px;">Hero Photos (6 shown in the homepage diagonal photo grid)</label>
       <div class="form-grid">
-        <?php for ($n = 1; $n <= 4; $n++): ?>
+        <?php for ($n = 1; $n <= 6; $n++): ?>
           <div class="form-group">
             <label>Photo <?= $n ?></label>
             <img src="<?= asset_url(setting($pdo, "hero_image_$n")) ?>" class="current-image"><br>

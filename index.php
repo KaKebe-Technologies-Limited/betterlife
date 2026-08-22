@@ -8,6 +8,8 @@ $heroImages = [
     setting($pdo, 'hero_image_2', 'assets/img/farm-field-1.jpg'),
     setting($pdo, 'hero_image_3', 'assets/img/product-honey.jpg'),
     setting($pdo, 'hero_image_4', 'assets/img/about-real-1.jpg'),
+    setting($pdo, 'hero_image_5', 'assets/img/farm-field-2.jpg'),
+    setting($pdo, 'hero_image_6', 'assets/img/program-trees.jpg'),
 ];
 $stats = $pdo->query("SELECT * FROM stats WHERE status = 1 ORDER BY sort_order")->fetchAll();
 $programs = $pdo->query("SELECT * FROM programs WHERE status = 1 ORDER BY sort_order LIMIT 4")->fetchAll();
@@ -31,17 +33,22 @@ require __DIR__ . '/includes/header.php';
         <span class="pill"><?= icon('users', 15) ?> Youth-Led</span>
       </div>
       <div class="hero-actions">
-        <a href="<?= SITE_URL ?>/about.php" class="btn btn-primary">Discover Our Story <?= icon('arrow-right', 16) ?></a>
+        <a href="<?= SITE_URL ?>/about.php" class="btn btn-hero-cta">Discover Our Story <span class="cta-dot"><?= icon('arrow-right', 15) ?></span></a>
         <a href="<?= SITE_URL ?>/products.php" class="btn btn-outline-dark"><?= icon('shopping-bag', 16) ?> Shop BetterLife Farm</a>
       </div>
     </div>
 
-    <div class="hero-bento fade-up">
-      <?php foreach ($heroImages as $i => $img): ?>
-        <div class="bento-item <?= $i % 2 === 0 ? 'bg-green' : 'bg-blue' ?>">
-          <img src="<?= asset_url($img) ?>" alt="BetterLife International">
-        </div>
-      <?php endforeach; ?>
+    <div class="hero-diagonal fade-up">
+      <span class="hero-dot dot-green"></span>
+      <span class="hero-dot dot-blue"></span>
+      <span class="hero-dot dot-outline"></span>
+      <div class="diagonal-grid">
+        <?php foreach ($heroImages as $i => $img): ?>
+          <div class="diagonal-capsule <?= $i % 2 === 0 ? 'tint-green' : 'tint-blue' ?>">
+            <img src="<?= asset_url($img) ?>" alt="BetterLife International" style="animation-delay:-<?= $i * 2 ?>s;">
+          </div>
+        <?php endforeach; ?>
+      </div>
     </div>
   </div>
 </section>
