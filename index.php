@@ -10,6 +10,8 @@ $heroImages = [
     setting($pdo, 'hero_image_4', 'assets/img/about-real-1.jpg'),
     setting($pdo, 'hero_image_5', 'assets/img/farm-field-2.jpg'),
     setting($pdo, 'hero_image_6', 'assets/img/program-trees.jpg'),
+    setting($pdo, 'hero_image_7', 'assets/img/product-ghee.jpg'),
+    setting($pdo, 'hero_image_8', 'assets/img/product-yogurt.jpg'),
 ];
 $stats = $pdo->query("SELECT * FROM stats WHERE status = 1 ORDER BY sort_order")->fetchAll();
 $programs = $pdo->query("SELECT * FROM programs WHERE status = 1 ORDER BY sort_order LIMIT 4")->fetchAll();
