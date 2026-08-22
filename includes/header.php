@@ -24,22 +24,6 @@ $logo       = setting($pdo, 'logo', 'assets/img/logo.png');
 </head>
 <body>
 
-<div class="topbar">
-  <div class="container">
-    <div class="topbar-left">
-      <span>📍 <?= h(setting($pdo, 'address')) ?></span>
-      <span>✉️ <a href="mailto:<?= h(setting($pdo, 'email')) ?>"><?= h(setting($pdo, 'email')) ?></a></span>
-      <span>📞 <a href="tel:<?= h(setting($pdo, 'phone')) ?>"><?= h(setting($pdo, 'phone')) ?></a></span>
-    </div>
-    <div class="topbar-social">
-      <?php if ($fb = setting($pdo, 'facebook')): ?><a href="<?= h($fb) ?>" target="_blank" rel="noopener" aria-label="Facebook">f</a><?php endif; ?>
-      <?php if ($tw = setting($pdo, 'twitter')): ?><a href="<?= h($tw) ?>" target="_blank" rel="noopener" aria-label="Twitter">𝕏</a><?php endif; ?>
-      <?php if ($ig = setting($pdo, 'instagram')): ?><a href="<?= h($ig) ?>" target="_blank" rel="noopener" aria-label="Instagram">◎</a><?php endif; ?>
-      <?php if ($li = setting($pdo, 'linkedin')): ?><a href="<?= h($li) ?>" target="_blank" rel="noopener" aria-label="LinkedIn">in</a><?php endif; ?>
-    </div>
-  </div>
-</div>
-
 <header class="site-header">
   <div class="container">
     <a href="<?= SITE_URL ?>/index.php" class="brand">

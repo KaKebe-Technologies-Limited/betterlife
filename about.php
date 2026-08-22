@@ -45,16 +45,22 @@ require __DIR__ . '/includes/header.php';
 
 <section class="section-cream">
   <div class="container">
-    <div class="grid grid-2" style="gap:30px;">
-      <div class="card fade-up" style="padding:38px;">
-        <div class="icon-badge" style="margin-bottom:16px;">🎯</div>
-        <h3>Our Mission</h3>
-        <p class="muted"><?= h(setting($pdo, 'mission_text')) ?></p>
+    <div class="split">
+      <div class="fade-up img-frame bg-blue">
+        <img src="<?= asset_url('assets/img/farm-field-3.jpg') ?>" alt="BetterLife International in the field">
       </div>
-      <div class="card fade-up" style="padding:38px;">
-        <div class="icon-badge" style="margin-bottom:16px;">🔭</div>
-        <h3>Our Vision</h3>
-        <p class="muted"><?= h(setting($pdo, 'vision_text')) ?></p>
+      <div class="fade-up" style="display:flex;flex-direction:column;gap:18px;">
+        <span class="eyebrow">Purpose</span>
+        <div class="card" style="padding:24px;">
+          <div class="icon-badge" style="width:38px;height:38px;margin-bottom:10px;">🎯</div>
+          <h3>Our Mission</h3>
+          <p class="muted" style="font-size:14px;margin:0;"><?= h(setting($pdo, 'mission_text')) ?></p>
+        </div>
+        <div class="card" style="padding:24px;">
+          <div class="icon-badge" style="width:38px;height:38px;margin-bottom:10px;">🔭</div>
+          <h3>Our Vision</h3>
+          <p class="muted" style="font-size:14px;margin:0;"><?= h(setting($pdo, 'vision_text')) ?></p>
+        </div>
       </div>
     </div>
   </div>

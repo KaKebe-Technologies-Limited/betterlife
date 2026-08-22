@@ -10,38 +10,69 @@ $products = $pdo->query("SELECT * FROM products WHERE status = 1 ORDER BY featur
 $testimonials = $pdo->query("SELECT * FROM testimonials WHERE status = 1 ORDER BY sort_order LIMIT 3")->fetchAll();
 $posts = $pdo->query("SELECT bp.*, bc.name AS cat_name FROM blog_posts bp LEFT JOIN blog_categories bc ON bc.id = bp.category_id WHERE bp.status = 'published' ORDER BY bp.published_at DESC LIMIT 3")->fetchAll();
 
+$heroStat = null;
+foreach ($stats as $s) { if (stripos($s['label'], 'tree') !== false) { $heroStat = $s; break; } }
+if (!$heroStat && $stats) $heroStat = $stats[0];
+
 require __DIR__ . '/includes/header.php';
 ?>
 
-<section class="hero" id="top" style="--hero-img:url('<?= asset_url($heroImage) ?>')">
-  <div class="container">
-    <div class="hero-content">
+<section class="hero-new" id="top">
+  <div class="container hero-grid">
+    <div class="hero-text fade-up">
       <span class="hero-badge"><span class="dot"></span> Youth-led · Refugee-inspired · Since <?= h(setting($pdo,'founded_year','2021')) ?></span>
       <h1><?= h(setting($pdo, 'hero_title')) ?></h1>
-      <p class="lead"><?= h(setting($pdo, 'hero_subtitle')) ?></p>
+      <p class="lead"><?= h(excerpt(setting($pdo, 'hero_subtitle'), 150)) ?></p>
+      <div class="feature-pills">
+        <span class="pill pill-active">🌱 Green Skills</span>
+        <span class="pill">🌍 Climate Education</span>
+        <span class="pill">🍯 Farm to Market</span>
+        <span class="pill">🤝 Youth-Led</span>
+      </div>
       <div class="hero-actions">
         <a href="<?= SITE_URL ?>/about.php" class="btn btn-primary">Discover Our Story →</a>
-        <a href="<?= SITE_URL ?>/products.php" class="btn btn-outline">🍯 Shop BetterLife Farm</a>
+        <a href="<?= SITE_URL ?>/products.php" class="btn btn-outline-dark">🍯 Shop BetterLife Farm</a>
       </div>
-      <div class="hero-stats">
-        <?php foreach (array_slice($stats, 0, 3) as $s): ?>
-          <div><strong><?= h($s['value']) ?></strong><span><?= h($s['label']) ?></span></div>
-        <?php endforeach; ?>
+    </div>
+
+    <div class="hero-bento fade-up">
+      <div class="bento-item bento-tall">
+        <img src="<?= asset_url($heroImage) ?>" alt="BetterLife International community work">
+      </div>
+      <?php if ($heroStat): ?>
+        <div class="bento-item bento-stat">
+          <span class="stat-label"><?= h($heroStat['label']) ?></span>
+          <strong><?= h($heroStat['value']) ?></strong>
+          <span class="stat-trend">▲ and growing</span>
+        </div>
+      <?php endif; ?>
+      <div class="bento-item bento-wide">
+        <img src="<?= asset_url(setting($pdo, 'farm_image', 'assets/img/farm-field-1.jpg')) ?>" alt="BetterLife Farm">
+        <span class="bento-caption">🍯 From our farm</span>
       </div>
     </div>
   </div>
-  <a href="#about-preview" class="hero-scroll"><span class="line"></span>Scroll</a>
 </section>
 
-<section class="stats-strip">
+<section class="impact-section section-cream">
   <div class="container">
-    <div class="grid">
+    <div class="section-head fade-up">
+      <span class="eyebrow">Local Impact</span>
+      <h2>Change You Can See On The Ground</h2>
+      <p class="muted">Real numbers from real communities — and a look at the work behind them.</p>
+    </div>
+    <div class="impact-stats">
       <?php foreach ($stats as $s): ?>
-        <div class="stat-item">
+        <div class="stat-item fade-up">
           <strong data-count="<?= h($s['value']) ?>">0</strong>
           <span><?= h($s['label']) ?></span>
         </div>
       <?php endforeach; ?>
+    </div>
+    <div class="impact-photos">
+      <div class="impact-photo fade-up"><img src="<?= asset_url('assets/img/farm-field-2.jpg') ?>" alt="Organic dairy farming"><span class="cap">Organic dairy farming</span></div>
+      <div class="impact-photo fade-up"><img src="<?= asset_url('assets/img/program-trees.jpg') ?>" alt="Tree planting"><span class="cap">Nature-based restoration</span></div>
+      <div class="impact-photo fade-up"><img src="<?= asset_url('assets/img/product-honey.jpg') ?>" alt="Beekeeping"><span class="cap">Community beekeeping</span></div>
     </div>
   </div>
 </section>
