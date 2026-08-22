@@ -193,79 +193,77 @@ section { padding: 76px 0; }
 }
 
 /* ---------- Hero (neat split + diagonal photo grid) ---------- */
-.hero-new { padding: 56px 0 48px; background: var(--cream); overflow: hidden; }
-.hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
-@media (max-width: 980px) { .hero-grid { grid-template-columns: 1fr; gap: 44px; } }
+/* Full-width hero: scrolling photo wall fills the whole section, dimmed
+   by a scrim, with centered copy floating on top. */
+.hero-full {
+  position: relative; overflow: hidden; min-height: 86vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 130px 0 70px; color: #fff;
+}
+.hero-full-copy { position: relative; z-index: 2; }
+.hero-text { max-width: 640px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; }
 
 .hero-badge {
   display: inline-flex; align-items: center; gap: 9px;
-  background: #fff; border: 1.5px solid var(--green-400);
-  padding: 8px 16px; border-radius: 999px; font-size: 12.5px; font-weight: 700; color: var(--green-800);
-  margin-bottom: 18px; box-shadow: var(--shadow);
+  background: rgba(255,255,255,.12); border: 1.5px solid rgba(255,255,255,.35);
+  padding: 8px 16px; border-radius: 999px; font-size: 12.5px; font-weight: 700; color: #fff;
+  margin-bottom: 20px; backdrop-filter: blur(6px);
 }
-.hero-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green-500); }
-.hero-text h1 { font-size: clamp(28px, 3.4vw, 42px); margin-bottom: 14px; letter-spacing: -.01em; }
-.hero-text p.lead { font-size: 15.5px; color: var(--ink-soft); max-width: 440px; margin-bottom: 22px; }
+.hero-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green-400); }
+.hero-text h1 { color: #fff; font-size: clamp(30px, 4.4vw, 50px); margin-bottom: 16px; letter-spacing: -.01em; text-shadow: 0 2px 20px rgba(0,0,0,.35); }
+.hero-text p.lead { font-size: 16px; color: #e6efe9; max-width: 520px; margin-bottom: 24px; }
 
-.feature-pills { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 28px; }
+.feature-pills { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 28px; justify-content: center; }
 .pill {
   display: inline-flex; align-items: center; gap: 6px; padding: 8px 15px; border-radius: 999px;
-  border: 1.5px solid var(--border); background: #fff; font-size: 12.5px; font-weight: 600; color: var(--ink-soft);
+  border: 1.5px solid rgba(255,255,255,.35); background: rgba(255,255,255,.1); font-size: 12.5px; font-weight: 600; color: #f2f5f2;
+  backdrop-filter: blur(6px);
 }
 .pill.pill-active { background: var(--green-600); border-color: var(--green-600); color: #fff; }
 
-.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.hero-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
 
-/* Scrolling photo rows — 8 admin-editable photos in 3 horizontal rows
-   that drift continuously (alternating left/right) inside a contained,
-   rounded, edge-faded half-page panel. Each row's photos are duplicated
-   in the markup and animated by exactly -50% so the loop is seamless
-   (no jump). Genuinely continuous motion rather than a subtle zoom, and
-   unlike a full-bleed background treatment it stays inside its own
-   panel beside the text — nothing to clip or overlap by construction. */
+/* Full-bleed scrolling photo wall — 12 admin-editable photos in 4
+   horizontal rows that drift continuously (alternating left/right)
+   behind a dark scrim, filling the entire hero section edge to edge.
+   Each row's photos are duplicated in the markup and animated by
+   exactly -50% so the loop is seamless (no jump). */
 .hero-scroll-panel {
-  position: relative; width: 100%; aspect-ratio: 0.95 / 1;
-  overflow: hidden; border-radius: 28px;
-  box-shadow: 0 20px 50px rgba(11, 61, 46, 0.18);
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-          mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  position: absolute; inset: 0; z-index: 0; overflow: hidden;
 }
-.scroll-track { display: flex; flex-direction: column; gap: 12px; height: 100%; padding: 10px 0; }
-.scroll-row { display: flex; flex-direction: row; gap: 12px; flex: 1; min-height: 0; will-change: transform; }
-.scroll-row.dir-left { animation: scrollRowLeft 24s linear infinite; }
-.scroll-row.dir-right { animation: scrollRowRight 28s linear infinite; transform: translateX(-50%); }
+.scroll-track { display: flex; flex-direction: column; gap: 10px; height: 100%; width: 100%; padding: 10px 0; }
+.scroll-row { display: flex; flex-direction: row; gap: 10px; flex: 1; min-height: 0; will-change: transform; }
+.scroll-row.dir-left { animation: scrollRowLeft 40s linear infinite; }
+.scroll-row.dir-right { animation: scrollRowRight 46s linear infinite; transform: translateX(-50%); }
 @keyframes scrollRowLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @keyframes scrollRowRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 @media (prefers-reduced-motion: reduce) { .scroll-row { animation: none !important; transform: none !important; } }
 
-.scroll-tile { position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 4 / 3; height: 100%; width: auto; flex-shrink: 0; }
+.scroll-tile { position: relative; overflow: hidden; aspect-ratio: 4 / 3; height: 100%; width: auto; flex-shrink: 0; }
 .scroll-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.scroll-tile::after { content: ''; position: absolute; inset: 0; mix-blend-mode: multiply; opacity: .2; }
-.scroll-tile.tint-green::after { background: linear-gradient(160deg, var(--green-600), transparent 65%); }
-.scroll-tile.tint-blue::after { background: linear-gradient(160deg, var(--blue-600), transparent 65%); }
+.scroll-tile::after { content: ''; position: absolute; inset: 0; mix-blend-mode: multiply; opacity: .3; }
+.scroll-tile.tint-green::after { background: linear-gradient(160deg, var(--green-700), transparent 65%); }
+.scroll-tile.tint-blue::after { background: linear-gradient(160deg, var(--blue-700), transparent 65%); }
 
-.hero-dot { position: absolute; border-radius: 50%; z-index: 3; }
-.hero-dot.dot-green { width: 14px; height: 14px; background: var(--green-500); top: -6px; left: 18%; }
-.hero-dot.dot-blue { width: 11px; height: 11px; background: var(--blue-500); bottom: -4px; right: 22%; }
-.hero-dot.dot-outline { width: 20px; height: 20px; border: 3px solid var(--blue-500); top: 40%; right: -10px; background: transparent; }
+.hero-scrim {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(180deg, rgba(9,40,29,.78), rgba(9,40,29,.55) 45%, rgba(9,40,29,.82));
+}
 
 .btn-hero-cta {
-  background: var(--green-900); color: #fff; box-shadow: var(--shadow);
+  background: var(--green-600); color: #fff; box-shadow: var(--shadow);
   padding-right: 8px;
 }
-.btn-hero-cta:hover { background: var(--green-800); }
+.btn-hero-cta:hover { background: var(--green-500); }
 .btn-hero-cta .cta-dot {
   display: inline-flex; align-items: center; justify-content: center;
   width: 30px; height: 30px; border-radius: 50%; background: var(--blue-500); color: #fff;
 }
 
-@media (max-width: 980px) {
-  .hero-scroll-panel { aspect-ratio: 1.3 / 1; max-width: 520px; margin: 0 auto; }
-}
-@media (max-width: 480px) {
-  .hero-scroll-panel { aspect-ratio: 1 / 1; }
-  .scroll-track { gap: 8px; }
-  .scroll-row { gap: 8px; }
+@media (max-width: 640px) {
+  .hero-full { padding: 120px 0 56px; min-height: 92vh; }
+  .scroll-track { gap: 6px; }
+  .scroll-row { gap: 6px; }
 }
 
 /* ---------- Breadcrumb / page header ---------- */

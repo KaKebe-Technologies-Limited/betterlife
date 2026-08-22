@@ -12,6 +12,10 @@ $heroImages = [
     setting($pdo, 'hero_image_6', 'assets/img/program-trees.jpg'),
     setting($pdo, 'hero_image_7', 'assets/img/product-ghee.jpg'),
     setting($pdo, 'hero_image_8', 'assets/img/product-yogurt.jpg'),
+    setting($pdo, 'hero_image_9', 'assets/img/betterlifeint-source/programs/program-photo-1.jpg'),
+    setting($pdo, 'hero_image_10', 'assets/img/betterlifeint-source/programs/program-photo-3.jpg'),
+    setting($pdo, 'hero_image_11', 'assets/img/betterlifeint-source/projects/project-agro-tourism-alt.jpeg'),
+    setting($pdo, 'hero_image_12', 'assets/img/betterlifeint-source/impact-reports/impact-photo-1.jpeg'),
 ];
 $stats = $pdo->query("SELECT * FROM stats WHERE status = 1 ORDER BY sort_order")->fetchAll();
 $programs = $pdo->query("SELECT * FROM programs WHERE status = 1 ORDER BY sort_order LIMIT 4")->fetchAll();
@@ -22,8 +26,23 @@ $posts = $pdo->query("SELECT bp.*, bc.name AS cat_name FROM blog_posts bp LEFT J
 require __DIR__ . '/includes/header.php';
 ?>
 
-<section class="hero-new" id="top">
-  <div class="container hero-grid">
+<section class="hero-full" id="top">
+  <div class="hero-scroll-panel">
+    <div class="scroll-track">
+      <?php foreach (array_chunk($heroImages, 3) as $ri => $rowImages): ?>
+        <div class="scroll-row <?= $ri % 2 === 0 ? 'dir-left' : 'dir-right' ?>">
+          <?php foreach (array_merge($rowImages, $rowImages) as $ii => $img): ?>
+            <div class="scroll-tile <?= $ii % 2 === 0 ? 'tint-green' : 'tint-blue' ?>">
+              <img src="<?= asset_url($img) ?>" alt="BetterLife International" loading="lazy">
+            </div>
+          <?php endforeach; ?>
+        </div>
+      <?php endforeach; ?>
+    </div>
+    <div class="hero-scrim"></div>
+  </div>
+
+  <div class="container hero-full-copy">
     <div class="hero-text fade-up">
       <span class="hero-badge"><span class="dot"></span> Youth-led · Refugee-inspired · Since <?= h(setting($pdo,'founded_year','2021')) ?></span>
       <h1><?= h(setting($pdo, 'hero_title')) ?></h1>
@@ -36,24 +55,7 @@ require __DIR__ . '/includes/header.php';
       </div>
       <div class="hero-actions">
         <a href="<?= SITE_URL ?>/about.php" class="btn btn-hero-cta">Discover Our Story <span class="cta-dot"><?= icon('arrow-right', 15) ?></span></a>
-        <a href="<?= SITE_URL ?>/products.php" class="btn btn-outline-dark"><?= icon('shopping-bag', 16) ?> Shop BetterLife Farm</a>
-      </div>
-    </div>
-
-    <div class="hero-scroll-panel fade-up">
-      <span class="hero-dot dot-green"></span>
-      <span class="hero-dot dot-blue"></span>
-      <span class="hero-dot dot-outline"></span>
-      <div class="scroll-track">
-        <?php foreach (array_chunk($heroImages, 3) as $ri => $rowImages): ?>
-          <div class="scroll-row <?= $ri % 2 === 0 ? 'dir-left' : 'dir-right' ?>">
-            <?php foreach (array_merge($rowImages, $rowImages) as $ii => $img): ?>
-              <div class="scroll-tile <?= $ii % 2 === 0 ? 'tint-green' : 'tint-blue' ?>">
-                <img src="<?= asset_url($img) ?>" alt="BetterLife International" loading="lazy">
-              </div>
-            <?php endforeach; ?>
-          </div>
-        <?php endforeach; ?>
+        <a href="<?= SITE_URL ?>/products.php" class="btn btn-outline"><?= icon('shopping-bag', 16) ?> Shop BetterLife Farm</a>
       </div>
     </div>
   </div>
