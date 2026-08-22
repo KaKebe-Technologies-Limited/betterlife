@@ -40,14 +40,18 @@ require __DIR__ . '/includes/header.php';
       </div>
     </div>
 
-    <div class="hero-diagonal fade-up">
+    <div class="hero-scroll-panel fade-up">
       <span class="hero-dot dot-green"></span>
       <span class="hero-dot dot-blue"></span>
       <span class="hero-dot dot-outline"></span>
-      <div class="diagonal-grid">
-        <?php foreach ($heroImages as $i => $img): $row = intdiv($i, 2); ?>
-          <div class="diagonal-capsule row-<?= $row ?> <?= $i % 2 === 0 ? 'tint-green' : 'tint-blue' ?>">
-            <img src="<?= asset_url($img) ?>" alt="BetterLife International" style="animation-delay:-<?= $i * 1.2 ?>s;">
+      <div class="scroll-track">
+        <?php foreach (array_chunk($heroImages, 3) as $ri => $rowImages): ?>
+          <div class="scroll-row <?= $ri % 2 === 0 ? 'dir-left' : 'dir-right' ?>">
+            <?php foreach (array_merge($rowImages, $rowImages) as $ii => $img): ?>
+              <div class="scroll-tile <?= $ii % 2 === 0 ? 'tint-green' : 'tint-blue' ?>">
+                <img src="<?= asset_url($img) ?>" alt="BetterLife International" loading="lazy">
+              </div>
+            <?php endforeach; ?>
           </div>
         <?php endforeach; ?>
       </div>

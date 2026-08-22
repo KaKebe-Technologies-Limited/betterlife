@@ -216,51 +216,38 @@ section { padding: 76px 0; }
 
 .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
 
-/* Diagonal photo grid — 8 admin-editable photos in tilted capsule frames
-   that cascade diagonally across the panel (not a straight column grid),
-   each one visibly, continuously zooming/panning. Covers half the hero.
-   Each capsule rotates IN PLACE and each grid ROW is nudged further
-   right than the last, which is what turns two straight columns into a
-   genuine diagonal sweep. Rotation is kept modest (12deg) and there's a
-   generous row gap specifically so a rotated capsule's bounding box
-   never reaches into the row above/below it — confirmed empirically via
-   getBoundingClientRect that consecutive rows do not overlap. */
-.hero-diagonal { position: relative; width: 100%; aspect-ratio: 0.68 / 1; overflow: visible; }
-.diagonal-grid {
-  position: absolute; inset: 0;
-  display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(4, 1fr);
-  gap: 10px 14px; padding: 6px 6px 6px 22px;
+/* Scrolling photo rows — 8 admin-editable photos in 3 horizontal rows
+   that drift continuously (alternating left/right) inside a contained,
+   rounded, edge-faded half-page panel. Each row's photos are duplicated
+   in the markup and animated by exactly -50% so the loop is seamless
+   (no jump). Genuinely continuous motion rather than a subtle zoom, and
+   unlike a full-bleed background treatment it stays inside its own
+   panel beside the text — nothing to clip or overlap by construction. */
+.hero-scroll-panel {
+  position: relative; width: 100%; aspect-ratio: 0.95 / 1;
+  overflow: hidden; border-radius: 28px;
+  box-shadow: 0 20px 50px rgba(11, 61, 46, 0.18);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
 }
-.diagonal-capsule {
-  position: relative; overflow: hidden; border-radius: 999px;
-  width: 58%; height: 90%; margin: 0 auto; align-self: center;
-  transform: rotate(12deg) translateX(0%);
-  box-shadow: 0 12px 26px rgba(11, 61, 46, 0.18);
-}
-.diagonal-capsule.row-1 { transform: rotate(12deg) translateX(11%); }
-.diagonal-capsule.row-2 { transform: rotate(12deg) translateX(22%); }
-.diagonal-capsule.row-3 { transform: rotate(12deg) translateX(33%); }
-.diagonal-capsule::after {
-  content: ''; position: absolute; inset: 0; z-index: 2; mix-blend-mode: multiply; opacity: .25;
-}
-.diagonal-capsule.tint-green::after { background: linear-gradient(135deg, var(--green-600), transparent 70%); }
-.diagonal-capsule.tint-blue::after { background: linear-gradient(135deg, var(--blue-600), transparent 70%); }
-.diagonal-capsule img {
-  position: absolute; inset: -45%; width: 190%; height: 190%; object-fit: cover;
-  transform: rotate(-12deg) scale(1); transform-origin: center;
-  animation: heroKenBurns 6s ease-in-out infinite alternate;
-  will-change: transform;
-}
-@keyframes heroKenBurns {
-  0%   { transform: rotate(-12deg) scale(1) translate(0, 0); }
-  100% { transform: rotate(-12deg) scale(1.35) translate(-6%, 6%); }
-}
-@media (prefers-reduced-motion: reduce) { .diagonal-capsule img { animation: none; } }
+.scroll-track { display: flex; flex-direction: column; gap: 12px; height: 100%; padding: 10px 0; }
+.scroll-row { display: flex; flex-direction: row; gap: 12px; flex: 1; min-height: 0; will-change: transform; }
+.scroll-row.dir-left { animation: scrollRowLeft 24s linear infinite; }
+.scroll-row.dir-right { animation: scrollRowRight 28s linear infinite; transform: translateX(-50%); }
+@keyframes scrollRowLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes scrollRowRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+@media (prefers-reduced-motion: reduce) { .scroll-row { animation: none !important; transform: none !important; } }
+
+.scroll-tile { position: relative; border-radius: 16px; overflow: hidden; aspect-ratio: 4 / 3; height: 100%; width: auto; flex-shrink: 0; }
+.scroll-tile img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.scroll-tile::after { content: ''; position: absolute; inset: 0; mix-blend-mode: multiply; opacity: .2; }
+.scroll-tile.tint-green::after { background: linear-gradient(160deg, var(--green-600), transparent 65%); }
+.scroll-tile.tint-blue::after { background: linear-gradient(160deg, var(--blue-600), transparent 65%); }
 
 .hero-dot { position: absolute; border-radius: 50%; z-index: 3; }
-.hero-dot.dot-green { width: 14px; height: 14px; background: var(--green-500); top: 1%; left: 2%; }
-.hero-dot.dot-blue { width: 11px; height: 11px; background: var(--blue-500); bottom: 2%; left: -2%; }
-.hero-dot.dot-outline { width: 20px; height: 20px; border: 3px solid var(--blue-500); top: 44%; right: 8%; background: transparent; }
+.hero-dot.dot-green { width: 14px; height: 14px; background: var(--green-500); top: -6px; left: 18%; }
+.hero-dot.dot-blue { width: 11px; height: 11px; background: var(--blue-500); bottom: -4px; right: 22%; }
+.hero-dot.dot-outline { width: 20px; height: 20px; border: 3px solid var(--blue-500); top: 40%; right: -10px; background: transparent; }
 
 .btn-hero-cta {
   background: var(--green-900); color: #fff; box-shadow: var(--shadow);
@@ -273,18 +260,12 @@ section { padding: 76px 0; }
 }
 
 @media (max-width: 980px) {
-  .hero-diagonal { aspect-ratio: 0.72 / 1; max-width: 420px; margin: 0 auto; }
-  .diagonal-grid { gap: 8px 10px; padding: 6px 6px 6px 14px; }
-  .diagonal-capsule { width: 62%; height: 90%; transform: rotate(10deg) translateX(0%); }
-  .diagonal-capsule.row-1 { transform: rotate(10deg) translateX(9%); }
-  .diagonal-capsule.row-2 { transform: rotate(10deg) translateX(18%); }
-  .diagonal-capsule.row-3 { transform: rotate(10deg) translateX(27%); }
-  .diagonal-capsule img { transform: rotate(-10deg) scale(1); }
-  @keyframes heroKenBurns { 0% { transform: rotate(-10deg) scale(1) translate(0,0); } 100% { transform: rotate(-10deg) scale(1.3) translate(-6%,6%); } }
+  .hero-scroll-panel { aspect-ratio: 1.3 / 1; max-width: 520px; margin: 0 auto; }
 }
-@media (max-width: 400px) {
-  .diagonal-grid { gap: 12px 6px; padding: 4px 4px 4px 8px; }
-  .diagonal-capsule { width: 66%; }
+@media (max-width: 480px) {
+  .hero-scroll-panel { aspect-ratio: 1 / 1; }
+  .scroll-track { gap: 8px; }
+  .scroll-row { gap: 8px; }
 }
 
 /* ---------- Breadcrumb / page header ---------- */
