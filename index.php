@@ -3,16 +3,17 @@ require_once __DIR__ . '/includes/functions.php';
 $pageTitle = 'Home';
 $activePage = 'home';
 
-$heroImage = setting($pdo, 'hero_image', 'assets/img/hero-real-1.jpg');
+$heroImages = [
+    setting($pdo, 'hero_image_1', 'assets/img/hero-real-1.jpg'),
+    setting($pdo, 'hero_image_2', 'assets/img/farm-field-1.jpg'),
+    setting($pdo, 'hero_image_3', 'assets/img/product-honey.jpg'),
+    setting($pdo, 'hero_image_4', 'assets/img/about-real-1.jpg'),
+];
 $stats = $pdo->query("SELECT * FROM stats WHERE status = 1 ORDER BY sort_order")->fetchAll();
 $programs = $pdo->query("SELECT * FROM programs WHERE status = 1 ORDER BY sort_order LIMIT 4")->fetchAll();
-$products = $pdo->query("SELECT * FROM products WHERE status = 1 ORDER BY featured DESC, sort_order LIMIT 3")->fetchAll();
+$products = $pdo->query("SELECT * FROM products WHERE status = 1 ORDER BY featured DESC, sort_order LIMIT 4")->fetchAll();
 $testimonials = $pdo->query("SELECT * FROM testimonials WHERE status = 1 ORDER BY sort_order LIMIT 3")->fetchAll();
 $posts = $pdo->query("SELECT bp.*, bc.name AS cat_name FROM blog_posts bp LEFT JOIN blog_categories bc ON bc.id = bp.category_id WHERE bp.status = 'published' ORDER BY bp.published_at DESC LIMIT 3")->fetchAll();
-
-$heroStat = null;
-foreach ($stats as $s) { if (stripos($s['label'], 'tree') !== false) { $heroStat = $s; break; } }
-if (!$heroStat && $stats) $heroStat = $stats[0];
 
 require __DIR__ . '/includes/header.php';
 ?>
@@ -24,32 +25,23 @@ require __DIR__ . '/includes/header.php';
       <h1><?= h(setting($pdo, 'hero_title')) ?></h1>
       <p class="lead"><?= h(excerpt(setting($pdo, 'hero_subtitle'), 150)) ?></p>
       <div class="feature-pills">
-        <span class="pill pill-active">🌱 Green Skills</span>
-        <span class="pill">🌍 Climate Education</span>
-        <span class="pill">🍯 Farm to Market</span>
-        <span class="pill">🤝 Youth-Led</span>
+        <span class="pill pill-active"><?= icon('leaf', 15) ?> Green Skills</span>
+        <span class="pill"><?= icon('globe', 15) ?> Climate Education</span>
+        <span class="pill"><?= icon('shopping-bag', 15) ?> Farm to Market</span>
+        <span class="pill"><?= icon('users', 15) ?> Youth-Led</span>
       </div>
       <div class="hero-actions">
-        <a href="<?= SITE_URL ?>/about.php" class="btn btn-primary">Discover Our Story →</a>
-        <a href="<?= SITE_URL ?>/products.php" class="btn btn-outline-dark">🍯 Shop BetterLife Farm</a>
+        <a href="<?= SITE_URL ?>/about.php" class="btn btn-primary">Discover Our Story <?= icon('arrow-right', 16) ?></a>
+        <a href="<?= SITE_URL ?>/products.php" class="btn btn-outline-dark"><?= icon('shopping-bag', 16) ?> Shop BetterLife Farm</a>
       </div>
     </div>
 
     <div class="hero-bento fade-up">
-      <div class="bento-item bento-tall">
-        <img src="<?= asset_url($heroImage) ?>" alt="BetterLife International community work">
-      </div>
-      <?php if ($heroStat): ?>
-        <div class="bento-item bento-stat">
-          <span class="stat-label"><?= h($heroStat['label']) ?></span>
-          <strong><?= h($heroStat['value']) ?></strong>
-          <span class="stat-trend">▲ and growing</span>
+      <?php foreach ($heroImages as $i => $img): ?>
+        <div class="bento-item <?= $i % 2 === 0 ? 'bg-green' : 'bg-blue' ?>">
+          <img src="<?= asset_url($img) ?>" alt="BetterLife International">
         </div>
-      <?php endif; ?>
-      <div class="bento-item bento-wide">
-        <img src="<?= asset_url(setting($pdo, 'farm_image', 'assets/img/farm-field-1.jpg')) ?>" alt="BetterLife Farm">
-        <span class="bento-caption">🍯 From our farm</span>
-      </div>
+      <?php endforeach; ?>
     </div>
   </div>
 </section>
@@ -92,9 +84,9 @@ require __DIR__ . '/includes/header.php';
         <h2>Building a better life, one community at a time</h2>
         <p class="muted"><?= nl2br(h(mb_substr(setting($pdo, 'about_who_text'), 0, 420))) ?>&hellip;</p>
         <ul class="check-list">
-          <li><span class="tick">✓</span> Working across Uganda, South Sudan, Tanzania, Ghana &amp; DR Congo</li>
-          <li><span class="tick">✓</span> Sustainable agriculture, green skills &amp; climate education</li>
-          <li><span class="tick">✓</span> A working model farm producing honey, ghee &amp; yoghurt</li>
+          <li><span class="tick"><?= icon('check', 13) ?></span> Working across Uganda, South Sudan, Tanzania, Ghana &amp; DR Congo</li>
+          <li><span class="tick"><?= icon('check', 13) ?></span> Sustainable agriculture, green skills &amp; climate education</li>
+          <li><span class="tick"><?= icon('check', 13) ?></span> A working model farm producing honey, ghee &amp; yoghurt</li>
         </ul>
         <a href="<?= SITE_URL ?>/about.php" class="btn btn-outline-dark" style="margin-top:16px;">Read Our Full Story →</a>
       </div>
@@ -114,7 +106,7 @@ require __DIR__ . '/includes/header.php';
         <div class="card program-card fade-up">
           <div class="thumb"><img src="<?= asset_url($p['image']) ?>" alt="<?= h($p['title']) ?>"></div>
           <div class="body">
-            <div class="icon-badge">🌿</div>
+            <div class="icon-badge"><?= icon('leaf', 20) ?></div>
             <span class="tagline"><?= h($p['tagline']) ?></span>
             <h3><?= h($p['title']) ?></h3>
             <p class="muted" style="font-size:14px;"><?= h(excerpt($p['summary'], 90)) ?></p>

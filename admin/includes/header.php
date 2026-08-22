@@ -8,29 +8,39 @@ $logo = setting($pdo, 'logo', 'assets/img/logo.png');
 
 $navItems = [
   ['group' => 'Overview', 'items' => [
-    ['key' => 'dashboard', 'label' => 'Dashboard', 'icon' => '📊', 'href' => ADMIN_URL . '/index.php'],
+    ['key' => 'dashboard', 'label' => 'Dashboard', 'icon' => 'grid', 'href' => ADMIN_URL . '/index.php'],
   ]],
   ['group' => 'Content', 'items' => [
-    ['key' => 'programs', 'label' => 'Programs', 'icon' => '🌿', 'href' => ADMIN_URL . '/programs.php'],
-    ['key' => 'products', 'label' => 'Farm Products', 'icon' => '🍯', 'href' => ADMIN_URL . '/products.php'],
-    ['key' => 'team', 'label' => 'Team & Board', 'icon' => '👥', 'href' => ADMIN_URL . '/team.php'],
-    ['key' => 'testimonials', 'label' => 'Testimonials', 'icon' => '💬', 'href' => ADMIN_URL . '/testimonials.php'],
-    ['key' => 'stats', 'label' => 'Impact Stats', 'icon' => '📈', 'href' => ADMIN_URL . '/stats.php'],
+    ['key' => 'programs', 'label' => 'Programs', 'icon' => 'leaf', 'href' => ADMIN_URL . '/programs.php'],
+    ['key' => 'projects', 'label' => 'Projects', 'icon' => 'box', 'href' => ADMIN_URL . '/projects.php'],
+    ['key' => 'impact-reports', 'label' => 'Impact & Reports', 'icon' => 'trending-up', 'href' => ADMIN_URL . '/impact-reports.php'],
+    ['key' => 'products', 'label' => 'Farm Products', 'icon' => 'shopping-bag', 'href' => ADMIN_URL . '/products.php'],
+    ['key' => 'team', 'label' => 'Team & Board', 'icon' => 'users', 'href' => ADMIN_URL . '/team.php'],
+    ['key' => 'testimonials', 'label' => 'Testimonials', 'icon' => 'message', 'href' => ADMIN_URL . '/testimonials.php'],
+    ['key' => 'stats', 'label' => 'Impact Stats', 'icon' => 'trending-up', 'href' => ADMIN_URL . '/stats.php'],
   ]],
   ['group' => 'Blog', 'items' => [
-    ['key' => 'blog', 'label' => 'Blog Posts', 'icon' => '📰', 'href' => ADMIN_URL . '/blog.php'],
-    ['key' => 'blog-categories', 'label' => 'Categories', 'icon' => '🏷️', 'href' => ADMIN_URL . '/blog-categories.php'],
+    ['key' => 'blog', 'label' => 'Blog Posts', 'icon' => 'newspaper', 'href' => ADMIN_URL . '/blog.php'],
+    ['key' => 'blog-categories', 'label' => 'Categories', 'icon' => 'tag', 'href' => ADMIN_URL . '/blog-categories.php'],
+  ]],
+  ['group' => 'Sales', 'items' => [
+    ['key' => 'orders', 'label' => 'Orders', 'icon' => 'box', 'href' => ADMIN_URL . '/orders.php'],
   ]],
   ['group' => 'Engagement', 'items' => [
-    ['key' => 'messages', 'label' => 'Messages', 'icon' => '✉️', 'href' => ADMIN_URL . '/messages.php'],
-    ['key' => 'subscribers', 'label' => 'Subscribers', 'icon' => '📬', 'href' => ADMIN_URL . '/subscribers.php'],
+    ['key' => 'messages', 'label' => 'Messages', 'icon' => 'mail', 'href' => ADMIN_URL . '/messages.php'],
+    ['key' => 'subscribers', 'label' => 'Subscribers', 'icon' => 'send', 'href' => ADMIN_URL . '/subscribers.php'],
   ]],
   ['group' => 'Site', 'items' => [
-    ['key' => 'settings', 'label' => 'Site Settings', 'icon' => '⚙️', 'href' => ADMIN_URL . '/settings.php'],
+    ['key' => 'settings', 'label' => 'Site Settings', 'icon' => 'settings', 'href' => ADMIN_URL . '/settings.php'],
   ]],
 ];
 
 $unreadCount = (int) $pdo->query("SELECT COUNT(*) FROM contact_messages WHERE is_read = 0")->fetchColumn();
+try {
+    $pendingOrders = (int) $pdo->query("SELECT COUNT(*) FROM orders WHERE status = 'paid'")->fetchColumn();
+} catch (PDOException $e) {
+    $pendingOrders = 0; // orders table not migrated yet
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,24 +65,27 @@ $unreadCount = (int) $pdo->query("SELECT COUNT(*) FROM contact_messages WHERE is
         <div class="nav-label"><?= h($group['group']) ?></div>
         <?php foreach ($group['items'] as $item): ?>
           <a href="<?= $item['href'] ?>" class="nav-link <?= ($activeNav ?? '') === $item['key'] ? 'active' : '' ?>">
-            <span class="ico"><?= $item['icon'] ?></span> <?= h($item['label']) ?>
+            <span class="ico"><?= icon($item['icon'], 18) ?></span> <?= h($item['label']) ?>
             <?php if ($item['key'] === 'messages' && $unreadCount > 0): ?>
               <span class="badge badge-red" style="margin-left:auto;"><?= $unreadCount ?></span>
+            <?php endif; ?>
+            <?php if ($item['key'] === 'orders' && $pendingOrders > 0): ?>
+              <span class="badge badge-green" style="margin-left:auto;"><?= $pendingOrders ?></span>
             <?php endif; ?>
           </a>
         <?php endforeach; ?>
       <?php endforeach; ?>
     </nav>
     <div class="sidebar-foot">
-      <a href="<?= SITE_URL ?>/index.php" target="_blank">🌐 View Live Site</a>
-      <a href="<?= ADMIN_URL ?>/logout.php">🚪 Logout</a>
+      <a href="<?= SITE_URL ?>/index.php" target="_blank" class="ico-text"><?= icon('external-link', 15) ?> View Live Site</a>
+      <a href="<?= ADMIN_URL ?>/logout.php" class="ico-text"><?= icon('log-out', 15) ?> Logout</a>
     </div>
   </aside>
 
   <div class="main">
     <div class="topbar-admin">
       <div style="display:flex;align-items:center;gap:14px;">
-        <button class="admin-toggle" id="adminToggle">☰</button>
+        <button class="admin-toggle" id="adminToggle"><?= icon('menu', 22) ?></button>
         <div>
           <h1><?= h($pageTitle ?? 'Dashboard') ?></h1>
         </div>

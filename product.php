@@ -44,10 +44,16 @@ require __DIR__ . '/includes/header.php';
         <div class="price" style="font-size:26px;margin:14px 0;"><?= format_price($product['price']) ?> <small>/ <?= h($product['unit']) ?></small></div>
         <p class="muted"><?= h($product['short_desc']) ?></p>
         <div style="margin:26px 0;"><?= nl2p($product['description']) ?></div>
-        <div style="display:flex;gap:14px;flex-wrap:wrap;">
-          <a href="<?= SITE_URL ?>/contact.php?subject=<?= urlencode('Order: ' . $product['name']) ?>" class="btn btn-primary">Enquire to Order →</a>
+        <form method="post" action="<?= SITE_URL ?>/cart-add.php" style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;">
+          <input type="hidden" name="product_id" value="<?= $product['id'] ?>">
+          <div class="qty-stepper">
+            <button type="button" class="qty-btn" data-step="-1">−</button>
+            <input type="number" name="qty" value="1" min="1" class="form-control">
+            <button type="button" class="qty-btn" data-step="1">+</button>
+          </div>
+          <button type="submit" class="btn btn-primary"><?= icon('shopping-bag', 16) ?> Add to Cart</button>
           <a href="<?= SITE_URL ?>/products.php" class="btn btn-outline-dark">← Back to Farm Shop</a>
-        </div>
+        </form>
       </div>
     </div>
   </div>

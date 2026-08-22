@@ -23,22 +23,22 @@ require __DIR__ . '/includes/header.php';
         <h3 style="color:#fff;">Contact Information</h3>
         <p style="color:#cfe3d8;margin-bottom:30px;">Reach out through any of the channels below — our team typically responds within 1–2 business days.</p>
         <div class="contact-info-item">
-          <div class="icon">📍</div>
+          <div class="icon"><?= icon('map-pin', 20) ?></div>
           <div><h4>Our Address</h4><p><?= h(setting($pdo, 'address')) ?></p></div>
         </div>
         <div class="contact-info-item">
-          <div class="icon">✉️</div>
+          <div class="icon"><?= icon('mail', 20) ?></div>
           <div><h4>Email Us</h4><p><?= h(setting($pdo, 'email')) ?><br><?= h(setting($pdo, 'shop_email')) ?> (farm orders)</p></div>
         </div>
         <div class="contact-info-item">
-          <div class="icon">📞</div>
+          <div class="icon"><?= icon('phone', 20) ?></div>
           <div><h4>Call Us</h4><p><?= h(setting($pdo, 'phone')) ?></p></div>
         </div>
         <div class="footer-social" style="margin-top:20px;">
-          <?php if ($fb = setting($pdo, 'facebook')): ?><a href="<?= h($fb) ?>" target="_blank" rel="noopener">f</a><?php endif; ?>
-          <?php if ($tw = setting($pdo, 'twitter')): ?><a href="<?= h($tw) ?>" target="_blank" rel="noopener">𝕏</a><?php endif; ?>
-          <?php if ($ig = setting($pdo, 'instagram')): ?><a href="<?= h($ig) ?>" target="_blank" rel="noopener">◎</a><?php endif; ?>
-          <?php if ($li = setting($pdo, 'linkedin')): ?><a href="<?= h($li) ?>" target="_blank" rel="noopener">in</a><?php endif; ?>
+          <?php if ($fb = setting($pdo, 'facebook')): ?><a href="<?= h($fb) ?>" target="_blank" rel="noopener" aria-label="Facebook"><?= icon('facebook', 16) ?></a><?php endif; ?>
+          <?php if ($tw = setting($pdo, 'twitter')): ?><a href="<?= h($tw) ?>" target="_blank" rel="noopener" aria-label="Twitter / X"><?= icon('x-twitter', 16) ?></a><?php endif; ?>
+          <?php if ($ig = setting($pdo, 'instagram')): ?><a href="<?= h($ig) ?>" target="_blank" rel="noopener" aria-label="Instagram"><?= icon('instagram', 16) ?></a><?php endif; ?>
+          <?php if ($li = setting($pdo, 'linkedin')): ?><a href="<?= h($li) ?>" target="_blank" rel="noopener" aria-label="LinkedIn"><?= icon('linkedin', 16) ?></a><?php endif; ?>
         </div>
       </div>
 

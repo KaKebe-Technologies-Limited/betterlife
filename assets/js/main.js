@@ -11,6 +11,30 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
+  // Quantity steppers (+/-)
+  document.querySelectorAll('.qty-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var input = btn.parentElement.querySelector('input[type=number]');
+      var step = parseInt(btn.getAttribute('data-step'), 10);
+      var next = Math.max(1, (parseInt(input.value, 10) || 1) + step);
+      input.value = next;
+    });
+  });
+
+  // "Our Work" nav dropdown
+  document.querySelectorAll('.nav-dropdown-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var dd = btn.closest('.nav-dropdown');
+      var wasOpen = dd.classList.contains('open');
+      document.querySelectorAll('.nav-dropdown.open').forEach(function (d) { d.classList.remove('open'); });
+      if (!wasOpen) dd.classList.add('open');
+    });
+  });
+  document.addEventListener('click', function () {
+    document.querySelectorAll('.nav-dropdown.open').forEach(function (d) { d.classList.remove('open'); });
+  });
+
   // Sticky header shadow
   var header = document.querySelector('.site-header');
   window.addEventListener('scroll', function () {

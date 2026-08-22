@@ -48,20 +48,20 @@ require __DIR__ . '/includes/header.php';
         <span class="cat-badge"><?= h($post['cat_name'] ?? 'General') ?></span>
         <h1 class="post-title"><?= h($post['title']) ?></h1>
         <div class="post-meta">
-          <span>✍️ <?= h($post['author']) ?></span>
-          <span>🗓 <?= format_date($post['published_at']) ?></span>
-          <span>👁 <?= (int) $post['views'] ?> views</span>
+          <span><?= icon('user', 14) ?> <?= h($post['author']) ?></span>
+          <span><?= icon('calendar', 14) ?> <?= format_date($post['published_at']) ?></span>
+          <span><?= icon('eye', 14) ?> <?= (int) $post['views'] ?> views</span>
         </div>
         <div class="featured-image"><img src="<?= asset_url($post['featured_image']) ?>" alt="<?= h($post['title']) ?>"></div>
         <div class="post-content"><?= $post['content'] ?></div>
 
         <div class="share-box">
-          <strong>Share this story:</strong>
-          <a href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode($postUrl) ?>" target="_blank" rel="noopener" aria-label="Share on Facebook">f</a>
-          <a href="https://twitter.com/intent/tweet?url=<?= urlencode($postUrl) ?>&text=<?= urlencode($post['title']) ?>" target="_blank" rel="noopener" aria-label="Share on X">𝕏</a>
-          <a href="https://wa.me/?text=<?= urlencode($post['title'] . ' ' . $postUrl) ?>" target="_blank" rel="noopener" aria-label="Share on WhatsApp">W</a>
-          <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?= urlencode($postUrl) ?>" target="_blank" rel="noopener" aria-label="Share on LinkedIn">in</a>
-          <a href="mailto:?subject=<?= urlencode($post['title']) ?>&body=<?= urlencode($postUrl) ?>" aria-label="Share by email">✉</a>
+          <strong><?= icon('share', 15) ?> Share this story:</strong>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode($postUrl) ?>" target="_blank" rel="noopener" aria-label="Share on Facebook"><?= icon('facebook', 16) ?></a>
+          <a href="https://twitter.com/intent/tweet?url=<?= urlencode($postUrl) ?>&text=<?= urlencode($post['title']) ?>" target="_blank" rel="noopener" aria-label="Share on X"><?= icon('x-twitter', 16) ?></a>
+          <a href="https://wa.me/?text=<?= urlencode($post['title'] . ' ' . $postUrl) ?>" target="_blank" rel="noopener" aria-label="Share on WhatsApp"><?= icon('whatsapp', 16) ?></a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?= urlencode($postUrl) ?>" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><?= icon('linkedin', 16) ?></a>
+          <a href="mailto:?subject=<?= urlencode($post['title']) ?>&body=<?= urlencode($postUrl) ?>" aria-label="Share by email"><?= icon('mail', 16) ?></a>
         </div>
 
         <?php if ($related): ?>
@@ -73,7 +73,7 @@ require __DIR__ . '/includes/header.php';
                   <div class="thumb"><a href="<?= SITE_URL ?>/blog-single.php?slug=<?= h($r['slug']) ?>"><img src="<?= asset_url($r['featured_image']) ?>" alt="<?= h($r['title']) ?>"></a></div>
                   <div class="body">
                     <h3 style="font-size:16px;"><a href="<?= SITE_URL ?>/blog-single.php?slug=<?= h($r['slug']) ?>"><?= h($r['title']) ?></a></h3>
-                    <div class="meta"><span>🗓 <?= format_date($r['published_at']) ?></span></div>
+                    <div class="meta"><span><?= icon('calendar', 14) ?> <?= format_date($r['published_at']) ?></span></div>
                   </div>
                 </div>
               <?php endforeach; ?>
@@ -87,7 +87,7 @@ require __DIR__ . '/includes/header.php';
           <h4>Search</h4>
           <form class="search-box" method="get" action="<?= SITE_URL ?>/blog.php">
             <input type="text" name="q" placeholder="Search articles…">
-            <button type="submit">🔍</button>
+            <button type="submit"><?= icon('search', 16) ?></button>
           </form>
         </div>
         <div class="sidebar-widget">

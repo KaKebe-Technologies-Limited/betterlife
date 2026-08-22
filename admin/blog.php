@@ -148,7 +148,7 @@ if (in_array($action, ['add', 'edit'], true)) {
               <p class="hint">Leave blank to use the current date/time when publishing.</p>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary">💾 Save Post</button>
+          <button type="submit" class="btn btn-primary ico-text"><?= icon('save', 16) ?> Save Post</button>
         </form>
       </div>
     </div>

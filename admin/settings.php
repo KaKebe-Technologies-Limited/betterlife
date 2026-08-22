@@ -19,6 +19,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         redirect(ADMIN_URL . '/settings.php');
     }
 
+    if (($_POST['form'] ?? '') === 'payments') {
+        $stmtUpsert = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
+        $stmtUpsert->execute(['admin_alert_email', trim($_POST['admin_alert_email'] ?? '')]);
+        $stmtUpsert->execute(['smtp_host', trim($_POST['smtp_host'] ?? '')]);
+        $stmtUpsert->execute(['smtp_port', trim($_POST['smtp_port'] ?? '587')]);
+        $stmtUpsert->execute(['smtp_username', trim($_POST['smtp_username'] ?? '')]);
+        $stmtUpsert->execute(['smtp_from_name', trim($_POST['smtp_from_name'] ?? '')]);
+        $stmtUpsert->execute(['pesapal_sandbox', isset($_POST['pesapal_sandbox']) ? '1' : '0']);
+        if (trim($_POST['smtp_app_password'] ?? '') !== '') {
+            $stmtUpsert->execute(['smtp_app_password', trim($_POST['smtp_app_password'])]);
+        }
+        if (trim($_POST['pesapal_consumer_key'] ?? '') !== '') {
+            $stmtUpsert->execute(['pesapal_consumer_key', trim($_POST['pesapal_consumer_key'])]);
+        }
+        if (trim($_POST['pesapal_consumer_secret'] ?? '') !== '') {
+            $stmtUpsert->execute(['pesapal_consumer_secret', trim($_POST['pesapal_consumer_secret'])]);
+        }
+        flash_set('success', 'Payment & email settings updated.');
+        redirect(ADMIN_URL . '/settings.php');
+    }
+
     if (($_POST['form'] ?? '') === 'password') {
         $current = $_POST['current_password'] ?? '';
         $new = $_POST['new_password'] ?? '';
@@ -51,8 +72,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($logo = handle_image_upload($_FILES['logo'] ?? [], 'settings', $errors)) {
         $stmtUpsert->execute(['logo', $logo]);
     }
-    if ($hero = handle_image_upload($_FILES['hero_image'] ?? [], 'settings', $errors)) {
-        $stmtUpsert->execute(['hero_image', $hero]);
+    foreach ([1, 2, 3, 4] as $n) {
+        if ($heroImg = handle_image_upload($_FILES["hero_image_$n"] ?? [], 'settings', $errors)) {
+            $stmtUpsert->execute(["hero_image_$n", $heroImg]);
+        }
     }
     if ($about = handle_image_upload($_FILES['about_image'] ?? [], 'settings', $errors)) {
         $stmtUpsert->execute(['about_image', $about]);
@@ -93,11 +116,16 @@ $v = fn($k) => h(setting($pdo, $k));
       <div class="form-grid">
         <div class="form-group full"><label>Hero Title</label><input type="text" name="hero_title" class="form-control" value="<?= $v('hero_title') ?>"></div>
         <div class="form-group full"><label>Hero Subtitle</label><textarea name="hero_subtitle" class="form-control"><?= h(setting($pdo, 'hero_subtitle')) ?></textarea></div>
-        <div class="form-group">
-          <label>Hero Background Image</label>
-          <img src="<?= asset_url(setting($pdo, 'hero_image')) ?>" class="current-image"><br>
-          <input type="file" name="hero_image" class="form-control" accept="image/*">
-        </div>
+      </div>
+      <label style="display:block;margin:8px 0 12px;">Hero Photos (4 shown in the homepage image grid)</label>
+      <div class="form-grid">
+        <?php for ($n = 1; $n <= 4; $n++): ?>
+          <div class="form-group">
+            <label>Photo <?= $n ?></label>
+            <img src="<?= asset_url(setting($pdo, "hero_image_$n")) ?>" class="current-image"><br>
+            <input type="file" name="hero_image_<?= $n ?>" class="form-control" accept="image/*">
+          </div>
+        <?php endfor; ?>
       </div>
     </div>
   </div>
@@ -155,8 +183,44 @@ $v = fn($k) => h(setting($pdo, $k));
     </div>
   </div>
 
-  <button type="submit" class="btn btn-primary">💾 Save All Settings</button>
+  <button type="submit" class="btn btn-primary ico-text"><?= icon('save', 16) ?> Save All Settings</button>
 </form>
+
+<div class="panel" style="margin-top:26px;">
+  <div class="panel-head"><h3>Payments &amp; Email</h3></div>
+  <div class="panel-body">
+    <p class="help-text" style="margin-bottom:20px;">Powers online checkout (card &amp; mobile money via Pesapal) and order emails. Secret fields show blank for security — leave them blank to keep the current saved value.</p>
+    <form method="post">
+      <?= csrf_field() ?>
+      <input type="hidden" name="form" value="payments">
+
+      <h4 style="margin-bottom:14px;">Order Alerts</h4>
+      <div class="form-grid">
+        <div class="form-group"><label>Admin Alert Email</label><input type="email" name="admin_alert_email" class="form-control" value="<?= $v('admin_alert_email') ?>"><p class="hint">Receives an email every time a customer places or pays for an order.</p></div>
+      </div>
+
+      <h4 style="margin:22px 0 14px;">Outgoing Email (SMTP)</h4>
+      <div class="form-grid">
+        <div class="form-group"><label>SMTP Host</label><input type="text" name="smtp_host" class="form-control" value="<?= $v('smtp_host') ?>"></div>
+        <div class="form-group"><label>SMTP Port</label><input type="number" name="smtp_port" class="form-control" value="<?= $v('smtp_port') ?>"></div>
+        <div class="form-group"><label>SMTP Username / Email</label><input type="text" name="smtp_username" class="form-control" value="<?= $v('smtp_username') ?>"></div>
+        <div class="form-group"><label>SMTP App Password</label><input type="password" name="smtp_app_password" class="form-control" placeholder="•••••••• (leave blank to keep current)" autocomplete="new-password"><p class="hint">Use a Gmail <strong>App Password</strong>, not your normal password — generate one at myaccount.google.com/apppasswords.</p></div>
+        <div class="form-group"><label>"From" Name</label><input type="text" name="smtp_from_name" class="form-control" value="<?= $v('smtp_from_name') ?>"></div>
+      </div>
+
+      <h4 style="margin:22px 0 14px;">Pesapal (Card &amp; Mobile Money)</h4>
+      <div class="form-grid">
+        <div class="form-group"><label>Consumer Key</label><input type="password" name="pesapal_consumer_key" class="form-control" placeholder="•••••••• (leave blank to keep current)" autocomplete="new-password"></div>
+        <div class="form-group"><label>Consumer Secret</label><input type="password" name="pesapal_consumer_secret" class="form-control" placeholder="•••••••• (leave blank to keep current)" autocomplete="new-password"></div>
+        <div class="form-group full">
+          <div class="checkbox-row"><input type="checkbox" name="pesapal_sandbox" id="pesapal_sandbox" <?= setting($pdo, 'pesapal_sandbox') === '1' ? 'checked' : '' ?>><label for="pesapal_sandbox" style="margin:0;">Sandbox / test mode (no real money moves)</label></div>
+          <p class="hint">Leave unchecked for LIVE payments. Get your keys from pay.pesapal.com under Settings → API.</p>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-accent ico-text"><?= icon('save', 16) ?> Save Payment &amp; Email Settings</button>
+    </form>
+  </div>
+</div>
 
 <div class="panel" style="margin-top:26px;">
   <div class="panel-head"><h3>Change Admin Password</h3></div>

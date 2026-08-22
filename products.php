@@ -61,9 +61,14 @@ require __DIR__ . '/includes/header.php';
             <div class="body">
               <h3><a href="<?= SITE_URL ?>/product.php?slug=<?= h($p['slug']) ?>"><?= h($p['name']) ?></a></h3>
               <p class="muted" style="font-size:14px;"><?= h($p['short_desc']) ?></p>
+              <div class="price"><?= format_price($p['price']) ?> <small>/ <?= h($p['unit']) ?></small></div>
               <div class="row">
-                <div class="price"><?= format_price($p['price']) ?> <small>/ <?= h($p['unit']) ?></small></div>
-                <a href="<?= SITE_URL ?>/product.php?slug=<?= h($p['slug']) ?>" class="btn btn-outline-dark btn-sm">View →</a>
+                <form method="post" action="<?= SITE_URL ?>/cart-add.php" style="flex:1;">
+                  <input type="hidden" name="product_id" value="<?= $p['id'] ?>">
+                  <input type="hidden" name="qty" value="1">
+                  <button type="submit" class="btn btn-primary btn-sm ico-text" style="width:100%;justify-content:center;"><?= icon('shopping-bag', 15) ?> Add to Cart</button>
+                </form>
+                <a href="<?= SITE_URL ?>/product.php?slug=<?= h($p['slug']) ?>" class="btn btn-outline-dark btn-sm">View</a>
               </div>
             </div>
           </div>

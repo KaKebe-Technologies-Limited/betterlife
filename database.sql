@@ -36,6 +36,10 @@ INSERT INTO settings (setting_key, setting_value) VALUES
 ('hero_title', 'Growing a Better Life, Rooted in Community'),
 ('hero_subtitle', 'We work with children, youth, refugees and displaced communities across Uganda, South Sudan, Tanzania, Ghana and the DRC to build sustainable livelihoods, green skills and lasting hope — from climate-smart farms to the honey, ghee and yoghurt they produce.'),
 ('hero_image', 'assets/img/hero-real-1.jpg'),
+('hero_image_1', 'assets/img/hero-real-1.jpg'),
+('hero_image_2', 'assets/img/farm-field-1.jpg'),
+('hero_image_3', 'assets/img/product-honey.jpg'),
+('hero_image_4', 'assets/img/about-real-1.jpg'),
 ('founded_year', '2021'),
 ('about_who_title', 'Who We Are'),
 ('about_who_text', 'BetterLife International was founded in 2021 by a group of young leaders and refugees who shared a vision: a world where every person, regardless of their background, can live with dignity, opportunity and hope. Born out of lived experiences of displacement, marginalization and resilience, our organization is youth-led and refugee-inspired, driven by the belief that those who have faced adversity have the greatest insights and solutions for creating lasting change.\n\nWe work hand-in-hand with children, youth, refugees, and internally displaced persons across Uganda, South Sudan, Tanzania, Ghana, and the Democratic Republic of Congo, designing programs that empower communities, build livelihoods, and strengthen resilience. Our interventions focus on sustainable agriculture, green skills, climate education, renewable energy, community health, and social cohesion, ensuring that those most vulnerable have the tools to thrive.\n\nAt BetterLife International, our approach is rooted in the voices of the communities we serve. Every program is shaped by local needs, co-created with young people, and strengthened by the resilience, courage, and creativity of those who refuse to give up despite life''s challenges. We believe that hope is not given, it is built — and that together, communities can transform adversity into opportunity.'),
@@ -57,7 +61,20 @@ INSERT INTO settings (setting_key, setting_value) VALUES
 ('footer_about', 'BetterLife International is a youth-led, refugee-inspired organization creating sustainable livelihoods, green skills and lasting hope across Sub-Saharan Africa.'),
 ('map_embed', ''),
 ('board_quote', 'BetterLife International is changing lives at every level, empowering youth, building resilient communities, and inspiring hope where it''s needed most.'),
-('board_quote_author', 'Hillary Clinton, Board Director');
+('board_quote_author', 'Hillary Clinton, Board Director'),
+('admin_alert_email', 'ot.sedrick@gmail.com'),
+('smtp_host', 'smtp.gmail.com'),
+('smtp_port', '587'),
+('smtp_username', ''),
+('smtp_app_password', ''),
+('smtp_from_name', 'BetterLife International'),
+('pesapal_sandbox', '0'),
+('pesapal_consumer_key', ''),
+('pesapal_consumer_secret', '');
+-- NOTE: SMTP + Pesapal credentials are intentionally left blank here so
+-- live secrets never enter version control. Set them once via
+-- Admin -> Site Settings -> Payments & Email (they're stored in this same
+-- `settings` table, just not committed to this seed file).
 
 -- ----------------------------------------------------------------------
 -- Impact stats
@@ -272,4 +289,98 @@ CREATE TABLE newsletter_subscribers (
   id INT AUTO_INCREMENT PRIMARY KEY,
   email VARCHAR(150) NOT NULL UNIQUE,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+-- ----------------------------------------------------------------------
+-- Projects ("Our Work" > Projects)
+-- ----------------------------------------------------------------------
+CREATE TABLE projects (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(200) NOT NULL,
+  slug VARCHAR(220) NOT NULL UNIQUE,
+  category VARCHAR(150),
+  description TEXT,
+  image VARCHAR(255),
+  sort_order INT DEFAULT 0,
+  status TINYINT(1) DEFAULT 1,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+INSERT INTO projects (title, slug, category, description, image, sort_order) VALUES
+('Climate Education and Youth Empowerment', 'climate-education-youth-empowerment', 'Climate Education', 'Engaging students in debates, public speaking and Green Libraries that build climate literacy and leadership skills across partner schools.', 'assets/img/project-climate-education.jpg', 1),
+('BetterLife Spring Project', 'betterlife-spring-project', 'Renewable Energy & Agriculture', 'Sustainable Powered Resilient Irrigation for Next Generation Farming (SPRING) — giving South Sudanese farmers access to renewable-energy-powered irrigation so they can grow food despite unpredictable weather.', 'assets/img/project-spring.jpg', 2),
+('SMILES', 'smiles', 'Empowering Refugees & Host Communities', 'A programme supporting social cohesion and livelihoods between refugee and host communities through shared training, resources and community dialogue.', 'assets/img/project-smiles.jpg', 3),
+('BetterLife Renewable Pathways', 'betterlife-renewable-pathways', 'Plastic Pollution in Uganda', 'Turning plastic waste into fuel and other reusable materials, reducing pollution while creating green income opportunities for youth.', 'assets/img/project-renewable-pathways.jpg', 4),
+('BetterLife Agro-Tourism Farm', 'betterlife-agro-tourism-farm', 'Agriculture in Uganda', 'Our Rukungiri model farm training centre for organic dairy and crop farming — and the source of the honey, ghee and yoghurt sold under the BetterLife Farm brand.', 'assets/img/project-agro-tourism.jpg', 5),
+('Empowering Refugee Women and IDPs Through Smart and Sustainable Agriculture', 'empowering-refugee-women-idps-agriculture', 'Driving Local Solutions for a Global Future', 'Equipping refugee and internally displaced women with climate-smart agricultural skills and small-scale farming techniques to build food security and income.', 'assets/img/project-women-idps.jpg', 6),
+('Soilla App', 'soilla-app', 'AI & IoT Technology', 'A web and mobile platform that leverages AI and IoT technologies to help smallholder farmers monitor soil health and make better-informed farming decisions.', 'assets/img/project-soilla-app.jpg', 7);
+
+-- ----------------------------------------------------------------------
+-- Impact stories ("Our Work" > Impact & Reports)
+-- ----------------------------------------------------------------------
+CREATE TABLE impact_stories (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(200) NOT NULL,
+  caption VARCHAR(255),
+  image VARCHAR(255),
+  sort_order INT DEFAULT 0,
+  status TINYINT(1) DEFAULT 1
+) ENGINE=InnoDB;
+
+INSERT INTO impact_stories (title, caption, image, sort_order) VALUES
+('Empowering Refugee Women', 'Skills training that builds real livelihoods', 'assets/img/impact-story-1.jpg', 1),
+('Empowering Refugee Communities', 'Resilience built together, family by family', 'assets/img/impact-story-2.jpg', 2),
+('Building Our Demo Farm', 'How the BetterLife Agro-Tourism Farm began', 'assets/img/impact-story-3.jpg', 3);
+
+-- ----------------------------------------------------------------------
+-- Annual / impact reports (downloadable PDFs)
+-- ----------------------------------------------------------------------
+CREATE TABLE reports (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  title VARCHAR(200) NOT NULL,
+  year VARCHAR(10),
+  file_url VARCHAR(500),
+  sort_order INT DEFAULT 0,
+  status TINYINT(1) DEFAULT 1,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+INSERT INTO reports (title, year, file_url, sort_order) VALUES
+('BetterLife International Annual Report', '2023', 'https://assets.zyrosite.com/m5KvNaBjBKtjxV5x/betterlife-international-annual-report-20223-AoPvD3b9PLsZ7ryj.pdf', 1),
+('BetterLife International Annual Report', '2022', 'https://assets.zyrosite.com/m5KvNaBjBKtjxV5x/betterlife-international-annual-report-2022-YbNvbWgWWESzw1nz.pdf', 2);
+
+-- ----------------------------------------------------------------------
+-- Orders & payments (BetterLife Farm checkout — Pesapal: card + mobile money)
+-- ----------------------------------------------------------------------
+CREATE TABLE orders (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  order_ref VARCHAR(40) NOT NULL UNIQUE,
+  customer_name VARCHAR(150) NOT NULL,
+  customer_email VARCHAR(150) NOT NULL,
+  customer_phone VARCHAR(50) NOT NULL,
+  delivery_location VARCHAR(255) NOT NULL,
+  notes TEXT,
+  subtotal DECIMAL(12,2) NOT NULL DEFAULT 0,
+  total_amount DECIMAL(12,2) NOT NULL DEFAULT 0,
+  currency VARCHAR(10) NOT NULL DEFAULT 'UGX',
+  status ENUM('pending','paid','failed','cancelled') NOT NULL DEFAULT 'pending',
+  pesapal_tracking_id VARCHAR(100),
+  pesapal_merchant_ref VARCHAR(100),
+  paid_at DATETIME DEFAULT NULL,
+  admin_notified TINYINT(1) DEFAULT 0,
+  receipt_sent TINYINT(1) DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+CREATE TABLE order_items (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  order_id INT NOT NULL,
+  product_id INT DEFAULT NULL,
+  product_name VARCHAR(150) NOT NULL,
+  unit_price DECIMAL(10,2) NOT NULL,
+  quantity INT NOT NULL DEFAULT 1,
+  line_total DECIMAL(12,2) NOT NULL,
+  FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+  FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE SET NULL
 ) ENGINE=InnoDB;

@@ -100,7 +100,7 @@ if (in_array($action, ['add', 'edit'], true)) {
               </div>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary">💾 Save Program</button>
+          <button type="submit" class="btn btn-primary ico-text"><?= icon('save', 16) ?> Save Program</button>
         </form>
       </div>
     </div>

@@ -52,12 +52,12 @@ require __DIR__ . '/includes/header.php';
       <div class="fade-up" style="display:flex;flex-direction:column;gap:18px;">
         <span class="eyebrow">Purpose</span>
         <div class="card" style="padding:24px;">
-          <div class="icon-badge" style="width:38px;height:38px;margin-bottom:10px;">🎯</div>
+          <div class="icon-badge" style="width:38px;height:38px;margin-bottom:10px;"><?= icon('target', 20) ?></div>
           <h3>Our Mission</h3>
           <p class="muted" style="font-size:14px;margin:0;"><?= h(setting($pdo, 'mission_text')) ?></p>
         </div>
         <div class="card" style="padding:24px;">
-          <div class="icon-badge" style="width:38px;height:38px;margin-bottom:10px;">🔭</div>
+          <div class="icon-badge" style="width:38px;height:38px;margin-bottom:10px;"><?= icon('eye', 20) ?></div>
           <h3>Our Vision</h3>
           <p class="muted" style="font-size:14px;margin:0;"><?= h(setting($pdo, 'vision_text')) ?></p>
         </div>
@@ -68,35 +68,45 @@ require __DIR__ . '/includes/header.php';
 
 <section>
   <div class="container">
-    <div class="section-head center fade-up">
-      <span class="eyebrow" style="justify-content:center;">Our Journey</span>
-      <h2>From a Local Idea to a Regional Movement</h2>
-    </div>
-    <div class="timeline">
-      <?php foreach ($journey as $j): ?>
-        <div class="timeline-item fade-up">
-          <div class="year"><?= h($j[0]) ?></div>
-          <p><?= h($j[1]) ?></p>
+    <div class="split">
+      <div class="fade-up img-frame">
+        <img src="<?= asset_url('assets/img/hero-farm-1.jpg') ?>" alt="BetterLife International journey">
+      </div>
+      <div class="fade-up">
+        <span class="eyebrow">Our Journey</span>
+        <h2>From a Local Idea to a Regional Movement</h2>
+        <div class="journey-list">
+          <?php foreach ($journey as $j): ?>
+            <div class="journey-row">
+              <div class="year"><?= h($j[0]) ?></div>
+              <p><?= h($j[1]) ?></p>
+            </div>
+          <?php endforeach; ?>
         </div>
-      <?php endforeach; ?>
+      </div>
     </div>
   </div>
 </section>
 
 <section class="section-cream">
   <div class="container">
-    <div class="section-head center fade-up">
-      <span class="eyebrow" style="justify-content:center;">Core Values</span>
-      <h2>The Principles That Guide Everything We Do</h2>
-    </div>
-    <div class="grid grid-4">
-      <?php foreach ($values as $v): ?>
-        <div class="card value-card fade-up">
-          <div class="num"><?= h($v['num']) ?></div>
-          <h4><?= h($v['title']) ?></h4>
-          <p><?= h($v['text']) ?></p>
+    <div class="split">
+      <div class="fade-up" style="order:2;">
+        <span class="eyebrow">Core Values</span>
+        <h2>The Principles That Guide Everything We Do</h2>
+        <div class="grid grid-2" style="gap:16px;">
+          <?php foreach ($values as $v): ?>
+            <div class="card value-card fade-up" style="padding:20px;">
+              <div class="num"><?= h($v['num']) ?></div>
+              <h4 style="font-size:15px;"><?= h($v['title']) ?></h4>
+              <p style="font-size:13px;"><?= h($v['text']) ?></p>
+            </div>
+          <?php endforeach; ?>
         </div>
-      <?php endforeach; ?>
+      </div>
+      <div class="fade-up img-frame bg-blue" style="order:1;">
+        <img src="<?= asset_url('assets/img/farm-field-2.jpg') ?>" alt="BetterLife International values in action">
+      </div>
     </div>
   </div>
 </section>

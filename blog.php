@@ -67,8 +67,8 @@ function qs(array $overrides = []) {
           <h2 style="font-size:28px;"><a href="<?= SITE_URL ?>/blog-single.php?slug=<?= h($featured['slug']) ?>"><?= h($featured['title']) ?></a></h2>
           <p class="muted"><?= h(excerpt($featured['excerpt'] ?: $featured['content'], 180)) ?></p>
           <div class="post-card meta" style="margin-bottom:18px;">
-            <span>✍️ <?= h($featured['author']) ?></span>
-            <span>🗓 <?= format_date($featured['published_at']) ?></span>
+            <span><?= icon('user', 14) ?> <?= h($featured['author']) ?></span>
+            <span><?= icon('calendar', 14) ?> <?= format_date($featured['published_at']) ?></span>
           </div>
           <a href="<?= SITE_URL ?>/blog-single.php?slug=<?= h($featured['slug']) ?>" class="btn btn-primary btn-sm">Read Full Story →</a>
         </div>
@@ -85,7 +85,7 @@ function qs(array $overrides = []) {
                 <div class="body">
                   <span class="cat-badge"><?= h($post['cat_name'] ?? 'General') ?></span>
                   <h3><a href="<?= SITE_URL ?>/blog-single.php?slug=<?= h($post['slug']) ?>"><?= h($post['title']) ?></a></h3>
-                  <div class="meta"><span>🗓 <?= format_date($post['published_at']) ?></span><span>👁 <?= (int)$post['views'] ?> views</span></div>
+                  <div class="meta"><span><?= icon('calendar', 14) ?> <?= format_date($post['published_at']) ?></span><span><?= icon('eye', 14) ?> <?= (int)$post['views'] ?> views</span></div>
                   <p class="excerpt"><?= h(excerpt($post['excerpt'] ?: $post['content'], 110)) ?></p>
                   <a href="<?= SITE_URL ?>/blog-single.php?slug=<?= h($post['slug']) ?>" class="readmore">Read Story →</a>
                 </div>
@@ -114,7 +114,7 @@ function qs(array $overrides = []) {
           <h4>Search</h4>
           <form class="search-box" method="get" action="<?= SITE_URL ?>/blog.php">
             <input type="text" name="q" placeholder="Search articles…" value="<?= h($search) ?>">
-            <button type="submit">🔍</button>
+            <button type="submit"><?= icon('search', 16) ?></button>
           </form>
         </div>
 

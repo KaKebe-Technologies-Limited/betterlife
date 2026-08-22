@@ -114,7 +114,7 @@ if (in_array($action, ['add', 'edit'], true)) {
               </div>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary">💾 Save Product</button>
+          <button type="submit" class="btn btn-primary ico-text"><?= icon('save', 16) ?> Save Product</button>
         </form>
       </div>
     </div>
@@ -143,7 +143,7 @@ require __DIR__ . '/includes/header.php';
             <td><strong><?= h($p['name']) ?></strong></td>
             <td><span class="badge badge-blue"><?= h($p['category']) ?></span></td>
             <td><?= format_price($p['price']) ?> <span class="help-text">/ <?= h($p['unit']) ?></span></td>
-            <td><?= $p['featured'] ? '⭐' : '—' ?></td>
+            <td><?= $p['featured'] ? icon('star', 15) : '—' ?></td>
             <td><span class="badge <?= $p['status'] ? 'badge-green' : 'badge-gray' ?>"><?= $p['status'] ? 'Visible' : 'Hidden' ?></span></td>
             <td>
               <div class="row-actions">
