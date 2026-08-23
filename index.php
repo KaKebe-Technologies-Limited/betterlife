@@ -47,11 +47,9 @@ require __DIR__ . '/includes/header.php';
       <span class="hero-badge"><span class="dot"></span> Youth-led · Refugee-inspired · Since <?= h(setting($pdo,'founded_year','2021')) ?></span>
       <h1><?= h(setting($pdo, 'hero_title')) ?></h1>
       <p class="lead"><?= h(excerpt(setting($pdo, 'hero_subtitle'), 150)) ?></p>
-      <div class="feature-pills">
-        <span class="pill pill-active"><?= icon('leaf', 15) ?> Green Skills</span>
-        <span class="pill"><?= icon('globe', 15) ?> Climate Education</span>
-        <span class="pill"><?= icon('shopping-bag', 15) ?> Farm to Market</span>
-        <span class="pill"><?= icon('users', 15) ?> Youth-Led</span>
+      <div class="hero-actions">
+        <a href="<?= SITE_URL ?>/products.php" class="btn btn-hero-cta">Buy Our Products <span class="cta-dot"><?= icon('arrow-right', 15) ?></span></a>
+        <a href="<?= SITE_URL ?>/programs.php" class="btn btn-outline">Explore Our Services</a>
       </div>
     </div>
   </div>
