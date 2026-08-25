@@ -58,7 +58,7 @@ try {
   <aside class="sidebar" id="adminSidebar">
     <div class="brand">
       <img src="<?= asset_url($logo) ?>" alt="Logo">
-      <div><strong></strong><span>Content Dashboard</span></div>
+      <div><strong></strong><span></span></div>
     </div>
     <nav>
       <?php foreach ($navItems as $group): ?>
