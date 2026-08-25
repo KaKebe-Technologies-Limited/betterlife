@@ -43,7 +43,7 @@ $logo = setting($pdo, 'logo', 'assets/img/logo.png');
 <body>
 <div class="auth-wrap">
   <div class="auth-card">
-    <div class="logo"><img src="<?= asset_url($logo) ?>" alt="Logo"><strong>BetterLife Admin</strong></div>
+    <div class="logo"><img src="<?= asset_url($logo) ?>" alt="Logo"><strong></strong></div>
     <h1>Welcome back</h1>
     <p class="sub">Sign in to manage your site's content.</p>
     <?php if ($error): ?><div class="alert alert-error"><?= h($error) ?></div><?php endif; ?>
