@@ -1,0 +1,18 @@
+<?php
+/**
+ * Template for LIVE server database credentials.
+ *
+ * On your live server: copy this file to config.local.php (same folder)
+ * and fill in your real values. config.local.php itself is git-ignored on
+ * purpose so live secrets never enter version control — this .example
+ * file is the only one that gets committed.
+ *
+ * Locally on XAMPP you don't need this file at all — config.php already
+ * defaults to root / no password / database "betterlife" whenever it
+ * detects it's running on localhost.
+ */
+
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'your_live_db_name');
+define('DB_USER', 'your_live_db_user');
+define('DB_PASS', 'your_live_db_password');
