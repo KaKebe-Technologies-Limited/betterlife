@@ -33,11 +33,10 @@ $logo       = setting($pdo, 'logo', 'assets/img/logo.png');
     <nav class="main-nav" id="mainNav">
       <a href="<?= SITE_URL ?>/index.php" class="<?= $activePage === 'home' ? 'active' : '' ?>">Home</a>
       <a href="<?= SITE_URL ?>/about.php" class="<?= $activePage === 'about' ? 'active' : '' ?>">About Us</a>
-      <div class="nav-dropdown <?= in_array($activePage, ['programs', 'projects', 'impact']) ? 'active' : '' ?>">
+      <div class="nav-dropdown <?= in_array($activePage, ['programs', 'impact']) ? 'active' : '' ?>">
         <button type="button" class="nav-dropdown-toggle">Our Work <?= icon('chevron-down', 15) ?></button>
         <div class="nav-dropdown-menu">
-          <a href="<?= SITE_URL ?>/programs.php"><?= icon('leaf', 17) ?> Our Programs</a>
-          <a href="<?= SITE_URL ?>/projects.php"><?= icon('box', 17) ?> Projects</a>
+          <a href="<?= SITE_URL ?>/programs.php"><?= icon('leaf', 17) ?> Programs &amp; Projects</a>
           <a href="<?= SITE_URL ?>/impact-reports.php"><?= icon('trending-up', 17) ?> Impact &amp; Reports</a>
         </div>
       </div>

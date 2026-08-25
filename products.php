@@ -14,6 +14,15 @@ if ($category && in_array($category, $categories, true)) {
 }
 $products = $stmt->fetchAll();
 
+$farmGallery = [
+    ['img' => 'assets/img/betterlifeint-source/projects/project-agro-tourism-alt.jpeg', 'cap' => 'Solar-powered irrigation'],
+    ['img' => 'assets/img/betterlifeint-source/programs/program-photo-1.jpg', 'cap' => 'Refugees training on the farm'],
+    ['img' => 'assets/img/betterlifeint-source/programs/program-photo-2.jpg', 'cap' => 'Greenhouse farming'],
+    ['img' => 'assets/img/betterlifeint-source/programs/program-photo-3.jpg', 'cap' => 'Community beekeeping'],
+    ['img' => 'assets/img/betterlifeint-source/programs/program-photo-4.jpg', 'cap' => 'Livestock rearing'],
+    ['img' => 'assets/img/betterlifeint-source/programs/program-photo-5.jpg', 'cap' => 'Free seedlings for new gardens'],
+];
+
 require __DIR__ . '/includes/header.php';
 ?>
 
@@ -21,24 +30,35 @@ require __DIR__ . '/includes/header.php';
   <div class="container">
     <div class="crumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span>/</span>BetterLife Farm</div>
     <h1><?= h(setting($pdo, 'farm_title')) ?></h1>
-    <p style="max-width:640px;color:#e2f0e9;"><?= h(excerpt(setting($pdo, 'farm_text'), 260)) ?></p>
+    <p style="max-width:640px;color:#e2f0e9;font-style:italic;"><?= h(setting($pdo, 'farm_tagline', 'From immediate support to lasting independence')) ?></p>
   </div>
 </section>
 
 <section>
   <div class="container">
-    <div class="split" style="margin-bottom:70px;">
-      <div class="fade-up img-frame"><img src="<?= asset_url(setting($pdo,'farm_image')) ?>" alt="BetterLife Farm"></div>
+    <div class="split" style="margin-bottom:60px;">
+      <div class="fade-up img-frame"><img src="<?= asset_url(setting($pdo,'farm_image')) ?>" alt="BetterLife Agro Tourism Farm"></div>
       <div class="fade-up">
-        <span class="eyebrow">From Farm to Table</span>
-        <h2>Honest food, grown with purpose</h2>
+        <span class="eyebrow">Our Strategy: Food Security</span>
+        <h2><?= h(setting($pdo, 'farm_tagline', 'From immediate support to lasting independence')) ?></h2>
         <div class="muted"><?= nl2p(setting($pdo, 'farm_text')) ?></div>
       </div>
     </div>
 
     <div class="section-head center fade-up">
+      <span class="eyebrow" style="justify-content:center;">On The Farm</span>
+      <h2>Clean Energy, Real Livelihoods</h2>
+      <p class="muted">A glimpse of the people and practices behind BetterLife Agro Tourism Farm Ltd.</p>
+    </div>
+    <div class="impact-photos" style="margin-bottom:80px;">
+      <?php foreach ($farmGallery as $g): ?>
+        <div class="impact-photo fade-up"><img src="<?= asset_url($g['img']) ?>" alt="<?= h($g['cap']) ?>"><span class="cap"><?= h($g['cap']) ?></span></div>
+      <?php endforeach; ?>
+    </div>
+
+    <div class="section-head center fade-up">
       <span class="eyebrow" style="justify-content:center;">Our Products</span>
-      <h2>Pure Honey, Ghee &amp; Yoghurt — Made with Care</h2>
+      <h2>Pure Honey, Ghee &amp; Vanilla Yoghurt — Made with Care</h2>
       <p class="muted">Every purchase supports beekeeping, dairy farming and livelihoods training in the communities we serve.</p>
     </div>
 
@@ -84,8 +104,8 @@ require __DIR__ . '/includes/header.php';
   <div class="container">
     <div class="cta-banner fade-up" style="background:linear-gradient(120deg,var(--green-700),var(--blue-700));">
       <div>
-        <h3>Want to order in bulk or become a stockist?</h3>
-        <p>Reach out and our farm team will get back to you with pricing and availability.</p>
+        <h3>Want to order in bulk, become a stockist, or visit the farm?</h3>
+        <p>Reach out and our farm team will get back to you with pricing, availability and agro-tourism visits.</p>
       </div>
       <a href="<?= SITE_URL ?>/contact.php?subject=Farm+Product+Enquiry" class="btn btn-white">Enquire Now →</a>
     </div>

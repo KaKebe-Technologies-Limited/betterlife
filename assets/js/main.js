@@ -97,5 +97,39 @@ document.addEventListener('DOMContentLoaded', function () {
     reveals.forEach(function (el) { revealObserver.observe(el); });
   }
 
+  // Team/board member bio modal
+  var memberModal = document.getElementById('memberModal');
+  if (memberModal && window.__teamData) {
+    var openBioCard = function (card) {
+      var m = window.__teamData[card.getAttribute('data-member-id')];
+      if (!m) return;
+      document.getElementById('modalPhoto').src = m.photo;
+      document.getElementById('modalPhoto').alt = m.name;
+      document.getElementById('modalName').textContent = m.name;
+      document.getElementById('modalRole').textContent = m.role;
+      document.getElementById('modalBio').textContent = m.bio;
+      memberModal.classList.add('open');
+      memberModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+    var closeBioModal = function () {
+      memberModal.classList.remove('open');
+      memberModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    };
+    document.querySelectorAll('.js-open-bio').forEach(function (card) {
+      card.addEventListener('click', function () { openBioCard(card); });
+      card.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openBioCard(card); }
+      });
+    });
+    memberModal.querySelectorAll('[data-close-modal]').forEach(function (el) {
+      el.addEventListener('click', closeBioModal);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeBioModal();
+    });
+  }
+
   // Simple client-side validation feedback (native HTML5 required already handles most)
 });
