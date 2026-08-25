@@ -2,6 +2,7 @@
 require_once __DIR__ . '/includes/functions.php';
 $pageTitle = 'Contact Us';
 $activePage = 'contact';
+$pageDescription = 'Get in touch with BetterLife International — questions about our programs, partnership enquiries, or orders from BetterLife Farm.';
 $prefillSubject = $_GET['subject'] ?? '';
 $flash = flash_get();
 

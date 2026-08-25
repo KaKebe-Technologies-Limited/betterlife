@@ -17,6 +17,9 @@ if (!$product) {
 }
 
 $pageTitle = $product['name'];
+$pageDescription = excerpt($product['short_desc'] ?: $product['description'], 160);
+$pageImage = $product['image'];
+$ogType = 'product';
 
 $related = $pdo->prepare("SELECT * FROM products WHERE status = 1 AND category = ? AND id != ? ORDER BY sort_order LIMIT 3");
 $related->execute([$product['category'], $product['id']]);

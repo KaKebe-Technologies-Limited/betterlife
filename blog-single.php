@@ -19,6 +19,9 @@ if (!$post) {
 $pdo->prepare("UPDATE blog_posts SET views = views + 1 WHERE id = ?")->execute([$post['id']]);
 
 $pageTitle = $post['title'];
+$pageDescription = excerpt($post['excerpt'] ?: $post['content'], 160);
+$pageImage = $post['featured_image'];
+$ogType = 'article';
 
 $related = $pdo->prepare("SELECT * FROM blog_posts WHERE status = 'published' AND category_id <=> ? AND id != ? ORDER BY published_at DESC LIMIT 3");
 $related->execute([$post['category_id'], $post['id']]);

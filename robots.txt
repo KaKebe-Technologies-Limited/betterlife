@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /cart.php
+Disallow: /checkout.php
+Disallow: /order-confirmation.php
+Disallow: /order-callback.php
+Disallow: /order-ipn.php
+Disallow: /uploads/
+
+Sitemap: https://betterlifeint.org/sitemap.php

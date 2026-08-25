@@ -2,6 +2,7 @@
 require_once __DIR__ . '/includes/functions.php';
 $pageTitle = 'Home';
 $activePage = 'home';
+$pageDescription = 'BetterLife International is a youth-led, refugee-inspired NGO building sustainable livelihoods, green skills and climate resilience across Uganda, South Sudan, Tanzania, Ghana and the DRC — and the home of BetterLife Farm honey, ghee and dairy products.';
 
 $heroImages = [
     setting($pdo, 'hero_image_1', 'assets/img/hero-real-1.jpg'),

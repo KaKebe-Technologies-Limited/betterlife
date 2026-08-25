@@ -2,6 +2,7 @@
 require_once __DIR__ . '/includes/functions.php';
 $pageTitle = 'BetterLife Farm';
 $activePage = 'products';
+$pageDescription = 'BetterLife Agro Tourism Farm: clean-energy-powered honey, ghee, yoghurt and organic farm inputs, produced by refugees and smallholder farmers building lasting independence through food security.';
 
 $category = $_GET['category'] ?? '';
 $categories = $pdo->query("SELECT DISTINCT category FROM products WHERE status = 1 ORDER BY category")->fetchAll(PDO::FETCH_COLUMN);

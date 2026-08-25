@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     redirect(ADMIN_URL . '/products.php');
 }
 
-$categoryOptions = ['Honey', 'Ghee', 'Yoghurt', 'Dairy', 'Other'];
+$categoryOptions = ['Honey', 'Ghee', 'Yoghurt', 'Dairy', 'Farm Inputs', 'Other'];
 
 $editing = null;
 if (in_array($action, ['add', 'edit'], true)) {

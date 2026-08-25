@@ -2,6 +2,7 @@
 require_once __DIR__ . '/includes/functions.php';
 $pageTitle = 'Impact & Reports';
 $activePage = 'impact';
+$pageDescription = 'See BetterLife International\'s impact in numbers and stories, plus download our annual reports covering climate action, agriculture and community empowerment across Africa.';
 
 $stats = $pdo->query("SELECT * FROM stats WHERE status = 1 ORDER BY sort_order")->fetchAll();
 $stories = $pdo->query("SELECT * FROM impact_stories WHERE status = 1 ORDER BY sort_order")->fetchAll();

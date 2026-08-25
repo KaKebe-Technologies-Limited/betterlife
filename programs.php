@@ -2,6 +2,7 @@
 require_once __DIR__ . '/includes/functions.php';
 $pageTitle = 'Our Programs & Projects';
 $activePage = 'programs';
+$pageDescription = 'Explore BetterLife International\'s programs and on-the-ground projects: sustainable agriculture, climate education, nature-based solutions and livelihoods for refugees and displaced communities across Africa.';
 
 $programs = $pdo->query("SELECT * FROM programs WHERE status = 1 ORDER BY sort_order")->fetchAll();
 $projects = $pdo->query("SELECT * FROM projects WHERE status = 1 ORDER BY sort_order")->fetchAll();
@@ -59,7 +60,7 @@ require __DIR__ . '/includes/header.php';
       <h2>Our Projects</h2>
       <p class="muted">Real initiatives turning these programs into measurable results across five countries.</p>
     </div>
-    <div class="grid grid-3">
+    <div class="grid grid-4">
       <?php foreach ($projects as $p): ?>
         <div class="card project-card fade-up">
           <div class="thumb"><img src="<?= asset_url($p['image']) ?>" alt="<?= h($p['title']) ?>"></div>

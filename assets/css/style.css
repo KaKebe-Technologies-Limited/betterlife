@@ -209,7 +209,7 @@ section { padding: 76px 0; }
   padding: 130px 0 70px; color: #fff;
 }
 .hero-full-copy { position: relative; z-index: 2; }
-.hero-text { max-width: 640px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; }
+.hero-text { max-width: 780px; margin: 0 auto; text-align: center; display: flex; flex-direction: column; align-items: center; }
 
 .hero-badge {
   display: inline-flex; align-items: center; gap: 9px;
@@ -218,8 +218,8 @@ section { padding: 76px 0; }
   margin-bottom: 20px; backdrop-filter: blur(6px);
 }
 .hero-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green-400); }
-.hero-text h1 { color: #fff; font-size: clamp(30px, 4.4vw, 50px); margin-bottom: 16px; letter-spacing: -.01em; text-shadow: 0 2px 20px rgba(0,0,0,.35); }
-.hero-text p.lead { font-size: 16px; color: #e6efe9; max-width: 520px; margin-bottom: 24px; }
+.hero-text h1 { color: #fff; font-size: clamp(32px, 4.8vw, 56px); margin-bottom: 18px; letter-spacing: -.01em; text-shadow: 0 2px 20px rgba(0,0,0,.35); }
+.hero-text p.lead { font-size: 17px; color: #e6efe9; max-width: 640px; margin-bottom: 24px; }
 
 .feature-pills { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 28px; justify-content: center; }
 .pill {

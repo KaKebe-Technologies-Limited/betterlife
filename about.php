@@ -2,6 +2,7 @@
 require_once __DIR__ . '/includes/functions.php';
 $pageTitle = 'About Us';
 $activePage = 'about';
+$pageDescription = 'Founded in 2021 by young leaders and refugees, BetterLife International is a youth-led NGO working across Uganda, South Sudan, Tanzania, Ghana and the DRC. Meet our story, mission, values and leadership team.';
 
 $leadership = $pdo->query("SELECT * FROM team_members WHERE status = 1 AND category = 'leadership' ORDER BY sort_order LIMIT 6")->fetchAll();
 $values = [

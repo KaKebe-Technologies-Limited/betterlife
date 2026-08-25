@@ -2,6 +2,7 @@
 require_once __DIR__ . '/includes/functions.php';
 $pageTitle = 'Blog';
 $activePage = 'blog';
+$pageDescription = 'News, stories and analysis from BetterLife International on climate change, sustainable agriculture and community empowerment across Sub-Saharan Africa.';
 
 $categorySlug = $_GET['category'] ?? '';
 $search = trim($_GET['q'] ?? '');

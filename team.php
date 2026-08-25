@@ -2,6 +2,7 @@
 require_once __DIR__ . '/includes/functions.php';
 $pageTitle = 'Our Team';
 $activePage = 'team';
+$pageDescription = 'Meet the leadership, country teams and board of directors behind BetterLife International — a youth-led organisation working across five African countries.';
 
 $all = $pdo->query("SELECT * FROM team_members WHERE status = 1 ORDER BY sort_order")->fetchAll();
 $leadership = array_filter($all, fn($m) => $m['category'] === 'leadership');
