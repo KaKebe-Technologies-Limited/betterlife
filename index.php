@@ -30,7 +30,7 @@ require __DIR__ . '/includes/header.php';
 <section class="hero-full" id="top">
   <div class="hero-scroll-panel">
     <div class="scroll-track">
-      <?php foreach (array_chunk($heroImages, 3) as $ri => $rowImages): ?>
+      <?php foreach (array_chunk($heroImages, 4) as $ri => $rowImages): ?>
         <div class="scroll-row <?= $ri % 2 === 0 ? 'dir-left' : 'dir-right' ?>">
           <?php foreach (array_merge($rowImages, $rowImages) as $ii => $img): ?>
             <div class="scroll-tile <?= $ii % 2 === 0 ? 'tint-green' : 'tint-blue' ?>">
