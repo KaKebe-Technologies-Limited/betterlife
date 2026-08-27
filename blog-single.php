@@ -11,7 +11,7 @@ if (!$post) {
     http_response_code(404);
     $pageTitle = 'Article Not Found';
     require __DIR__ . '/includes/header.php';
-    echo '<section class="container-narrow" style="padding:100px 24px;text-align:center;"><h1>Article Not Found</h1><p class="muted">This story may have been removed.</p><a href="' . SITE_URL . '/blog.php" class="btn btn-primary">Back to Blog</a></section>';
+    echo '<section class="container-narrow" style="padding:100px 24px;text-align:center;"><h1>Article Not Found</h1><p class="muted">This story may have been removed.</p><a href="' . SITE_URL . '/blog.php" class="btn btn-primary">Back to Stories</a></section>';
     require __DIR__ . '/includes/footer.php';
     exit;
 }
@@ -40,7 +40,7 @@ require __DIR__ . '/includes/header.php';
 
 <section class="page-header">
   <div class="container">
-    <div class="crumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span>/</span><a href="<?= SITE_URL ?>/blog.php">Blog</a><span>/</span><?= h(excerpt($post['title'], 40)) ?></div>
+    <div class="crumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span>/</span><a href="<?= SITE_URL ?>/blog.php">Stories</a><span>/</span><?= h(excerpt($post['title'], 40)) ?></div>
   </div>
 </section>
 

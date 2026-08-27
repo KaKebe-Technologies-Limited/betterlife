@@ -2,12 +2,24 @@
 require_once __DIR__ . '/includes/functions.php';
 $pageTitle = 'Impact & Reports';
 $activePage = 'impact';
-$pageDescription = 'See BetterLife International\'s impact in numbers and stories, plus download our annual reports covering climate action, agriculture and community empowerment across Africa.';
+$pageDescription = 'BetterLife tracks whether people are using what they learnt, whether families are growing more food, whether incomes are becoming more stable and whether communities are better placed to face the next shock.';
 
 $stats = $pdo->query("SELECT * FROM stats WHERE status = 1 ORDER BY sort_order")->fetchAll();
-$stories = $pdo->query("SELECT * FROM impact_stories WHERE status = 1 ORDER BY sort_order")->fetchAll();
 $reports = $pdo->query("SELECT * FROM reports WHERE status = 1 ORDER BY sort_order")->fetchAll();
 $logo = setting($pdo, 'logo', 'assets/img/logo.png');
+
+$changeLooksLike = [
+  'Impact is a woman harvesting vegetables from a sack garden beside her home instead of buying everything at the market.',
+  'It is a young refugee starting a poultry business and trading with the host community.',
+  'It is a farmer checking market information before deciding where to sell.',
+  'It is a child using a computer or opening a climate book for the first time.',
+  'It is a household cooking with biogas instead of spending hours looking for firewood.',
+];
+$selectedResults = [
+  ['Women&rsquo;s Climate Resilience in Yumbe', 'Knowledge of climate-smart agriculture among the structured training cohort rose from 22 per cent to 92 per cent. Women adopted sack and box gardening, composting, mulching and drought-tolerant crops, while participating households reported lower spending on vegetables.', 'Read the Yumbe Case Study'],
+  ['SMILES', 'Seventy-eight per cent of participants moved into sustainable income pathways, 85 per cent reported stronger refugee-host relationships and food insecurity in target groups fell by 40 per cent.', 'Read the SMILES Case Study'],
+  ['Green Libraries and Eco Labs', 'More than 4,500 learners have taken part in climate education, practical environmental action, debate and digital learning through BetterLife-supported schools and learning spaces.', 'Read the Education Case Study'],
+];
 
 require __DIR__ . '/includes/header.php';
 ?>
@@ -15,13 +27,24 @@ require __DIR__ . '/includes/header.php';
 <section class="page-header">
   <div class="container">
     <div class="crumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span>/</span>Our Work<span>/</span>Impact &amp; Reports</div>
-    <h1>Our Impact</h1>
-    <p style="max-width:640px;color:#e2f0e9;">Since 2021, we've empowered women, trained farmers, and promoted biogas, organic farming, climate education, tree-planting and zero-waste projects to foster sustainability and community development.</p>
+    <h1>We ask what changed, not only what was delivered.</h1>
+    <p style="max-width:660px;color:#e2f0e9;">What Happens After the Training Ends?</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="prose-narrow fade-up">
+      <p>BetterLife tracks whether people are using what they learnt, whether families are growing more food, whether incomes are becoming more stable and whether communities are better placed to face the next shock.</p>
+    </div>
   </div>
 </section>
 
 <section class="section-cream">
   <div class="container">
+    <div class="section-head fade-up">
+      <span class="eyebrow">Our Reach</span>
+    </div>
     <div class="impact-stats">
       <?php foreach ($stats as $s): ?>
         <div class="stat-item fade-up">
@@ -33,59 +56,58 @@ require __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<?php if ($stories): ?>
 <section>
   <div class="container">
-    <div class="section-head center fade-up">
-      <span class="eyebrow" style="justify-content:center;">Stories From the Ground</span>
-      <h2>Impact, Told by the People Living It</h2>
+    <div class="section-head fade-up">
+      <span class="eyebrow">What Change Looks Like</span>
     </div>
-    <div class="grid grid-3">
-      <?php foreach ($stories as $s): ?>
-        <div class="impact-photo fade-up" style="aspect-ratio:4/3.4;">
-          <img src="<?= asset_url($s['image']) ?>" alt="<?= h($s['title']) ?>">
-          <span class="cap"><?= h($s['title']) ?></span>
-        </div>
+    <div class="prose-narrow fade-up">
+      <?php foreach ($changeLooksLike as $line): ?>
+        <p><?= $line ?></p>
       <?php endforeach; ?>
+      <p>These changes may begin with one activity. Their value lies in what becomes possible afterwards.</p>
     </div>
   </div>
 </section>
-<?php endif; ?>
 
-<?php if ($reports): ?>
 <section class="section-cream">
   <div class="container">
-    <div class="section-head center fade-up">
-      <span class="eyebrow" style="justify-content:center;">Our Annual Reports</span>
-      <h2>Read the Full Story, Year by Year</h2>
+    <div class="section-head fade-up">
+      <span class="eyebrow">Selected Results</span>
     </div>
     <div class="grid grid-3">
-      <?php foreach ($reports as $r): ?>
-        <div class="card report-card fade-up">
-          <div class="report-icon"><?= icon('file-text', 26) ?></div>
-          <img src="<?= asset_url($logo) ?>" alt="<?= h(setting($pdo,'site_name')) ?>" class="report-logo">
-          <h3><?= h($r['title']) ?></h3>
-          <span class="cat-badge"><?= h($r['year']) ?></span>
-          <a href="<?= h($r['file_url']) ?>" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="margin-top:16px;">Download PDF <?= icon('arrow-right', 15) ?></a>
+      <?php foreach ($selectedResults as $r): ?>
+        <div class="card value-card fade-up">
+          <h4><?= $r[0] ?></h4>
+          <p><?= h($r[1]) ?></p>
+          <a href="<?= SITE_URL ?>/blog.php" class="readmore"><?= h($r[2]) ?></a>
         </div>
       <?php endforeach; ?>
     </div>
   </div>
 </section>
-<?php endif; ?>
 
 <section>
   <div class="container">
-    <div class="cta-banner fade-up">
-      <div>
-        <h3>Explore the programs and projects behind these numbers</h3>
-        <p>See exactly where and how this impact is created.</p>
-      </div>
-      <div style="display:flex;gap:12px;flex-wrap:wrap;">
-        <a href="<?= SITE_URL ?>/programs.php" class="btn btn-white">Our Programs</a>
-        <a href="<?= SITE_URL ?>/projects.php" class="btn btn-outline">Our Projects</a>
-      </div>
+    <div class="section-head fade-up">
+      <span class="eyebrow">Reports and Accountability</span>
     </div>
+    <div class="prose-narrow fade-up">
+      <p>We publish reports so that communities, partners and the public can see what we did, what changed and where we still need to improve.</p>
+    </div>
+    <?php if ($reports): ?>
+      <div class="grid grid-3" style="margin-top:34px;">
+        <?php foreach ($reports as $r): ?>
+          <div class="card report-card fade-up">
+            <div class="report-icon"><?= icon('file-text', 26) ?></div>
+            <img src="<?= asset_url($logo) ?>" alt="<?= h(setting($pdo,'site_name')) ?>" class="report-logo">
+            <h3><?= h($r['title']) ?></h3>
+            <span class="cat-badge"><?= h($r['year']) ?></span>
+            <a href="<?= h($r['file_url']) ?>" target="_blank" rel="noopener" class="btn btn-primary btn-sm" style="margin-top:16px;">Download PDF <?= icon('arrow-right', 15) ?></a>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    <?php endif; ?>
   </div>
 </section>
 

@@ -637,6 +637,39 @@ textarea.form-control { resize: vertical; min-height: 130px; }
 .fade-up { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
 .fade-up.in { opacity: 1; transform: translateY(0); }
 
+/* Partner name chips (Home + About) */
+.partner-names { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; max-width: 860px; margin: 0 auto; }
+.partner-names li {
+  list-style: none; background: #fff; border: 1.5px solid var(--border); border-radius: 999px;
+  padding: 12px 22px; font-weight: 700; font-size: 14px; color: var(--green-800); box-shadow: var(--shadow);
+}
+
+/* Simple two-column definition rows (Our Model, Who We Work With, On the Farm) */
+.detail-list { display: grid; gap: 4px; margin-top: 10px; }
+.detail-block { padding: 18px 0; border-bottom: 1px solid var(--border); }
+.detail-block:last-child { border-bottom: none; }
+.detail-block h4 { font-size: 16px; margin-bottom: 6px; color: var(--green-800); }
+.detail-block p { font-size: 14px; color: var(--ink-soft); margin: 0; }
+.detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px 40px; }
+@media (max-width: 720px) { .detail-grid { grid-template-columns: 1fr; } }
+
+.prose-narrow { max-width: 760px; }
+.prose-narrow p { color: var(--ink-soft); margin-bottom: 14px; }
+
+/* Long-form sub-programme blocks (Our Work) */
+.workblock-list { margin-top: 34px; display: grid; gap: 26px; }
+.workblock {
+  max-width: 820px; background: #fff; border: 1.5px solid var(--border);
+  border-radius: var(--radius-lg); padding: clamp(24px, 4vw, 40px); box-shadow: var(--shadow);
+}
+.workblock h3 { font-size: 21px; margin-bottom: 6px; color: var(--green-800); }
+.workblock .workblock-note {
+  color: var(--blue-600); font-weight: 700; font-size: 13px; text-transform: uppercase;
+  letter-spacing: .04em; margin-bottom: 14px;
+}
+.workblock p { font-size: 14.5px; color: var(--ink-soft); margin-bottom: 12px; }
+.workblock .btn { margin-top: 6px; }
+
 .empty-state { text-align: center; padding: 60px 20px; color: var(--ink-soft); }
 .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 20px; }
 .pagination a, .pagination span { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 10px; border: 1.5px solid var(--border); font-weight: 700; font-size: 14px; }

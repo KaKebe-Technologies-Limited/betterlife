@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (($_POST['form'] ?? '') === 'payments') {
         $stmtUpsert = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
         $stmtUpsert->execute(['admin_alert_email', trim($_POST['admin_alert_email'] ?? '')]);
+        $stmtUpsert->execute(['admin_alert_cc', trim($_POST['admin_alert_cc'] ?? '')]);
         $stmtUpsert->execute(['smtp_host', trim($_POST['smtp_host'] ?? '')]);
         $stmtUpsert->execute(['smtp_port', trim($_POST['smtp_port'] ?? '587')]);
         $stmtUpsert->execute(['smtp_username', trim($_POST['smtp_username'] ?? '')]);
@@ -197,6 +198,7 @@ $v = fn($k) => h(setting($pdo, $k));
       <h4 style="margin-bottom:14px;">Order Alerts</h4>
       <div class="form-grid">
         <div class="form-group"><label>Admin Alert Email</label><input type="email" name="admin_alert_email" class="form-control" value="<?= $v('admin_alert_email') ?>"><p class="hint">Receives an email every time a customer places or pays for an order.</p></div>
+        <div class="form-group"><label>Copy (CC) Alerts To</label><input type="text" name="admin_alert_cc" class="form-control" value="<?= $v('admin_alert_cc') ?>"><p class="hint">Optional. One or more emails, comma-separated — each gets a copy of every order alert.</p></div>
       </div>
 
       <h4 style="margin:22px 0 14px;">Outgoing Email (SMTP)</h4>

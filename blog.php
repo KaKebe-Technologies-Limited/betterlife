@@ -51,9 +51,24 @@ function qs(array $overrides = []) {
 
 <section class="page-header">
   <div class="container">
-    <div class="crumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span>/</span>Blog</div>
-    <h1>Stories, Insights &amp; Impact</h1>
-    <p style="max-width:640px;color:#e2f0e9;">News and analysis from our work across climate, agriculture and community empowerment in Sub-Saharan Africa.</p>
+    <div class="crumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span>/</span>Stories</div>
+    <h1>From the field, in our own words.</h1>
+    <p style="max-width:640px;color:#e2f0e9;">What We Are Seeing, Learning and Changing.</p>
+  </div>
+</section>
+
+<section style="padding-bottom:0;">
+  <div class="container">
+    <div class="prose-narrow fade-up">
+      <p>This is where we share the people behind the numbers, the lessons shaping our programmes and the questions we are still working through.</p>
+    </div>
+    <div class="detail-grid fade-up" style="margin-top:24px;">
+      <div class="detail-block"><h4>From the Field</h4><p>Stories from farmers, women, young people, refugees and community facilitators.</p></div>
+      <div class="detail-block"><h4>Climate and Food</h4><p>Lessons on agriculture, energy, water and adaptation.</p></div>
+      <div class="detail-block"><h4>Work and Enterprise</h4><p>Stories about skills, income, finance and markets.</p></div>
+      <div class="detail-block"><h4>Young People and Ideas</h4><p>Climate education, leadership, digital access and innovation.</p></div>
+      <div class="detail-block"><h4>Partnerships and News</h4><p>New programmes, collaborations, reports and organisational updates.</p></div>
+    </div>
   </div>
 </section>
 

@@ -8,6 +8,7 @@ $all = $pdo->query("SELECT * FROM team_members WHERE status = 1 ORDER BY sort_or
 $leadership = array_filter($all, fn($m) => $m['category'] === 'leadership');
 $staff      = array_filter($all, fn($m) => $m['category'] === 'staff');
 $board      = array_filter($all, fn($m) => $m['category'] === 'board');
+$volunteers = array_filter($all, fn($m) => $m['category'] === 'volunteer');
 
 function avatar_src(array $m): string {
     return $m['photo'] ? asset_url($m['photo']) : 'https://ui-avatars.com/api/?name=' . urlencode($m['name']) . '&background=16593f&color=fff&size=240';
@@ -29,8 +30,17 @@ require __DIR__ . '/includes/header.php';
 <section class="page-header">
   <div class="container">
     <div class="crumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span>/</span>Our Team</div>
-    <h1>The People Behind BetterLife</h1>
-    <p style="max-width:640px;color:#e2f0e9;">A dedicated multidisciplinary team committed to empowering individuals and communities through innovative solutions. Tap anyone below to read their full bio.</p>
+    <h1>People who know the work and the places where it happens.</h1>
+    <p style="max-width:640px;color:#e2f0e9;">The Team Behind BetterLife.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="prose-narrow fade-up">
+      <p>BetterLife is led by an African team working across community development, agriculture, law, climate action, finance, monitoring, communications and youth leadership.</p>
+      <p>Our country and programme teams bring professional knowledge together with a close understanding of the communities where we work. Our board provides oversight, experience and accountability as the organisation grows.</p>
+    </div>
   </div>
 </section>
 
@@ -38,8 +48,8 @@ require __DIR__ . '/includes/header.php';
 <section>
   <div class="container">
     <div class="section-head center fade-up">
-      <span class="eyebrow" style="justify-content:center;">Leadership</span>
-      <h2>Meet Our Leadership Team</h2>
+      <span class="eyebrow" style="justify-content:center;">Executive Leadership</span>
+      <h2>Executive Leadership</h2>
     </div>
     <div class="grid grid-3">
       <?php foreach ($leadership as $m): ?>
@@ -60,8 +70,8 @@ require __DIR__ . '/includes/header.php';
 <section class="section-cream">
   <div class="container">
     <div class="section-head center fade-up">
-      <span class="eyebrow" style="justify-content:center;">Our Staff</span>
-      <h2>Country &amp; Programme Teams</h2>
+      <span class="eyebrow" style="justify-content:center;">Country and Programme Teams</span>
+      <h2>Country and Programme Teams</h2>
     </div>
     <div class="grid grid-4">
       <?php foreach ($staff as $m): ?>
@@ -81,9 +91,8 @@ require __DIR__ . '/includes/header.php';
 <section id="board">
   <div class="container">
     <div class="section-head center fade-up">
-      <span class="eyebrow" style="justify-content:center;">Governance</span>
-      <h2>Meet the Board of Directors</h2>
-      <p class="muted">Leaders and advisors who guide our strategy and hold us accountable to our mission.</p>
+      <span class="eyebrow" style="justify-content:center;">Board of Directors</span>
+      <h2>Board of Directors</h2>
     </div>
     <div class="grid grid-2">
       <?php foreach ($board as $m): ?>
@@ -102,6 +111,27 @@ require __DIR__ . '/includes/header.php';
 </section>
 <?php endif; ?>
 
+<?php if ($volunteers): ?>
+<section class="section-cream">
+  <div class="container">
+    <div class="section-head center fade-up">
+      <span class="eyebrow" style="justify-content:center;">Volunteers and Community Champions</span>
+      <h2>Volunteers and Community Champions</h2>
+    </div>
+    <div class="grid grid-4">
+      <?php foreach ($volunteers as $m): ?>
+        <div class="card team-card fade-up js-open-bio" data-member-id="<?= $m['id'] ?>" role="button" tabindex="0">
+          <div class="avatar"><img src="<?= avatar_src($m) ?>" alt="<?= h($m['name']) ?>"></div>
+          <h4><?= h($m['name']) ?></h4>
+          <div class="role"><?= h($m['role']) ?></div>
+          <span class="read-bio-link"><?= icon('file-text', 14) ?> Read full bio</span>
+        </div>
+      <?php endforeach; ?>
+    </div>
+  </div>
+</section>
+<?php endif; ?>
+
 <section>
   <div class="container">
     <div class="cta-banner fade-up">
@@ -109,7 +139,7 @@ require __DIR__ . '/includes/header.php';
         <h3>Want to join the BetterLife team?</h3>
         <p>We're always looking for passionate people to work with us.</p>
       </div>
-      <a href="<?= SITE_URL ?>/contact.php?subject=Careers" class="btn btn-white">Get In Touch →</a>
+      <a href="<?= SITE_URL ?>/contact.php?subject=Careers" class="btn btn-white">Get In Touch</a>
     </div>
   </div>
 </section>

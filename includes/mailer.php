@@ -16,7 +16,7 @@ use PHPMailer\PHPMailer\Exception as PHPMailerException;
  * Low-level sender. Returns true/false; never throws (logs instead) so a
  * failed email never breaks the checkout/order flow.
  */
-function send_email(PDO $pdo, string $toEmail, string $toName, string $subject, string $htmlBody): bool
+function send_email(PDO $pdo, string $toEmail, string $toName, string $subject, string $htmlBody, array $cc = []): bool
 {
     $host = setting($pdo, 'smtp_host');
     $user = setting($pdo, 'smtp_username');
@@ -41,6 +41,12 @@ function send_email(PDO $pdo, string $toEmail, string $toName, string $subject, 
 
         $mail->setFrom($user, $fromName);
         $mail->addAddress($toEmail, $toName);
+        foreach ($cc as $ccEmail) {
+            $ccEmail = trim($ccEmail);
+            if ($ccEmail !== '' && filter_var($ccEmail, FILTER_VALIDATE_EMAIL) && strcasecmp($ccEmail, $toEmail) !== 0) {
+                $mail->addCC($ccEmail);
+            }
+        }
         $mail->isHTML(true);
         $mail->Subject = $subject;
         $mail->Body = $htmlBody;
@@ -118,6 +124,7 @@ function send_order_confirmation_to_customer(PDO $pdo, array $order, array $item
 function send_order_alert_to_admin(PDO $pdo, array $order, array $items): bool
 {
     $adminEmail = setting($pdo, 'admin_alert_email', 'ot.sedrick@gmail.com');
+    $adminCc = array_filter(array_map('trim', explode(',', setting($pdo, 'admin_alert_cc'))));
     $body = '
       <p style="font-size:14px;color:#2c3a32;">A new order has been placed on BetterLife Farm.</p>
       <p style="font-size:14px;">
@@ -132,7 +139,7 @@ function send_order_alert_to_admin(PDO $pdo, array $order, array $items): bool
       <p style="font-size:15px;font-weight:bold;text-align:right;">Total: ' . h($order['currency']) . ' ' . number_format((float) $order['total_amount']) . '</p>
       <p style="font-size:13px;color:#6b7972;">Status: ' . h(ucfirst($order['status'])) . ' — view full details in the admin dashboard under Orders.</p>';
 
-    return send_email($pdo, $adminEmail, 'BetterLife Admin', 'New order: ' . $order['order_ref'] . ' — ' . h($order['customer_name']), email_wrap($pdo, 'New Order Alert', $body));
+    return send_email($pdo, $adminEmail, 'BetterLife Admin', 'New order: ' . $order['order_ref'] . ' — ' . h($order['customer_name']), email_wrap($pdo, 'New Order Alert', $body), $adminCc);
 }
 
 function send_receipt_to_customer(PDO $pdo, array $order, array $items): bool

@@ -77,13 +77,13 @@ $ogType          = $ogType ?? 'website';
       <div class="nav-dropdown <?= in_array($activePage, ['programs', 'impact']) ? 'active' : '' ?>">
         <button type="button" class="nav-dropdown-toggle">Our Work <?= icon('chevron-down', 15) ?></button>
         <div class="nav-dropdown-menu">
-          <a href="<?= SITE_URL ?>/programs.php"><?= icon('leaf', 17) ?> Programs &amp; Projects</a>
+          <a href="<?= SITE_URL ?>/programs.php"><?= icon('leaf', 17) ?> Our Work</a>
           <a href="<?= SITE_URL ?>/impact-reports.php"><?= icon('trending-up', 17) ?> Impact &amp; Reports</a>
         </div>
       </div>
-      <a href="<?= SITE_URL ?>/products.php" class="<?= $activePage === 'products' ? 'active' : '' ?>">BetterLife Farm</a>
+      <a href="<?= SITE_URL ?>/farm.php" class="<?= in_array($activePage, ['farm', 'products']) ? 'active' : '' ?>">BetterLife Farm</a>
       <a href="<?= SITE_URL ?>/team.php" class="<?= $activePage === 'team' ? 'active' : '' ?>">Our Team</a>
-      <a href="<?= SITE_URL ?>/blog.php" class="<?= $activePage === 'blog' ? 'active' : '' ?>">Blog</a>
+      <a href="<?= SITE_URL ?>/blog.php" class="<?= $activePage === 'blog' ? 'active' : '' ?>">Stories</a>
       <a href="<?= SITE_URL ?>/contact.php" class="<?= $activePage === 'contact' ? 'active' : '' ?>">Contact</a>
     </nav>
 

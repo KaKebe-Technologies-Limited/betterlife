@@ -24,10 +24,11 @@ $footerPrograms = $pdo->query("SELECT title, slug FROM programs WHERE status = 1
         <h4>Quick Links</h4>
         <ul class="footer-links">
           <li><a href="<?= SITE_URL ?>/about.php">About Us</a></li>
-          <li><a href="<?= SITE_URL ?>/programs.php">Our Programs</a></li>
-          <li><a href="<?= SITE_URL ?>/products.php">BetterLife Farm</a></li>
+          <li><a href="<?= SITE_URL ?>/programs.php">Our Work</a></li>
+          <li><a href="<?= SITE_URL ?>/impact-reports.php">Impact &amp; Reports</a></li>
+          <li><a href="<?= SITE_URL ?>/farm.php">BetterLife Farm</a></li>
           <li><a href="<?= SITE_URL ?>/team.php">Our Team</a></li>
-          <li><a href="<?= SITE_URL ?>/blog.php">Blog</a></li>
+          <li><a href="<?= SITE_URL ?>/blog.php">Stories</a></li>
           <li><a href="<?= SITE_URL ?>/contact.php">Contact</a></li>
         </ul>
       </div>

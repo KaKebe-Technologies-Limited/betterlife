@@ -9,6 +9,7 @@ $staticPages = [
     ['url' => '/about.php', 'priority' => '0.8', 'freq' => 'monthly'],
     ['url' => '/programs.php', 'priority' => '0.8', 'freq' => 'monthly'],
     ['url' => '/impact-reports.php', 'priority' => '0.7', 'freq' => 'monthly'],
+    ['url' => '/farm.php', 'priority' => '0.8', 'freq' => 'monthly'],
     ['url' => '/products.php', 'priority' => '0.9', 'freq' => 'weekly'],
     ['url' => '/team.php', 'priority' => '0.6', 'freq' => 'monthly'],
     ['url' => '/blog.php', 'priority' => '0.8', 'freq' => 'daily'],

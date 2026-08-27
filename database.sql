@@ -33,8 +33,9 @@ INSERT INTO settings (setting_key, setting_value) VALUES
 ('site_name', 'BetterLife International'),
 ('tagline', 'Sustainable Livelihoods. Green Skills. Lasting Hope.'),
 ('logo', 'assets/img/logo.png'),
-('hero_title', 'Growing a Better Life, Rooted in Community'),
-('hero_subtitle', 'We work with children, youth, refugees and displaced communities across Uganda, South Sudan, Tanzania, Ghana and the DRC to build sustainable livelihoods, green skills and lasting hope — from climate-smart farms to the honey, ghee and yoghurt they produce.'),
+('hero_kicker', 'Founded in Uganda. Working across five African countries.'),
+('hero_title', 'Led by people who understand what it means to begin again.'),
+('hero_subtitle', 'BetterLife works with women, young people, refugees, displaced families and farming communities to turn climate pressure into practical action: food people can grow, skills they can earn from, cleaner energy and stronger routes to market.'),
 ('hero_image', 'assets/img/hero-real-1.jpg'),
 ('hero_image_1', 'assets/img/hero-real-1.jpg'),
 ('hero_image_2', 'assets/img/farm-field-1.jpg'),
@@ -50,16 +51,16 @@ INSERT INTO settings (setting_key, setting_value) VALUES
 ('hero_image_12', 'assets/img/betterlifeint-source/impact-reports/impact-photo-1.jpeg'),
 ('founded_year', '2021'),
 ('about_who_title', 'Who We Are'),
-('about_who_text', 'BetterLife International was founded in 2021 by a group of young leaders and refugees who shared a vision: a world where every person, regardless of their background, can live with dignity, opportunity and hope. Born out of lived experiences of displacement, marginalization and resilience, our organization is youth-led and refugee-inspired, driven by the belief that those who have faced adversity have the greatest insights and solutions for creating lasting change.\n\nWe work hand-in-hand with children, youth, refugees, and internally displaced persons across Uganda, South Sudan, Tanzania, Ghana, and the Democratic Republic of Congo, designing programs that empower communities, build livelihoods, and strengthen resilience. Our interventions focus on sustainable agriculture, green skills, climate education, renewable energy, community health, and social cohesion, ensuring that those most vulnerable have the tools to thrive.\n\nAt BetterLife International, our approach is rooted in the voices of the communities we serve. Every program is shaped by local needs, co-created with young people, and strengthened by the resilience, courage, and creativity of those who refuse to give up despite life''s challenges. We believe that hope is not given, it is built — and that together, communities can transform adversity into opportunity.'),
-('mission_text', 'To create a better life for everyone by promoting sustainable practices, empowering young people, supporting vulnerable groups, and fostering peace and equality in communities.'),
-('vision_text', 'We envision a world where every person, regardless of their background, has the opportunity to live a fulfilling and sustainable life.'),
+('about_who_text', 'Denise Ayebare founded BetterLife International in Uganda in 2021. She was nineteen, and the organisation began with USD 200 and a small group of young people who were tired of watching communities receive short-term help while the conditions keeping them vulnerable remained unchanged.\n\nThey had seen farmers lose a season and start again with nothing. They had seen women carry the weight of food, water and household survival without access to finance or decision-making. They had seen young people complete training and still have no tools, customers or way into work. They had also seen how much knowledge already existed inside communities, often overlooked by programmes designed from far away.\n\nBetterLife was created to work differently.\n\nWhat began as a small youth-led initiative in Uganda now works across Uganda, South Sudan, Tanzania, Ghana and the Democratic Republic of Congo. The organisation brings together climate-resilient agriculture, livelihoods, clean energy, water, restoration, education, technology and market access.\n\nThe work has grown, but the starting point has remained the same: people closest to a problem must have a real hand in defining it, designing the response and deciding what success looks like.'),
+('mission_text', 'To work with communities to build the food systems, livelihoods, knowledge and local institutions they need to live with greater security and dignity in a changing climate.'),
+('vision_text', 'Communities with the power, resources and opportunity to shape their own future.'),
 ('about_image', 'assets/img/about-real-1.jpg'),
 ('farm_title', 'BetterLife Agro Tourism Farm'),
 ('farm_tagline', 'From immediate support to lasting independence'),
-('farm_text', 'BetterLife Agro Tourism Farm is a clean-energy-powered social enterprise where our humanitarian support, climate-smart agriculture and market-access work come together. Solar energy powers the farm''s irrigation, water pumping and key production activities, reducing dependence on fossil fuels while demonstrating that agriculture can be both productive and environmentally responsible.\n\nThe farm supports refugees, women and vulnerable households to move from emergency assistance towards producing their own food and earning stable incomes. Refugees who are able to participate contribute up to two hours of their time at the farm while rebuilding their livelihoods. In return, they receive practical agricultural training, food support, free seedlings and other starter inputs to establish gardens of their own. This flexible, temporary arrangement allows participants to contribute with dignity while retaining time to care for their families, study, seek employment or develop other sources of income. As they become stable, they can transition into independent producers and suppliers to BetterLife.\n\nThe farm demonstrates solar-powered irrigation, greenhouse farming, beekeeping, livestock rearing and sustainable food production. Produce from the farm and farmers trained by BetterLife International is processed and marketed through BetterLife Agro Tourism Farm Ltd as products such as BetterLife Honey, Ghee and Vanilla Yoghurt — connecting training and production to packaging, customers and real household income.\n\nIt also serves as a practical learning and agro-tourism space where schools, farmers, partners and visitors can experience how clean energy, agriculture and local enterprise can work together to address hunger, unemployment and climate vulnerability.'),
+('farm_text', 'BetterLife Agro Tourism Farm is where our work in agriculture, clean energy and livelihoods meets production and sales.\n\nThe farm demonstrates solar-powered irrigation, greenhouse farming, dairy production, beekeeping and livestock rearing. It also creates a route for farmers trained by BetterLife International to supply produce for processing and sale through BetterLife Agro Tourism Farm Ltd.\n\nOur products include BetterLife Honey, Ghee and Vanilla Yoghurt. Each one is part of a wider value chain connecting knowledge, production and household income.'),
 ('farm_image', 'assets/img/farm-field-1.jpg'),
 ('address', 'Rukungiri, Uganda'),
-('phone', '+256 700 000 000'),
+('phone', '+256 770 933 286'),
 ('email', 'info@betterlifeint.org'),
 ('shop_email', 'farm@betterlifeint.org'),
 ('facebook', 'https://facebook.com/betterlifeintl'),
@@ -67,11 +68,12 @@ INSERT INTO settings (setting_key, setting_value) VALUES
 ('instagram', 'https://instagram.com/betterlifeintl'),
 ('linkedin', 'https://linkedin.com/company/betterlifeintl'),
 ('youtube', 'https://youtube.com/@betterlifeintl'),
-('footer_about', 'BetterLife International is a youth-led, refugee-inspired organization creating sustainable livelihoods, green skills and lasting hope across Sub-Saharan Africa.'),
+('footer_about', 'BetterLife International works with communities across five African countries to build food security, livelihoods and practical climate resilience.'),
 ('map_embed', ''),
 ('board_quote', 'BetterLife International is changing lives at every level, empowering youth, building resilient communities, and inspiring hope where it''s needed most.'),
 ('board_quote_author', 'BetterLife International Board of Directors'),
 ('admin_alert_email', 'ot.sedrick@gmail.com'),
+('admin_alert_cc', ''),
 ('smtp_host', 'smtp.gmail.com'),
 ('smtp_port', '587'),
 ('smtp_username', ''),
@@ -97,13 +99,15 @@ CREATE TABLE stats (
   status TINYINT(1) DEFAULT 1
 ) ENGINE=InnoDB;
 
-INSERT INTO stats (label, value, icon, sort_order) VALUES
-('People Engaged', '110,000+', 'graduation-cap', 1),
-('Tonnes of Plastic Recycled', '20,000', 'recycle', 2),
-('Trees Planted', '1M+', 'tree', 3),
-('Refugee Camps Impacted', '5', 'tent', 4),
-('Women & Girls Empowered', '280', 'heart', 5),
-('Refugees & IDPs Supported', '45,800+', 'users', 6);
+INSERT INTO stats (label, value, sort_order) VALUES
+('People reached in 2025', '112,430', 1),
+('Farmers supported', '18,900', 2),
+('Refugees and host-community members reached', '41,200', 3),
+('Students engaged in climate education', '4,580+', 4),
+('Green Libraries and Eco Labs', '20+', 5),
+('Household biogas systems', '48+', 6),
+('Community boreholes', '65', 7),
+('Tree seedlings raised', '50,000+', 8);
 
 -- ----------------------------------------------------------------------
 -- Programs
@@ -124,10 +128,11 @@ CREATE TABLE programs (
 ) ENGINE=InnoDB;
 
 INSERT INTO programs (title, slug, tagline, summary, content, image, icon, sort_order) VALUES
-('Sustainable Agriculture — BetterLife Agro-Tourism', 'sustainable-agriculture', 'Bringing innovation to the community', 'Our model farm in Rukungiri trains farmers in organic dairy and crop farming, and produces the honey, ghee and yoghurt sold under the BetterLife Farm brand.', 'BetterLife Agro-Tourism Farm is leading a revolution in Ugandan agriculture by promoting sustainable practices and ecological conservation. We empower farmers with modern and sustainable agricultural techniques, focusing on dairy and crop farming, and organic methods that benefit both people and the planet. Our model farm in Rukungiri serves as a learning centre where farmers gain practical skills and knowledge to cultivate organic crops.\n\nAdditionally, we are spearheading the introduction of organic produce to Ugandan markets, ensuring consumers have access to healthier and environmentally friendly food options. With a commitment to sustainability and innovation, we are paving the way for a greener and healthier future.', 'assets/img/farm-field-1.jpg', 'leaf', 1),
-('Climate Education & Awareness', 'climate-education-awareness', 'Saving mother earth', 'Debates, public speaking and Green Libraries that put climate literacy directly into the hands of students.', 'Our Climate Education and Awareness Programme aims to educate and empower students to take action against climate change. Through engaging in debates and public speaking competitions held in schools, we foster dialogue and critical thinking about environmental issues. Additionally, we support the establishment of Green Libraries in schools, providing educational materials to promote sustainability and environmental stewardship among students.', 'assets/img/hero-farm-1.jpg', 'book-open', 2),
-('Nature-Based Solutions Programme', 'nature-based-solutions', 'Conserving the environment for future generations', 'Over 30 nursery beds across 24 districts, growing indigenous and fruit trees to restore ecosystems.', 'Our Nature-Based Solutions Programme is dedicated to promoting environmental conservation through tree-planting initiatives. With over 30 nursery beds spread across 24 districts in Uganda and spanning 3 regions nationwide, we actively grow indigenous and fruit trees. By planting trees, we aim to enhance biodiversity, mitigate climate change, and create sustainable ecosystems. Our efforts not only contribute to environmental conservation but also foster appreciation for nature among communities and individuals.', 'assets/img/program-trees.jpg', 'tree', 3),
-('Empowering Women in Refugee & IDP Communities', 'empowering-women', 'We bring hope to the voiceless', 'Skill-building in briquette-making and small-scale farming that gives displaced women a sustainable income.', 'Our project focuses on empowering women in refugee and internally displaced communities through skill-building and sustainable livelihood initiatives. We provide training in briquette making, equipping women with the knowledge and resources to produce environmentally friendly fuel sources. Additionally, we offer guidance on small-scale farming techniques tailored to limited land resources, enabling women to cultivate their own food and generate income. Through innovative approaches and practical training, we empower women to sustain themselves and their families, fostering resilience and self-reliance in challenging environments.', 'assets/img/farm-field-3.jpg', 'heart-handshake', 4);
+('Climate-Resilient Agriculture and Food Security', 'climate-resilient-agriculture', '', 'We help farmers and families grow food in the face of unreliable rain, poor soils and limited land. The work includes demonstration gardens, composting, mulching, drought-tolerant crops, agroforestry, greenhouse farming, irrigation, poultry, aquaculture and beekeeping.', '', 'assets/img/farm-field-1.jpg', 'leaf', 1),
+('Green Skills, Livelihoods and Markets', 'green-skills-livelihoods', '', 'We train people in skills that respond to local opportunities, then help them move beyond training through savings groups, enterprise support, finance and market connections. Our work spans agriculture, carpentry, tailoring, barbering, poultry, weaving and solar technology.', '', 'assets/img/project-smiles.jpg', 'users', 2),
+('Climate Education and Youth Leadership', 'climate-education-youth-leadership', '', 'Through Green Libraries, Eco Labs, school clubs, youth centres, debates, Climate Academies and innovation challenges, children and young people gain the knowledge, tools and confidence to take part in the decisions shaping their future.', '', 'assets/img/project-climate-education.jpg', 'file-text', 3),
+('Clean Energy, Water and Restoration', 'clean-energy-water-restoration', '', 'We work with communities on tree nurseries, agroforestry, biogas, briquettes, waste recovery and water access. Each solution is designed to ease pressure on both households and the environment.', '', 'assets/img/program-trees.jpg', 'leaf', 4),
+('Digital Innovation for Farmers', 'digital-innovation', '', 'Soilla and Agribusiness Connekt bring soil advice, climate information, services, finance and markets closer to farmers. The technology is paired with face-to-face support so that information becomes something people can use.', '', 'assets/img/project-soilla-app.jpg', 'trending-up', 5);
 
 -- ----------------------------------------------------------------------
 -- Products (BetterLife Farm produce)
@@ -224,10 +229,11 @@ CREATE TABLE blog_categories (
 ) ENGINE=InnoDB;
 
 INSERT INTO blog_categories (name, slug) VALUES
-('Climate Change', 'climate-change'),
-('Agriculture', 'agriculture'),
-('Politics', 'politics'),
-('Uncategorized', 'uncategorized');
+('From the Field', 'from-the-field'),
+('Climate and Food', 'climate-and-food'),
+('Work and Enterprise', 'work-and-enterprise'),
+('Young People and Ideas', 'young-people-and-ideas'),
+('Partnerships and News', 'partnerships-and-news');
 
 CREATE TABLE blog_posts (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -247,27 +253,27 @@ CREATE TABLE blog_posts (
 ) ENGINE=InnoDB;
 
 INSERT INTO blog_posts (title, slug, category_id, excerpt, content, featured_image, author, status, published_at) VALUES
-('Climate Justice: Beyond Financial Transactions to Protect the Vulnerable', 'climate-justice-beyond-financial-transactions', 1,
+('Climate Justice: Beyond Financial Transactions to Protect the Vulnerable', 'climate-justice-beyond-financial-transactions', 2,
 'Climate justice is not merely about financial transactions to protect the environment. It embodies the fight for fairness for the communities least responsible for the crisis, yet most affected by it.',
 '<p>Climate justice is not merely about financial transactions to protect the environment. It embodies the fight for fairness for the communities least responsible for the climate crisis, yet most affected by its consequences.</p><p>Across Uganda, South Sudan, Tanzania, Ghana and the DR Congo, the families BetterLife International works with are on the frontline of a crisis they did little to cause — unpredictable rains, shrinking grazing land, and displacement driven by environmental stress. True climate justice means channelling resources, skills and decision-making power directly to these communities, not just discussing figures in international finance rooms.</p><p>That is why our approach pairs climate education with tangible livelihoods: green skills training, climate-smart agriculture, and renewable energy access such as biogas and boreholes. When a family can irrigate a field with solar power or cook with biogas instead of charcoal, climate justice becomes something they can hold in their hands, not just a policy conversation.</p><p>We continue to advocate for financing that reaches the last mile — the refugee-hosting districts and rural communities that are too often left out of climate finance altogether.</p>',
 'assets/img/blog-climate-justice.jpg', 'Admin', 'published', '2024-10-26 09:00:00'),
 
-('Climate Change: Amplifying Extreme Weather and Displacement', 'climate-change-extreme-weather-displacement', 4,
+('Climate Change: Amplifying Extreme Weather and Displacement', 'climate-change-extreme-weather-displacement', 2,
 'Climate change significantly heightens the risks of extreme weather events — storms, floods, wildfires — and the displacement that follows them.',
 '<p>Climate change significantly heightens the risks of extreme weather events — such as storms, floods, wildfires, and droughts — and the human displacement that so often follows in their wake.</p><p>In the regions where BetterLife International works, we see this firsthand: families who already fled conflict now facing floods that destroy their new farmland, or droughts that fail the very crops meant to rebuild their food security. Displacement driven by climate stress is compounding an already fragile humanitarian situation across Sub-Saharan Africa.</p><p>Our response combines immediate resilience-building — climate-smart agriculture, water access through boreholes, and renewable energy — with long-term climate education through our Green Libraries and Eco Clubs, reaching thousands of students with the knowledge to adapt and lead.</p><p>Addressing climate-driven displacement requires both humanitarian urgency and sustained investment in local adaptation. It is a challenge we are meeting one community, one borehole, one biogas plant at a time.</p>',
 'assets/img/blog-extreme-weather.jpg', 'Admin', 'published', '2024-10-14 09:00:00'),
 
-('Congratulations to Dr. Okello Sharon Nagenjwa on Her PhD and Outstanding Community Impact!', 'dr-okello-sharon-nagenjwa-phd', 2,
+('Congratulations to Dr. Okello Sharon Nagenjwa on Her PhD and Outstanding Community Impact!', 'dr-okello-sharon-nagenjwa-phd', 4,
 'We are happy to celebrate the remarkable journey of Dr. Okello Sharon Nagenjwa, who was recently awarded her PhD after years of dedicated research and community impact.',
 '<p>We are happy to celebrate the remarkable journey of Dr. Okello Sharon Nagenjwa, who was recently awarded her PhD after years of dedicated research and community impact work across Uganda''s agricultural and refugee-hosting communities.</p><p>Dr. Nagenjwa''s research has directly informed several of BetterLife International''s programs in sustainable agriculture and climate-smart farming, helping bridge the gap between academic research and practical, farmer-led solutions.</p><p>Her achievement reflects the spirit of BetterLife International''s mission: that those closest to a challenge are often best placed to solve it. We congratulate Dr. Nagenjwa and look forward to continued collaboration as we grow our agricultural and livelihoods programs, including the BetterLife Farm.</p>',
 'assets/img/blog-sharon-phd.png', 'Admin', 'published', '2024-09-29 09:00:00'),
 
-('The Importance of Civic Education in Uganda: An Evaluative Analysis', 'importance-of-civic-education-in-uganda', 3,
+('The Importance of Civic Education in Uganda: An Evaluative Analysis', 'importance-of-civic-education-in-uganda', 4,
 'Civic education plays a crucial role in the development of any democratic society, yet in Uganda it remains under-prioritized in many communities.',
 '<p>Civic education plays a crucial role in the development of any democratic society, yet in Uganda it remains under-prioritized in many communities, particularly among youth and displaced populations.</p><p>Through our Climate Education and Awareness programme, BetterLife International has seen how civic literacy and environmental literacy reinforce one another — young people who understand their rights and responsibilities are also more likely to take an active role in protecting their environment and holding leaders accountable for it.</p><p>We believe civic education should be woven into every level of schooling, not treated as an afterthought. It is one of the quiet foundations of the resilient, self-reliant communities we work to build.</p>',
 'assets/img/blog-civic-education.jpg', 'Admin', 'published', '2024-09-20 09:00:00'),
 
-('The Naked Truth of Corruption: A Critical Analysis of Uganda''s Socioeconomic State and Youth-Led Activism', 'naked-truth-of-corruption-uganda', 3,
+('The Naked Truth of Corruption: A Critical Analysis of Uganda''s Socioeconomic State and Youth-Led Activism', 'naked-truth-of-corruption-uganda', 4,
 'Uganda is currently grappling with a critical socio-political issue: rampant corruption, which has become deeply embedded and is fuelling youth-led activism.',
 '<p>Uganda is currently grappling with a critical socio-political issue: rampant corruption, which has become deeply embedded in public institutions and continues to undermine development outcomes for ordinary citizens.</p><p>At BetterLife International, we see the downstream effects of this every day — resources that should reach vulnerable communities are too often diverted, delayed, or diminished. This is part of why we are youth-led: young people across our five countries of operation are refusing to accept corruption, inequality, or environmental destruction as the status quo.</p><p>Youth-led activism, paired with transparent, community-owned programs like our farm cooperatives and green-skills training, is one practical way to build systems that are accountable from the ground up.</p>',
 'assets/img/blog-corruption.jpg', 'Admin', 'published', '2023-09-06 09:00:00');
