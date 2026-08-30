@@ -9,7 +9,6 @@ $footerPrograms = $pdo->query("SELECT title, slug FROM programs WHERE status = 1
       <div>
         <div class="footer-brand">
           <img src="<?= asset_url($logo) ?>" alt="<?= h(setting($pdo, 'site_name')) ?>">
-          <span><?= h(setting($pdo, 'site_name')) ?></span>
         </div>
         <p style="font-size:14px;"><?= h(setting($pdo, 'footer_about')) ?></p>
         <div class="footer-social">
