@@ -33,6 +33,7 @@ INSERT INTO settings (setting_key, setting_value) VALUES
 ('site_name', 'BetterLife International'),
 ('tagline', 'Sustainable Livelihoods. Green Skills. Lasting Hope.'),
 ('logo', 'assets/img/logo.png'),
+('favicon', 'assets/img/favicon.png'),
 ('hero_kicker', 'Founded in Uganda. Working across five African countries.'),
 ('hero_title', 'Led by people who understand what it means to begin again.'),
 ('hero_subtitle', 'BetterLife works with women, young people, refugees, displaced families and farming communities to turn climate pressure into practical action: food people can grow, skills they can earn from, cleaner energy and stronger routes to market.'),
