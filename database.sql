@@ -81,7 +81,9 @@ INSERT INTO settings (setting_key, setting_value) VALUES
 ('smtp_from_name', 'BetterLife International'),
 ('pesapal_sandbox', '0'),
 ('pesapal_consumer_key', ''),
-('pesapal_consumer_secret', '');
+('pesapal_consumer_secret', ''),
+('maintenance_mode', '0'),
+('maintenance_message', 'We are carrying out a short update to improve the site. Please check back again shortly.');
 -- NOTE: SMTP + Pesapal credentials are intentionally left blank here so
 -- live secrets never enter version control. Set them once via
 -- Admin -> Site Settings -> Payments & Email (they're stored in this same
@@ -128,10 +130,10 @@ CREATE TABLE programs (
 ) ENGINE=InnoDB;
 
 INSERT INTO programs (title, slug, tagline, summary, content, image, icon, sort_order) VALUES
-('Climate-Resilient Agriculture and Food Security', 'climate-resilient-agriculture', '', 'We help farmers and families grow food in the face of unreliable rain, poor soils and limited land. The work includes demonstration gardens, composting, mulching, drought-tolerant crops, agroforestry, greenhouse farming, irrigation, poultry, aquaculture and beekeeping.', '', 'assets/img/farm-field-1.jpg', 'leaf', 1),
+('Climate-Resilient Agriculture and Food Security', 'climate-resilient-agriculture', '', 'We help farmers and families grow food in the face of unreliable rain, poor soils and limited land. The work includes demonstration gardens, composting, mulching, drought-tolerant crops, agroforestry, greenhouse farming, irrigation, poultry, aquaculture and beekeeping.', '', 'assets/img/betterlifeint-source/programs/program-photo-2.jpg', 'leaf', 1),
 ('Green Skills, Livelihoods and Markets', 'green-skills-livelihoods', '', 'We train people in skills that respond to local opportunities, then help them move beyond training through savings groups, enterprise support, finance and market connections. Our work spans agriculture, carpentry, tailoring, barbering, poultry, weaving and solar technology.', '', 'assets/img/project-smiles.jpg', 'users', 2),
-('Climate Education and Youth Leadership', 'climate-education-youth-leadership', '', 'Through Green Libraries, Eco Labs, school clubs, youth centres, debates, Climate Academies and innovation challenges, children and young people gain the knowledge, tools and confidence to take part in the decisions shaping their future.', '', 'assets/img/project-climate-education.jpg', 'file-text', 3),
-('Clean Energy, Water and Restoration', 'clean-energy-water-restoration', '', 'We work with communities on tree nurseries, agroforestry, biogas, briquettes, waste recovery and water access. Each solution is designed to ease pressure on both households and the environment.', '', 'assets/img/program-trees.jpg', 'leaf', 4),
+('Climate Education and Youth Leadership', 'climate-education-youth-leadership', '', 'Through Green Libraries, Eco Labs, school clubs, youth centres, debates, Climate Academies and innovation challenges, children and young people gain the knowledge, tools and confidence to take part in the decisions shaping their future.', '', 'assets/img/betterlifeint-source/programs/program-photo-4.jpg', 'file-text', 3),
+('Clean Energy, Water and Restoration', 'clean-energy-water-restoration', '', 'We work with communities on tree nurseries, agroforestry, biogas, briquettes, waste recovery and water access. Each solution is designed to ease pressure on both households and the environment.', '', 'assets/img/betterlifeint-source/programs/program-photo-1.jpg', 'leaf', 4),
 ('Digital Innovation for Farmers', 'digital-innovation', '', 'Soilla and Agribusiness Connekt bring soil advice, climate information, services, finance and markets closer to farmers. The technology is paired with face-to-face support so that information becomes something people can use.', '', 'assets/img/project-soilla-app.jpg', 'trending-up', 5);
 
 -- ----------------------------------------------------------------------

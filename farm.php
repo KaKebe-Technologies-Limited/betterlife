@@ -13,9 +13,9 @@ $onTheFarm = [
   ['Seedlings', 'Participants receive free seedlings to establish gardens of their own and begin moving towards independent production.'],
 ];
 $products = [
-  ['BetterLife Honey', 'Produced through community beekeeping and local value chains that support both livelihoods and environmental care.'],
-  ['BetterLife Ghee', 'Made through local dairy production, creating a market for milk while adding value closer to the farmer.'],
-  ['BetterLife Vanilla Yoghurt', 'Fresh vanilla yoghurt made from locally sourced milk and processed through the BetterLife dairy value chain.'],
+  ['BetterLife Honey', 'Produced through community beekeeping and local value chains that support both livelihoods and environmental care.', 'assets/img/product-honey-real.jpg'],
+  ['BetterLife Ghee', 'Made through local dairy production, creating a market for milk while adding value closer to the farmer.', 'assets/img/product-ghee-real.jpg'],
+  ['BetterLife Vanilla Yoghurt', 'Fresh vanilla yoghurt made from locally sourced milk and processed through the BetterLife dairy value chain.', 'assets/img/product-yogurt.jpg'],
 ];
 
 require __DIR__ . '/includes/header.php';
@@ -50,12 +50,23 @@ require __DIR__ . '/includes/header.php';
 
 <section class="section-cream">
   <div class="container">
-    <div class="section-head fade-up">
-      <span class="eyebrow">Powered by Clean Energy</span>
+    <div class="split">
+      <div class="fade-up img-frame bg-blue">
+        <img src="<?= asset_url('assets/img/farm-field-2.jpg') ?>" alt="Solar-powered irrigation on BetterLife Agro Tourism Farm">
+      </div>
+      <div class="fade-up">
+        <span class="eyebrow">Powered by Clean Energy</span>
+        <p class="muted">Solar energy powers irrigation, water pumping and key activities on the farm. This makes production more reliable through dry periods and shows farmers how clean energy can reduce both climate risk and operating costs.</p>
+      </div>
     </div>
-    <div class="prose-narrow fade-up">
-      <p>Solar energy powers irrigation, water pumping and key activities on the farm. This makes production more reliable through dry periods and shows farmers how clean energy can reduce both climate risk and operating costs.</p>
-    </div>
+  </div>
+</section>
+
+<section class="media-band">
+  <div class="container">
+    <figure class="fade-up">
+      <img src="<?= asset_url('assets/img/impact-story-3.jpg') ?>" alt="Greenhouse crop production on the farm">
+    </figure>
   </div>
 </section>
 
@@ -74,12 +85,15 @@ require __DIR__ . '/includes/header.php';
 
 <section class="section-cream">
   <div class="container">
-    <div class="section-head fade-up">
-      <span class="eyebrow">From Farmer to Customer</span>
-    </div>
-    <div class="prose-narrow fade-up">
-      <p>Training has limited value if a farmer produces and cannot sell. BetterLife Agro Tourism Farm Ltd buys, processes and markets produce from the farm and participating farmers.</p>
-      <p>This turns BetterLife&rsquo;s products into more than items on a shelf. They are the final link in a chain that begins with skills and ends with income.</p>
+    <div class="split">
+      <div class="fade-up">
+        <span class="eyebrow">From Farmer to Customer</span>
+        <p class="muted">Training has limited value if a farmer produces and cannot sell. BetterLife Agro Tourism Farm Ltd buys, processes and markets produce from the farm and participating farmers.</p>
+        <p class="muted">This turns BetterLife&rsquo;s products into more than items on a shelf. They are the final link in a chain that begins with skills and ends with income.</p>
+      </div>
+      <div class="fade-up img-frame">
+        <img src="<?= asset_url('assets/img/product-honey-real.jpg') ?>" alt="Jars of BetterLife Honey">
+      </div>
     </div>
   </div>
 </section>
@@ -91,9 +105,12 @@ require __DIR__ . '/includes/header.php';
     </div>
     <div class="grid grid-3">
       <?php foreach ($products as $p): ?>
-        <div class="card value-card fade-up">
-          <h4><?= h($p[0]) ?></h4>
-          <p><?= h($p[1]) ?></p>
+        <div class="card product-card fade-up">
+          <div class="thumb"><img src="<?= asset_url($p[2]) ?>" alt="<?= h($p[0]) ?>"></div>
+          <div class="body" style="padding:22px;">
+            <h3 style="font-size:17px;"><?= h($p[0]) ?></h3>
+            <p class="muted" style="font-size:14px;"><?= h($p[1]) ?></p>
+          </div>
         </div>
       <?php endforeach; ?>
     </div>
@@ -105,14 +122,17 @@ require __DIR__ . '/includes/header.php';
 
 <section class="section-cream">
   <div class="container">
-    <div class="section-head fade-up">
-      <span class="eyebrow">Visit the Farm</span>
-    </div>
-    <div class="prose-narrow fade-up">
-      <p>Schools, farmers, community groups, development partners and visitors can experience how solar energy, irrigation, livestock, beekeeping and food processing work together.</p>
-      <div class="hero-actions" style="justify-content:flex-start;margin-top:18px;">
-        <a href="<?= SITE_URL ?>/contact.php?subject=Farm visit" class="btn btn-primary">Book a Farm Visit</a>
-        <a href="<?= SITE_URL ?>/contact.php?subject=Partner With the Farm" class="btn btn-outline-dark">Partner With the Farm</a>
+    <div class="split">
+      <div class="fade-up img-frame">
+        <img src="<?= asset_url('assets/img/hero-farm-1.jpg') ?>" alt="Visitors touring BetterLife Agro Tourism Farm">
+      </div>
+      <div class="fade-up">
+        <span class="eyebrow">Visit the Farm</span>
+        <p class="muted">Schools, farmers, community groups, development partners and visitors can experience how solar energy, irrigation, livestock, beekeeping and food processing work together.</p>
+        <div class="hero-actions" style="justify-content:flex-start;margin-top:18px;">
+          <a href="<?= SITE_URL ?>/contact.php?subject=Farm visit" class="btn btn-primary">Book a Farm Visit</a>
+          <a href="<?= SITE_URL ?>/contact.php?subject=Partner With the Farm" class="btn btn-outline-dark">Partner With the Farm</a>
+        </div>
       </div>
     </div>
   </div>

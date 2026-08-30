@@ -71,7 +71,12 @@ require __DIR__ . '/includes/header.php';
       <span class="eyebrow">Our Story</span>
       <h2>From USD 200 to Work Across Five Countries</h2>
     </div>
-    <div class="prose-narrow fade-up"><?= nl2p(setting($pdo, 'about_who_text')) ?></div>
+    <div class="split" style="align-items:start;">
+      <div class="prose-narrow fade-up"><?= nl2p(setting($pdo, 'about_who_text')) ?></div>
+      <div class="fade-up img-frame" style="position:sticky;top:100px;">
+        <img src="<?= asset_url('assets/img/betterlifeint-source/about/about-team-photo.jpg') ?>" alt="A BetterLife team member with a child in the community">
+      </div>
+    </div>
   </div>
 </section>
 
@@ -100,14 +105,17 @@ require __DIR__ . '/includes/header.php';
 
 <section class="section-cream">
   <div class="container">
-    <div class="section-head fade-up">
-      <span class="eyebrow">How We See the Work</span>
-      <h2>A Failed Harvest Is Never Just a Farming Problem</h2>
-    </div>
-    <div class="prose-narrow fade-up">
-      <p>When a woman tells us her harvest failed, seeds may appear to be the answer. But listen longer and the picture changes. She may have no water nearby. She may spend much of the day collecting firewood. She may lack money for inputs, access to a phone or a buyer for what she grows.</p>
-      <p>Giving her seeds alone leaves most of the problem untouched.</p>
-      <p>BetterLife takes a systems approach because people live in systems. We connect food to water, time, energy, income, finance, information and markets. One programme may therefore include a demonstration garden, a savings group, a digital tool and a buyer connection. The combination is shaped by the barriers people are actually facing.</p>
+    <div class="split">
+      <div class="fade-up img-frame bg-blue">
+        <img src="<?= asset_url('assets/img/betterlifeint-source/programs/program-photo-10.jpg') ?>" alt="A woman taking notes during a BetterLife training session">
+      </div>
+      <div class="fade-up">
+        <span class="eyebrow">How We See the Work</span>
+        <h2>A Failed Harvest Is Never Just a Farming Problem</h2>
+        <p class="muted">When a woman tells us her harvest failed, seeds may appear to be the answer. But listen longer and the picture changes. She may have no water nearby. She may spend much of the day collecting firewood. She may lack money for inputs, access to a phone or a buyer for what she grows.</p>
+        <p class="muted">Giving her seeds alone leaves most of the problem untouched.</p>
+        <p class="muted">BetterLife takes a systems approach because people live in systems. We connect food to water, time, energy, income, finance, information and markets. One programme may therefore include a demonstration garden, a savings group, a digital tool and a buyer connection. The combination is shaped by the barriers people are actually facing.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -122,6 +130,15 @@ require __DIR__ . '/includes/header.php';
         <div class="detail-block"><h4><?= $b[0] ?></h4><p><?= $b[1] ?></p></div>
       <?php endforeach; ?>
     </div>
+  </div>
+</section>
+
+<section class="media-band">
+  <div class="container">
+    <figure class="fade-up">
+      <img src="<?= asset_url('assets/img/betterlifeint-source/programs/program-photo-11.jpg') ?>" alt="Women meeting together in a BetterLife community group">
+      <figcaption>People learn faster in groups they already trust.</figcaption>
+    </figure>
   </div>
 </section>
 
@@ -148,6 +165,14 @@ require __DIR__ . '/includes/header.php';
         <div class="detail-block"><h4><?= $b[0] ?></h4><p><?= $b[1] ?></p></div>
       <?php endforeach; ?>
     </div>
+  </div>
+</section>
+
+<section class="media-band">
+  <div class="container">
+    <figure class="fade-up">
+      <img src="<?= asset_url('assets/img/betterlifeint-source/projects/project-agro-tourism-alt.jpeg') ?>" alt="A BetterLife farmer walking through a banana plantation">
+    </figure>
   </div>
 </section>
 

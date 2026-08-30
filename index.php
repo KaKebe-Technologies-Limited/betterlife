@@ -83,14 +83,17 @@ require __DIR__ . '/includes/header.php';
 
 <section id="why-we-exist">
   <div class="container">
-    <div class="section-head fade-up">
-      <span class="eyebrow">Why We Exist</span>
-      <h2>Climate Change Rarely Arrives Calling Itself Climate Change</h2>
-    </div>
-    <div class="container-narrow" style="padding:0;max-width:760px;">
-      <p class="muted">It arrives as a harvest that fails twice in one year. It is the extra distance a woman walks when the nearest water source dries up. It is the child who misses school because there is more work to do at home. It is the young person who leaves agriculture because one bad season can erase everything.</p>
-      <p class="muted">These problems are connected. Food depends on water. Water collection takes time. Time affects education and income. Income determines whether a family can recover when the next shock comes.</p>
-      <p class="muted">BetterLife works across those connections. We bring together agriculture, livelihoods, clean energy, education, technology and market access around the way people actually live.</p>
+    <div class="split">
+      <div class="fade-up">
+        <span class="eyebrow">Why We Exist</span>
+        <h2>Climate Change Rarely Arrives Calling Itself Climate Change</h2>
+        <p class="muted">It arrives as a harvest that fails twice in one year. It is the extra distance a woman walks when the nearest water source dries up. It is the child who misses school because there is more work to do at home. It is the young person who leaves agriculture because one bad season can erase everything.</p>
+        <p class="muted">These problems are connected. Food depends on water. Water collection takes time. Time affects education and income. Income determines whether a family can recover when the next shock comes.</p>
+        <p class="muted">BetterLife works across those connections. We bring together agriculture, livelihoods, clean energy, education, technology and market access around the way people actually live.</p>
+      </div>
+      <div class="fade-up img-frame">
+        <img src="<?= asset_url('assets/img/project-spring.jpg') ?>" alt="Women collecting water at a community borehole">
+      </div>
     </div>
   </div>
 </section>

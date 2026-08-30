@@ -5,6 +5,14 @@
  */
 require_once __DIR__ . '/functions.php';
 
+// Maintenance mode: public visitors get a holding page; logged-in admins pass through.
+if (setting($pdo, 'maintenance_mode') === '1' && !is_logged_in()) {
+    http_response_code(503);
+    header('Retry-After: 3600');
+    require __DIR__ . '/maintenance.php';
+    exit;
+}
+
 $pageTitle       = $pageTitle ?? setting($pdo, 'site_name', 'BetterLife International');
 $activePage      = $activePage ?? '';
 $siteName        = setting($pdo, 'site_name', 'BetterLife International');

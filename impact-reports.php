@@ -16,9 +16,9 @@ $changeLooksLike = [
   'It is a household cooking with biogas instead of spending hours looking for firewood.',
 ];
 $selectedResults = [
-  ['Women&rsquo;s Climate Resilience in Yumbe', 'Knowledge of climate-smart agriculture among the structured training cohort rose from 22 per cent to 92 per cent. Women adopted sack and box gardening, composting, mulching and drought-tolerant crops, while participating households reported lower spending on vegetables.', 'Read the Yumbe Case Study'],
-  ['SMILES', 'Seventy-eight per cent of participants moved into sustainable income pathways, 85 per cent reported stronger refugee-host relationships and food insecurity in target groups fell by 40 per cent.', 'Read the SMILES Case Study'],
-  ['Green Libraries and Eco Labs', 'More than 4,500 learners have taken part in climate education, practical environmental action, debate and digital learning through BetterLife-supported schools and learning spaces.', 'Read the Education Case Study'],
+  ['Women&rsquo;s Climate Resilience in Yumbe', 'Knowledge of climate-smart agriculture among the structured training cohort rose from 22 per cent to 92 per cent. Women adopted sack and box gardening, composting, mulching and drought-tolerant crops, while participating households reported lower spending on vegetables.', 'Read the Yumbe Case Study', 'assets/img/betterlifeint-source/programs/program-photo-3.jpg'],
+  ['SMILES', 'Seventy-eight per cent of participants moved into sustainable income pathways, 85 per cent reported stronger refugee-host relationships and food insecurity in target groups fell by 40 per cent.', 'Read the SMILES Case Study', 'assets/img/project-smiles.jpg'],
+  ['Green Libraries and Eco Labs', 'More than 4,500 learners have taken part in climate education, practical environmental action, debate and digital learning through BetterLife-supported schools and learning spaces.', 'Read the Education Case Study', 'assets/img/betterlifeint-source/programs/program-photo-8.jpg'],
 ];
 
 require __DIR__ . '/includes/header.php';
@@ -58,14 +58,17 @@ require __DIR__ . '/includes/header.php';
 
 <section>
   <div class="container">
-    <div class="section-head fade-up">
-      <span class="eyebrow">What Change Looks Like</span>
-    </div>
-    <div class="prose-narrow fade-up">
-      <?php foreach ($changeLooksLike as $line): ?>
-        <p><?= $line ?></p>
-      <?php endforeach; ?>
-      <p>These changes may begin with one activity. Their value lies in what becomes possible afterwards.</p>
+    <div class="split">
+      <div class="fade-up">
+        <span class="eyebrow">What Change Looks Like</span>
+        <?php foreach ($changeLooksLike as $line): ?>
+          <p class="muted"><?= $line ?></p>
+        <?php endforeach; ?>
+        <p class="muted">These changes may begin with one activity. Their value lies in what becomes possible afterwards.</p>
+      </div>
+      <div class="fade-up img-frame" style="position:sticky;top:100px;">
+        <img src="<?= asset_url('assets/img/impact-story-2.jpg') ?>" alt="A woman laughing during a BetterLife community session">
+      </div>
     </div>
   </div>
 </section>
@@ -77,10 +80,13 @@ require __DIR__ . '/includes/header.php';
     </div>
     <div class="grid grid-3">
       <?php foreach ($selectedResults as $r): ?>
-        <div class="card value-card fade-up">
-          <h4><?= $r[0] ?></h4>
-          <p><?= h($r[1]) ?></p>
-          <a href="<?= SITE_URL ?>/blog.php" class="readmore"><?= h($r[2]) ?></a>
+        <div class="card project-card fade-up">
+          <div class="thumb"><img src="<?= asset_url($r[3]) ?>" alt="<?= h(html_entity_decode(strip_tags($r[0]), ENT_QUOTES)) ?>"></div>
+          <div class="body">
+            <h3 style="font-size:17px;"><?= $r[0] ?></h3>
+            <p class="muted" style="font-size:13.5px;"><?= h($r[1]) ?></p>
+            <a href="<?= SITE_URL ?>/blog.php" class="readmore"><?= h($r[2]) ?></a>
+          </div>
         </div>
       <?php endforeach; ?>
     </div>

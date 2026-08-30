@@ -19,6 +19,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         redirect(ADMIN_URL . '/settings.php');
     }
 
+    if (($_POST['form'] ?? '') === 'maintenance') {
+        $stmtUpsert = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
+        $stmtUpsert->execute(['maintenance_mode', isset($_POST['maintenance_mode']) ? '1' : '0']);
+        $stmtUpsert->execute(['maintenance_message', trim($_POST['maintenance_message'] ?? '')]);
+        flash_set('success', isset($_POST['maintenance_mode'])
+            ? 'Maintenance mode is ON. Visitors now see the holding page; you still have full access.'
+            : 'Maintenance mode is OFF. The site is live for everyone.');
+        redirect(ADMIN_URL . '/settings.php');
+    }
+
     if (($_POST['form'] ?? '') === 'payments') {
         $stmtUpsert = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)");
         $stmtUpsert->execute(['admin_alert_email', trim($_POST['admin_alert_email'] ?? '')]);
@@ -91,7 +101,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 require __DIR__ . '/includes/header.php';
 $v = fn($k) => h(setting($pdo, $k));
+$maintenanceOn = setting($pdo, 'maintenance_mode') === '1';
 ?>
+
+<div class="panel" style="border-left:4px solid <?= $maintenanceOn ? '#c0392b' : 'var(--green-600, #16593f)' ?>;">
+  <div class="panel-head" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+    <h3>Maintenance Mode</h3>
+    <span class="badge" style="padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700;color:#fff;background:<?= $maintenanceOn ? '#c0392b' : '#16593f' ?>;">
+      <?= $maintenanceOn ? 'SITE OFFLINE' : 'SITE LIVE' ?>
+    </span>
+  </div>
+  <div class="panel-body">
+    <p class="help-text" style="margin-bottom:16px;">When ON, the public website shows a holding page and returns HTTP 503. You and any other logged-in admin keep full access, so you can keep working while visitors are held out.</p>
+    <form method="post">
+      <?= csrf_field() ?>
+      <input type="hidden" name="form" value="maintenance">
+      <div class="checkbox-row" style="margin-bottom:16px;">
+        <input type="checkbox" name="maintenance_mode" id="maintenance_mode" <?= $maintenanceOn ? 'checked' : '' ?>>
+        <label for="maintenance_mode" style="margin:0;">Put the public site into maintenance mode</label>
+      </div>
+      <div class="form-group">
+        <label>Message shown to visitors</label>
+        <textarea name="maintenance_message" class="form-control" rows="3"><?= h(setting($pdo, 'maintenance_message', 'We are carrying out a short update to improve the site. Please check back again shortly.')) ?></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary ico-text"><?= icon('save', 16) ?> Save Maintenance Settings</button>
+      <p class="help-text" style="margin-top:10px;">Tick the box and save to take the site offline. Untick and save to bring it back.</p>
+    </form>
+  </div>
+</div>
+
 <form method="post" enctype="multipart/form-data">
   <?= csrf_field() ?>
 

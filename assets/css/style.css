@@ -656,6 +656,17 @@ textarea.form-control { resize: vertical; min-height: 130px; }
 .prose-narrow { max-width: 760px; }
 .prose-narrow p { color: var(--ink-soft); margin-bottom: 14px; }
 
+/* Full-width photo band used to break up long text pages */
+.media-band { padding: 0 !important; }
+.media-band .container { padding-top: 0; padding-bottom: 0; }
+.media-band figure { margin: 0; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); position: relative; }
+.media-band img { width: 100%; height: clamp(240px, 42vw, 460px); object-fit: cover; display: block; }
+.media-band figcaption {
+  position: absolute; left: 0; right: 0; bottom: 0; padding: 30px 28px 20px;
+  color: #fff; font-size: 14px; font-weight: 600;
+  background: linear-gradient(to top, rgba(11,36,29,.72), transparent);
+}
+
 /* Long-form sub-programme blocks (Our Work) */
 .workblock-list { margin-top: 34px; display: grid; gap: 26px; }
 .workblock {
