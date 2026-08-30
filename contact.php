@@ -93,6 +93,16 @@ require __DIR__ . '/includes/header.php';
   </div>
 </section>
 
+<section class="section-cream">
+  <div class="container">
+    <div class="impact-photos fade-up">
+      <div class="impact-photo"><img src="<?= asset_url('assets/img/farm-field-2.jpg') ?>" alt="BetterLife Agro Tourism Farm in Rukungiri, Uganda"><span class="cap">Uganda</span></div>
+      <div class="impact-photo"><img src="<?= asset_url('assets/img/betterlifeint-source/projects/project-spring-alt.jpeg') ?>" alt="Solar-powered irrigation work in Juba, South Sudan"><span class="cap">South Sudan</span></div>
+      <div class="impact-photo"><img src="<?= asset_url('assets/img/impact-story-2.jpg') ?>" alt="A BetterLife community session in Tanzania"><span class="cap">Tanzania</span></div>
+    </div>
+  </div>
+</section>
+
 <?php if ($map = setting($pdo, 'map_embed')): ?>
 <section class="section-cream" style="padding-top:0;">
   <div class="container"><div class="fade-up" style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow);"><?= $map ?></div></div>

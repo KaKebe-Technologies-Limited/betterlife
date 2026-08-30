@@ -44,6 +44,14 @@ require __DIR__ . '/includes/header.php';
   </div>
 </section>
 
+<section class="media-band">
+  <div class="container">
+    <figure class="fade-up">
+      <img src="<?= asset_url('assets/img/impact-story-3.jpg') ?>" alt="The BetterLife team at work in the community">
+    </figure>
+  </div>
+</section>
+
 <?php if ($leadership): ?>
 <section>
   <div class="container">

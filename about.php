@@ -152,6 +152,11 @@ require __DIR__ . '/includes/header.php';
         <div class="detail-block"><h4><?= $b[0] ?></h4><p><?= $b[1] ?></p></div>
       <?php endforeach; ?>
     </div>
+    <div class="impact-photos fade-up" style="margin-top:36px;">
+      <div class="impact-photo"><img src="<?= asset_url('assets/img/betterlifeint-source/programs/program-photo-6.jpg') ?>" alt="A woman participating in a BetterLife community programme"><span class="cap">Women &amp; girls</span></div>
+      <div class="impact-photo"><img src="<?= asset_url('assets/img/betterlifeint-source/programs/program-photo-7.jpg') ?>" alt="Young people at a BetterLife youth session"><span class="cap">Children &amp; young people</span></div>
+      <div class="impact-photo"><img src="<?= asset_url('assets/img/project-women-idps.jpg') ?>" alt="A smallholder farmer tending crops"><span class="cap">Refugees &amp; smallholder farmers</span></div>
+    </div>
   </div>
 </section>
 
@@ -164,6 +169,11 @@ require __DIR__ . '/includes/header.php';
       <?php foreach ($whereWeWork as $b): ?>
         <div class="detail-block"><h4><?= $b[0] ?></h4><p><?= $b[1] ?></p></div>
       <?php endforeach; ?>
+    </div>
+    <div class="impact-photos fade-up" style="margin-top:36px;">
+      <div class="impact-photo"><img src="<?= asset_url('assets/img/betterlifeint-source/projects/project-spring-alt.jpeg') ?>" alt="Solar-powered irrigation work in South Sudan"><span class="cap">South Sudan</span></div>
+      <div class="impact-photo"><img src="<?= asset_url('assets/img/betterlifeint-source/projects/project-climate-education-alt.jpg') ?>" alt="Climate education programme in Ghana"><span class="cap">Ghana</span></div>
+      <div class="impact-photo"><img src="<?= asset_url('assets/img/betterlifeint-source/programs/program-photo-9.jpg') ?>" alt="Community programme activity in Uganda"><span class="cap">Uganda</span></div>
     </div>
   </div>
 </section>
@@ -195,6 +205,15 @@ require __DIR__ . '/includes/header.php';
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="media-band">
+  <div class="container">
+    <figure class="fade-up">
+      <img src="<?= asset_url('assets/img/betterlifeint-source/programs/program-photo-12.jpg') ?>" alt="A BetterLife community session in progress">
+      <figcaption>Every principle here was learned in the field, not written first in an office.</figcaption>
+    </figure>
   </div>
 </section>
 
