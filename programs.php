@@ -59,7 +59,9 @@ $farm = SITE_URL . '/farm.php';
         'Among the 72 women who completed structured training, knowledge of climate-smart agriculture rose from 22 per cent to 92 per cent. Seventy-two per cent adopted sack or box gardening, 63 per cent took up composting, 54 per cent used mulching and 57 per cent introduced drought-tolerant crops. Participating households reported an average 35 per cent reduction in spending on vegetables as home production improved.',
         'The figures matter, but so did the way the change happened. Women learnt in groups, saw the methods before risking their own resources and could return with questions after trying them at home. Confidence grew alongside knowledge.',
       ], 'Read the Project Story', $stories);
-
+      ?>
+      <div class="workblock-photo fade-up"><img src="<?= asset_url('assets/img/betterlifeint-source/programs/program-photo-2.jpg') ?>" alt="Greenhouse farming on a BetterLife demonstration plot"><span class="cap">Greenhouse farming in practice</span></div>
+      <?php
       workblock('Green Leaf Platforms Uganda', 'In partnership with Farm Radio International', [
         'What happens after a radio programme ends?',
         'A woman may hear about a regenerative farming practice and understand it perfectly, yet still be unable to try it. She may not control the land, own a phone or have the materials to risk on an unfamiliar method. She may need to see the practice working nearby before she trusts it with a small harvest.',
@@ -107,7 +109,9 @@ $farm = SITE_URL . '/farm.php';
         'The economic work also creates room for social cohesion. Refugees and host-community members build relationships as they train, save, trade and solve business problems together. Peacebuilding becomes part of ordinary economic life rather than a separate conversation in a workshop.',
         'Across target groups, 78 per cent of participants moved into sustainable income pathways, 85 per cent reported improved refugee-host relations and food insecurity fell by 40 per cent.',
       ], 'Explore SMILES', $stories);
-
+      ?>
+      <div class="workblock-photo fade-up"><img src="<?= asset_url('assets/img/impact-story-2.jpg') ?>" alt="SMILES participants at a livelihoods training session"><span class="cap">Refugees and host-community members training together</span></div>
+      <?php
       workblock('Agribusiness Connekt', '', [
         'Farmers are often trained to produce and then left alone at the point where business begins.',
         'Agribusiness Connekt links farmers and small agricultural enterprises to buyers, finance, services and market information. It helps producers understand what customers need, find opportunities beyond their immediate location and make better decisions about when and where to sell.',
@@ -139,7 +143,9 @@ $farm = SITE_URL . '/farm.php';
         'More than 4,500 students have been engaged through school climate education, and BetterLife has supported over 20 Green Libraries and Eco Labs. Our school work has included Lake Victoria School Entebbe and Buddo Junior School.',
         'The aim is not to turn every child into a climate expert. It is to make the subject understandable enough for them to connect it to their home, school and community, and confident enough for them to act.',
       ], 'Explore Green Libraries', $stories);
-
+      ?>
+      <div class="workblock-photo fade-up"><img src="<?= asset_url('assets/img/betterlifeint-source/programs/program-photo-4.jpg') ?>" alt="Students taking part in a BetterLife school climate club"><span class="cap">School climate clubs in action</span></div>
+      <?php
       workblock('Apala One Stop Youth Centre', '', [
         'Talent exists in rural communities. Access often does not.',
         'The Apala One Stop Youth Centre in Alebtong gives young people a place to read, use computers, learn digital skills and develop ideas. Launched in December 2023, the centre opened with ten computers, more than 3,000 books and space to serve around 400 young people.',
@@ -189,7 +195,9 @@ $farm = SITE_URL . '/farm.php';
         'Fruit trees can contribute to nutrition and income. Indigenous trees protect soil, provide shade and support biodiversity. Through agroforestry, trees become part of the farm rather than competing with it.',
         'We focus on what happens after distribution, including care, monitoring and survival. A seedling in the ground is a beginning, not a result by itself.',
       ], 'Explore Nature Restoration', $stories);
-
+      ?>
+      <div class="workblock-photo fade-up"><img src="<?= asset_url('assets/img/betterlifeint-source/projects/project-renewable-pathways-alt.jpg') ?>" alt="BetterLife Renewable Pathways plastic recycling work"><span class="cap">Renewable Pathways: turning waste into value</span></div>
+      <?php
       workblock('Community Biogas', '', [
         'BetterLife has supported more than 48 household biogas systems. Families turn organic waste into cleaner cooking energy, reducing smoke inside the home and dependence on firewood and charcoal.',
         'The process also produces an organic by-product that can be returned to the soil. One household system therefore connects waste, energy, health and farming.',
@@ -236,7 +244,9 @@ $farm = SITE_URL . '/farm.php';
         'Soilla is paired with field training because owning a phone or receiving data does not automatically make a tool useful. Farmers need confidence, local support and information that fits their crops and circumstances.',
         'Our engagement with the World Food Programme has contributed to work around farmer information, verification and the responsible use of agricultural and climate data.',
       ], 'Explore Soilla', $stories);
-
+      ?>
+      <div class="workblock-photo fade-up"><img src="<?= asset_url('assets/img/betterlifeint-source/projects/project-soilla-app-alt.jpeg') ?>" alt="A farmer using the Soilla mobile app in the field"><span class="cap">Soilla in the field</span></div>
+      <?php
       workblock('Agribusiness Connekt', '', [
         'Where Soilla supports production decisions, Agribusiness Connekt focuses on the business around the farm. It links producers to buyers, finance, services and market opportunities.',
         'Together, the two platforms respond to a gap we see repeatedly: farmers learn how to produce, but remain disconnected from the systems that determine whether production becomes income.',
@@ -252,6 +262,7 @@ $farm = SITE_URL . '/farm.php';
     <div class="section-head fade-up">
       <span class="eyebrow">Strengthening the Organisation Behind the Work</span>
     </div>
+    <div class="workblock-photo fade-up" style="margin-bottom:26px;"><img src="<?= asset_url('assets/img/betterlifeint-source/about/about-team-photo.jpg') ?>" alt="The BetterLife International team"><span class="cap">The team behind the work</span></div>
     <div class="workblock-list">
       <?php
       workblock('Dovetail Impact Foundation', 'Growing without losing what made the work local', [
