@@ -89,10 +89,7 @@ $farm = SITE_URL . '/farm.php';
 <!-- ===================== Green Skills & Livelihoods ===================== -->
 <section id="green-skills-livelihoods">
   <div class="container">
-    <div class="split" style="margin-bottom:10px;">
-      <div class="fade-up img-frame bg-blue">
-        <img src="<?= asset_url('assets/img/project-smiles.jpg') ?>" alt="Participants at a BetterLife livelihoods training">
-      </div>
+    <div style="max-width:760px;margin:0 auto 10px;">
       <div class="fade-up">
         <span class="eyebrow">Area of Work</span>
         <h2>Green Skills, Livelihoods and Market Access</h2>
@@ -245,7 +242,6 @@ $farm = SITE_URL . '/farm.php';
         'Our engagement with the World Food Programme has contributed to work around farmer information, verification and the responsible use of agricultural and climate data.',
       ], 'Explore Soilla', $stories);
       ?>
-      <div class="workblock-photo fade-up"><img src="<?= asset_url('assets/img/betterlifeint-source/projects/project-soilla-app-alt.jpeg') ?>" alt="A farmer using the Soilla mobile app in the field"><span class="cap">Soilla in the field</span></div>
       <?php
       workblock('Agribusiness Connekt', '', [
         'Where Soilla supports production decisions, Agribusiness Connekt focuses on the business around the farm. It links producers to buyers, finance, services and market opportunities.',
@@ -262,7 +258,6 @@ $farm = SITE_URL . '/farm.php';
     <div class="section-head fade-up">
       <span class="eyebrow">Strengthening the Organisation Behind the Work</span>
     </div>
-    <div class="workblock-photo fade-up" style="margin-bottom:26px;"><img src="<?= asset_url('assets/img/betterlifeint-source/about/about-team-photo.jpg') ?>" alt="The BetterLife International team"><span class="cap">The team behind the work</span></div>
     <div class="workblock-list">
       <?php
       workblock('Dovetail Impact Foundation', 'Growing without losing what made the work local', [

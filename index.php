@@ -4,19 +4,13 @@ $pageTitle = 'Home';
 $activePage = 'home';
 $pageDescription = 'BetterLife International works with women, young people, refugees, displaced families and farming communities across Uganda, South Sudan, Tanzania, Ghana and the DRC to turn climate pressure into practical action.';
 
+// These four are not reused anywhere else on the site, so the homepage
+// hero stays free of the repeats that show up later in the page flow.
 $heroImages = [
     setting($pdo, 'hero_image_1', 'assets/img/hero-real-1.jpg'),
-    setting($pdo, 'hero_image_2', 'assets/img/farm-field-1.jpg'),
     setting($pdo, 'hero_image_3', 'assets/img/product-honey.jpg'),
-    setting($pdo, 'hero_image_4', 'assets/img/about-real-1.jpg'),
-    setting($pdo, 'hero_image_5', 'assets/img/farm-field-2.jpg'),
     setting($pdo, 'hero_image_6', 'assets/img/program-trees.jpg'),
     setting($pdo, 'hero_image_7', 'assets/img/product-ghee.jpg'),
-    setting($pdo, 'hero_image_8', 'assets/img/product-yogurt.jpg'),
-    setting($pdo, 'hero_image_9', 'assets/img/betterlifeint-source/programs/program-photo-1.jpg'),
-    setting($pdo, 'hero_image_10', 'assets/img/betterlifeint-source/programs/program-photo-3.jpg'),
-    setting($pdo, 'hero_image_11', 'assets/img/betterlifeint-source/projects/project-agro-tourism-alt.jpeg'),
-    setting($pdo, 'hero_image_12', 'assets/img/betterlifeint-source/impact-reports/impact-photo-1.jpeg'),
 ];
 $programs = $pdo->query("SELECT * FROM programs WHERE status = 1 ORDER BY sort_order LIMIT 5")->fetchAll();
 $posts = $pdo->query("SELECT bp.*, bc.name AS cat_name FROM blog_posts bp LEFT JOIN blog_categories bc ON bc.id = bp.category_id WHERE bp.status = 'published' ORDER BY bp.published_at DESC LIMIT 3")->fetchAll();
@@ -92,7 +86,7 @@ require __DIR__ . '/includes/header.php';
         <p class="muted">BetterLife works across those connections. We bring together agriculture, livelihoods, clean energy, education, technology and market access around the way people actually live.</p>
       </div>
       <div class="fade-up img-frame">
-        <img src="<?= asset_url('assets/img/project-spring.jpg') ?>" alt="Women collecting water at a community borehole">
+        <img src="<?= asset_url('assets/img/program-trees-2.jpg') ?>" alt="A mother and child in a BetterLife community environmental project">
       </div>
     </div>
   </div>
@@ -147,10 +141,7 @@ require __DIR__ . '/includes/header.php';
 
 <section class="section-cream">
   <div class="container">
-    <div class="split">
-      <div class="fade-up img-frame">
-        <img src="<?= asset_url('assets/img/betterlifeint-source/programs/program-photo-2.jpg') ?>" alt="Women in Yumbe learning climate-resilient farming">
-      </div>
+    <div style="max-width:760px;margin:0 auto;">
       <div class="fade-up">
         <span class="eyebrow">Featured Work</span>
         <h2>What Women in Yumbe Taught Us About Climate Resilience</h2>
@@ -179,7 +170,7 @@ require __DIR__ . '/includes/header.php';
         </div>
       </div>
       <div class="fade-up img-frame bg-blue">
-        <img src="<?= asset_url('assets/img/farm-field-2.jpg') ?>" alt="BetterLife Agro Tourism Farm">
+        <img src="<?= asset_url('assets/img/product-ghee-2.jpg') ?>" alt="Dairy products from BetterLife Agro Tourism Farm">
       </div>
     </div>
   </div>

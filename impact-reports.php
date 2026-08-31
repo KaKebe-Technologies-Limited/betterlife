@@ -58,16 +58,13 @@ require __DIR__ . '/includes/header.php';
 
 <section>
   <div class="container">
-    <div class="split">
+    <div style="max-width:760px;margin:0 auto;">
       <div class="fade-up">
         <span class="eyebrow">What Change Looks Like</span>
         <?php foreach ($changeLooksLike as $line): ?>
           <p class="muted"><?= $line ?></p>
         <?php endforeach; ?>
         <p class="muted">These changes may begin with one activity. Their value lies in what becomes possible afterwards.</p>
-      </div>
-      <div class="fade-up img-frame" style="position:sticky;top:100px;">
-        <img src="<?= asset_url('assets/img/impact-story-2.jpg') ?>" alt="A woman laughing during a BetterLife community session">
       </div>
     </div>
   </div>

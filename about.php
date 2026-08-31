@@ -74,7 +74,7 @@ require __DIR__ . '/includes/header.php';
     <div class="split" style="align-items:start;">
       <div class="prose-narrow fade-up"><?= nl2p(setting($pdo, 'about_who_text')) ?></div>
       <div class="fade-up img-frame" style="position:sticky;top:100px;">
-        <img src="<?= asset_url('assets/img/betterlifeint-source/about/about-team-photo.jpg') ?>" alt="A BetterLife team member with a child in the community">
+        <img src="<?= asset_url('assets/img/betterlifeint-source/impact-reports/impact-photo-2.jpeg') ?>" alt="A BetterLife team member with a child in the community">
       </div>
     </div>
   </div>
@@ -152,9 +152,8 @@ require __DIR__ . '/includes/header.php';
         <div class="detail-block"><h4><?= $b[0] ?></h4><p><?= $b[1] ?></p></div>
       <?php endforeach; ?>
     </div>
-    <div class="impact-photos fade-up" style="margin-top:36px;">
+    <div class="impact-photos fade-up" style="margin-top:36px;grid-template-columns:repeat(2,1fr);max-width:600px;">
       <div class="impact-photo"><img src="<?= asset_url('assets/img/betterlifeint-source/programs/program-photo-6.jpg') ?>" alt="A woman participating in a BetterLife community programme"><span class="cap">Women &amp; girls</span></div>
-      <div class="impact-photo"><img src="<?= asset_url('assets/img/betterlifeint-source/programs/program-photo-7.jpg') ?>" alt="Young people at a BetterLife youth session"><span class="cap">Children &amp; young people</span></div>
       <div class="impact-photo"><img src="<?= asset_url('assets/img/project-women-idps.jpg') ?>" alt="A smallholder farmer tending crops"><span class="cap">Refugees &amp; smallholder farmers</span></div>
     </div>
   </div>
@@ -170,8 +169,7 @@ require __DIR__ . '/includes/header.php';
         <div class="detail-block"><h4><?= $b[0] ?></h4><p><?= $b[1] ?></p></div>
       <?php endforeach; ?>
     </div>
-    <div class="impact-photos fade-up" style="margin-top:36px;">
-      <div class="impact-photo"><img src="<?= asset_url('assets/img/betterlifeint-source/projects/project-spring-alt.jpeg') ?>" alt="Solar-powered irrigation work in South Sudan"><span class="cap">South Sudan</span></div>
+    <div class="impact-photos fade-up" style="margin-top:36px;grid-template-columns:repeat(2,1fr);max-width:600px;">
       <div class="impact-photo"><img src="<?= asset_url('assets/img/betterlifeint-source/projects/project-climate-education-alt.jpg') ?>" alt="Climate education programme in Ghana"><span class="cap">Ghana</span></div>
       <div class="impact-photo"><img src="<?= asset_url('assets/img/betterlifeint-source/programs/program-photo-9.jpg') ?>" alt="Community programme activity in Uganda"><span class="cap">Uganda</span></div>
     </div>
@@ -188,10 +186,7 @@ require __DIR__ . '/includes/header.php';
 
 <section class="section-cream">
   <div class="container">
-    <div class="split">
-      <div class="fade-up img-frame">
-        <img src="<?= asset_url('assets/img/hero-farm-1.jpg') ?>" alt="BetterLife International journey">
-      </div>
+    <div style="max-width:760px;margin:0 auto;">
       <div class="fade-up">
         <span class="eyebrow">Our Journey</span>
         <h2>From a Local Idea to Work Across Five Countries</h2>

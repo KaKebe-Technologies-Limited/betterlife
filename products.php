@@ -16,12 +16,7 @@ if ($category && in_array($category, $categories, true)) {
 $products = $stmt->fetchAll();
 
 $farmGallery = [
-    ['img' => 'assets/img/betterlifeint-source/projects/project-agro-tourism-alt.jpeg', 'cap' => 'Solar-powered irrigation'],
     ['img' => 'assets/img/betterlifeint-source/programs/program-photo-1.jpg', 'cap' => 'Refugees training on the farm'],
-    ['img' => 'assets/img/betterlifeint-source/programs/program-photo-2.jpg', 'cap' => 'Greenhouse farming'],
-    ['img' => 'assets/img/betterlifeint-source/programs/program-photo-3.jpg', 'cap' => 'Community beekeeping'],
-    ['img' => 'assets/img/betterlifeint-source/programs/program-photo-4.jpg', 'cap' => 'Livestock rearing'],
-    ['img' => 'assets/img/betterlifeint-source/programs/program-photo-5.jpg', 'cap' => 'Free seedlings for new gardens'],
 ];
 
 require __DIR__ . '/includes/header.php';
@@ -37,8 +32,7 @@ require __DIR__ . '/includes/header.php';
 
 <section>
   <div class="container">
-    <div class="split" style="margin-bottom:60px;">
-      <div class="fade-up img-frame"><img src="<?= asset_url(setting($pdo,'farm_image')) ?>" alt="BetterLife Agro Tourism Farm"></div>
+    <div style="max-width:760px;margin:0 auto 60px;">
       <div class="fade-up">
         <span class="eyebrow">Our Strategy: Food Security</span>
         <h2><?= h(setting($pdo, 'farm_tagline', 'From immediate support to lasting independence')) ?></h2>
@@ -51,7 +45,7 @@ require __DIR__ . '/includes/header.php';
       <h2>Clean Energy, Real Livelihoods</h2>
       <p class="muted">A glimpse of the people and practices behind BetterLife Agro Tourism Farm Ltd.</p>
     </div>
-    <div class="impact-photos" style="margin-bottom:80px;">
+    <div class="impact-photos" style="margin-bottom:80px;grid-template-columns:1fr;max-width:520px;margin-left:auto;margin-right:auto;">
       <?php foreach ($farmGallery as $g): ?>
         <div class="impact-photo fade-up"><img src="<?= asset_url($g['img']) ?>" alt="<?= h($g['cap']) ?>"><span class="cap"><?= h($g['cap']) ?></span></div>
       <?php endforeach; ?>

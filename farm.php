@@ -62,14 +62,6 @@ require __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<section class="media-band">
-  <div class="container">
-    <figure class="fade-up">
-      <img src="<?= asset_url('assets/img/impact-story-3.jpg') ?>" alt="Greenhouse crop production on the farm">
-    </figure>
-  </div>
-</section>
-
 <section>
   <div class="container">
     <div class="section-head fade-up">
@@ -92,7 +84,7 @@ require __DIR__ . '/includes/header.php';
         <p class="muted">This turns BetterLife&rsquo;s products into more than items on a shelf. They are the final link in a chain that begins with skills and ends with income.</p>
       </div>
       <div class="fade-up img-frame">
-        <img src="<?= asset_url('assets/img/product-honey-real.jpg') ?>" alt="Jars of BetterLife Honey">
+        <img src="<?= asset_url('assets/img/product-honey-2.jpg') ?>" alt="Jars of BetterLife Honey">
       </div>
     </div>
   </div>
