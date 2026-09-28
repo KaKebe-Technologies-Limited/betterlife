@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
   window.addEventListener('scroll', function () {
     if (!header) return;
     header.style.boxShadow = window.scrollY > 10 ? '0 6px 20px rgba(11,61,46,.08)' : 'none';
+    header.classList.toggle('scrolled', window.scrollY > 40);
 
     var btt = document.querySelector('.back-to-top');
     if (btt) btt.classList.toggle('show', window.scrollY > 500);
@@ -131,5 +132,34 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Simple client-side validation feedback (native HTML5 required already handles most)
+  // Homepage hero: fetch the admin-managed photo gallery over AJAX and
+  // rotate the photo that breaks over the Africa artwork's edge. It fades
+  // to 0, swaps its src once fully hidden, then fades back in — so a slow
+  // connection just shows the static server-rendered photo for longer,
+  // never a broken image.
+  var heroPhoto = document.getElementById('heroOverlapPhoto');
+
+  if (heroPhoto && window.fetch) {
+    fetch('hero-gallery.php')
+      .then(function (res) { return res.ok ? res.json() : []; })
+      .then(function (photos) {
+        photos = (photos || []).filter(function (p) { return p && p.src; });
+        if (photos.length < 2) return; // not enough variety to rotate; keep the default
+
+        photos.forEach(function (p) { var pre = new Image(); pre.src = p.src; });
+
+        var index = 0;
+        setInterval(function () {
+          index = (index + 1) % photos.length;
+          var next = photos[index];
+          heroPhoto.style.opacity = '0';
+          setTimeout(function () {
+            heroPhoto.setAttribute('src', next.src);
+            heroPhoto.alt = next.alt || heroPhoto.alt;
+            heroPhoto.style.opacity = '1';
+          }, 500);
+        }, 5000);
+      })
+      .catch(function () { /* keep the three default portraits already rendered */ });
+  }
 });

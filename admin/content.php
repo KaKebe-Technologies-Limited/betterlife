@@ -9,6 +9,8 @@ $activeNav = 'content';
  * the add/edit form shows (and their labels) for that section.
  */
 $SECTIONS = [
+    'home:hero_gallery' => ['page' => 'home', 'section' => 'hero_gallery', 'group' => 'Homepage', 'label' => 'Hero Africa Photo Gallery', 'page_url' => 'index.php',
+        'fields' => ['title' => 'Caption (used as photo alt text)', 'image' => 'Photo']],
     'about:how_we_work' => ['page' => 'about', 'section' => 'how_we_work', 'group' => 'About Page', 'label' => 'How We Work', 'page_url' => 'about.php',
         'fields' => ['title' => 'Heading', 'body' => 'Text']],
     'about:who_we_work_with' => ['page' => 'about', 'section' => 'who_we_work_with', 'group' => 'About Page', 'label' => 'Who We Work With', 'page_url' => 'about.php',

@@ -49,7 +49,7 @@ $ogType          = $ogType ?? 'website';
 
 <link rel="icon" href="<?= asset_url(setting($pdo, 'favicon', 'assets/img/favicon.png')) ?>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="<?= SITE_URL ?>/assets/css/style.css?v=<?= @filemtime(__DIR__ . '/../assets/css/style.css') ?: time() ?>">
 
 <?php if ($activePage === 'home'): ?>
@@ -71,7 +71,8 @@ $ogType          = $ogType ?? 'website';
 </script>
 <?php endif; ?>
 </head>
-<body>
+<body class="<?= h($activePage) ?>">
+<?php if ($activePage === 'home'): ?><div class="home-shell"><?php endif; ?>
 
 <header class="site-header">
   <div class="container">
@@ -93,9 +94,13 @@ $ogType          = $ogType ?? 'website';
       <a href="<?= SITE_URL ?>/team.php" class="<?= $activePage === 'team' ? 'active' : '' ?>">Our Team</a>
       <a href="<?= SITE_URL ?>/blog.php" class="<?= $activePage === 'blog' ? 'active' : '' ?>">Stories</a>
       <a href="<?= SITE_URL ?>/contact.php" class="<?= $activePage === 'contact' ? 'active' : '' ?>">Contact</a>
+      <a href="<?= SITE_URL ?>/contact.php?subject=Partnership enquiry" class="btn-pill-accent mobile-only">Support Our Work</a>
     </nav>
 
     <div class="header-actions">
+      <?php if ($phone = setting($pdo, 'phone')): ?>
+        <a href="tel:<?= h(preg_replace('/\s+/', '', $phone)) ?>" class="nav-phone"><?= icon('phone', 16) ?> <?= h($phone) ?></a>
+      <?php endif; ?>
       <a href="<?= SITE_URL ?>/cart.php" class="cart-link" aria-label="Cart">
         <?= icon('shopping-bag', 20) ?>
         <?php if (!empty($_SESSION['cart']) && ($cartCount = array_sum(array_column($_SESSION['cart'], 'qty')))): ?>
@@ -103,6 +108,7 @@ $ogType          = $ogType ?? 'website';
         <?php endif; ?>
       </a>
       <a href="<?= SITE_URL ?>/products.php" class="btn btn-primary btn-sm"><span class="label">Shop the Farm</span></a>
+      <a href="<?= SITE_URL ?>/contact.php?subject=Partnership enquiry" class="btn-pill-accent"><span class="label">Support Our Work</span></a>
       <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><?= icon('menu', 22) ?></button>
     </div>
   </div>

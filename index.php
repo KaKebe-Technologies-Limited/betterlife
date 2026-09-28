@@ -4,16 +4,9 @@ $pageTitle = 'Home';
 $activePage = 'home';
 $pageDescription = 'BetterLife International works with women, young people, refugees, displaced families and farming communities across Uganda, South Sudan, Tanzania, Ghana and the DRC to turn climate pressure into practical action.';
 
-// These four are not reused anywhere else on the site, so the homepage
-// hero stays free of the repeats that show up later in the page flow.
-$heroImages = [
-    setting($pdo, 'hero_image_1', 'assets/img/hero-real-1.jpg'),
-    setting($pdo, 'hero_image_3', 'assets/img/product-honey.jpg'),
-    setting($pdo, 'hero_image_6', 'assets/img/program-trees.jpg'),
-    setting($pdo, 'hero_image_7', 'assets/img/product-ghee.jpg'),
-];
 $programs = $pdo->query("SELECT * FROM programs WHERE status = 1 ORDER BY sort_order LIMIT 5")->fetchAll();
 $posts = $pdo->query("SELECT bp.*, bc.name AS cat_name FROM blog_posts bp LEFT JOIN blog_categories bc ON bc.id = bp.category_id WHERE bp.status = 'published' ORDER BY bp.published_at DESC LIMIT 3")->fetchAll();
+$impactStories = $pdo->query("SELECT * FROM impact_stories WHERE status = 1 ORDER BY sort_order LIMIT 3")->fetchAll();
 
 // Button label for each programme area on the "What We Do" grid.
 $programCta = [
@@ -27,50 +20,128 @@ $programCta = [
 require __DIR__ . '/includes/header.php';
 ?>
 
-<section class="hero-full" id="top">
-  <div class="hero-scroll-panel">
-    <div class="scroll-track">
-      <?php foreach (array_chunk($heroImages, 4) as $ri => $rowImages): ?>
-        <div class="scroll-row <?= $ri % 2 === 0 ? 'dir-left' : 'dir-right' ?>">
-          <?php foreach (array_merge($rowImages, $rowImages) as $ii => $img): ?>
-            <div class="scroll-tile <?= $ii % 2 === 0 ? 'tint-green' : 'tint-blue' ?>">
-              <img src="<?= asset_url($img) ?>" alt="BetterLife International" loading="lazy">
-            </div>
-          <?php endforeach; ?>
-        </div>
-      <?php endforeach; ?>
-    </div>
-    <div class="hero-scrim"></div>
-  </div>
+<section class="hero-split" id="top">
+  <div class="container hero-split-inner">
 
-  <div class="container hero-full-copy">
-    <div class="hero-text fade-up">
-      <span class="hero-badge"><span class="dot"></span> <?= h(setting($pdo, 'hero_kicker', 'Founded in Uganda. Working across five African countries.')) ?></span>
-      <h1><?= h(setting($pdo, 'hero_title')) ?></h1>
+    <div class="hero-copy">
+      <span class="hero-kicker"><span class="dot"></span> <?= h(setting($pdo, 'hero_kicker', 'Founded in Uganda. Working across five African countries.')) ?></span>
+      <h1><?= nl2br(preg_replace('/\b(begin again)\b/i', '<span class="highlight">$1</span>', h(setting($pdo, 'hero_title')))) ?></h1>
       <p class="lead"><?= h(setting($pdo, 'hero_subtitle')) ?></p>
       <div class="hero-actions">
-        <a href="<?= SITE_URL ?>/programs.php" class="btn btn-hero-cta">See Our Work <span class="cta-dot"><?= icon('arrow-right', 15) ?></span></a>
-        <a href="<?= SITE_URL ?>/contact.php" class="btn btn-outline">Partner With Us</a>
+        <a href="<?= SITE_URL ?>/programs.php" class="btn btn-hero-cta">Explore Our Work <span class="cta-dot"><?= icon('arrow-right', 15) ?></span></a>
+        <a href="<?= SITE_URL ?>/contact.php" class="btn-ghost-dark"><span class="play-ico"><?= icon('arrow-right', 12) ?></span> Partner With Us</a>
+      </div>
+      <div class="hero-features">
+        <div class="hero-feature"><span class="icon-badge"><?= icon('leaf', 18) ?></span><span>Climate-Resilient<br>Agriculture</span></div>
+        <div class="hero-feature"><span class="icon-badge"><?= icon('book', 18) ?></span><span>Climate<br>Education</span></div>
+        <div class="hero-feature"><span class="icon-badge"><?= icon('droplet', 18) ?></span><span>Clean Water<br>&amp; Energy</span></div>
+        <div class="hero-feature"><span class="icon-badge"><?= icon('users', 18) ?></span><span>Green Skills &amp;<br>Livelihoods</span></div>
+      </div>
+    </div>
+
+    <div class="hero-art">
+      <div class="hero-art-dots" aria-hidden="true">
+        <span class="accent-dot d-orange" style="width:18px;height:18px;top:2%;left:8%;animation-delay:0s;"></span>
+        <span class="accent-dot d-red"    style="width:13px;height:13px;top:10%;right:4%;animation-delay:.6s;"></span>
+        <span class="accent-dot d-green"  style="width:11px;height:11px;top:46%;left:-2%;animation-delay:1.2s;"></span>
+        <span class="accent-dot d-blue"   style="width:14px;height:14px;bottom:18%;left:4%;animation-delay:1.8s;"></span>
+        <span class="accent-dot d-blue"   style="width:11px;height:11px;bottom:-2%;left:38%;animation-delay:2.4s;"></span>
+      </div>
+
+      <svg class="africa-art" viewBox="0 0 600 760" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" role="img" aria-label="The shape of the African continent, representing the five countries BetterLife works in">
+        <defs>
+          <path id="africaShape" d="M150,40 C250,20 350,15 420,35 C460,50 470,75 450,95 C480,100 540,110 580,160 C560,190 530,200 510,220 C530,260 540,300 525,340 C515,380 495,420 470,460 C450,500 430,540 410,580 C395,620 385,670 375,750 C350,730 320,700 300,660 C280,620 265,580 255,540 C245,500 230,470 210,450 C185,440 160,445 140,460 C125,440 115,415 110,390 C100,370 90,355 75,345 C60,335 50,315 55,295 C60,270 75,250 90,225 C100,200 95,175 105,150 C115,120 130,90 150,65 C152,55 150,48 150,40 Z"/>
+        </defs>
+        <use href="#africaShape" class="africa-fill"/>
+        <use href="#africaShape" class="africa-dash" transform="translate(-14,-14) scale(0.98)"/>
+      </svg>
+
+      <div class="hero-photo-overlap">
+        <img id="heroOverlapPhoto" src="<?= asset_url('assets/img/village-girl-portrait.webp') ?>" alt="A girl from a BetterLife community in Uganda">
+      </div>
+
+      <div class="hero-stat-card">
+        <strong>112,430</strong>
+        <span>People reached across<br>5 African countries in 2025</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="done-section">
+  <div class="container">
+    <div class="done-grid">
+      <div class="done-collage fade-up">
+        <div class="dc-item dc-1"><img src="<?= asset_url('assets/img/yumbe-greenhouse-group.webp') ?>" alt="Building a greenhouse with women in Yumbe"></div>
+        <div class="dc-item dc-2"><img src="<?= asset_url('assets/img/classroom-climate-club.webp') ?>" alt="A school climate club in session"></div>
+        <div class="dc-item dc-3"><img src="<?= asset_url('assets/img/farmers-planting-together.webp') ?>" alt="Two generations working the same field"></div>
+      </div>
+      <div class="fade-up">
+        <span class="eyebrow">Our Impact</span>
+        <h2>What have we done with <em>your help?</em></h2>
+        <p class="muted">Every season, BetterLife works alongside farmers, refugees, women and young people across Uganda, South Sudan, Tanzania, Ghana and the DRC &mdash; turning climate pressure into food people can grow, skills they can earn from and routes into a stronger local economy.</p>
+        <p class="muted">In 2025 alone, that meant 112,430 people reached, 18,900 farmers supported and 65 community boreholes delivering cleaner water closer to home.</p>
+        <a href="<?= SITE_URL ?>/impact-reports.php" class="btn btn-hero-cta">See Our Impact <span class="cta-dot"><?= icon('arrow-right', 15) ?></span></a>
       </div>
     </div>
   </div>
 </section>
 
-<section class="impact-section section-cream">
+<?php if ($impactStories): ?>
+<section class="section-cream stories-section">
   <div class="container">
     <div class="section-head fade-up">
-      <span class="eyebrow">Impact at a Glance</span>
-      <h2>The Numbers Matter. What Happens Afterwards Matters More.</h2>
-      <p class="muted">In 2025, BetterLife reached 112,430 people. Behind that number are farmers who changed how they grow food, young people who found a way into work, women who began earning and saving, and families that became less exposed to the next failed season.</p>
+      <span class="eyebrow">Real Stories</span>
+      <h2>Learn the stories of <em>those we've already helped</em></h2>
     </div>
-    <div class="impact-stats">
-      <div class="stat-item fade-up"><strong data-count="112,430">0</strong><span>People reached in 2025</span></div>
-      <div class="stat-item fade-up"><strong data-count="18,900">0</strong><span>Farmers supported</span></div>
-      <div class="stat-item fade-up"><strong data-count="41,200">0</strong><span>Refugees and host-community members reached</span></div>
-      <div class="stat-item fade-up"><strong data-count="5">0</strong><span>African countries</span></div>
+    <div class="stories-row">
+      <?php foreach ($impactStories as $story): ?>
+        <a href="<?= SITE_URL ?>/impact-reports.php" class="story-card fade-up">
+          <div class="story-photo"><img src="<?= asset_url($story['image']) ?>" alt="<?= h($story['title']) ?>"></div>
+          <h4><?= h($story['title']) ?></h4>
+          <p><?= h($story['caption']) ?></p>
+        </a>
+      <?php endforeach; ?>
     </div>
-    <div style="margin-top:28px;">
-      <a href="<?= SITE_URL ?>/impact-reports.php" class="btn btn-outline-dark">See Our Impact</a>
+  </div>
+</section>
+<?php endif; ?>
+
+<section class="reach-section">
+  <div class="container reach-grid">
+    <div class="fade-up">
+      <span class="eyebrow">Where We Work</span>
+      <h2>We are always where others need help.</h2>
+      <div class="reach-stats">
+        <div class="reach-stat"><strong>112,430</strong><span>People reached</span></div>
+        <div class="reach-stat"><strong>65</strong><span>Community boreholes</span></div>
+        <div class="reach-stat"><strong>50,000+</strong><span>Tree seedlings raised</span></div>
+      </div>
+      <a href="<?= SITE_URL ?>/about.php#where-we-work" class="btn btn-outline-dark">See Where We Work</a>
+    </div>
+    <div class="reach-map fade-up">
+      <svg viewBox="0 0 600 760" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Map of the five African countries BetterLife works in">
+        <path class="reach-map-fill" d="M150,40 C250,20 350,15 420,35 C460,50 470,75 450,95 C480,100 540,110 580,160 C560,190 530,200 510,220 C530,260 540,300 525,340 C515,380 495,420 470,460 C450,500 430,540 410,580 C395,620 385,670 375,750 C350,730 320,700 300,660 C280,620 265,580 255,540 C245,500 230,470 210,450 C185,440 160,445 140,460 C125,440 115,415 110,390 C100,370 90,355 75,345 C60,335 50,315 55,295 C60,270 75,250 90,225 C100,200 95,175 105,150 C115,120 130,90 150,65 C152,55 150,48 150,40 Z"/>
+        <g class="reach-pin" transform="translate(230,270)"><circle r="10"/><text y="-18">Uganda</text></g>
+        <g class="reach-pin" transform="translate(400,330)"><circle r="10"/><text y="-18">South Sudan</text></g>
+        <g class="reach-pin" transform="translate(280,180)"><circle r="10"/><text y="-18">Ghana</text></g>
+        <g class="reach-pin" transform="translate(270,420)"><circle r="10"/><text y="-18">Tanzania</text></g>
+        <g class="reach-pin" transform="translate(180,340)"><circle r="10"/><text y="-18">DR Congo</text></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="cta-band-photo"><img src="<?= asset_url('assets/img/field-team-group-under-tree.webp') ?>" alt="The BetterLife field team"></div>
+  <div class="container">
+    <div class="cta-band-inner fade-up">
+      <h2>Ready to grow this work with us? Everyone can help.</h2>
+      <div class="hero-actions">
+        <a href="<?= SITE_URL ?>/contact.php" class="btn btn-hero-cta">Partner With Us <span class="cta-dot"><?= icon('arrow-right', 15) ?></span></a>
+        <a href="<?= SITE_URL ?>/programs.php" class="btn-ghost-light">Explore Our Work</a>
+      </div>
     </div>
   </div>
 </section>

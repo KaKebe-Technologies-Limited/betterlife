@@ -8,3 +8,7 @@ Thumbs.db
 
 # Local env overrides (if you ever split config out)
 config/config.local.php
+
+# Full-resolution camera originals — kept locally only; the site serves the
+# optimized WebP copies in assets/img/. Too large for git (hundreds of MB).
+assets/img/originals/
