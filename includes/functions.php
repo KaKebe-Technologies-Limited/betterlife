@@ -23,6 +23,18 @@ function setting(PDO $pdo, string $key, string $default = ''): string
 }
 
 /* ---------------------------------------------------------------------
+ * Content items — admin-editable repeatable content blocks (lists of
+ * cards, timeline rows, photo strips, workblocks, etc.) grouped by a
+ * (page, section_key) pair. See admin/content.php for the CRUD screen.
+ * ------------------------------------------------------------------- */
+function content_items(PDO $pdo, string $page, string $sectionKey): array
+{
+    $stmt = $pdo->prepare("SELECT * FROM content_items WHERE page = ? AND section_key = ? AND status = 1 ORDER BY sort_order, id");
+    $stmt->execute([$page, $sectionKey]);
+    return $stmt->fetchAll();
+}
+
+/* ---------------------------------------------------------------------
  * General helpers
  * ------------------------------------------------------------------- */
 function h(?string $value): string

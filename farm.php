@@ -4,19 +4,12 @@ $pageTitle = 'BetterLife Farm';
 $activePage = 'farm';
 $pageDescription = 'BetterLife Agro Tourism Farm brings together practical learning, clean energy, food production and market access, giving farmers a route from training to a real market.';
 
-$onTheFarm = [
-  ['Solar-Powered Irrigation', 'Water is pumped and distributed using solar energy, helping crops survive when rainfall is unreliable.'],
-  ['Greenhouse and Crop Farming', 'Farmers learn water-efficient production, soil management, crop care and methods suited to limited land.'],
-  ['Dairy and Livestock', 'Livestock supports food, manure, household income and the farm&rsquo;s dairy value chain.'],
-  ['Beekeeping', 'Community beekeeping creates income while encouraging the protection of trees and flowering plants.'],
-  ['Poultry and Aquaculture', 'Diversified production reduces the risk of depending on one crop or one season.'],
-  ['Seedlings', 'Participants receive free seedlings to establish gardens of their own and begin moving towards independent production.'],
-];
-$products = [
-  ['BetterLife Honey', 'Produced through community beekeeping and local value chains that support both livelihoods and environmental care.', 'assets/img/product-honey-real.jpg'],
-  ['BetterLife Ghee', 'Made through local dairy production, creating a market for milk while adding value closer to the farmer.', 'assets/img/product-ghee-real.jpg'],
-  ['BetterLife Vanilla Yoghurt', 'Fresh vanilla yoghurt made from locally sourced milk and processed through the BetterLife dairy value chain.', 'assets/img/product-yogurt.jpg'],
-];
+// Managed from Admin → Page Content (page "farm", section "on_the_farm").
+$onTheFarm = content_items($pdo, 'farm', 'on_the_farm');
+// Pulls straight from the real product catalogue (Admin → Products) so this
+// preview always matches what is actually for sale, with no separate copy
+// to keep in sync.
+$products = $pdo->query("SELECT * FROM products WHERE status = 1 ORDER BY featured DESC, sort_order LIMIT 3")->fetchAll();
 
 require __DIR__ . '/includes/header.php';
 ?>
@@ -69,7 +62,7 @@ require __DIR__ . '/includes/header.php';
     </div>
     <div class="detail-grid fade-up">
       <?php foreach ($onTheFarm as $b): ?>
-        <div class="detail-block"><h4><?= $b[0] ?></h4><p><?= $b[1] ?></p></div>
+        <div class="detail-block"><h4><?= h($b['title']) ?></h4><p><?= h($b['body']) ?></p></div>
       <?php endforeach; ?>
     </div>
   </div>
@@ -98,10 +91,10 @@ require __DIR__ . '/includes/header.php';
     <div class="grid grid-3">
       <?php foreach ($products as $p): ?>
         <div class="card product-card fade-up">
-          <div class="thumb"><img src="<?= asset_url($p[2]) ?>" alt="<?= h($p[0]) ?>"></div>
+          <div class="thumb"><img src="<?= asset_url($p['image']) ?>" alt="<?= h($p['name']) ?>"></div>
           <div class="body" style="padding:22px;">
-            <h3 style="font-size:17px;"><?= h($p[0]) ?></h3>
-            <p class="muted" style="font-size:14px;"><?= h($p[1]) ?></p>
+            <h3 style="font-size:17px;"><?= h($p['name']) ?></h3>
+            <p class="muted" style="font-size:14px;"><?= h($p['short_desc']) ?></p>
           </div>
         </div>
       <?php endforeach; ?>

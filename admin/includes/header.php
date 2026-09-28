@@ -18,6 +18,7 @@ $navItems = [
     ['key' => 'team', 'label' => 'Team & Board', 'icon' => 'users', 'href' => ADMIN_URL . '/team.php'],
     ['key' => 'testimonials', 'label' => 'Testimonials', 'icon' => 'message', 'href' => ADMIN_URL . '/testimonials.php'],
     ['key' => 'stats', 'label' => 'Impact Stats', 'icon' => 'trending-up', 'href' => ADMIN_URL . '/stats.php'],
+    ['key' => 'content', 'label' => 'Page Content', 'icon' => 'file-text', 'href' => ADMIN_URL . '/content.php'],
   ]],
   ['group' => 'Blog', 'items' => [
     ['key' => 'blog', 'label' => 'Blog Posts', 'icon' => 'newspaper', 'href' => ADMIN_URL . '/blog.php'],

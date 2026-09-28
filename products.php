@@ -15,9 +15,8 @@ if ($category && in_array($category, $categories, true)) {
 }
 $products = $stmt->fetchAll();
 
-$farmGallery = [
-    ['img' => 'assets/img/betterlifeint-source/programs/program-photo-1.jpg', 'cap' => 'Refugees training on the farm'],
-];
+// Managed from Admin → Page Content (page "products", section "farm_gallery").
+$farmGallery = content_items($pdo, 'products', 'farm_gallery');
 
 require __DIR__ . '/includes/header.php';
 ?>
@@ -47,7 +46,7 @@ require __DIR__ . '/includes/header.php';
     </div>
     <div class="impact-photos" style="margin-bottom:80px;grid-template-columns:1fr;max-width:520px;margin-left:auto;margin-right:auto;">
       <?php foreach ($farmGallery as $g): ?>
-        <div class="impact-photo fade-up"><img src="<?= asset_url($g['img']) ?>" alt="<?= h($g['cap']) ?>"><span class="cap"><?= h($g['cap']) ?></span></div>
+        <div class="impact-photo fade-up"><img src="<?= asset_url($g['image']) ?>" alt="<?= h($g['title']) ?>"><span class="cap"><?= h($g['title']) ?></span></div>
       <?php endforeach; ?>
     </div>
 
