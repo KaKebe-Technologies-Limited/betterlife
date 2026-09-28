@@ -1,13 +1,24 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // Mobile nav toggle
+  // Mobile nav: off-canvas panel with backdrop, close button and Escape
   var toggle = document.querySelector('.nav-toggle');
   var nav = document.querySelector('.main-nav');
+  var backdrop = document.getElementById('navBackdrop');
+  function setNavOpen(open) {
+    nav.classList.toggle('open', open);
+    document.body.classList.toggle('nav-open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (backdrop) backdrop.hidden = !open;
+  }
   if (toggle && nav) {
-    toggle.addEventListener('click', function () {
-      nav.classList.toggle('open');
+    toggle.addEventListener('click', function () { setNavOpen(!nav.classList.contains('open')); });
+    var closeBtn = nav.querySelector('.nav-close');
+    if (closeBtn) closeBtn.addEventListener('click', function () { setNavOpen(false); });
+    if (backdrop) backdrop.addEventListener('click', function () { setNavOpen(false); });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && nav.classList.contains('open')) setNavOpen(false);
     });
     nav.querySelectorAll('a').forEach(function (a) {
-      a.addEventListener('click', function () { nav.classList.remove('open'); });
+      a.addEventListener('click', function () { setNavOpen(false); });
     });
   }
 
@@ -35,12 +46,10 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.nav-dropdown.open').forEach(function (d) { d.classList.remove('open'); });
   });
 
-  // Sticky header shadow
-  var header = document.querySelector('.site-header');
+  // Sticky header shadow (menu band on desktop, masthead on mobile — CSS picks)
+  var stickyBars = document.querySelectorAll('.site-header, .nav-bar');
   window.addEventListener('scroll', function () {
-    if (!header) return;
-    header.style.boxShadow = window.scrollY > 10 ? '0 6px 20px rgba(11,61,46,.08)' : 'none';
-    header.classList.toggle('scrolled', window.scrollY > 40);
+    stickyBars.forEach(function (bar) { bar.classList.toggle('scrolled', window.scrollY > 10); });
 
     var btt = document.querySelector('.back-to-top');
     if (btt) btt.classList.toggle('show', window.scrollY > 500);

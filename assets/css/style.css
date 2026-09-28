@@ -150,95 +150,148 @@ section { padding: 76px 0; }
 .btn-sm { padding: 9px 18px; font-size: 13px; }
 .btn-block { width: 100%; justify-content: center; }
 
-/* ---------- Header ---------- */
-.site-header {
-  position: sticky; top: 0; z-index: 200;
-  background: rgba(255,255,255,.97);
-  backdrop-filter: blur(6px);
-  border-bottom: 1px solid var(--border);
-}
-.site-header .container { display: flex; align-items: center; justify-content: space-between; padding-top: 16px; padding-bottom: 16px; gap: 20px; }
-.brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-head); font-weight: 800; font-size: 17px; color: var(--green-900); }
-.brand img { height: 38px; width: auto; }
-.brand small { display: block; font-size: 10.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--blue-600); }
+/* ---------- Header (institutional, three bands) ----------
+   1. .topbar       slim navy utility strip: contact, social, shop, cart
+   2. .site-header  white masthead: logo, tagline, primary call to action
+   3. .nav-bar      full-width menu band, sticky on desktop
+   Below 981px the topbar hides, the masthead becomes the sticky bar and
+   .main-nav turns into an off-canvas panel. Every label is nowrap so no
+   item ever breaks onto two lines or collides with its neighbour. */
+.topbar { background: var(--blue-900); color: rgba(255,255,255,.82); font-size: 13px; line-height: 1; }
+.topbar .container { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 40px; }
+.topbar a { display: inline-flex; align-items: center; gap: 7px; color: inherit; white-space: nowrap; transition: color .15s ease; }
+.topbar a:hover { color: #fff; }
+.topbar-contact, .topbar-links { display: flex; align-items: center; gap: 22px; min-width: 0; }
+.topbar-social { display: flex; align-items: center; gap: 14px; padding-right: 22px; border-right: 1px solid rgba(255,255,255,.18); }
+.topbar-shop { font-weight: 600; color: var(--hero-gold) !important; }
+.topbar .cart-link { color: #fff; }
+.topbar .cart-count { top: -7px; right: -10px; background: var(--hero-gold); color: var(--hero-charcoal); }
 
-.main-nav { display: flex; align-items: center; gap: 30px; }
-.main-nav a {
-  font-weight: 600; font-size: 15px; color: var(--ink); position: relative; padding: 6px 0;
+.site-header { position: relative; z-index: 210; background: #fff; }
+.site-header .container { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-top: 18px; padding-bottom: 18px; }
+.brand { display: flex; align-items: center; min-width: 0; flex-shrink: 0; }
+.brand img { height: 54px; width: auto; }
+.brand-tagline {
+  margin-left: 20px; padding-left: 20px; border-left: 1px solid var(--border);
+  font-family: var(--font-serif); font-style: italic; font-size: 15px; line-height: 1.35;
+  color: var(--ink-soft); max-width: 230px;
 }
-.main-nav a::after {
-  content: ''; position: absolute; left: 0; bottom: -2px; width: 0; height: 2px; background: var(--green-600); transition: width .2s ease;
-}
-.main-nav a:hover::after, .main-nav a.active::after { width: 100%; }
-.main-nav a.active { color: var(--green-700); }
-.header-actions { display: flex; align-items: center; gap: 16px; }
-.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 6px; color: var(--green-900); }
-
-/* Homepage-only: header starts transparent over the cream hero, then
-   picks up the same frosted-white treatment once the page is scrolled. */
-body.home .site-header { background: transparent; border-bottom-color: transparent; backdrop-filter: none; }
-body.home .site-header.scrolled { background: rgba(255,255,255,.97); border-bottom-color: var(--border); backdrop-filter: blur(6px); }
+.header-actions { display: flex; align-items: center; gap: 16px; flex-shrink: 0; }
+.nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 6px; margin-right: -6px; color: var(--green-900); line-height: 0; }
+.mobile-cart { display: none; }
 
 .btn-pill-accent {
-  display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 999px;
-  background: var(--hero-gold); color: var(--hero-charcoal); font-weight: 800; font-size: 13.5px;
-  text-transform: uppercase; letter-spacing: .03em; box-shadow: 0 8px 18px rgba(245,166,35,.35);
-  white-space: nowrap;
+  display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px; border-radius: 999px;
+  background: var(--hero-gold); color: var(--hero-charcoal); font-weight: 800; font-size: 13px;
+  text-transform: uppercase; letter-spacing: .05em; line-height: 1; white-space: nowrap;
+  transition: background .15s ease;
 }
 .btn-pill-accent:hover { background: #e0951c; }
-.btn-pill-accent.mobile-only { display: none; }
-
-.nav-phone {
-  display: inline-flex; align-items: center; gap: 7px; color: var(--ink); font-weight: 700; font-size: 14px; white-space: nowrap;
-}
-.nav-phone svg { color: var(--green-700); }
-@media (max-width: 1180px) { .nav-phone { display: none; } }
 
 .cart-link { position: relative; display: inline-flex; color: var(--green-900); }
 .cart-count {
   position: absolute; top: -8px; right: -9px; background: var(--blue-600); color: #fff;
   font-size: 10px; font-weight: 800; min-width: 17px; height: 17px; border-radius: 999px;
-  display: flex; align-items: center; justify-content: center; padding: 0 3px;
+  display: flex; align-items: center; justify-content: center; padding: 0 3px; line-height: 1;
 }
+
+.nav-bar {
+  position: sticky; top: 0; z-index: 200; background: #fff;
+  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  transition: box-shadow .2s ease;
+}
+.nav-bar.scrolled { box-shadow: 0 6px 20px rgba(10,61,82,.10); }
+/* Negative margin lines the first label's text up with the logo's left edge. */
+.main-nav { display: flex; align-items: stretch; height: 54px; margin-left: -18px; }
+.main-nav > a, .nav-dropdown-toggle {
+  position: relative; display: flex; align-items: center; gap: 6px; padding: 0 18px;
+  font-family: var(--font-body); font-size: 13.5px; font-weight: 700; line-height: 1;
+  letter-spacing: .06em; text-transform: uppercase; white-space: nowrap; color: var(--ink);
+  background: none; border: none; cursor: pointer; transition: color .15s ease, background .15s ease;
+}
+.main-nav > a::after, .nav-dropdown-toggle::after {
+  content: ''; position: absolute; left: 18px; right: 18px; bottom: -1px; height: 3px;
+  background: var(--blue-600); transform: scaleX(0); transition: transform .2s ease;
+}
+.main-nav > a:hover, .nav-dropdown-toggle:hover, .nav-dropdown.open .nav-dropdown-toggle { color: var(--blue-700); background: #f4f8fa; }
+.main-nav > a:hover::after, .nav-dropdown-toggle:hover::after { transform: scaleX(1); }
+.main-nav > a.active, .nav-dropdown.active .nav-dropdown-toggle { color: var(--blue-700); }
+.main-nav > a.active::after, .nav-dropdown.active .nav-dropdown-toggle::after { transform: scaleX(1); }
+.nav-dropdown-toggle svg { transition: transform .2s ease; }
+.nav-dropdown.open .nav-dropdown-toggle svg { transform: rotate(180deg); }
+.main-nav-head, .main-nav-foot { display: none; }
 
 /* Dropdown ("Our Work") */
-.nav-dropdown { position: relative; }
-.nav-dropdown-toggle {
-  display: inline-flex; align-items: center; gap: 5px; background: none; border: none; cursor: pointer;
-  font: inherit; font-weight: 600; font-size: 15px; color: var(--ink); padding: 6px 0;
-}
-.nav-dropdown.active .nav-dropdown-toggle { color: var(--green-700); }
+.nav-dropdown { position: relative; display: flex; }
 .nav-dropdown-menu {
-  position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%);
-  background: #fff; border-radius: 14px; box-shadow: var(--shadow-lg); border: 1px solid var(--border);
-  padding: 8px; min-width: 210px; display: none; flex-direction: column; gap: 2px; z-index: 50;
+  position: absolute; top: 100%; left: 0; margin-top: 1px;
+  background: #fff; border-top: 3px solid var(--blue-600); border-radius: 0 0 10px 10px;
+  box-shadow: var(--shadow-lg); padding: 8px; min-width: 250px;
+  display: none; flex-direction: column; gap: 2px; z-index: 50;
 }
-.nav-dropdown-menu a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 9px; font-size: 14px; font-weight: 600; color: var(--ink); }
-.nav-dropdown-menu a:hover { background: var(--green-100); color: var(--green-800); }
-.nav-dropdown-menu a::after { display: none; }
+.nav-dropdown-menu a {
+  display: flex; align-items: center; gap: 10px; padding: 11px 12px; border-radius: 6px;
+  font-size: 14px; font-weight: 600; color: var(--ink); white-space: nowrap;
+}
+.nav-dropdown-menu a svg { color: var(--blue-600); flex-shrink: 0; }
+.nav-dropdown-menu a:hover { background: var(--blue-100); color: var(--blue-900); }
 .nav-dropdown.open .nav-dropdown-menu { display: flex; }
-@media (min-width: 981px) { .nav-dropdown:hover .nav-dropdown-menu { display: flex; } }
+@media (min-width: 981px) {
+  .nav-dropdown:hover .nav-dropdown-menu, .nav-dropdown:focus-within .nav-dropdown-menu { display: flex; }
+}
+
+@media (max-width: 1100px) {
+  .brand-tagline { display: none; }
+  .main-nav > a, .nav-dropdown-toggle { padding: 0 14px; font-size: 13px; letter-spacing: .04em; }
+  .main-nav > a::after, .nav-dropdown-toggle::after { left: 14px; right: 14px; }
+  .main-nav { margin-left: -14px; }
+  .topbar-contact a:nth-child(2) { display: none; } /* email; phone stays */
+}
 
 @media (max-width: 980px) {
-  .main-nav {
-    position: fixed; top: 0; right: 0; left: auto; bottom: auto;
-    height: 100vh; height: 100dvh; /* dvh accounts for mobile browser toolbars so the panel never runs taller than what's actually visible */
-    width: min(300px, 85%);
-    background: #fff; display: flex; flex-direction: column; align-items: flex-start;
-    padding: 84px 24px 24px; box-shadow: -20px 0 40px rgba(0,0,0,.15);
-    transform: translateX(100%); transition: transform .3s ease; gap: 4px;
-    overflow-y: auto; -webkit-overflow-scrolling: touch; z-index: 300;
-  }
-  .main-nav.open { transform: translateX(0); }
+  .topbar { display: none; }
+  .site-header { position: sticky; top: 0; border-bottom: 1px solid var(--border); transition: box-shadow .2s ease; }
+  .site-header.scrolled { box-shadow: 0 6px 20px rgba(10,61,82,.10); }
+  .site-header .container { padding-top: 12px; padding-bottom: 12px; }
+  .brand img { height: 44px; }
+  .header-cta { display: none; }
+  .mobile-cart { display: inline-flex; }
   .nav-toggle { display: block; }
-  .header-actions .btn span.label { display: none; }
-  .header-actions > .btn-pill-accent { display: none; }
-  .btn-pill-accent.mobile-only { display: inline-flex; justify-content: center; margin-top: 14px; }
-  .main-nav > a { padding: 12px 0; width: 100%; border-bottom: 1px solid var(--border); }
-  .nav-dropdown { width: 100%; border-bottom: 1px solid var(--border); }
-  .nav-dropdown-toggle { width: 100%; justify-content: space-between; padding: 12px 0; }
-  .nav-dropdown-menu { position: static; transform: none; box-shadow: none; border: none; padding: 0 0 10px 14px; min-width: 0; }
+
+  .nav-bar { position: static; border: 0; background: none; }
+  .main-nav {
+    position: fixed; top: 0; right: 0; z-index: 400; margin: 0;
+    height: 100vh; height: 100dvh; width: min(340px, 88%);
+    flex-direction: column; align-items: stretch; padding: 0 22px 28px;
+    background: #fff; box-shadow: -20px 0 40px rgba(0,0,0,.15);
+    overflow-y: auto; -webkit-overflow-scrolling: touch;
+    transform: translateX(105%); visibility: hidden;
+    transition: transform .3s ease, visibility 0s linear .3s;
+  }
+  .main-nav.open { transform: translateX(0); visibility: visible; transition: transform .3s ease; }
+  .main-nav-head {
+    display: flex; align-items: center; justify-content: space-between; padding: 16px 0;
+    border-bottom: 3px solid var(--blue-600); margin-bottom: 4px;
+    font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-soft);
+  }
+  .nav-close { background: none; border: none; cursor: pointer; padding: 6px; margin-right: -6px; color: var(--green-900); line-height: 0; }
+  .main-nav > a, .nav-dropdown-toggle { padding: 15px 0; font-size: 14px; border-bottom: 1px solid var(--border); }
+  .main-nav > a::after, .nav-dropdown-toggle::after { display: none; }
+  .main-nav > a:hover, .nav-dropdown-toggle:hover, .nav-dropdown.open .nav-dropdown-toggle { background: none; }
+  .nav-dropdown { flex-direction: column; }
+  .nav-dropdown-toggle { width: 100%; justify-content: space-between; }
+  .nav-dropdown-menu {
+    position: static; margin: 0; border: 0; border-bottom: 1px solid var(--border); border-radius: 0;
+    box-shadow: none; padding: 6px 0 10px 10px; min-width: 0;
+  }
+  .main-nav-foot { display: flex; flex-direction: column; gap: 12px; padding-top: 24px; }
+  .main-nav-foot .btn-pill-accent, .main-nav-foot .btn { justify-content: center; padding: 13px 20px; }
+  .main-nav-contact { display: inline-flex; align-items: center; gap: 8px; font-size: 14px; color: var(--ink-soft); }
+  .main-nav-contact svg { color: var(--green-700); }
+  .nav-backdrop { position: fixed; inset: 0; z-index: 390; background: rgba(10,30,25,.45); }
+  body.nav-open { overflow: hidden; }
 }
+@media (max-width: 400px) { .brand img { height: 38px; } }
 
 /* ---------- Homepage page shell: warm brush-stroke background behind a
    single large rounded white card holding the whole page ---------- */
@@ -252,13 +305,13 @@ body.home {
 }
 .home-shell {
   position: relative; z-index: 1; background: #fff;
-  border-radius: 34px; overflow: hidden; box-shadow: 0 30px 70px rgba(26,26,26,.14);
+  /* clip (not hidden) rounds the corners without creating a scroll
+     container, so the sticky menu bar still sticks on the homepage. */
+  border-radius: 34px; overflow: hidden; overflow: clip; box-shadow: 0 30px 70px rgba(26,26,26,.14);
   margin: 22px auto; max-width: 1400px;
 }
-.home-shell .site-header { border-radius: 34px 34px 0 0; }
 @media (max-width: 640px) {
   .home-shell { margin: 12px; border-radius: 20px; }
-  .home-shell .site-header { border-radius: 20px 20px 0 0; }
 }
 
 /* ---------- Hero (split layout: copy left, Africa photo artwork right) ---------- */
@@ -751,7 +804,7 @@ body.home {
 .invoice-totals .grand strong { color: var(--green-700); }
 .invoice-footer { text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px dashed var(--border); font-size: 12.5px; color: var(--ink-soft); }
 @media print {
-  .site-header, .site-footer, .back-to-top, .page-header, .btn { display: none !important; }
+  .topbar, .site-header, .nav-bar, .site-footer, .back-to-top, .page-header, .btn { display: none !important; }
   .invoice-box { box-shadow: none; border: none; }
 }
 @media (max-width: 600px) { .invoice-box { padding: 24px; } .invoice-parties { grid-template-columns: 1fr; } .invoice-meta { text-align: left; } }
