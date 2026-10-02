@@ -1,0 +1,137 @@
+/* =========================================================
+   Landing design preview — faithful recreation of the reference.
+   Desktop measurements are taken from the reference at a 1440px-wide
+   page and expressed in --u (1 design px, shrinking proportionally
+   below 1440) so the composition keeps its exact proportions.
+   ========================================================= */
+:root {
+  /* BetterLife brand colours, sampled from assets/img/logo.png */
+  --green: #08722d;
+  --blue: #007cad;
+
+  --ink: #151515;
+  --ink-2: #5d5d5d;
+  --land: #ece5da;      /* neutral land tint of the reference's world map */
+  --photo-bg: #d9cbb8;
+
+  --serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --u: min(1px, calc(100vw / 1440));
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: #fff; color: var(--ink); font-family: var(--sans); line-height: 1.6; overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, p { margin: 0; }
+.lp-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+.lp-container { position: relative; width: calc(1214 * var(--u)); margin: 0 auto; }
+
+/* ---------- Buttons ---------- */
+.lp-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: max(34px, calc(36 * var(--u))); padding: 0 max(20px, calc(34 * var(--u)));
+  font: 600 max(12px, calc(12.5 * var(--u)))/1 var(--sans); letter-spacing: .04em;
+  border-radius: 2px; white-space: nowrap; transition: background .15s ease, color .15s ease;
+}
+.lp-btn-dark { background: var(--ink); color: #fff; }
+.lp-btn-dark:hover { background: var(--green); }
+.lp-btn-sm { height: max(32px, calc(34 * var(--u))); padding: 0 max(16px, calc(22 * var(--u))); font-size: max(11.5px, calc(11.5 * var(--u))); }
+.lp-textlink { display: inline-flex; align-items: center; gap: 6px; font: 600 max(12.5px, calc(13 * var(--u)))/1 var(--sans); color: var(--ink); }
+.lp-textlink span { transition: transform .15s ease; }
+.lp-textlink:hover span { transform: translateX(3px); }
+
+/* ---------- 1. Nav: logo left, links, compact button right ---------- */
+.lp-nav { position: absolute; top: 0; left: 0; right: 0; z-index: 20; }
+.lp-nav-inner {
+  max-width: 1440px; margin: 0 auto; display: flex; align-items: center;
+  height: calc(120 * var(--u)); padding: calc(36 * var(--u)) calc(78 * var(--u)) 0 calc(24 * var(--u));
+}
+.lp-logo img { height: max(30px, calc(40 * var(--u))); width: auto; }
+.lp-links { display: flex; align-items: center; gap: calc(28 * var(--u)); margin-left: calc(40 * var(--u)); }
+.lp-links a { font: 500 max(12px, calc(13 * var(--u)))/1 var(--sans); color: #4a4a4a; white-space: nowrap; transition: color .15s ease; }
+.lp-links a:hover { color: var(--green); }
+.lp-nav .lp-btn { margin-left: auto; }
+
+/* ---------- 2. Hero ---------- */
+.lp-hero { position: relative; overflow: hidden; }
+.lp-hero-inner { height: calc(720 * var(--u)); }
+
+.lp-hero-copy { position: absolute; left: 0; top: calc(293 * var(--u)); width: calc(480 * var(--u)); z-index: 2; }
+.lp-display {
+  position: relative; z-index: 0;
+  font: 800 calc(52 * var(--u))/1.12 var(--serif); letter-spacing: -.012em; color: var(--ink);
+}
+.lp-mark { position: relative; white-space: nowrap; }
+/* Highlighter swipe across the lower part of the letters (centre ≈ 0.12em above the baseline) */
+.lp-mark svg { position: absolute; left: -4%; bottom: .12em; width: 108%; height: .6em; z-index: -1; overflow: visible; }
+.lp-mark path { fill: var(--blue); opacity: .85; }
+.lp-lead { margin-top: calc(33 * var(--u)); max-width: calc(360 * var(--u)); font-size: max(13px, calc(14 * var(--u))); line-height: 1.6; color: var(--ink-2); }
+.lp-actions { display: flex; align-items: center; gap: calc(34 * var(--u)); margin-top: calc(34 * var(--u)); }
+
+/* Art box = the reference's 880x720 map area; Africa sits at (40,53), 552x620 */
+.lp-art {
+  position: absolute; top: 0; left: calc(447 * var(--u));
+  width: calc(880 * var(--u)); aspect-ratio: 880 / 720;
+  container-type: inline-size;
+}
+.lp-art-svg { position: absolute; left: 0; top: 0; width: calc(1700 / 880 * 100%); height: 100%; overflow: visible; }
+.lp-world { fill: var(--land); }
+.lp-brushes .b-green { fill: var(--green); }
+.lp-brushes .b-blue  { fill: var(--blue); }
+.lp-brushes { opacity: .94; }
+
+/* Stat badge, positioned in % of the art box so it scales with the map */
+.lp-stat { position: absolute; inset: 0; pointer-events: none; }
+.lp-stat > * { position: absolute; }
+.lp-stat-brush { left: calc(605 / 880 * 100%); top: calc(476 / 720 * 100%); width: calc(130 / 880 * 100%); overflow: visible; }
+.lp-stat-brush path { fill: var(--green); opacity: .92; }
+.lp-stat-circle { left: calc(642 / 880 * 100%); top: calc(484 / 720 * 100%); width: calc(70 / 880 * 100%); aspect-ratio: 1; border-radius: 50%; background: var(--blue); }
+.lp-stat-num { right: calc(196 / 880 * 100%); top: calc(492 / 720 * 100%); font: 800 5cqw/1 var(--serif); color: var(--ink); letter-spacing: -.01em; }
+.lp-stat-label { right: calc(196 / 880 * 100%); top: calc(572 / 720 * 100%); font-size: max(10px, 1.2cqw); line-height: 1.4; color: var(--ink-2); text-align: right; white-space: nowrap; }
+
+/* ---------- 3. Icon row ---------- */
+.lp-pillars { padding: calc(20 * var(--u)) 0 calc(80 * var(--u)); overflow-x: clip; }
+.lp-pillars-row { display: flex; align-items: flex-start; gap: calc(40 * var(--u)); }
+.lp-rule { height: 1px; background: #e7e4de; margin-top: calc(13 * var(--u)); }
+.lp-rule-l { flex: 0 0 calc(140 * var(--u)); }
+.lp-rule-r { flex: 0 0 calc(147 * var(--u)); margin-left: calc(40 * var(--u)); }
+.lp-pillar { position: relative; width: calc(160 * var(--u)); flex-shrink: 0; }
+.lp-pillar > *:not(.lp-pillar-wash) { position: relative; z-index: 1; }
+.lp-pillar-wash { position: absolute; left: -24%; top: 18%; width: 148%; height: 105%; overflow: visible; }
+.lp-pillar-wash path { fill: var(--land); }
+.lp-ico { width: calc(26 * var(--u)); height: calc(26 * var(--u)); min-width: 20px; min-height: 20px; fill: none; stroke: var(--green); stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.lp-pillar:nth-child(odd) .lp-ico { stroke: var(--blue); }
+.lp-pillar h3 { margin-top: calc(12 * var(--u)); font: 700 max(12px, calc(13 * var(--u)))/1.3 var(--sans); color: var(--ink); }
+.lp-pillar p { margin-top: calc(8 * var(--u)); max-width: calc(138 * var(--u)); font-size: max(11px, calc(11.5 * var(--u))); line-height: 1.55; color: var(--ink-2); }
+
+/* =========================================================
+   Mobile: stack, keeping the Africa photograph and its details.
+   The map keeps its viewBox aspect ratio — never stretched.
+   ========================================================= */
+@media (max-width: 860px) {
+  .lp-container { width: auto; padding: 0 20px; }
+  .lp-nav-inner { height: 72px; padding: 14px 20px 0; }
+  .lp-links { display: none; }
+  .lp-logo img { height: 34px; }
+
+  .lp-hero-inner { height: auto; display: flex; flex-direction: column; padding-bottom: 8px; }
+  .lp-art { position: relative; left: auto; top: auto; width: 120vw; margin: 44px 0 0 calc(-20px - 6vw); }
+  .lp-stat-label { top: 83%; right: calc(168 / 880 * 100%); }  /* clear of Madagascar at readable size */
+  .lp-hero-copy { position: static; width: auto; margin-top: 6px; }
+  .lp-display { font-size: clamp(32px, 9.4vw, 46px); }
+  .lp-lead { max-width: 34em; font-size: 15px; margin-top: 18px; }
+  .lp-actions { gap: 24px; margin-top: 24px; }
+
+  .lp-pillars { padding: 44px 0 56px; }
+  .lp-pillars-row { display: grid; grid-template-columns: 1fr 1fr; gap: 28px 22px; }
+  .lp-rule { display: none; }
+  .lp-pillar { width: auto; }
+  .lp-pillar p { max-width: none; }
+  .lp-ico { width: 24px; height: 24px; }
+  .lp-pillar h3 { margin-top: 10px; font-size: 14px; }
+  .lp-pillar p { font-size: 13px; }
+}
