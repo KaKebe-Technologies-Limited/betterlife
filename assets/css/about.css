@@ -559,8 +559,8 @@
 .ab-proof-faces li:nth-child(even) { border-radius: 18px 18px 999px 999px; }
 .ab-proof-faces img { width: 100%; height: 100% !important; object-fit: cover; object-position: 50% 22%; }
 .ab-proof-faces figcaption { margin-top: 10px; font-size: 13.5px; color: var(--ab-soft); }
-/* Founder portrait in the founding collage */
-.ab-col-founder img { object-position: 50% 50% !important; }
+/* Group photo in the founding collage: keep the people on the right inside the curve */
+.ab-col-group img { object-position: 70% 50% !important; }
 @media (max-width: 720px) {
   .ab-proof-faces ul { grid-template-columns: repeat(4, 1fr); gap: 8px; }
 }

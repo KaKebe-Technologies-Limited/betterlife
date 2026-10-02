@@ -116,7 +116,7 @@ $project = fn(float $lon, float $lat): array => [
 ];
 $countryMeta = [
     'Uganda' => ['key' => 'uganda', 'mapKey' => 'Uganda', 'note' => 'Where BetterLife began',
-        'places' => [['Yumbe and Bidi Bidi', 31.3, 3.47, 'field', 'West Nile coordination']],
+        'places' => [['Yumbe and Bidi Bidi', 31.3, 3.47, 'field', 'West Nile coordination'], ['Rukungiri', 29.92, -0.79, 'field', 'Communal farm', 'left']],
         'photo' => ['assets/img/about/yumbe-greenhouse-aerial.jpg', 'Aerial view of a greenhouse and farm plots in Yumbe, Uganda']],
     'South Sudan' => ['key' => 'south-sudan', 'mapKey' => 'South Sudan', 'note' => '',
         'places' => [['Juba', 31.58, 4.85, 'office', 'Office'], ['Yambio', 28.40, 4.57, 'field', 'Field presence', 'left']],
@@ -136,7 +136,7 @@ $journeyPhotos = [
     '2023' => ['assets/img/soilla-app-field-demo.webp', 'The Soilla app open on a phone in a field', 'Soilla in use in the field'],
     '2024' => ['assets/img/solar-panel-installation-2.webp', 'A solar panel installed above a raised water tank', 'Clean energy installation'],
     '2025' => ['assets/img/about/yumbe-2025-women.jpg', 'Women laughing together at a programme session', 'Women in the Foundation S-supported programme in Yumbe, 2025'],
-    '2026' => ['assets/img/about/soroti-wac-2026.jpg', 'A facilitator speaking with a group of women', 'A Women’s Action Circle session in Soroti, 2026'],
+    '2026' => ['assets/img/about/rukungiri-communal-farm.jpg', 'A wide maize field below forested hills', 'Our 20-acre communal farm in Rukungiri, 2026'],
 ];
 
 $strip = [
@@ -149,7 +149,7 @@ $strip = [
     ['assets/img/about/rukungiri-staff-maize.jpg', 'A BetterLife team member in a maize field in Rukungiri'],
     ['assets/img/children-at-borehole.webp', 'Children fetching water at a borehole'],
     ['assets/img/about/yumbe-man-child.jpg', 'A BetterLife team member laughing with a child in Yumbe'],
-    ['assets/img/solar-panel-installation-1.webp', 'Installing a solar panel'],
+    ['assets/img/about/soroti-wac-2026.jpg', 'A Women’s Action Circle session in Soroti'],
 ];
 
 $contact = fn(string $subject): string => SITE_URL . '/contact.php?subject=' . rawurlencode($subject);
@@ -240,8 +240,8 @@ require __DIR__ . '/includes/header.php';
           </g>
         </svg>
         <?= ab_photo('assets/img/about/yumbe-team-members.jpg', 'Two BetterLife team members smiling together outdoors', 'BetterLife team members in Yumbe, Uganda', 'beginnings', 'ab-col ab-col-a', '(max-width: 900px) 50vw, 300px') ?>
-        <?= ab_photo('assets/img/yumbe-greenhouse-group.webp', 'A community group outside a greenhouse', 'A community group outside a greenhouse in Yumbe, Uganda', 'beginnings', 'ab-col ab-col-b', '(max-width: 900px) 50vw, 320px') ?>
-        <?= ab_photo('assets/img/about/denise-ayebare.jpg', 'Denise Ayebare smiling beside a wall made from recycled bottle caps', 'Denise Ayebare, founder and Executive Director of BetterLife International', 'beginnings', 'ab-col ab-col-c ab-col-founder', '(max-width: 900px) 45vw, 260px') ?>
+        <?= ab_photo('assets/img/about/denise-with-group.jpg', 'Denise Ayebare standing with a group of people outdoors', 'Denise Ayebare with others at a community gathering', 'beginnings', 'ab-col ab-col-b ab-col-group', '(max-width: 900px) 50vw, 320px') ?>
+        <?= ab_photo('assets/img/betterlifeint-source/programs/program-photo-10.jpg', 'Women taking notes during a training session', 'Women taking notes during a BetterLife training session', 'beginnings', 'ab-col ab-col-c', '(max-width: 900px) 45vw, 260px') ?>
         <?= ab_photo('assets/img/village-girl-portrait.webp', 'A girl standing outside a thatched home', 'A girl standing outside a thatched home', 'beginnings', 'ab-col ab-col-d', '(max-width: 900px) 45vw, 260px') ?>
         <div class="ab-stamp ab-stamp-year" aria-hidden="true"><span>Founded</span><strong>2021</strong></div>
         <div class="ab-stamp ab-stamp-money" aria-hidden="true"><span>Started with</span><strong>USD 200</strong></div>
