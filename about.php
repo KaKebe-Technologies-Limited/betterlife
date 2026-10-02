@@ -13,7 +13,13 @@ $guides        = content_items($pdo, 'about', 'guides');
 $mission       = setting($pdo, 'mission_text');
 $vision        = setting($pdo, 'vision_text');
 $slogan        = setting($pdo, 'tagline', 'Building Hope');
-$team = $pdo->query("SELECT name, role FROM team_members WHERE status = 1 AND (category = 'leadership' OR role LIKE 'Country Manager%') ORDER BY FIELD(category, 'leadership', 'staff'), sort_order, id")->fetchAll();
+$leaders = $pdo->query("SELECT name, role, photo FROM team_members WHERE status = 1 AND category = 'leadership' ORDER BY sort_order, id")->fetchAll();
+$managerCountries = array_map(
+    fn($r) => trim(preg_replace('/^Country Manager,\s*/i', '', $r['role'])),
+    $pdo->query("SELECT role FROM team_members WHERE status = 1 AND role LIKE 'Country Manager%' ORDER BY sort_order, id")->fetchAll()
+);
+// Leadership faces appear automatically once every leader has a photo (Admin → Team)
+$leadersHavePhotos = $leaders && !array_filter($leaders, fn($l) => empty($l['photo']));
 
 $map = require __DIR__ . '/includes/map-paths.php';
 
@@ -65,11 +71,6 @@ function ab_photo(string $path, string $alt, string $caption, string $gallery, s
         . ab_img($path, $alt, '', true, '', $sizes) . '<span class="ab-lb-icon" aria-hidden="true">' . icon('search', 16) . '</span></a>';
 }
 
-function ab_initials(string $name): string
-{
-    $parts = preg_split('/\s+/', trim($name));
-    return strtoupper(mb_substr($parts[0], 0, 1) . (count($parts) > 1 ? mb_substr(end($parts), 0, 1) : ''));
-}
 
 // Figures (verified). Shown separately; never summed.
 $figures = [
@@ -199,18 +200,22 @@ require __DIR__ . '/includes/header.php';
       </div>
     </div>
 
-    <?php if ($team): ?>
+    <?php if ($leaders):
+      $others = array_values(array_filter($leaders, fn($l) => stripos($l['role'], 'Founder') === false));
+      $listJoin = function (array $items): string {
+          if (count($items) < 2) return implode('', $items);
+          return implode(', ', array_slice($items, 0, -1)) . ' and ' . end($items);
+      }; ?>
       <div class="container">
         <div class="ab-team ab-reveal">
-          <div class="ab-team-head">
-            <h3>The team behind the work</h3>
-            <p>Led from Uganda, with country managers in Tanzania, South Sudan, the DR Congo and Ghana.</p>
-          </div>
-          <ul class="ab-team-list">
-            <?php foreach ($team as $i => $m): ?>
-              <li><span class="ab-avatar <?= $i % 2 ? 'is-blue' : '' ?>" aria-hidden="true"><?= h(ab_initials($m['name'])) ?></span><span><strong><?= h($m['name']) ?></strong><small><?= h($m['role']) ?></small></span></li>
-            <?php endforeach; ?>
-          </ul>
+          <?php if ($leadersHavePhotos): ?>
+            <ul class="ab-team-faces">
+              <?php foreach ($leaders as $l): ?>
+                <li><?= ab_img($l['photo'], $l['name'], 'ab-team-photo', true, '', '96px') ?><strong><?= h($l['name']) ?></strong><small><?= h($l['role']) ?></small></li>
+              <?php endforeach; ?>
+            </ul>
+          <?php endif; ?>
+          <p class="ab-team-line">BetterLife is led by its founder and Executive Director, Denise Ayebare<?php if ($others): ?>, with <?= h($listJoin(array_map(fn($l) => $l['name'] . ' (' . $l['role'] . ')', $others))) ?><?php endif; ?><?php if ($managerCountries): ?>, alongside country managers in <?= h($listJoin($managerCountries)) ?><?php endif; ?>.</p>
           <a href="<?= SITE_URL ?>/team.php" class="ab-link">Meet the full team and board <?= icon('arrow-right', 15) ?></a>
         </div>
       </div>
@@ -237,41 +242,18 @@ require __DIR__ . '/includes/header.php';
       </ul>
       <p class="ab-figures-note ab-reveal">Each figure counts a different part of the work, so they should not be added together. The people we reach take part in different activities and receive different kinds of support.</p>
 
-      <article class="ab-results ab-reveal" aria-labelledby="abResultsTitle">
-        <div class="ab-results-head">
-          <span class="ab-eyebrow">Results from one programme</span>
-          <h3 id="abResultsTitle">Strengthening the capacity of refugees and IDPs in agriculture, food security and climate action</h3>
+      <!-- One programme as proof; the full account lives on the Programmes page -->
+      <article class="ab-proof ab-reveal" aria-labelledby="abProofTitle">
+        <div class="ab-proof-head">
+          <span class="ab-eyebrow">Proof from one programme</span>
+          <h3 id="abProofTitle">Strengthening the capacity of refugees and IDPs in agriculture, food security and climate action</h3>
           <p class="ab-results-meta"><?= icon('map-pin', 15) ?> Yumbe, Uganda <i aria-hidden="true">&middot;</i> With support from Foundation S, The Sanofi Collective</p>
         </div>
-        <div class="ab-results-grid">
-          <div class="ab-results-before">
-            <h4>Before we began, we listened to 100 women</h4>
-            <ul class="ab-before-list">
-              <li><strong>About 4 hours</strong><span>a day spent collecting water by many</span></li>
-              <li><strong>Up to 24 km</strong><span>travelled by some in search of firewood</span></li>
-              <li><strong>81%</strong><span>had experienced crop failure</span></li>
-              <li><strong>63%</strong><span>had at some point withdrawn a child from school because the household could not meet the cost</span></li>
-            </ul>
-            <p class="ab-results-note">Those answers shaped the project: it could not be a farming course alone.</p>
-          </div>
-          <div class="ab-results-after">
-            <h4>Among the 72 women who completed structured training</h4>
-            <div class="ab-knowledge" role="img" aria-label="Knowledge of climate-smart agriculture rose from 22 per cent to 92 per cent">
-              <span class="ab-knowledge-label">Knowledge of climate-smart agriculture</span>
-              <div class="ab-knowledge-bars">
-                <div class="ab-kbar is-before" style="--v: 22%"><b>22%</b><span>before</span></div>
-                <div class="ab-kbar is-after" style="--v: 92%"><b>92%</b><span>after</span></div>
-              </div>
-            </div>
-            <ul class="ab-adopt" aria-label="Practices adopted">
-              <?php foreach ([['Sack or box gardening', 72], ['Composting', 63], ['Drought-tolerant crops', 57], ['Mulching', 54]] as [$label, $pct]): ?>
-                <li style="--v: <?= $pct ?>%"><span><?= h($label) ?></span><b><?= $pct ?>%</b></li>
-              <?php endforeach; ?>
-            </ul>
-            <p class="ab-results-highlight"><strong>35%</strong> average reduction in household spending on vegetables, reported by participating households as home production improved.</p>
-          </div>
+        <div class="ab-proof-stats">
+          <p class="ab-proof-stat"><strong>22% <span aria-hidden="true">&rarr;</span><span class="sr-only">to</span> 92%</strong><span>Knowledge of climate-smart agriculture among the 72 women who completed structured training</span></p>
+          <p class="ab-proof-stat"><strong>35%</strong><span>Average reduction in household spending on vegetables, reported by participating households</span></p>
         </div>
-        <a href="<?= SITE_URL ?>/programs.php#climate-resilient-agriculture" class="ab-link">Read about this programme <?= icon('arrow-right', 15) ?></a>
+        <a href="<?= SITE_URL ?>/programs.php#climate-resilient-agriculture" class="ab-link">Read the full programme story <?= icon('arrow-right', 15) ?></a>
       </article>
     </div>
   </section>
