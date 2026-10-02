@@ -75,11 +75,11 @@ function ab_photo(string $path, string $alt, string $caption, string $gallery, s
 
 // Figures (verified). Shown separately; never summed.
 $figures = [
-    ['value' => '110,000', 'count' => 110000, 'label' => 'people reached',               'prefix' => '',      'img' => 'assets/img/smiles-group-under-tree-2.webp',                    'alt' => 'Community members gathered under a tree'],
-    ['value' => '122',     'count' => 122,    'label' => 'farms established',            'prefix' => 'About', 'img' => 'assets/img/farm-aerial-view-2.webp',                           'alt' => 'Aerial view of cultivated farm plots and a greenhouse'],
-    ['value' => '5',       'count' => 5,      'label' => 'community farms established',  'prefix' => '',      'img' => 'assets/img/betterlifeint-source/programs/program-photo-2.jpg', 'alt' => 'A field of cabbages'],
-    ['value' => '310',     'count' => 310,    'label' => 'households supported',         'prefix' => '',      'img' => 'assets/img/vendor-and-children-food-stall.webp',               'alt' => 'A woman preparing food at a stall with children nearby'],
-    ['value' => '5',       'count' => 5,      'label' => 'schools supported with meals', 'prefix' => '',      'img' => 'assets/img/betterlifeint-source/programs/program-photo-8.jpg', 'alt' => 'Pupils gathered outdoors for a session'],
+    ['value' => '110,000', 'count' => 110000, 'label' => 'people reached',               'prefix' => '',      'img' => 'assets/img/about/yumbe-women-celebrating.jpg',                 'alt' => 'Programme participants and BetterLife staff celebrating together under a tree in Yumbe'],
+    ['value' => '122',     'count' => 122,    'label' => 'farms established',            'prefix' => 'About', 'img' => 'assets/img/about/yumbe-farm-aerial.jpg',                       'alt' => 'Aerial view of farm plots and a greenhouse in Yumbe'],
+    ['value' => '5',       'count' => 5,      'label' => 'community farms established',  'prefix' => '',      'img' => 'assets/img/about/rukungiri-community-field.jpg',               'alt' => 'A group of people working a field together in Rukungiri'],
+    ['value' => '310',     'count' => 310,    'label' => 'households supported',         'prefix' => '',      'img' => 'assets/img/about/yumbe-shopkeeper.jpg',                        'alt' => 'A smiling woman at her market stall'],
+    ['value' => '5',       'count' => 5,      'label' => 'schools supported with meals', 'prefix' => '',      'img' => 'assets/img/about/rukungiri-school-cup.jpg',                    'alt' => 'A pupil drinking from a cup in a classroom'],
 ];
 
 // How we see the work: food connects to seven things (drawn from the supplied narrative and programme content)
@@ -94,18 +94,18 @@ $connections = [
 ];
 
 $howPhotos = [
-    ['assets/img/field-team-conversation.webp', 'BetterLife team members in conversation with a community member'],
-    ['assets/img/betterlifeint-source/programs/program-photo-9.jpg', 'A raised sack garden planted with seedlings'],
-    ['assets/img/grain-milling-machine.webp', 'Grain being processed with a milling machine'],
-    ['assets/img/betterlifeint-source/programs/program-photo-11.jpg', 'Women meeting together in a community group'],
-    ['assets/img/soil-sample-in-hand.webp', 'Soil being examined by hand in a field'],
+    ['assets/img/about/yumbe-listening-circle.jpg', 'BetterLife team members seated in a circle with community members'],
+    ['assets/img/about/yumbe-planting-demo.jpg', 'A man demonstrating planting while others watch'],
+    ['assets/img/about/rukungiri-weighing.jpg', 'A woman weighing a sack of produce on a hanging scale'],
+    ['assets/img/about/yumbe-group-under-tree.jpg', 'A community group meeting under a tree'],
+    ['assets/img/about/yumbe-field-conversation.jpg', 'A BetterLife team member talking with community members'],
 ];
 
 $whoPhotos = [
-    'Women and Girls'                 => ['assets/img/betterlifeint-source/programs/program-photo-3.jpg', 'A woman in a BetterLife shirt holding a young plant'],
-    'Children and Young People'       => ['assets/img/classroom-climate-club.webp', 'Pupils raising their hands in a classroom'],
-    'Refugees and Displaced Families' => ['assets/img/project-women-idps.jpg', 'Women seated together at a community session'],
-    'Smallholder Farmers'             => ['assets/img/farmer-spraying-crops.webp', 'A farmer tending a maize crop'],
+    'Women and Girls'                 => ['assets/img/about/rukungiri-two-women.jpg', 'Two women smiling in a maize field', '18% 50%'],
+    'Children and Young People'       => ['assets/img/about/rukungiri-pupils.jpg', 'Four smiling pupils in school uniform'],
+    'Refugees and Displaced Families' => ['assets/img/about/yumbe-four-women.jpg', 'Four women smiling together in Yumbe'],
+    'Smallholder Farmers'             => ['assets/img/about/rukungiri-maize-smile.jpg', 'A smiling farmer standing in her maize crop'],
 ];
 
 // Where we work: places named in the supplied text only (no addresses)
@@ -117,7 +117,7 @@ $project = fn(float $lon, float $lat): array => [
 $countryMeta = [
     'Uganda' => ['key' => 'uganda', 'mapKey' => 'Uganda', 'note' => 'Where BetterLife began',
         'places' => [['Yumbe and Bidi Bidi', 31.3, 3.47, 'field', 'West Nile coordination']],
-        'photo' => ['assets/img/yumbe-greenhouse-interior.webp', 'Inside a greenhouse in Yumbe, Uganda']],
+        'photo' => ['assets/img/about/yumbe-greenhouse-aerial.jpg', 'Aerial view of a greenhouse and farm plots in Yumbe, Uganda']],
     'South Sudan' => ['key' => 'south-sudan', 'mapKey' => 'South Sudan', 'note' => '',
         'places' => [['Juba', 31.58, 4.85, 'office', 'Office'], ['Yambio', 28.40, 4.57, 'field', 'Field presence', 'left']],
         'photo' => null],
@@ -135,20 +135,21 @@ $countryMeta = [
 $journeyPhotos = [
     '2023' => ['assets/img/soilla-app-field-demo.webp', 'The Soilla app open on a phone in a field', 'Soilla in use in the field'],
     '2024' => ['assets/img/solar-panel-installation-2.webp', 'A solar panel installed above a raised water tank', 'Clean energy installation'],
-    '2025' => ['assets/img/betterlifeint-source/projects/project-agro-tourism-alt.jpeg', 'A farmer walking through a banana plantation at BetterLife Agro Tourism Farm', 'BetterLife Agro Tourism Farm'],
+    '2025' => ['assets/img/about/yumbe-2025-women.jpg', 'Women laughing together at a programme session', 'Women in the Foundation S-supported programme in Yumbe, 2025'],
+    '2026' => ['assets/img/about/soroti-wac-2026.jpg', 'A facilitator speaking with a group of women', 'A Women’s Action Circle session in Soroti, 2026'],
 ];
 
 $strip = [
-    ['assets/img/impact-story-1.jpg', 'A community group meeting outdoors'],
-    ['assets/img/betterlifeint-source/projects/project-spring-alt.jpeg', 'Collecting water at a spring'],
+    ['assets/img/about/yumbe-staff-child.jpg', 'A BetterLife team member holding a child in Yumbe'],
+    ['assets/img/about/rukungiri-poultry.jpg', 'A woman feeding chickens in a poultry house in Rukungiri'],
+    ['assets/img/about/yumbe-elder-smile.jpg', 'An older woman smiling outside her shop in Yumbe'],
+    ['assets/img/about/rukungiri-classroom.jpg', 'Pupils at their desks in a classroom in Rukungiri'],
+    ['assets/img/about/yumbe-poultry-feeders.jpg', 'Programme participants celebrating with new poultry feeders in Yumbe'],
+    ['assets/img/about/yumbe-2025-shirt.jpg', 'A smiling woman holding a programme T-shirt in Yumbe'],
+    ['assets/img/about/rukungiri-staff-maize.jpg', 'A BetterLife team member in a maize field in Rukungiri'],
     ['assets/img/children-at-borehole.webp', 'Children fetching water at a borehole'],
-    ['assets/img/betterlifeint-source/impact-reports/impact-photo-3.jpeg', 'Leafy greens growing in a hydroponic system'],
+    ['assets/img/about/yumbe-man-child.jpg', 'A BetterLife team member laughing with a child in Yumbe'],
     ['assets/img/solar-panel-installation-1.webp', 'Installing a solar panel'],
-    ['assets/img/betterlifeint-source/projects/project-renewable-pathways-alt.jpg', 'Plastic bottles collected for reuse'],
-    ['assets/img/market-stall-vendor.webp', 'A vendor at her market stall'],
-    ['assets/img/betterlifeint-source/programs/program-photo-7.jpg', 'A newly planted field'],
-    ['assets/img/betterlifeint-source/programs/program-photo-5.jpg', 'Students holding placards at a school event'],
-    ['assets/img/betterlifeint-source/programs/program-photo-6.jpg', 'Young women at a BetterLife event'],
 ];
 
 $contact = fn(string $subject): string => SITE_URL . '/contact.php?subject=' . rawurlencode($subject);
@@ -157,7 +158,7 @@ $contact = fn(string $subject): string => SITE_URL . '/contact.php?subject=' . r
 $heroSlides = [
     ['assets/img/woman-winnowing-grain.webp',     'A woman winnowing grain',                         '56% 28%'],
     ['assets/img/farmers-planting-together.webp', 'Two people planting seedlings together',          '50% 46%'],
-    ['assets/img/smiles-group-under-tree-1.webp', 'A community group gathered under a large tree',   '50% 58%'],
+    ['assets/img/about/rukungiri-women-hoeing.jpg', 'Women preparing a field together with hoes in Rukungiri', '50% 55%'],
 ];
 $heroImg = $heroSlides[0][0];
 $heroV = ab_variants($heroImg);
@@ -238,9 +239,9 @@ require __DIR__ . '/includes/header.php';
             <path class="f-green" d="<?= lp_brush_d(360, 628, 560, 604, 34, 45) ?>"/>
           </g>
         </svg>
-        <?= ab_photo('assets/img/field-team-group-under-tree.webp', 'Members of the BetterLife field team standing together outdoors', 'Members of the BetterLife field team', 'beginnings', 'ab-col ab-col-a', '(max-width: 900px) 50vw, 300px') ?>
+        <?= ab_photo('assets/img/about/yumbe-team-members.jpg', 'Two BetterLife team members smiling together outdoors', 'BetterLife team members in Yumbe, Uganda', 'beginnings', 'ab-col ab-col-a', '(max-width: 900px) 50vw, 300px') ?>
         <?= ab_photo('assets/img/yumbe-greenhouse-group.webp', 'A community group outside a greenhouse', 'A community group outside a greenhouse in Yumbe, Uganda', 'beginnings', 'ab-col ab-col-b', '(max-width: 900px) 50vw, 320px') ?>
-        <?= ab_photo('assets/img/betterlifeint-source/programs/program-photo-10.jpg', 'Women taking notes during a training session', 'Women taking notes during a BetterLife training session', 'beginnings', 'ab-col ab-col-c', '(max-width: 900px) 45vw, 260px') ?>
+        <?= ab_photo('assets/img/about/denise-ayebare.jpg', 'Denise Ayebare smiling beside a wall made from recycled bottle caps', 'Denise Ayebare, founder and Executive Director of BetterLife International', 'beginnings', 'ab-col ab-col-c ab-col-founder', '(max-width: 900px) 45vw, 260px') ?>
         <?= ab_photo('assets/img/village-girl-portrait.webp', 'A girl standing outside a thatched home', 'A girl standing outside a thatched home', 'beginnings', 'ab-col ab-col-d', '(max-width: 900px) 45vw, 260px') ?>
         <div class="ab-stamp ab-stamp-year" aria-hidden="true"><span>Founded</span><strong>2021</strong></div>
         <div class="ab-stamp ab-stamp-money" aria-hidden="true"><span>Started with</span><strong>USD 200</strong></div>
@@ -317,6 +318,14 @@ require __DIR__ . '/includes/header.php';
           <p class="ab-proof-stat"><strong>22% <span aria-hidden="true">&rarr;</span><span class="sr-only">to</span> 92%</strong><span>Knowledge of climate-smart agriculture among the 72 women who completed structured training</span></p>
           <p class="ab-proof-stat"><strong>35%</strong><span>Average reduction in household spending on vegetables, reported by participating households</span></p>
         </div>
+        <figure class="ab-proof-faces">
+          <ul>
+            <?php for ($i = 1; $i <= 8; $i++): ?>
+              <li><?= ab_img("assets/img/about/yumbe-portrait-$i.jpg", '', '', true, '', '(max-width: 720px) 25vw, 140px') ?></li>
+            <?php endfor; ?>
+          </ul>
+          <figcaption>Some of the women taking part in the programme in Yumbe</figcaption>
+        </figure>
         <a href="<?= SITE_URL ?>/programs.php#climate-resilient-agriculture" class="ab-link">Read the full programme story <?= icon('arrow-right', 15) ?></a>
       </article>
     </div>
@@ -446,10 +455,10 @@ require __DIR__ . '/includes/header.php';
       </div>
       <div class="ab-who-grid">
         <?php foreach ($whoWeWorkWith as $i => $w):
-          [$p, $alt] = $whoPhotos[$w['title']] ?? [null, ''];
+          [$p, $alt] = $whoPhotos[$w['title']] ?? [null, '']; $pos = $whoPhotos[$w['title']][2] ?? '';
           [$short, $more] = ab_split(str_replace('; they', '. They', $w['body'])); ?>
           <article class="ab-who-card ab-reveal">
-            <?php if ($p): ?><div class="ab-who-photo"><?= ab_img($p, $alt, '', true, '', '(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 300px') ?></div><?php endif; ?>
+            <?php if ($p): ?><div class="ab-who-photo"><?= ab_img($p, $alt, '', true, $pos ? 'style="object-position: ' . h($pos) . '"' : '', '(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 300px') ?></div><?php endif; ?>
             <div class="ab-who-body">
               <h3><?= h($w['title']) ?></h3>
               <p><?= h($short) ?></p>
