@@ -2,207 +2,496 @@
 require_once __DIR__ . '/includes/functions.php';
 $pageTitle = 'About Us';
 $activePage = 'about';
-$pageDescription = 'BetterLife International was founded in Uganda in 2021 with USD 200. It now works across Uganda, South Sudan, Tanzania, Ghana and the Democratic Republic of Congo on climate-resilient agriculture, livelihoods, clean energy, education and market access.';
+$pageDescription = 'BetterLife International began in Uganda in 2021 with USD 200 and a small team of young people. Refugee-led, youth-led and women-led, it now works across five African countries on food security and sustainable livelihoods.';
 
-// These lists (and the photo strips below) are stored in the content_items
-// table and managed from Admin → Page Content, so BetterLife staff can edit
-// the wording or add/remove cards without touching code.
-$howWeWork = content_items($pdo, 'about', 'how_we_work');
+// Editable content (Admin → Page Content / Site Settings)
+$howWeWork     = content_items($pdo, 'about', 'how_we_work');
 $whoWeWorkWith = content_items($pdo, 'about', 'who_we_work_with');
-$whoWeWorkWithGallery = content_items($pdo, 'about', 'who_we_work_with_gallery');
-$whereWeWork = content_items($pdo, 'about', 'where_we_work');
-$whereWeWorkGallery = content_items($pdo, 'about', 'where_we_work_gallery');
-$journey = content_items($pdo, 'about', 'journey');
-$guides = content_items($pdo, 'about', 'guides');
+$whereWeWork   = content_items($pdo, 'about', 'where_we_work');
+$journey       = content_items($pdo, 'about', 'journey');
+$guides        = content_items($pdo, 'about', 'guides');
+$storyText     = setting($pdo, 'about_who_text');
+$mission       = setting($pdo, 'mission_text');
+$vision        = setting($pdo, 'vision_text');
+$slogan        = setting($pdo, 'tagline', 'Building Hope');
+
+$map = require __DIR__ . '/includes/map-paths.php';
+
+/** <img> with intrinsic size (prevents layout shift) and lazy loading by default. */
+function ab_img(string $path, string $alt, string $class = '', bool $lazy = true, string $extra = ''): string
+{
+    static $sizes = [];
+    $sizes[$path] ??= @getimagesize(__DIR__ . '/' . $path) ?: [null, null];
+    [$w, $h] = $sizes[$path];
+    return '<img src="' . h(asset_url($path)) . '" alt="' . h($alt) . '"'
+        . ($w ? ' width="' . $w . '" height="' . $h . '"' : '')
+        . ($class ? ' class="' . h($class) . '"' : '')
+        . ($lazy ? ' loading="lazy" decoding="async"' : ' fetchpriority="high"')
+        . ($extra ? ' ' . $extra : '') . '>';
+}
+
+/** Split text into its first sentence and the remainder. */
+function ab_split(string $text): array
+{
+    $text = trim($text);
+    if (preg_match('/^(.+?[.!?])\s+(.+)$/su', $text, $m)) return [$m[1], $m[2]];
+    return [$text, ''];
+}
+
+/** Lightbox-enabled photo: a plain link to the full image without JavaScript. */
+function ab_photo(string $path, string $alt, string $caption, string $gallery, string $class = '', string $imgClass = ''): string
+{
+    return '<a href="' . h(asset_url($path)) . '" class="ab-lb ' . h($class) . '" data-gallery="' . h($gallery) . '" data-caption="' . h($caption) . '" aria-label="View larger: ' . h($caption) . '">'
+        . ab_img($path, $alt, $imgClass) . '<span class="ab-lb-icon" aria-hidden="true">' . icon('search', 16) . '</span></a>';
+}
+
+// Figures (verified). Shown separately; never summed.
+$figures = [
+    ['value' => '110,000', 'count' => 110000, 'label' => 'people reached',              'prefix' => '',      'img' => 'assets/img/team-conference-group-photo.webp', 'alt' => 'Participants gathered at a BetterLife event'],
+    ['value' => '122',     'count' => 122,    'label' => 'farms established',           'prefix' => 'About', 'img' => 'assets/img/farm-aerial-view-2.webp',                        'alt' => 'Aerial view of cultivated farm plots and a greenhouse'],
+    ['value' => '5',       'count' => 5,      'label' => 'community farms established', 'prefix' => '',      'img' => 'assets/img/betterlifeint-source/programs/program-photo-2.jpg', 'alt' => 'A field of cabbages'],
+    ['value' => '310',     'count' => 310,    'label' => 'households supported',        'prefix' => '',      'img' => 'assets/img/vendor-and-children-food-stall.webp',             'alt' => 'A woman preparing food at a stall with children nearby'],
+    ['value' => '5',       'count' => 5,      'label' => 'schools supported with meals','prefix' => '',      'img' => 'assets/img/betterlifeint-source/programs/program-photo-8.jpg', 'alt' => 'Pupils gathered outdoors for a session'],
+];
+
+// How we see the work: food connects to seven things (drawn from the supplied narrative and programme content)
+$connections = [
+    'water'       => ['Water',       'A harvest depends on water close enough to use. Our work includes water access and water-efficient production, and solar-powered irrigation in South Sudan.'],
+    'energy'      => ['Energy',      'Firewood collection takes hours. Clean energy, from biogas to solar, eases that load and can power farming itself.'],
+    'time'        => ['Time',        'When much of the day goes on water and firewood, little is left for farming, learning or earning.'],
+    'skills'      => ['Skills',      'People adopt what they can see working. We teach through demonstration sites, local-language facilitation and peer learning.'],
+    'savings'     => ['Savings',     'Without money for inputs, good knowledge stays unused. Savings groups and credit co-operatives help members plan and invest.'],
+    'information' => ['Information', 'A phone and timely information change decisions. Soilla brings soil, crop, climate and price information closer to farmers.'],
+    'markets'     => ['Markets',     'Growing more only helps if someone buys it. Buyer connections and Agribusiness Connekt link producers to markets.'],
+];
+
+// How we work: one photograph per principle
+$howPhotos = [
+    ['assets/img/field-team-conversation.webp', 'BetterLife team members in conversation with a community member'],
+    ['assets/img/betterlifeint-source/programs/program-photo-9.jpg', 'A raised sack garden planted with seedlings'],
+    ['assets/img/grain-milling-machine.webp', 'Grain being processed with a milling machine'],
+    ['assets/img/betterlifeint-source/programs/program-photo-11.jpg', 'Women meeting together in a community group'],
+    ['assets/img/soil-sample-in-hand.webp', 'Soil being examined by hand in a field'],
+];
+
+// Who we work with: photographs of participation, work and learning
+$whoPhotos = [
+    'Women and Girls'                => ['assets/img/betterlifeint-source/programs/program-photo-3.jpg', 'A woman in a BetterLife shirt holding a young plant'],
+    'Children and Young People'      => ['assets/img/classroom-climate-club.webp', 'Pupils raising their hands in a classroom'],
+    'Refugees and Displaced Families'=> ['assets/img/smiles-group-under-tree-2.webp', 'Participants in the SMILES project gathered under a tree'],
+    'Smallholder Farmers'            => ['assets/img/farmer-spraying-crops.webp', 'A farmer tending a maize crop'],
+];
+
+// Where we work: places named in the supplied text only (no addresses)
+$pr = $map['proj'];
+$project = fn(float $lon, float $lat): array => [
+    round(deg2rad($lon) * $pr['scale'] + $pr['ox'], 1),
+    round(-log(tan(M_PI / 4 + deg2rad($lat) / 2)) * $pr['scale'] + $pr['oy'], 1),
+];
+$countryMeta = [
+    'Uganda' => ['key' => 'uganda', 'mapKey' => 'Uganda', 'note' => 'Where BetterLife began',
+        'places' => [['Yumbe and Bidi Bidi', 31.3, 3.47, 'field', 'West Nile coordination']],
+        'photo' => ['assets/img/yumbe-greenhouse-interior.webp', 'Inside a greenhouse in Yumbe, Uganda']],
+    'South Sudan' => ['key' => 'south-sudan', 'mapKey' => 'South Sudan', 'note' => '',
+        'places' => [['Juba', 31.58, 4.85, 'office', 'Office'], ['Yambio', 28.40, 4.57, 'field', 'Field presence', 'left']],
+        'photo' => null],
+    'Tanzania' => ['key' => 'tanzania', 'mapKey' => 'Tanzania', 'note' => 'With FADECO',
+        'places' => [['Kayanga, Karagwe', 31.13, -1.6, 'office', 'Base']],
+        'photo' => null],
+    'Ghana' => ['key' => 'ghana', 'mapKey' => 'Ghana', 'note' => 'Programme activity',
+        'places' => [],
+        'photo' => ['assets/img/betterlifeint-source/projects/project-climate-education-alt.jpg', 'A climate education session in Ghana']],
+    'Democratic Republic of Congo' => ['key' => 'drc', 'mapKey' => 'Democratic Republic of the Congo', 'note' => 'Programme activity',
+        'places' => [],
+        'photo' => null],
+];
+
+// Journey photographs, only where the photo genuinely belongs to that milestone
+$journeyPhotos = [
+    '2023' => ['assets/img/soilla-app-field-demo.webp', 'The Soilla app open on a phone in a field', 'Soilla in use in the field'],
+    '2024' => ['assets/img/solar-panel-installation-2.webp', 'A solar panel installed above a raised water tank', 'Clean energy installation'],
+    '2025' => ['assets/img/betterlifeint-source/projects/project-agro-tourism-alt.jpeg', 'A farmer walking through a banana plantation at BetterLife Agro Tourism Farm', 'BetterLife Agro Tourism Farm'],
+];
+
+// Community strip: photographs not used elsewhere on this page
+$strip = [
+    ['assets/img/betterlifeint-source/programs/program-photo-1.jpg', 'A tray of seedlings ready for transplanting'],
+    ['assets/img/betterlifeint-source/projects/project-spring-alt.jpeg', 'Collecting water at a spring'],
+    ['assets/img/children-at-borehole.webp', 'Children fetching water at a borehole'],
+    ['assets/img/betterlifeint-source/impact-reports/impact-photo-3.jpeg', 'Leafy greens growing in a hydroponic system'],
+    ['assets/img/solar-panel-installation-1.webp', 'Installing a solar panel'],
+    ['assets/img/betterlifeint-source/projects/project-renewable-pathways-alt.jpg', 'Plastic bottles collected for reuse'],
+    ['assets/img/market-stall-vendor.webp', 'A vendor at her market stall'],
+    ['assets/img/betterlifeint-source/programs/program-photo-7.jpg', 'A newly planted field'],
+    ['assets/img/betterlifeint-source/programs/program-photo-5.jpg', 'Students holding placards at a school event'],
+    ['assets/img/betterlifeint-source/programs/program-photo-6.jpg', 'Young women at a BetterLife event'],
+];
+
+$heroImg = 'assets/img/smiles-group-under-tree-1.webp';
+$pageStyles  = ['assets/css/about.css'];
+$pageScripts = ['assets/js/about.js'];
+$pageHead = '<link rel="preload" as="image" href="' . h(asset_url($heroImg)) . '" fetchpriority="high">'
+          . '<script>document.documentElement.classList.add("ab-js")</script>';
 
 require __DIR__ . '/includes/header.php';
 ?>
 
-<section class="page-header">
-  <div class="container">
-    <div class="crumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span>/</span>About Us</div>
-    <h1>It Began with the Lives We Knew</h1>
-    <p style="max-width:640px;color:#e2f0e9;">This work did not begin in a conference room.</p>
-  </div>
-</section>
+<main class="ab" id="top">
 
-<section>
-  <div class="container">
-    <div class="split">
-      <div class="fade-up">
-        <p class="muted">BetterLife International was founded by young people who understood that poverty, displacement and climate change do not happen one at a time. Our work grew from the need for solutions that make sense in the whole of a person&rsquo;s life.</p>
+  <!-- 1. Opening -->
+  <section class="ab-hero" aria-labelledby="abHeroTitle">
+    <div class="ab-hero-media"><?= ab_img($heroImg, 'Members of a BetterLife community programme gathered under a large tree', 'ab-hero-img', false) ?></div>
+    <div class="container ab-hero-inner">
+      <nav class="ab-crumb" aria-label="Breadcrumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span aria-hidden="true">/</span><span aria-current="page">About Us</span></nav>
+      <p class="ab-kicker"><span>Refugee-led</span> <i aria-hidden="true">&middot;</i> <span>Youth-led</span> <i aria-hidden="true">&middot;</i> <span>Women-led</span></p>
+      <h1 id="abHeroTitle">It Began with the Lives We Knew</h1>
+      <p class="ab-hero-lead">This work did not begin in a conference room. It began with young people who knew that poverty, displacement and climate change do not arrive one at a time, and who wanted solutions that make sense in the whole of a person&rsquo;s life.</p>
+      <a href="#beginnings" class="ab-hero-scroll">Read our story <?= icon('chevron-down', 16) ?></a>
+    </div>
+  </section>
+
+  <!-- 2. Our beginnings -->
+  <section class="ab-begin" id="beginnings" aria-labelledby="abBeginTitle">
+    <div class="container ab-begin-grid">
+      <div class="ab-collage ab-reveal">
+        <?= ab_photo('assets/img/field-team-group-under-tree.webp', 'Members of the BetterLife field team standing together outdoors', 'Members of the BetterLife field team', 'beginnings', 'ab-col ab-col-a', '') ?>
+        <?= ab_photo('assets/img/yumbe-greenhouse-group.webp', 'A community group outside a greenhouse', 'A community group outside a greenhouse in Yumbe, Uganda', 'beginnings', 'ab-col ab-col-b') ?>
+        <?= ab_photo('assets/img/betterlifeint-source/programs/program-photo-10.jpg', 'Women taking notes during a training session', 'Women taking notes during a BetterLife training session', 'beginnings', 'ab-col ab-col-c') ?>
+        <?= ab_photo('assets/img/betterlifeint-source/projects/project-smiles-alt.jpg', 'Participants in the SMILES project', 'Participants in the SMILES project', 'beginnings', 'ab-col ab-col-d') ?>
+        <div class="ab-stamp ab-stamp-year" aria-hidden="true"><span>Founded</span><strong>2021</strong></div>
+        <div class="ab-stamp ab-stamp-money" aria-hidden="true"><span>Started with</span><strong>USD 200</strong></div>
       </div>
-      <div class="fade-up img-frame">
-        <img src="<?= asset_url(setting($pdo, 'about_image')) ?>" alt="BetterLife International team">
+
+      <div class="ab-begin-copy ab-reveal">
+        <span class="ab-eyebrow">Our beginnings</span>
+        <h2 id="abBeginTitle">Nineteen, with <span class="ab-hl">USD&nbsp;200</span> and a small team</h2>
+        <?php $paras = array_values(array_filter(array_map('trim', preg_split('/\n\s*\n/', $storyText)))); ?>
+        <p class="ab-lead"><?= h($paras[0] ?? '') ?></p>
+        <?php if (!empty($paras[1])): ?><p><?= h($paras[1]) ?></p><?php endif; ?>
+        <?php if (!empty($paras[2])): ?><p class="ab-pull"><?= h($paras[2]) ?></p><?php endif; ?>
+        <?php if (!empty($paras[3])): ?><p><?= h($paras[3]) ?> We are refugee-led, youth-led and women-led, and food security and sustainable livelihoods remain at the centre of everything we do.</p><?php endif; ?>
+        <p class="ab-facts"><span><strong>2021</strong> founded in Uganda</span><span><strong>USD 200</strong> starting budget</span><span><strong>5</strong> countries today</span></p>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="section-cream">
-  <div class="container">
-    <div class="section-head fade-up">
-      <span class="eyebrow">Our Story</span>
-      <h2>From USD 200 to Work Across Five Countries</h2>
+  <!-- 3. Impact in pictures -->
+  <section class="ab-impact" aria-labelledby="abImpactTitle">
+    <div class="container">
+      <div class="ab-head ab-head-light ab-reveal">
+        <span class="ab-eyebrow">Impact in pictures</span>
+        <h2 id="abImpactTitle">Since 2021, counted in people, farms, homes and schools</h2>
+      </div>
+      <ul class="ab-figures">
+        <?php foreach ($figures as $f): ?>
+          <li class="ab-figure ab-reveal">
+            <?= ab_img($f['img'], $f['alt'], 'ab-figure-img') ?>
+            <div class="ab-figure-text">
+              <strong><?php if ($f['prefix']): ?><small><?= h($f['prefix']) ?></small> <?php endif; ?><span class="ab-count" data-count="<?= $f['count'] ?>"><?= h($f['value']) ?></span></strong>
+              <span><?= h($f['label']) ?></span>
+            </div>
+          </li>
+        <?php endforeach; ?>
+      </ul>
+      <p class="ab-figures-note ab-reveal">Each figure counts a different part of the work, so they should not be added together. The people we reach take part in different activities and receive different kinds of support.</p>
     </div>
-    <div class="split" style="align-items:start;">
-      <div class="prose-narrow fade-up"><?= nl2p(setting($pdo, 'about_who_text')) ?></div>
-      <div class="fade-up img-frame" style="position:sticky;top:100px;">
-        <img src="<?= asset_url('assets/img/betterlifeint-source/impact-reports/impact-photo-2.jpeg') ?>" alt="A BetterLife team member with a child in the community">
+  </section>
+
+  <!-- 4. Vision and mission -->
+  <section class="ab-purpose" aria-labelledby="abPurposeTitle">
+    <div class="ab-purpose-bg"><?= ab_img('assets/img/solar-panel-farm-sky.webp', '', '') ?></div>
+    <div class="container">
+      <div class="ab-purpose-head ab-reveal">
+        <span class="ab-eyebrow">Our vision and mission</span>
+        <h2 id="abPurposeTitle"><?= h($slogan) ?></h2>
+      </div>
+      <div class="ab-purpose-grid">
+        <article class="ab-purpose-card ab-reveal">
+          <span class="ab-purpose-label"><?= icon('eye', 18) ?> Our vision</span>
+          <p><?= h($vision) ?></p>
+        </article>
+        <article class="ab-purpose-card ab-reveal">
+          <span class="ab-purpose-label"><?= icon('target', 18) ?> Our mission</span>
+          <p><?= h($mission) ?></p>
+        </article>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section>
-  <div class="container">
-    <div class="split">
-      <div class="fade-up img-frame bg-blue">
-        <img src="<?= asset_url('assets/img/farm-field-3.jpg') ?>" alt="BetterLife International in the field">
+  <!-- 5. How we see the work -->
+  <section class="ab-systems" aria-labelledby="abSystemsTitle">
+    <div class="container ab-systems-grid">
+      <div class="ab-systems-copy ab-reveal">
+        <span class="ab-eyebrow">How we see the work</span>
+        <h2 id="abSystemsTitle">A Failed Harvest Is Never Just a Farming Problem</h2>
+        <p class="ab-lead">When a woman tells us her harvest failed, seeds may appear to be the answer. Listen longer and the picture changes. She may have no water nearby. She may spend much of the day collecting firewood. She may lack money for inputs, access to a phone or a buyer for what she grows.</p>
+        <p class="ab-pull ab-pull-sm">Giving her seeds alone leaves most of the problem untouched.</p>
+        <p>We take a systems approach because people live in systems. One programme may include a demonstration garden, a savings group, a digital tool and a buyer connection. The combination is shaped by the barriers people actually face.</p>
+        <figure class="ab-systems-photo"><?= ab_img('assets/img/farmers-planting-together.webp', 'Two people planting seedlings together in a field') ?></figure>
       </div>
-      <div class="fade-up" style="display:flex;flex-direction:column;gap:18px;">
-        <span class="eyebrow">Purpose</span>
-        <div class="card" style="padding:24px;">
-          <div class="icon-badge" style="width:38px;height:38px;margin-bottom:10px;"><?= icon('target', 20) ?></div>
-          <h3>Mission</h3>
-          <p class="muted" style="font-size:14px;margin:0;"><?= h(setting($pdo, 'mission_text')) ?></p>
+
+      <div class="ab-web ab-reveal" data-tabs>
+        <p class="ab-web-hint" id="abWebHint">Food sits at the centre. Select a connection to see how it shapes the harvest.</p>
+        <div class="ab-web-stage">
+          <svg class="ab-web-lines" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+            <?php $n = count($connections); $i = 0; foreach ($connections as $key => $c):
+              $a = -M_PI / 2 + 2 * M_PI * $i / $n; $x = round(50 + 38 * cos($a), 2); $y = round(50 + 38 * sin($a), 2); ?>
+              <line x1="50" y1="50" x2="<?= $x ?>" y2="<?= $y ?>" data-for="<?= $key ?>"/>
+            <?php $i++; endforeach; ?>
+          </svg>
+          <div class="ab-web-core" aria-hidden="true"><?= icon('leaf', 22) ?><span>Food</span></div>
+          <div class="ab-web-nodes" role="tablist" aria-label="What food connects to" aria-describedby="abWebHint">
+            <?php $i = 0; foreach ($connections as $key => $c):
+              $a = -M_PI / 2 + 2 * M_PI * $i / $n; $x = round(50 + 38 * cos($a), 2); $y = round(50 + 38 * sin($a), 2); ?>
+              <button type="button" role="tab" class="ab-web-node" id="abTab-<?= $key ?>" aria-controls="abPanel-<?= $key ?>" aria-selected="<?= $i === 0 ? 'true' : 'false' ?>" tabindex="<?= $i === 0 ? '0' : '-1' ?>" data-key="<?= $key ?>" style="--x: <?= $x ?>%; --y: <?= $y ?>%"><?= h($c[0]) ?></button>
+            <?php $i++; endforeach; ?>
+          </div>
         </div>
-        <div class="card" style="padding:24px;">
-          <div class="icon-badge" style="width:38px;height:38px;margin-bottom:10px;"><?= icon('eye', 20) ?></div>
-          <h3>Vision</h3>
-          <p class="muted" style="font-size:14px;margin:0;"><?= h(setting($pdo, 'vision_text')) ?></p>
+        <div class="ab-web-panels">
+          <?php $i = 0; foreach ($connections as $key => $c): ?>
+            <div class="ab-web-panel" role="tabpanel" id="abPanel-<?= $key ?>" aria-labelledby="abTab-<?= $key ?>" data-key="<?= $key ?>">
+              <h3>Food and <?= h(strtolower($c[0])) ?></h3>
+              <p><?= h($c[1]) ?></p>
+            </div>
+          <?php $i++; endforeach; ?>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="section-cream">
-  <div class="container">
-    <div class="split">
-      <div class="fade-up img-frame bg-blue">
-        <img src="<?= asset_url('assets/img/betterlifeint-source/programs/program-photo-10.jpg') ?>" alt="A woman taking notes during a BetterLife training session">
+  <!-- 6. How we work -->
+  <section class="ab-how" aria-labelledby="abHowTitle">
+    <div class="container">
+      <div class="ab-head ab-reveal">
+        <span class="ab-eyebrow">How we work</span>
+        <h2 id="abHowTitle">Learned in the field, not written in an office</h2>
       </div>
-      <div class="fade-up">
-        <span class="eyebrow">How We See the Work</span>
-        <h2>A Failed Harvest Is Never Just a Farming Problem</h2>
-        <p class="muted">When a woman tells us her harvest failed, seeds may appear to be the answer. But listen longer and the picture changes. She may have no water nearby. She may spend much of the day collecting firewood. She may lack money for inputs, access to a phone or a buyer for what she grows.</p>
-        <p class="muted">Giving her seeds alone leaves most of the problem untouched.</p>
-        <p class="muted">BetterLife takes a systems approach because people live in systems. We connect food to water, time, energy, income, finance, information and markets. One programme may therefore include a demonstration garden, a savings group, a digital tool and a buyer connection. The combination is shaped by the barriers people are actually facing.</p>
+      <div class="ab-how-grid">
+        <div class="ab-how-sticky" aria-hidden="true">
+          <div class="ab-how-frame">
+            <?php foreach ($howWeWork as $i => $s): [$p, $alt] = $howPhotos[$i] ?? $howPhotos[0]; ?>
+              <?= ab_img($p, '', 'ab-how-img' . ($i === 0 ? ' is-active' : ''), true, 'data-step="' . $i . '"') ?>
+            <?php endforeach; ?>
+            <span class="ab-how-count"><b>01</b> / <?= str_pad((string) count($howWeWork), 2, '0', STR_PAD_LEFT) ?></span>
+          </div>
+        </div>
+        <ol class="ab-how-steps">
+          <?php foreach ($howWeWork as $i => $s): [$p, $alt] = $howPhotos[$i] ?? $howPhotos[0]; ?>
+            <li class="ab-how-step" data-step="<?= $i ?>">
+              <figure class="ab-how-step-photo"><?= ab_img($p, $alt) ?></figure>
+              <span class="ab-how-num"><?= str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) ?></span>
+              <h3><?= h($s['title']) ?></h3>
+              <p><?= h($s['body']) ?></p>
+              <?php if ($i === 3): ?>
+                <p class="ab-trust"><?= icon('users', 20) ?><span>People learn faster in groups they already trust.</span></p>
+              <?php endif; ?>
+            </li>
+          <?php endforeach; ?>
+        </ol>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section>
-  <div class="container">
-    <div class="section-head fade-up">
-      <span class="eyebrow">How We Work</span>
+  <!-- 7. Who we work with -->
+  <section class="ab-who" aria-labelledby="abWhoTitle">
+    <div class="container">
+      <div class="ab-head ab-reveal">
+        <span class="ab-eyebrow">Who we work with</span>
+        <h2 id="abWhoTitle">Partners in the work, not recipients of it</h2>
+      </div>
+      <div class="ab-who-grid">
+        <?php foreach ($whoWeWorkWith as $i => $w):
+          [$p, $alt] = $whoPhotos[$w['title']] ?? [null, ''];
+          $body = str_replace('; they', '. They', $w['body']);
+          [$short, $more] = ab_split($body); ?>
+          <article class="ab-who-card ab-reveal">
+            <?php if ($p): ?><div class="ab-who-photo"><?= ab_img($p, $alt) ?></div><?php endif; ?>
+            <div class="ab-who-body">
+              <h3><?= h($w['title']) ?></h3>
+              <p><?= h($short) ?></p>
+              <?php if ($more): ?>
+                <p class="ab-who-more" id="abWhoMore<?= $i ?>"><?= h($more) ?></p>
+                <button type="button" class="ab-who-toggle" aria-expanded="false" aria-controls="abWhoMore<?= $i ?>" hidden><span>Read more</span> <?= icon('chevron-down', 15) ?></button>
+              <?php endif; ?>
+            </div>
+          </article>
+        <?php endforeach; ?>
+      </div>
     </div>
-    <div class="detail-grid fade-up">
-      <?php foreach ($howWeWork as $b): ?>
-        <div class="detail-block"><h4><?= h($b['title']) ?></h4><p><?= h($b['body']) ?></p></div>
-      <?php endforeach; ?>
-    </div>
-  </div>
-</section>
+  </section>
 
-<section class="media-band">
-  <div class="container">
-    <figure class="fade-up">
-      <img src="<?= asset_url('assets/img/betterlifeint-source/programs/program-photo-11.jpg') ?>" alt="Women meeting together in a BetterLife community group">
-      <figcaption>People learn faster in groups they already trust.</figcaption>
-    </figure>
-  </div>
-</section>
+  <!-- 8. Where we work: interactive map -->
+  <section class="ab-where" id="where" aria-labelledby="abWhereTitle">
+    <div class="container">
+      <div class="ab-head ab-reveal">
+        <span class="ab-eyebrow">Where we work</span>
+        <h2 id="abWhereTitle">Rooted in Uganda, working across five countries</h2>
+      </div>
+      <div class="ab-where-grid" data-map>
+        <div class="ab-map-wrap ab-reveal">
+          <svg class="ab-map" viewBox="30 43 572 640" data-base="30 43 572 640" role="img" aria-label="Map of Africa highlighting Uganda, South Sudan, Tanzania, Ghana and the Democratic Republic of Congo">
+            <path class="ab-map-land" d="<?= $map['africa'] ?>"/>
+            <?php foreach ($countryMeta as $name => $c): $d = $map['countries'][$c['mapKey']]['d'] ?? ''; ?>
+              <path class="ab-map-country" d="<?= $d ?>" data-key="<?= $c['key'] ?>"><title><?= h($name) ?></title></path>
+            <?php endforeach; ?>
+            <?php foreach ($countryMeta as $name => $c): foreach ($c['places'] as $place): [$label, $lon, $lat, $type] = $place; $left = ($place[5] ?? '') === 'left'; [$px, $py] = $project($lon, $lat); ?>
+              <g class="ab-map-place is-<?= $type ?>" data-key="<?= $c['key'] ?>" data-x="<?= $px ?>" data-y="<?= $py ?>" transform="translate(<?= $px ?> <?= $py ?>)">
+                <?php if ($type === 'office'): ?><rect x="-4" y="-4" width="8" height="8" rx="1.5"/><?php else: ?><circle r="4"/><?php endif; ?>
+                <text x="<?= $left ? -7 : 7 ?>" y="3.5"<?= $left ? ' text-anchor="end"' : '' ?>><?= h($label) ?></text>
+              </g>
+            <?php endforeach; endforeach; ?>
+          </svg>
+          <p class="ab-map-legend"><span class="lg-office" aria-hidden="true"></span> Office or base <span class="lg-field" aria-hidden="true"></span> Field presence <span class="lg-country" aria-hidden="true"></span> Programme country</p>
+        </div>
 
-<section class="section-cream">
-  <div class="container">
-    <div class="section-head fade-up">
-      <span class="eyebrow">Who We Work With</span>
-    </div>
-    <div class="detail-grid fade-up">
-      <?php foreach ($whoWeWorkWith as $b): ?>
-        <div class="detail-block"><h4><?= h($b['title']) ?></h4><p><?= h($b['body']) ?></p></div>
-      <?php endforeach; ?>
-    </div>
-    <div class="impact-photos fade-up" style="margin-top:36px;grid-template-columns:repeat(<?= count($whoWeWorkWithGallery) ?>,1fr);max-width:<?= count($whoWeWorkWithGallery) * 300 ?>px;">
-      <?php foreach ($whoWeWorkWithGallery as $g): ?>
-        <div class="impact-photo"><img src="<?= asset_url($g['image']) ?>" alt="<?= h($g['extra'] ?: $g['title']) ?>"><span class="cap"><?= h($g['title']) ?></span></div>
-      <?php endforeach; ?>
-    </div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <div class="section-head fade-up">
-      <span class="eyebrow">Where We Work</span>
-    </div>
-    <div class="detail-grid fade-up">
-      <?php foreach ($whereWeWork as $b): ?>
-        <div class="detail-block"><h4><?= h($b['title']) ?></h4><p><?= h($b['body']) ?></p></div>
-      <?php endforeach; ?>
-    </div>
-    <div class="impact-photos fade-up" style="margin-top:36px;grid-template-columns:repeat(<?= count($whereWeWorkGallery) ?>,1fr);max-width:<?= count($whereWeWorkGallery) * 300 ?>px;">
-      <?php foreach ($whereWeWorkGallery as $g): ?>
-        <div class="impact-photo"><img src="<?= asset_url($g['image']) ?>" alt="<?= h($g['extra'] ?: $g['title']) ?>"><span class="cap"><?= h($g['title']) ?></span></div>
-      <?php endforeach; ?>
-    </div>
-  </div>
-</section>
-
-<section class="media-band">
-  <div class="container">
-    <figure class="fade-up">
-      <img src="<?= asset_url('assets/img/betterlifeint-source/projects/project-agro-tourism-alt.jpeg') ?>" alt="A BetterLife farmer walking through a banana plantation">
-    </figure>
-  </div>
-</section>
-
-<section class="section-cream">
-  <div class="container">
-    <div style="max-width:760px;margin:0 auto;">
-      <div class="fade-up">
-        <span class="eyebrow">Our Journey</span>
-        <h2>From a Local Idea to Work Across Five Countries</h2>
-        <div class="journey-list">
-          <?php foreach ($journey as $j): ?>
-            <div class="journey-row">
-              <div class="year"><?= h($j['title']) ?></div>
-              <p><?= h($j['body']) ?></p>
+        <div class="ab-where-panel ab-reveal">
+          <div class="ab-country-tabs" role="tablist" aria-label="Countries">
+            <?php $first = true; foreach ($countryMeta as $name => $c): ?>
+              <button type="button" role="tab" class="ab-country-tab" id="abCTab-<?= $c['key'] ?>" aria-controls="abCPanel-<?= $c['key'] ?>" aria-selected="<?= $first ? 'true' : 'false' ?>" tabindex="<?= $first ? '0' : '-1' ?>" data-key="<?= $c['key'] ?>"><?= h($name === 'Democratic Republic of Congo' ? 'DR Congo' : $name) ?></button>
+            <?php $first = false; endforeach; ?>
+          </div>
+          <?php $byTitle = []; foreach ($whereWeWork as $w) $byTitle[$w['title']] = $w['body']; ?>
+          <?php foreach ($countryMeta as $name => $c): ?>
+            <div class="ab-country-panel" role="tabpanel" id="abCPanel-<?= $c['key'] ?>" aria-labelledby="abCTab-<?= $c['key'] ?>" data-key="<?= $c['key'] ?>">
+              <div class="ab-country-photo">
+                <?php if ($c['photo']): ?>
+                  <?= ab_img($c['photo'][0], $c['photo'][1]) ?>
+                <?php else: ?>
+                  <div class="ab-photo-needed"><?= icon('map-pin', 20) ?><span>Photograph from our <?= h($name) ?> work needed</span></div>
+                <?php endif; ?>
+              </div>
+              <h3><?= h($name) ?></h3>
+              <?php if ($c['note'] || $c['places']): ?>
+                <ul class="ab-country-tags">
+                  <?php if ($c['note']): ?><li><?= h($c['note']) ?></li><?php endif; ?>
+                  <?php foreach ($c['places'] as $place): [$label, , , $type, $role] = $place; ?><li class="is-<?= $type ?>"><?= h($role) ?>: <?= h($label) ?></li><?php endforeach; ?>
+                </ul>
+              <?php endif; ?>
+              <p><?= h($byTitle[$name] ?? '') ?></p>
             </div>
           <?php endforeach; ?>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section class="media-band">
-  <div class="container">
-    <figure class="fade-up">
-      <img src="<?= asset_url('assets/img/betterlifeint-source/programs/program-photo-12.jpg') ?>" alt="A BetterLife community session in progress">
-      <figcaption>Every principle here was learned in the field, not written first in an office.</figcaption>
-    </figure>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <div class="section-head center fade-up">
-      <span class="eyebrow" style="justify-content:center;">What Guides Us</span>
+  <!-- 9. Photographic journey -->
+  <section class="ab-journey" aria-labelledby="abJourneyTitle">
+    <div class="container">
+      <div class="ab-head ab-head-center ab-reveal">
+        <span class="ab-eyebrow">Our journey</span>
+        <h2 id="abJourneyTitle">From a local idea to work across five countries</h2>
+      </div>
+      <ol class="ab-timeline">
+        <?php foreach ($journey as $i => $j): [$first, $rest] = ab_split($j['body']); $ph = $journeyPhotos[$j['title']] ?? null; ?>
+          <li class="ab-milestone ab-reveal <?= $ph ? 'has-photo' : '' ?>">
+            <span class="ab-year"><?= h($j['title']) ?></span>
+            <div class="ab-milestone-card">
+              <?php if ($ph): ?><?= ab_photo($ph[0], $ph[1], $ph[2], 'journey', 'ab-milestone-photo') ?><?php endif; ?>
+              <p><?= h($first) ?></p>
+              <?php if ($rest): ?>
+                <p class="ab-milestone-more" id="abMs<?= $i ?>"><?= h($rest) ?></p>
+                <button type="button" class="ab-who-toggle" aria-expanded="false" aria-controls="abMs<?= $i ?>" hidden><span>Read more</span> <?= icon('chevron-down', 15) ?></button>
+              <?php endif; ?>
+            </div>
+          </li>
+        <?php endforeach; ?>
+      </ol>
     </div>
-    <div class="grid grid-3">
-      <?php foreach ($guides as $i => $g): ?>
-        <div class="card value-card fade-up">
-          <div class="num"><?= str_pad((string)($i + 1), 2, '0', STR_PAD_LEFT) ?></div>
-          <h4><?= h($g['title']) ?></h4>
-          <p><?= h($g['body']) ?></p>
-        </div>
+  </section>
+
+  <!-- 10. Tools that extend the work -->
+  <section class="ab-tools" aria-labelledby="abToolsTitle">
+    <div class="container">
+      <div class="ab-head ab-reveal">
+        <span class="ab-eyebrow">Tools that extend the work</span>
+        <h2 id="abToolsTitle">Because owning a phone does not make a tool useful</h2>
+        <p class="ab-head-sub">Farmers learn how to produce, then often remain disconnected from the systems that decide whether production becomes income. Two BetterLife platforms work on that gap, always paired with field training.</p>
+      </div>
+      <div class="ab-tools-grid">
+        <article class="ab-tool ab-reveal">
+          <div class="ab-tool-media">
+            <?= ab_photo('assets/img/betterlifeint-source/projects/project-soilla-app-alt.jpeg', 'Screens from the Soilla app', 'Screens from the Soilla app', 'tools', 'ab-tool-screens') ?>
+            <figure class="ab-tool-person"><?= ab_img('assets/img/soilla-app-portrait.webp', 'A young man holding up a phone showing the Soilla app') ?></figure>
+          </div>
+          <span class="ab-status">Launched in 2023</span>
+          <h3>Soilla</h3>
+          <p>Our digital agricultural advisory platform. Farmers use it for soil and crop guidance, climate information, market prices and agricultural services, and to find suppliers, experts and other producers.</p>
+          <a href="<?= SITE_URL ?>/programs.php#digital-innovation" class="ab-link">How Soilla fits our programmes <?= icon('arrow-right', 15) ?></a>
+        </article>
+        <article class="ab-tool ab-reveal">
+          <div class="ab-tool-media ab-tool-media-single">
+            <figure class="ab-tool-person"><?= ab_img('assets/img/agribusiness-connekt-app.webp', 'A person holding up a phone showing the Agribusiness Connekt app') ?></figure>
+          </div>
+          <span class="ab-status ab-status-soft">Work continuing in 2026</span>
+          <h3>Agribusiness Connekt</h3>
+          <p>Where Soilla supports production decisions, Agribusiness Connekt focuses on the business around the farm. It links farmers and small agricultural enterprises to buyers, finance, services and market information.</p>
+          <a href="<?= SITE_URL ?>/programs.php#digital-innovation" class="ab-link">Explore our digital work <?= icon('arrow-right', 15) ?></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. What guides us -->
+  <section class="ab-guides" aria-labelledby="abGuidesTitle">
+    <div class="container">
+      <div class="ab-guides-intro ab-reveal">
+        <h2 class="ab-eyebrow" id="abGuidesTitle">What guides us</h2>
+        <p class="ab-statement">People closest to a problem must have a real hand in defining it, designing the response and deciding what success looks like.</p>
+      </div>
+      <ol class="ab-guides-grid">
+        <?php foreach ($guides as $i => $g): ?>
+          <li class="ab-guide ab-reveal">
+            <span class="ab-guide-num"><?= str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) ?></span>
+            <h3><?= h($g['title']) ?></h3>
+            <p><?= h($g['body']) ?></p>
+          </li>
+        <?php endforeach; ?>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 12. Community photo strip -->
+  <section class="ab-strip" aria-labelledby="abStripTitle">
+    <div class="container ab-strip-head ab-reveal">
+      <div>
+        <span class="ab-eyebrow">Around the work</span>
+        <h2 id="abStripTitle">Seedlings, springs and solar panels</h2>
+      </div>
+      <p>Select any photograph to see it larger.</p>
+    </div>
+    <ul class="ab-strip-row">
+      <?php foreach ($strip as [$p, $cap]): ?>
+        <li><?= ab_photo($p, $cap, $cap, 'strip', 'ab-strip-item') ?><span class="ab-strip-cap"><?= h($cap) ?></span></li>
       <?php endforeach; ?>
+    </ul>
+  </section>
+
+  <!-- 13. Closing invitation -->
+  <section class="ab-close" aria-labelledby="abCloseTitle">
+    <div class="ab-close-bg"><?= ab_img('assets/img/farm-aerial-view-1.webp', '', '') ?></div>
+    <div class="container ab-close-inner ab-reveal">
+      <span class="ab-eyebrow"><?= h($slogan) ?></span>
+      <h2 id="abCloseTitle">Work with people who know the problem firsthand</h2>
+      <p>Partner with BetterLife International, lend your skills or join the communities building on work already under way across five countries.</p>
+      <div class="ab-close-actions">
+        <a href="<?= SITE_URL ?>/contact.php?subject=<?= urlencode('Partnership enquiry') ?>" class="btn btn-white">Partner With Us <?= icon('arrow-right', 16) ?></a>
+        <a href="<?= SITE_URL ?>/contact.php?subject=<?= urlencode('Volunteer enquiry') ?>" class="btn btn-outline">Volunteer With Us</a>
+        <a href="<?= SITE_URL ?>/team.php" class="ab-close-link">Meet the team <?= icon('arrow-right', 15) ?></a>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+</main>
+
+<!-- Lightbox (native dialog: focus is contained and Escape closes it) -->
+<dialog class="ab-lightbox" id="abLightbox" aria-label="Photo viewer">
+  <figure>
+    <img src="" alt="">
+    <figcaption><span class="ab-lb-caption"></span><span class="ab-lb-count"></span></figcaption>
+  </figure>
+  <button type="button" class="ab-lb-btn ab-lb-close" aria-label="Close photo viewer"><?= icon('x', 22) ?></button>
+  <button type="button" class="ab-lb-btn ab-lb-prev" aria-label="Previous photo"><?= icon('arrow-right', 20) ?></button>
+  <button type="button" class="ab-lb-btn ab-lb-next" aria-label="Next photo"><?= icon('arrow-right', 20) ?></button>
+</dialog>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>

@@ -1,0 +1,424 @@
+/* =========================================================
+   About page. Loaded only on about.php (via $pageStyles).
+   Brand colours sampled from the BetterLife logo.
+   ========================================================= */
+.ab {
+  --ab-green: #08722d;
+  --ab-blue: #007cad;
+  --ab-deep: #0b3d2e;
+  --ab-ink: #16241d;
+  --ab-soft: #46554c;
+  --ab-cream: #f7f6ef;
+  --ab-sand: #ebe5da;
+  --ab-line: #e3e0d6;
+  --ab-radius: 22px;
+  --ab-serif: 'Fraunces', Georgia, serif;
+  overflow-x: clip;
+}
+.ab section { padding: clamp(64px, 8.5vw, 116px) 0; }
+.ab h2 { font-family: var(--ab-serif); font-weight: 600; font-size: clamp(30px, 3.5vw, 46px); line-height: 1.1; letter-spacing: -.012em; color: var(--ab-deep); margin: 0; }
+.ab h3 { color: var(--ab-deep); }
+.ab p { font-size: 16.5px; line-height: 1.72; color: var(--ab-soft); }
+.ab img { display: block; max-width: 100%; height: auto; }
+
+.ab-eyebrow {
+  display: inline-flex; align-items: center; gap: 10px; margin: 0 0 16px;
+  font: 700 12.5px/1 var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--ab-green);
+}
+.ab-eyebrow::before { content: ''; width: 26px; height: 2px; background: var(--ab-blue); }
+.ab-head { max-width: 760px; margin-bottom: clamp(36px, 4.5vw, 56px); }
+.ab-head-center { margin-left: auto; margin-right: auto; text-align: center; }
+.ab-head-center .ab-eyebrow { justify-content: center; }
+.ab-head-sub { margin-top: 18px; max-width: 640px; }
+.ab-lead { font-size: 19px !important; line-height: 1.6 !important; color: var(--ab-ink) !important; }
+.ab-pull { font-family: var(--ab-serif); font-size: 25px !important; line-height: 1.35 !important; color: var(--ab-green) !important; padding-left: 20px; border-left: 3px solid var(--ab-blue); margin: 28px 0 !important; }
+.ab-pull-sm { font-size: 21px !important; }
+.ab-hl { background: linear-gradient(transparent 60%, rgba(0, 124, 173, .24) 60%); padding: 0 .08em; }
+.ab-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; color: var(--ab-blue); }
+.ab-link svg { transition: transform .2s ease; }
+.ab-link:hover svg { transform: translateX(3px); }
+
+/* Visible focus for every control on the page */
+.ab a:focus-visible, .ab button:focus-visible, .ab-lightbox button:focus-visible {
+  outline: 3px solid var(--ab-blue); outline-offset: 3px; border-radius: 6px;
+}
+.ab-hero a:focus-visible, .ab-purpose a:focus-visible, .ab-guides a:focus-visible, .ab-close a:focus-visible, .ab-figure a:focus-visible { outline-color: #fff; }
+
+/* Reveal: content is only hidden once JavaScript has confirmed it can reveal it */
+.ab-js .ab-reveal { opacity: 0; transform: translateY(18px); transition: opacity .75s ease, transform .75s ease; }
+.ab-js .ab-reveal.is-in { opacity: 1; transform: none; }
+
+/* ---------- Lightbox triggers ---------- */
+.ab-lb { position: relative; display: block; overflow: hidden; cursor: zoom-in; background: var(--ab-sand); }
+.ab-lb img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+.ab-lb:hover img, .ab-lb:focus-visible img { transform: scale(1.04); }
+.ab-lb-icon {
+  position: absolute; right: 10px; bottom: 10px; width: 32px; height: 32px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,.92); color: var(--ab-deep);
+  opacity: 0; transform: scale(.85); transition: opacity .2s ease, transform .2s ease;
+}
+.ab-lb:hover .ab-lb-icon, .ab-lb:focus-visible .ab-lb-icon { opacity: 1; transform: none; }
+
+/* =========================================================
+   1. Opening
+   ========================================================= */
+.ab .ab-hero { position: relative; display: flex; align-items: flex-end; min-height: min(84vh, 780px); padding: 0; overflow: hidden; background: var(--ab-deep); color: #fff; }
+.ab-hero-media { position: absolute; inset: 0; }
+.ab-hero-img { width: 100%; height: 100% !important; object-fit: cover; object-position: 50% 58%; animation: abSettle 18s cubic-bezier(.2, .6, .2, 1) both; }
+@keyframes abSettle { from { transform: scale(1.09); } to { transform: scale(1); } }
+.ab-hero-media::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(6, 22, 15, .35) 0%, rgba(6, 22, 15, .2) 30%, rgba(6, 22, 15, .78) 72%, rgba(6, 22, 15, .92) 100%),
+              linear-gradient(90deg, rgba(6, 22, 15, .55), rgba(6, 22, 15, 0) 65%);
+}
+.ab-hero-inner { position: relative; z-index: 1; padding-top: 150px; padding-bottom: clamp(52px, 7vw, 92px); }
+.ab-crumb { display: flex; gap: 8px; font-size: 13.5px; color: rgba(255,255,255,.75); margin-bottom: 22px; }
+.ab-crumb a { color: #fff; font-weight: 600; }
+.ab-kicker { margin: 0 0 14px; font: 700 12.5px/1 var(--font-body) !important; letter-spacing: .16em; text-transform: uppercase; color: #bfe3cc !important; }
+.ab-kicker i { font-style: normal; margin: 0 .35em; color: rgba(255,255,255,.5); }
+.ab-kicker span { white-space: nowrap; }
+.ab-hero h1 { font-family: var(--ab-serif); font-weight: 600; font-size: clamp(42px, 6.4vw, 86px); line-height: 1.02; letter-spacing: -.02em; color: #fff; max-width: 13ch; margin: 0 0 22px; }
+.ab-hero-lead { max-width: 58ch; font-size: clamp(16.5px, 1.35vw, 19px) !important; line-height: 1.6 !important; color: rgba(255,255,255,.9) !important; margin: 0; }
+.ab-hero-scroll { display: inline-flex; align-items: center; gap: 8px; margin-top: 30px; font-weight: 700; font-size: 14px; color: #fff; padding: 11px 20px; border: 1.5px solid rgba(255,255,255,.55); border-radius: 999px; transition: background .2s ease; }
+.ab-hero-scroll:hover { background: rgba(255,255,255,.12); }
+
+/* =========================================================
+   2. Our beginnings: organic collage + founding story
+   ========================================================= */
+.ab-begin-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(40px, 6vw, 92px); align-items: center; }
+.ab-collage { position: sticky; top: 100px; align-self: start; aspect-ratio: 1 / 1.08; }
+.ab-col { position: absolute; box-shadow: 0 18px 40px rgba(11, 61, 46, .14); }
+.ab-col-a { left: 0; top: 7%; width: 47%; height: 60%; border-radius: 999px 999px 20px 20px; }
+.ab-col-b { right: 0; top: 0; width: 49%; height: 37%; border-radius: 46% 54% 52% 48% / 56% 46% 54% 44%; }
+.ab-col-c { right: 4%; top: 41%; width: 41%; aspect-ratio: 1; border-radius: 50%; }
+.ab-col-d { left: 15%; bottom: 0; width: 41%; height: 28%; border-radius: 52% 14% 52% 14%; }
+.ab-col-c img, .ab-col-d img { object-position: 50% 40%; }
+.ab-stamp { position: absolute; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-radius: 50%; color: #fff; box-shadow: 0 14px 30px rgba(11, 61, 46, .22); }
+.ab-stamp span { font: 700 10.5px/1.2 var(--font-body); letter-spacing: .12em; text-transform: uppercase; opacity: .85; }
+.ab-stamp strong { font-family: var(--ab-serif); font-weight: 600; line-height: 1; margin-top: 6px; }
+.ab-stamp-year { left: 40%; top: 33%; width: 25%; aspect-ratio: 1; background: var(--ab-green); }
+.ab-stamp-year strong { font-size: clamp(24px, 2.4vw, 34px); }
+.ab-stamp-money { right: -2%; bottom: 6%; width: 27%; aspect-ratio: 1; background: var(--ab-blue); }
+.ab-stamp-money strong { font-size: clamp(20px, 2vw, 28px); }
+.ab-begin-copy h2 { margin-bottom: 24px; }
+.ab-facts { display: flex; flex-wrap: wrap; gap: 12px; margin: 30px 0 0 !important; }
+.ab-facts span { display: inline-flex; align-items: baseline; gap: 8px; padding: 10px 16px; border-radius: 999px; background: var(--ab-cream); border: 1px solid var(--ab-line); font-size: 14px; color: var(--ab-soft); }
+.ab-facts strong { font-family: var(--ab-serif); font-size: 19px; color: var(--ab-deep); }
+
+/* =========================================================
+   3. Impact in pictures
+   ========================================================= */
+.ab .ab-impact { background: var(--ab-cream); }
+.ab-figures { display: grid; grid-template-columns: 1.35fr repeat(4, 1fr); gap: 16px; margin: 0; padding: 0; list-style: none; }
+.ab-figure { position: relative; aspect-ratio: 3 / 4.1; border-radius: var(--ab-radius); overflow: hidden; background: var(--ab-deep); }
+.ab-figure:first-child { aspect-ratio: auto; }
+.ab-figure-img { position: absolute; inset: 0; width: 100%; height: 100% !important; object-fit: cover; transition: transform .8s ease; }
+.ab-figure:hover .ab-figure-img { transform: scale(1.04); }
+.ab-figure::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6, 22, 15, 0) 35%, rgba(6, 22, 15, .86) 100%); }
+.ab-figure-text { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; padding: 20px 20px 22px; color: #fff; }
+.ab-figure-text strong { display: block; font-family: var(--ab-serif); font-weight: 600; font-size: clamp(34px, 3.2vw, 48px); line-height: 1; letter-spacing: -.01em; font-variant-numeric: lining-nums tabular-nums; }
+.ab-figure:first-child .ab-figure-text strong { font-size: clamp(44px, 4.6vw, 68px); }
+.ab-figure-text small { font: 600 14px/1 var(--font-body); letter-spacing: 0; opacity: .85; vertical-align: .5em; }
+.ab-figure-text > span { display: block; margin-top: 8px; font-size: 14.5px; font-weight: 600; line-height: 1.35; color: rgba(255,255,255,.9); }
+.ab-figures-note { margin: 22px 0 0 !important; max-width: 720px; font-size: 14px !important; color: var(--ab-soft) !important; }
+
+/* =========================================================
+   4. Vision and mission
+   ========================================================= */
+.ab .ab-purpose { position: relative; overflow: hidden; background: linear-gradient(135deg, #07392a 0%, #0b3d2e 45%, #03384d 100%); color: #fff; }
+.ab-purpose-bg { position: absolute; inset: 0; }
+.ab-purpose-bg img { width: 100%; height: 100% !important; object-fit: cover; opacity: .16; mix-blend-mode: luminosity; }
+.ab-purpose .container { position: relative; }
+.ab-purpose-head { text-align: center; margin-bottom: clamp(36px, 4.5vw, 56px); }
+.ab-purpose-head .ab-eyebrow { justify-content: center; color: #9fd6b2; }
+.ab-purpose-head .ab-eyebrow::before { background: #9fd6b2; }
+.ab-purpose-head h2 { color: #fff; font-size: clamp(40px, 5.4vw, 72px); }
+.ab-purpose-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(18px, 2.5vw, 32px); }
+.ab-purpose-card { padding: clamp(28px, 3.6vw, 48px); border-radius: var(--ab-radius); background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.16); backdrop-filter: blur(2px); }
+.ab-purpose-label { display: inline-flex; align-items: center; gap: 10px; font: 700 12.5px/1 var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: #9fd6b2; }
+.ab-purpose-card p { margin: 18px 0 0; font-family: var(--ab-serif); font-size: clamp(21px, 2vw, 28px) !important; line-height: 1.38 !important; color: #fff !important; }
+
+/* =========================================================
+   5. How we see the work: the connections diagram
+   ========================================================= */
+.ab-systems-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 88px); align-items: start; }
+.ab-systems-copy h2 { margin-bottom: 24px; }
+.ab-systems-photo { margin: 30px 0 0; border-radius: var(--ab-radius); overflow: hidden; aspect-ratio: 16 / 10; }
+.ab-systems-photo img { width: 100%; height: 100% !important; object-fit: cover; object-position: 50% 45%; }
+.ab-web { position: sticky; top: 90px; }
+.ab-web-hint { font-size: 14.5px !important; text-align: center; margin: 0 auto 8px !important; max-width: 420px; }
+.ab-web-stage { position: relative; aspect-ratio: 1; max-width: 540px; margin: 0 auto; }
+.ab-web-lines { position: absolute; inset: 0; width: 100%; height: 100%; }
+.ab-web-lines line { stroke: #c9d6cd; stroke-width: .5; stroke-dasharray: 1.2 1.2; transition: stroke .3s ease, stroke-width .3s ease; }
+.ab-web-lines line.is-active { stroke: var(--ab-blue); stroke-width: .9; stroke-dasharray: none; }
+.ab-web-core {
+  position: absolute; left: 50%; top: 50%; width: 27%; aspect-ratio: 1; transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  border-radius: 50%; background: var(--ab-green); color: #fff; box-shadow: 0 0 0 10px rgba(8, 114, 45, .12), 0 16px 34px rgba(8, 114, 45, .28);
+}
+.ab-web-core span { font-family: var(--ab-serif); font-size: clamp(20px, 2vw, 26px); }
+.ab-web-node {
+  position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%);
+  padding: 11px 18px; border-radius: 999px; background: #fff; border: 1.5px solid var(--ab-line);
+  font: 700 14.5px/1 var(--font-body); color: var(--ab-deep); cursor: pointer; white-space: nowrap;
+  box-shadow: 0 8px 22px rgba(11, 61, 46, .08); transition: background .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
+}
+.ab-web-node:hover { border-color: var(--ab-blue); transform: translate(-50%, -50%) scale(1.05); }
+.ab-web-node[aria-selected="true"] { background: var(--ab-blue); border-color: var(--ab-blue); color: #fff; }
+.ab-web-panels { margin-top: 18px; display: grid; gap: 12px; }
+.ab-web-panel { padding: 22px 24px; border-radius: 18px; background: var(--ab-cream); border-left: 4px solid var(--ab-blue); }
+.ab-web-panel h3 { font-family: var(--ab-serif); font-weight: 600; font-size: 22px; margin: 0 0 8px; }
+.ab-web-panel p { margin: 0; font-size: 16px; }
+.ab-js .ab-web-panel:not(.is-active) { display: none; }
+
+/* =========================================================
+   6. How we work: sticky photograph beside scrolling principles
+   ========================================================= */
+.ab .ab-how { background: var(--ab-cream); }
+.ab-how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 88px); align-items: start; }
+.ab-how-sticky { position: sticky; top: 84px; }
+.ab-how-frame { position: relative; aspect-ratio: 4 / 4.6; max-height: calc(100vh - 120px); border-radius: 28px; overflow: hidden; background: var(--ab-sand); }
+.ab-how-img { position: absolute; inset: 0; width: 100%; height: 100% !important; object-fit: cover; opacity: 0; transform: scale(1.03); transition: opacity .9s ease, transform 1.4s ease; }
+.ab-how-img.is-active { opacity: 1; transform: none; }
+.ab-how-count { position: absolute; left: 18px; bottom: 18px; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.92); font-size: 13px; font-weight: 600; color: var(--ab-soft); }
+.ab-how-count b { color: var(--ab-deep); }
+.ab-how-steps { list-style: none; margin: 0; padding: 0; }
+/* Tall enough for the photo to change as each principle passes, capped for very tall screens */
+.ab-how-step { min-height: min(64vh, 600px); display: flex; flex-direction: column; justify-content: center; padding: 40px 0; border-top: 1px solid var(--ab-line); }
+.ab-how-step:first-child { border-top: 0; min-height: min(50vh, 460px); justify-content: flex-start; padding-top: 0; }
+.ab-how-step-photo { display: none; margin: 0 0 22px; border-radius: 20px; overflow: hidden; aspect-ratio: 16 / 10; }
+.ab-how-step-photo img { width: 100%; height: 100% !important; object-fit: cover; }
+.ab-how-num { font-family: var(--ab-serif); font-size: 15px; font-weight: 600; color: var(--ab-blue); letter-spacing: .06em; }
+.ab-how-step h3 { font-family: var(--ab-serif); font-weight: 600; font-size: clamp(26px, 2.5vw, 34px); line-height: 1.15; margin: 10px 0 14px; }
+.ab-how-step p { margin: 0; font-size: 17px; }
+.ab-how-step.is-current .ab-how-num { color: var(--ab-green); }
+.ab-trust { display: flex; align-items: flex-start; gap: 14px; margin-top: 26px !important; padding: 22px 24px; border-radius: 18px; background: #fff; border: 1px solid var(--ab-line); }
+.ab-trust svg { flex-shrink: 0; color: var(--ab-green); margin-top: 4px; }
+.ab-trust span { font-family: var(--ab-serif); font-size: 23px; line-height: 1.3; color: var(--ab-deep); }
+/* Without JavaScript (or on narrow screens) each step shows its own photo */
+html:not(.ab-js) .ab-how-sticky { display: none; }
+html:not(.ab-js) .ab-how-grid { grid-template-columns: 1fr; max-width: 760px; }
+html:not(.ab-js) .ab-how-step-photo { display: block; }
+html:not(.ab-js) .ab-how-step { min-height: 0; }
+
+/* =========================================================
+   7. Who we work with
+   ========================================================= */
+.ab-who-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+.ab-who-card { display: flex; flex-direction: column; }
+.ab-who-photo { aspect-ratio: 4 / 5; border-radius: var(--ab-radius); overflow: hidden; background: var(--ab-sand); }
+.ab-who-photo img { width: 100%; height: 100% !important; object-fit: cover; transition: transform .7s ease; }
+.ab-who-card:hover .ab-who-photo img { transform: scale(1.04); }
+.ab-who-body { padding: 20px 4px 0; }
+.ab-who-body h3 { font-size: 20px; line-height: 1.25; margin: 0 0 10px; }
+.ab-who-body p { margin: 0; font-size: 15.5px; }
+.ab-who-more { margin-top: 10px !important; }
+.ab-who-toggle { display: inline-flex; align-items: center; gap: 6px; margin-top: 12px; padding: 6px 0; background: none; border: 0; cursor: pointer; font: 700 14px/1 var(--font-body); color: var(--ab-blue); }
+.ab-who-toggle svg { transition: transform .25s ease; }
+.ab-who-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+
+/* =========================================================
+   8. Where we work: interactive map
+   ========================================================= */
+.ab .ab-where { background: var(--ab-cream); }
+.ab-where-grid { display: grid; grid-template-columns: 1.05fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
+.ab-map-wrap { position: sticky; top: 90px; }
+.ab-map { display: block; width: 100%; height: auto; max-height: 72vh; }
+.ab-map-land { fill: #e2ddd1; stroke: #fff; stroke-width: .6; }
+.ab-map-country { fill: var(--ab-green); stroke: #fff; stroke-width: .9; stroke-linejoin: round; cursor: pointer; transition: fill .25s ease, opacity .25s ease; }
+.ab-map-country:hover { fill: #0a8a37; }
+.ab-map-country.is-selected { fill: var(--ab-blue); }
+.ab-map-place { pointer-events: none; }
+.ab-map-place rect { fill: var(--ab-ink); stroke: #fff; stroke-width: 1.2; }
+.ab-map-place circle { fill: #fff; stroke: var(--ab-ink); stroke-width: 1.6; }
+.ab-map:not(.is-zoomed) .ab-map-place text { display: none; }
+.ab-map-place text { font: 700 12px/1 var(--font-body); fill: var(--ab-ink); paint-order: stroke; stroke: #fff; stroke-width: 3px; stroke-linejoin: round; }
+.ab-map-reset { position: absolute; top: 6px; right: 6px; padding: 8px 14px; border-radius: 999px; border: 1px solid var(--ab-line); background: #fff; cursor: pointer; font: 700 13px/1 var(--font-body); color: var(--ab-deep); box-shadow: 0 6px 18px rgba(11, 61, 46, .08); }
+.ab-map-reset:hover { border-color: var(--ab-blue); color: var(--ab-blue); }
+.ab-map-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin: 14px 0 0 !important; font-size: 13.5px !important; }
+.ab-map-legend span { display: inline-block; width: 12px; height: 12px; margin-right: -10px; vertical-align: -1px; }
+.lg-office { background: var(--ab-ink); border-radius: 2px; }
+.lg-field { border: 2px solid var(--ab-ink); border-radius: 50%; background: #fff; }
+.lg-country { background: var(--ab-green); border-radius: 3px; }
+.ab-country-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.ab-country-tab { padding: 10px 16px; border-radius: 999px; background: #fff; border: 1.5px solid var(--ab-line); cursor: pointer; font: 700 14px/1 var(--font-body); color: var(--ab-deep); transition: background .2s ease, color .2s ease, border-color .2s ease; }
+.ab-country-tab:hover { border-color: var(--ab-blue); }
+.ab-country-tab[aria-selected="true"] { background: var(--ab-blue); border-color: var(--ab-blue); color: #fff; }
+.ab-country-panel + .ab-country-panel { margin-top: 32px; }
+.ab-js .ab-country-panel + .ab-country-panel { margin-top: 0; }
+.ab-js .ab-country-panel:not(.is-active) { display: none; }
+.ab-country-photo { aspect-ratio: 16 / 10; border-radius: var(--ab-radius); overflow: hidden; background: var(--ab-sand); margin-bottom: 22px; }
+.ab-country-photo img { width: 100%; height: 100% !important; object-fit: cover; }
+.ab-photo-needed { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 20px; text-align: center; border: 2px dashed #c9c2b3; border-radius: inherit; color: #7a7466; font-size: 14.5px; font-weight: 600; }
+.ab-country-panel h3 { font-family: var(--ab-serif); font-weight: 600; font-size: 30px; margin: 0 0 12px; }
+.ab-country-tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0 0 14px; padding: 0; }
+.ab-country-tags li { padding: 6px 12px; border-radius: 999px; background: #fff; border: 1px solid var(--ab-line); font-size: 13px; font-weight: 600; color: var(--ab-soft); }
+.ab-country-tags li.is-office { border-color: var(--ab-ink); color: var(--ab-ink); }
+.ab-country-panel p { margin: 0; }
+
+/* =========================================================
+   9. Photographic journey
+   ========================================================= */
+.ab-timeline { position: relative; list-style: none; margin: 0 auto; padding: 0; max-width: 1040px; }
+.ab-timeline::before { content: ''; position: absolute; left: 50%; top: 10px; bottom: 10px; width: 2px; transform: translateX(-50%); background: linear-gradient(var(--ab-green), var(--ab-blue)); opacity: .35; }
+.ab-milestone { position: relative; display: grid; grid-template-columns: 1fr 64px 1fr; align-items: center; margin-bottom: 36px; }
+.ab-milestone::before { content: ''; position: absolute; left: 50%; top: 50%; width: 16px; height: 16px; transform: translate(-50%, -50%); border-radius: 50%; background: #fff; border: 4px solid var(--ab-green); box-shadow: 0 0 0 6px #fff; }
+.ab-year { font-family: var(--ab-serif); font-weight: 600; font-size: clamp(48px, 5.6vw, 76px); line-height: 1; color: var(--ab-green); letter-spacing: -.02em; font-variant-numeric: lining-nums; }
+.ab-milestone-card { padding: 24px 26px; border-radius: var(--ab-radius); background: #fff; border: 1px solid var(--ab-line); box-shadow: 0 14px 34px rgba(11, 61, 46, .06); }
+.ab-milestone-card p { margin: 0; font-size: 16px; }
+.ab-milestone-more { margin-top: 10px !important; }
+.ab-milestone-photo { aspect-ratio: 16 / 9; border-radius: 14px; margin-bottom: 18px; }
+.ab-milestone:nth-child(odd) .ab-milestone-card { grid-column: 1; grid-row: 1; }
+.ab-milestone:nth-child(odd) .ab-year { grid-column: 3; grid-row: 1; padding-left: 8px; }
+.ab-milestone:nth-child(even) .ab-milestone-card { grid-column: 3; grid-row: 1; }
+.ab-milestone:nth-child(even) .ab-year { grid-column: 1; grid-row: 1; text-align: right; padding-right: 8px; }
+.ab-milestone:nth-child(even) .ab-year { color: var(--ab-blue); }
+
+/* =========================================================
+   10. Tools
+   ========================================================= */
+.ab .ab-tools { background: var(--ab-cream); }
+.ab-tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 3vw, 36px); }
+.ab-tool { padding: clamp(22px, 2.6vw, 32px); border-radius: 28px; background: #fff; border: 1px solid var(--ab-line); }
+.ab-tool-media { position: relative; display: grid; grid-template-columns: 1fr 34%; gap: 14px; margin-bottom: 26px; }
+.ab-tool-screens { aspect-ratio: 600 / 403; border-radius: 18px; border: 1px solid var(--ab-line); }
+.ab-tool-screens img { object-fit: contain !important; background: #fff; }
+.ab-tool-person { margin: 0; border-radius: 18px; overflow: hidden; }
+.ab-tool-person img { width: 100%; height: 100% !important; object-fit: cover; }
+.ab-tool-media-single { grid-template-columns: 1fr; }
+.ab-tool-media-single .ab-tool-person { aspect-ratio: 600 / 403; }
+.ab-tool-media-single .ab-tool-person img { object-position: 50% 42%; }
+.ab-status { display: inline-block; padding: 6px 12px; border-radius: 999px; background: rgba(8, 114, 45, .1); color: var(--ab-green); font-size: 12.5px; font-weight: 700; letter-spacing: .02em; }
+.ab-status-soft { background: rgba(0, 124, 173, .1); color: var(--ab-blue); }
+.ab-tool h3 { font-family: var(--ab-serif); font-weight: 600; font-size: 32px; margin: 12px 0 10px; }
+.ab-tool p { margin: 0 0 18px; }
+
+/* =========================================================
+   11. What guides us
+   ========================================================= */
+.ab .ab-guides { background: var(--ab-deep); color: #fff; }
+.ab-guides-intro { max-width: 900px; margin-bottom: clamp(40px, 5vw, 64px); }
+.ab-guides-intro .ab-eyebrow { color: #9fd6b2; font-size: 12.5px; }
+.ab-guides-intro .ab-eyebrow::before { background: #9fd6b2; }
+.ab-statement { margin: 0 !important; font-family: var(--ab-serif); font-size: clamp(26px, 3.2vw, 42px) !important; line-height: 1.22 !important; color: #fff !important; letter-spacing: -.01em; }
+.ab-guides-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 clamp(24px, 3vw, 44px); list-style: none; margin: 0; padding: 0; }
+.ab-guide { padding: 26px 0 34px; border-top: 1px solid rgba(255,255,255,.18); transition: border-color .3s ease; }
+.ab-guide:hover { border-top-color: #9fd6b2; }
+.ab-guide-num { font-family: var(--ab-serif); font-size: 16px; color: #9fd6b2; font-variant-numeric: lining-nums; }
+.ab-guide h3 { color: #fff; font-size: 21px; margin: 10px 0 8px; transition: color .3s ease; }
+.ab-guide:hover h3 { color: #c8ecd5; }
+.ab-guide p { margin: 0; color: rgba(255,255,255,.76) !important; font-size: 15.5px; }
+
+/* =========================================================
+   12. Community photo strip
+   ========================================================= */
+.ab .ab-strip { padding-bottom: clamp(56px, 7vw, 96px); }
+.ab-strip-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; margin-bottom: 30px; }
+.ab-strip-head p { margin: 0; font-size: 14.5px; }
+.ab-strip-row {
+  display: flex; gap: 16px; list-style: none; margin: 0; overflow-x: auto; scroll-snap-type: x mandatory;
+  padding: 4px max(20px, calc((100vw - 1240px) / 2 + 56px)) 18px; scroll-padding-inline: max(20px, calc((100vw - 1240px) / 2 + 56px));
+  scrollbar-width: thin; scrollbar-color: #c9c2b3 transparent;
+}
+.ab-strip-row li { flex: 0 0 clamp(220px, 23vw, 300px); scroll-snap-align: start; }
+.ab-strip-item { aspect-ratio: 4 / 5; border-radius: 20px; }
+.ab-strip-cap { display: block; margin-top: 10px; font-size: 13.5px; line-height: 1.4; color: var(--ab-soft); }
+
+/* =========================================================
+   13. Closing invitation
+   ========================================================= */
+.ab .ab-close { position: relative; overflow: hidden; padding: clamp(88px, 11vw, 150px) 0; color: #fff; background: var(--ab-deep); }
+.ab-close-bg { position: absolute; inset: 0; }
+.ab-close-bg img { width: 100%; height: 100% !important; object-fit: cover; }
+.ab-close-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6, 22, 15, .9), rgba(6, 22, 15, .62) 60%, rgba(3, 56, 77, .55)); }
+.ab-close-inner { position: relative; max-width: 760px; }
+.ab-close .ab-eyebrow { color: #9fd6b2; }
+.ab-close .ab-eyebrow::before { background: #9fd6b2; }
+.ab-close h2 { color: #fff; font-size: clamp(34px, 4.4vw, 58px); }
+.ab-close p { margin: 18px 0 0; color: rgba(255,255,255,.88) !important; font-size: 18px; max-width: 58ch; }
+.ab-close-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 18px; margin-top: 32px; }
+.ab-close-link { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; color: #fff; }
+
+/* =========================================================
+   Lightbox
+   ========================================================= */
+.ab-lightbox { width: 100vw; height: 100vh; max-width: 100vw; max-height: 100vh; margin: 0; padding: 0; border: 0; background: transparent; color: #fff; }
+.ab-lightbox::backdrop { background: rgba(4, 14, 9, .92); }
+.ab-lightbox[open] { display: flex; align-items: center; justify-content: center; }
+.ab-lightbox figure { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 14px; max-width: min(1200px, 88vw); }
+.ab-lightbox img { max-width: 100%; max-height: 78vh; width: auto; height: auto; border-radius: 10px; box-shadow: 0 30px 80px rgba(0,0,0,.5); }
+.ab-lightbox figcaption { display: flex; gap: 14px; align-items: baseline; justify-content: center; flex-wrap: wrap; font-size: 15px; text-align: center; }
+.ab-lb-count { font-size: 13px; color: rgba(255,255,255,.6); }
+.ab-lb-btn { position: fixed; width: 50px; height: 50px; border-radius: 50%; border: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,.12); color: #fff; transition: background .2s ease; }
+.ab-lb-btn:hover { background: rgba(255,255,255,.24); }
+.ab-lb-close { top: 18px; right: 18px; }
+.ab-lb-prev { left: 18px; top: 50%; transform: translateY(-50%) rotate(180deg); }
+.ab-lb-next { right: 18px; top: 50%; transform: translateY(-50%); }
+.ab-lightbox.is-single .ab-lb-prev, .ab-lightbox.is-single .ab-lb-next, .ab-lightbox.is-single .ab-lb-count { display: none; }
+
+/* =========================================================
+   Responsive
+   ========================================================= */
+@media (max-width: 1100px) {
+  .ab-who-grid { grid-template-columns: repeat(2, 1fr); }
+  .ab-figures { grid-template-columns: repeat(3, 1fr); }
+  .ab-figure:first-child { grid-column: span 3; aspect-ratio: 16 / 7; }
+}
+@media (max-width: 900px) {
+  .ab-begin-grid, .ab-systems-grid, .ab-where-grid, .ab-tools-grid { grid-template-columns: 1fr; }
+  .ab-collage { position: relative; top: auto; max-width: 560px; width: 100%; margin: 0 auto; }
+  .ab-web, .ab-map-wrap { position: static; }
+  .ab-map { max-width: 480px; margin: 0 auto; }
+  .ab-how-grid { grid-template-columns: 1fr; }
+  .ab-how-sticky { display: none; }
+  .ab-how-step-photo { display: block; }
+  .ab-how-step, .ab-how-step:first-child { min-height: 0; padding: 30px 0; }
+  .ab-guides-grid { grid-template-columns: 1fr 1fr; }
+  .ab-purpose-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .ab section { padding: 60px 0; }
+  .ab p { font-size: 16px; }
+  .ab .ab-hero { min-height: 82svh; }
+  .ab-hero-img { object-position: 42% 60%; }
+  .ab-hero-inner { padding-top: 110px; }
+  .ab-lead { font-size: 17.5px !important; }
+  .ab-pull { font-size: 21px !important; }
+  /* Connections become a row of chips */
+  .ab-web-stage { aspect-ratio: auto; max-width: none; }
+  .ab-web-lines, .ab-web-core { display: none; }
+  .ab-web-nodes { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .ab-web-node { position: static; transform: none !important; padding: 10px 15px; font-size: 14px; }
+  .ab-web-hint { text-align: left; margin-left: 0 !important; }
+  .ab-figures { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .ab-figure:first-child { grid-column: span 2; aspect-ratio: 4 / 3; }
+  .ab-figure { aspect-ratio: 3 / 4; }
+  .ab-figure-text { padding: 14px; }
+  .ab-figure-text strong { font-size: 32px; }
+  .ab-figure-text > span { font-size: 13.5px; }
+  .ab-who-grid { grid-template-columns: 1fr; gap: 34px; }
+  .ab-who-photo { aspect-ratio: 4 / 3.4; }
+  .ab-guides-grid { grid-template-columns: 1fr; }
+  .ab-tool-media { grid-template-columns: 1fr; }
+  .ab-tool-media .ab-tool-person { aspect-ratio: 16 / 10; }
+  .ab-strip-head { flex-direction: column; align-items: flex-start; }
+  /* Timeline: one column with the line on the left */
+  .ab-timeline::before { left: 7px; transform: none; }
+  .ab-milestone, .ab-milestone:nth-child(even) { grid-template-columns: 1fr; padding-left: 34px; gap: 10px; margin-bottom: 28px; }
+  .ab-milestone::before { left: 8px; top: 22px; }
+  .ab-milestone .ab-year, .ab-milestone:nth-child(even) .ab-year,
+  .ab-milestone .ab-milestone-card, .ab-milestone:nth-child(even) .ab-milestone-card { grid-column: 1 !important; grid-row: auto !important; text-align: left; padding: 0; }
+  .ab-milestone .ab-milestone-card { padding: 20px; }
+  .ab-year { font-size: 44px; }
+  .ab-lb-prev, .ab-lb-next { top: auto; bottom: 18px; }
+  .ab-lb-prev { left: calc(50% - 64px); transform: rotate(180deg); }
+  .ab-lb-next { right: calc(50% - 64px); transform: none; }
+  .ab-lightbox img { max-height: 70vh; }
+}
+
+/* Reduced motion: no settle-in zoom, no reveals, instant swaps */
+@media (prefers-reduced-motion: reduce) {
+  .ab-hero-img { animation: none; }
+  .ab-js .ab-reveal { opacity: 1; transform: none; transition: none; }
+  .ab-how-img, .ab-lb img, .ab-figure-img, .ab-who-photo img { transition: none; }
+}

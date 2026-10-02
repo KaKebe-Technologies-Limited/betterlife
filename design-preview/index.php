@@ -173,7 +173,7 @@ $countryLabels = [
         </svg>
         <!-- Each frame holds two photos that slowly swap; frames float a few pixels -->
         <figure class="lp-ph ph-b"><img src="<?= $img ?>smiles-group-under-tree-2.webp" alt="A large community group gathered under a tree"><img class="lp-ph-alt" src="<?= $img ?>smiles-group-under-tree-1.webp" alt="" loading="lazy"></figure>
-        <figure class="lp-ph ph-a"><img src="<?= $img ?>program-trees.jpg" alt="A woman with a baby on her back planting crops"><img class="lp-ph-alt" src="<?= $img ?>farm-field-2.jpg" alt="" loading="lazy"></figure>
+        <figure class="lp-ph ph-a"><img src="<?= $img ?>betterlifeint-source/programs/program-photo-3.jpg" alt="A woman in a BetterLife shirt holding a young plant"><img class="lp-ph-alt" src="<?= $img ?>betterlifeint-source/programs/program-photo-2.jpg" alt="" loading="lazy"></figure>
         <figure class="lp-ph ph-d"><img src="<?= $img ?>soilla-app-portrait.webp" alt="A young man holding up a phone with the Soilla app"><img class="lp-ph-alt" src="<?= $img ?>agribusiness-connekt-app.webp" alt="" loading="lazy"></figure>
         <figure class="lp-ph ph-c"><img src="<?= $img ?>impact-story-2.jpg" alt="Women writing in notebooks at a group meeting"><img class="lp-ph-alt" src="<?= $img ?>impact-story-1.jpg" alt="" loading="lazy"></figure>
         <svg class="lp-collage-brush is-front" viewBox="0 0 620 521" aria-hidden="true">
@@ -213,14 +213,14 @@ $countryLabels = [
         </svg>
         <div class="lp-cards" id="lpCards">
           <article class="lp-card">
-            <div class="lp-card-img"><img src="<?= $img ?>farm-field-3.jpg" alt="A mother with her baby tending crops" loading="lazy"></div>
+            <div class="lp-card-img"><img src="<?= $img ?>betterlifeint-source/programs/program-photo-9.jpg" alt="A raised sack garden planted with seedlings" loading="lazy"></div>
             <h3>Household farms</h3>
             <span class="lp-card-meta">Food and income close to home</span>
             <p>Families put their training to work on farms near home. Alongside savings and small enterprise, the farm feeds the household and adds to what it earns.</p>
             <a href="<?= $site ?>/programs.php" class="lp-textlink lp-textlink-sm">Explore our livelihoods work <span aria-hidden="true">&rarr;</span></a>
           </article>
           <article class="lp-card">
-            <div class="lp-card-img"><img src="<?= $img ?>farm-field-1.jpg" alt="A farmer preparing soil beside a wheelbarrow" loading="lazy"></div>
+            <div class="lp-card-img"><img src="<?= $img ?>betterlifeint-source/programs/program-photo-7.jpg" alt="A newly planted field" loading="lazy"></div>
             <h3>A 20-acre community farm</h3>
             <span class="lp-card-meta">Under way</span>
             <p>With the community, we are preparing 20 acres for maize and soybean, with clean energy supporting the farm's operations. It is being built with the capacity to help feed about 1,000 refugees and displaced people.</p>
@@ -328,7 +328,7 @@ $countryLabels = [
         <h2>Help families plan<br>beyond the next meal.</h2>
         <p>Funding, technical expertise, equipment and market connections all help communities build on work that is already under way.</p>
         <div class="lp-cta-actions">
-          <a href="<?= $site ?>/contact.php?subject=Support" class="lp-btn lp-btn-blue">Support Our Work</a>
+          <a href="<?= $site ?>/contact.php?subject=Partnership enquiry" class="lp-btn lp-btn-blue">Support Our Work</a>
           <a href="<?= $site ?>/contact.php" class="lp-btn lp-btn-green">Talk to Our Team</a>
         </div>
       </div>

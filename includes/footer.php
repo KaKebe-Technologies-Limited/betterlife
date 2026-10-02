@@ -70,5 +70,8 @@ $footerPrograms = $pdo->query("SELECT title, slug FROM programs WHERE status = 1
 
 <a href="#top" class="back-to-top" aria-label="Back to top"><?= icon('arrow-right', 18) ?></a>
 <script src="<?= SITE_URL ?>/assets/js/main.js?v=<?= @filemtime(__DIR__ . '/../assets/js/main.js') ?: time() ?>"></script>
+<?php foreach ($pageScripts ?? [] as $js): // optional per-page scripts (paths under the site root) ?>
+<script src="<?= SITE_URL . '/' . $js ?>?v=<?= @filemtime(__DIR__ . '/../' . $js) ?: time() ?>"></script>
+<?php endforeach; ?>
 </body>
 </html>
