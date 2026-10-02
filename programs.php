@@ -30,7 +30,7 @@ $petals = [
 ];
 $dots = [
     ['Skills', 'assets/img/programmes/yumbe-training-listener.jpg', 'A participant listening during a training session in Yumbe', '35% 40%'],
-    ['Information', 'assets/img/programmes/radio-studio-session.jpg', 'BetterLife team members on air in a radio studio in Yumbe', '50% 40%'],
+    ['Information', 'assets/img/programmes/yumbe-session-phones.jpg', 'Participants at a training session in Yumbe, one checking a phone', '40% 40%'],
 ];
 
 // Farming, training, school learning, food processing, clean energy and community organising
@@ -49,6 +49,9 @@ $strip = [
     ['assets/img/programmes/yumbe-trellis-rows.jpg', 'Trellised vegetables in Yumbe'],
 ];
 
+// Voices (illustrative placeholders show on a local preview only; see pp_voices())
+$voices = pp_visible_voices(['amina', 'chantal', 'fatima']);
+
 $feature = 'womens-climate-resilience-yumbe';
 $side = ['smiles', 'betterlife-spring'];
 
@@ -59,6 +62,7 @@ $pageScripts = ['assets/js/about.js', 'assets/js/programmes.js'];
 $pageHead = ($heroV
         ? '<link rel="preload" as="image" imagesrcset="' . h(implode(', ', array_map(fn($w, $r) => asset_url($r) . " {$w}w", array_keys($heroV), $heroV))) . '" imagesizes="100vw" fetchpriority="high">'
         : '')
+    . pp_voice_head($voices)
     . '<script>document.documentElement.classList.add("ab-js")</script>';
 
 require __DIR__ . '/includes/header.php';
@@ -163,7 +167,7 @@ require __DIR__ . '/includes/header.php';
       <div class="pg-feature-grid">
         <?php $f = $projects[$feature]; ?>
         <article class="pg-feature ab-reveal">
-          <?= ab_img($f['image'][0], $f['image'][1], 'pg-feature-img', true, 'style="object-position: 50% 12%"', '(max-width: 900px) 100vw, 700px') ?>
+          <?= ab_img($f['image'][0], $f['image'][1], 'pg-feature-img', true, 'style="object-position: ' . h($f['image'][2]) . '"', '(max-width: 900px) 100vw, 700px') ?>
           <div class="pg-feature-panel">
             <span class="pg-kicker"><?= h($areas[$f['area']]['short']) ?></span>
             <h3><a href="<?= h(pp_project_url($feature, $f)) ?>"><?= h($f['title']) ?></a></h3>
@@ -191,8 +195,8 @@ require __DIR__ . '/includes/header.php';
   <section class="pg-evidence" aria-labelledby="pgEvidenceTitle">
     <div class="container pg-evidence-grid">
       <figure class="pg-evidence-photo ab-reveal">
-        <span class="pg-evidence-frame"><?= ab_img('assets/img/programmes/yumbe-training-hands.jpg', 'Women raising their hands during a training session in Yumbe', '', true, 'style="object-position: 55% 50%"', '(max-width: 900px) 100vw, 520px') ?></span>
-        <figcaption>A training session in Yumbe</figcaption>
+        <span class="pg-evidence-frame"><?= ab_img('assets/img/programmes/yumbe-participant-smile.jpg', 'A smiling participant in the Yumbe programme, wearing the programme T-shirt', '', true, 'style="object-position: 50% 25%"', '(max-width: 900px) 100vw, 520px') ?></span>
+        <figcaption>A participant in the Yumbe programme</figcaption>
       </figure>
       <div>
         <div class="ab-head ab-reveal">
@@ -206,6 +210,8 @@ require __DIR__ . '/includes/header.php';
       </div>
     </div>
   </section>
+
+  <?= pp_voice_section($voices, 'Questions people bring to the work') ?>
 
   <!-- 6. Community photo strip -->
   <section class="pg-strip" aria-labelledby="pgStripTitle" data-strip>

@@ -28,6 +28,9 @@ $featureSlug = isset($own[$a['feature'] ?? '']) ? $a['feature'] : array_key_firs
 $feature = $featureSlug ? $own[$featureSlug] : null;
 $others = array_filter($own, fn($k) => $k !== $featureSlug, ARRAY_FILTER_USE_KEY);
 $collage = $a['collage'] ?? [];
+// Voices for this area (illustrative placeholders show on a local preview only; see pp_voices())
+$voiceKeys = ['climate-resilient-agriculture' => ['grace', 'mariam'], 'green-skills-livelihoods' => ['peter', 'josephine', 'ahmed', 'esther']][$slug] ?? [];
+$voices = pp_visible_voices($voiceKeys);
 $strip = $a['gallery'] ?? [];
 
 $pageTitle = $a['short'];
@@ -39,6 +42,7 @@ $pageScripts = ['assets/js/about.js', 'assets/js/programmes.js'];
 $pageHead = ($heroV
         ? '<link rel="preload" as="image" imagesrcset="' . h(implode(', ', array_map(fn($w, $r) => asset_url($r) . " {$w}w", array_keys($heroV), $heroV))) . '" imagesizes="100vw" fetchpriority="high">'
         : '')
+    . pp_voice_head($voices)
     . '<script>document.documentElement.classList.add("ab-js")</script>';
 $contactUrl = SITE_URL . '/contact.php?subject=' . rawurlencode('Partnership enquiry: ' . $a['short']);
 $seed = 100 + $index * 7;   // each area gets its own brush strokes
@@ -142,9 +146,10 @@ require __DIR__ . '/includes/header.php';
           <a href="<?= SITE_URL ?>/projects.php?area=<?= h(rawurlencode($slug)) ?>" class="pg-link">Filter the project directory <?= icon('arrow-right', 15) ?></a>
         </div>
         <?php if ($feature): ?>
-          <article class="pg-feature pg-feature-wide ab-reveal<?= empty($feature['image']) ? ' is-text' : '' ?>">
-            <?php if (!empty($feature['image'])): ?>
-              <?= ab_img($feature['image'][0], $feature['image'][1], 'pg-feature-img', true, 'style="object-position: ' . h($feature['image'][2] ?? '50% 50%') . '"', '(max-width: 900px) 100vw, 1240px') ?>
+          <?php $fPic = $feature['hero'] ?? $feature['image'] ?? null; ?>
+          <article class="pg-feature pg-feature-wide ab-reveal<?= $fPic ? '' : ' is-text' ?>">
+            <?php if ($fPic): ?>
+              <?= ab_img($fPic[0], $fPic[1], 'pg-feature-img', true, 'style="object-position: ' . h($fPic[2] ?? '50% 50%') . '"', '(max-width: 900px) 100vw, 1240px') ?>
             <?php endif; ?>
             <div class="pg-feature-panel">
               <span class="pg-kicker">Featured project</span>
@@ -194,6 +199,8 @@ require __DIR__ . '/includes/header.php';
       </div>
     </section>
   <?php endif; ?>
+
+  <?= pp_voice_section($voices) ?>
 
   <!-- Photographs: a strip with controls, or a pair when there are only a few -->
   <?php if (count($strip) >= 4): ?>
@@ -248,10 +255,10 @@ require __DIR__ . '/includes/header.php';
   <section class="pg-section-cream" aria-labelledby="pgOtherTitle" style="padding-top: clamp(44px, 5vw, 68px); padding-bottom: clamp(48px, 6vw, 80px);">
     <div class="container">
       <h2 id="pgOtherTitle" class="ab-subhead" style="border-top: 0; padding-top: 0; margin-bottom: 22px;">Explore the other programme areas</h2>
-      <ul class="pg-area-nav has-photos">
+      <ul class="pg-area-nav has-icons">
         <?php $n = 0; foreach ($areas as $os => $oa): $n++; if ($os === $slug) continue; ?>
           <li><a href="<?= h(pp_area_url($os)) ?>">
-            <span class="pg-area-nav-img"><?= ab_img($oa['image'][0], '', '', true, 'style="object-position: ' . h($oa['image'][2]) . '"', '160px') ?></span>
+            <span class="pg-area-nav-ico" aria-hidden="true"><?= icon($oa['icon'], 20) ?></span>
             <span><small><?= str_pad((string) $n, 2, '0', STR_PAD_LEFT) ?></small><?= h($oa['short']) ?></span>
           </a></li>
         <?php endforeach; ?>

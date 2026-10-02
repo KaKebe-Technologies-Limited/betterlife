@@ -27,7 +27,8 @@ $gallery = $p['gallery'] ?? [];
 
 $pageTitle = $p['title'];
 $pageDescription = $p['summary'];
-$heroImg = $p['image'][0] ?? null;
+$heroPic = $p['hero'] ?? $p['image'] ?? null;   // the page photograph differs from the card photograph where there is one
+$heroImg = $heroPic[0] ?? null;
 $heroV = $heroImg ? ab_variants($heroImg) : [];
 $pageStyles  = ['assets/css/about.css', 'assets/css/programmes.css'];
 $pageScripts = ['assets/js/about.js', 'assets/js/programmes.js'];
@@ -45,7 +46,7 @@ require __DIR__ . '/includes/header.php';
 
   <section class="pg-hero is-compact<?= $heroImg ? '' : ' is-text' ?>" aria-labelledby="pgTitle">
     <?php if ($heroImg): ?>
-      <div class="pg-hero-media"><?= ab_img($heroImg, $p['image'][1], '', false, 'style="object-position: ' . h($p['image'][2] ?? '50% 50%') . '"', '100vw') ?></div>
+      <div class="pg-hero-media"><?= ab_img($heroImg, $heroPic[1], '', false, 'style="object-position: ' . h($heroPic[2] ?? '50% 50%') . '"', '100vw') ?></div>
     <?php else: ?>
       <svg class="pg-hero-strokes" viewBox="0 0 1200 500" preserveAspectRatio="none" aria-hidden="true" focusable="false"><g filter="url(#lpBrush)"><path class="f-green" d="<?= lp_brush_d(860, 120, 1260, 80, 60, 81) ?>"/><path class="f-blue" d="<?= lp_brush_d(940, 420, 1260, 390, 50, 83) ?>"/></g></svg>
     <?php endif; ?>
@@ -60,7 +61,6 @@ require __DIR__ . '/includes/header.php';
         <?php if (!empty($p['status'])): ?><li><?= icon('calendar', 15) ?> <?= h($p['status']) ?></li><?php endif; ?>
       </ul>
     </div>
-    <?php if (!empty($p['image_note'])): ?><p class="pg-hero-note"><?= h($p['image_note']) ?></p><?php endif; ?>
   </section>
 
   <!-- The project -->
@@ -139,9 +139,13 @@ require __DIR__ . '/includes/header.php';
         </ul>
       </div>
       <?php if ($others): ?>
-        <div class="pg-project-grid">
-          <?php foreach ($others as $os => $op): ?><?= pp_project_card($os, $op, $areas, '(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 380px', false) ?><?php endforeach; ?>
-        </div>
+        <!-- More projects as text links, so their photographs are not repeated here -->
+        <h3 class="ab-subhead" style="margin-bottom: 18px;">More in <?= h($area['short']) ?></h3>
+        <ul class="pg-more-list">
+          <?php foreach ($others as $os => $op): ?>
+            <li><a href="<?= h(pp_project_url($os, $op)) ?>"><span><strong><?= h($op['title']) ?></strong><?php if (!empty($op['location'])): ?><small><?= icon('map-pin', 13) ?> <?= h($op['location']) ?></small><?php endif; ?></span><?= icon('arrow-right', 18) ?></a></li>
+          <?php endforeach; ?>
+        </ul>
       <?php endif; ?>
     </div>
   </section>
