@@ -22,56 +22,7 @@ $managerCountries = array_map(
 $leadersHavePhotos = $leaders && !array_filter($leaders, fn($l) => empty($l['photo']));
 
 $map = require __DIR__ . '/includes/map-paths.php';
-require_once __DIR__ . '/includes/brush.php';
-
-/** Resized copies made by tools/make_sized_images.php live in assets/img/sized/. */
-function ab_variants(string $path): array
-{
-    static $cache = [];
-    if (isset($cache[$path])) return $cache[$path];
-    $slug = preg_replace('~\.[a-z0-9]+$~i', '', str_replace('/', '__', preg_replace('~^assets/img/~', '', $path)));
-    $out = [];
-    foreach ([480, 960, 1600] as $w) {
-        $rel = "assets/img/sized/{$slug}-{$w}.webp";
-        if (is_file(__DIR__ . '/' . $rel)) $out[$w] = $rel;
-    }
-    return $cache[$path] = $out;
-}
-
-/** <img> with intrinsic size (no layout shift), responsive srcset and lazy loading by default. */
-function ab_img(string $path, string $alt, string $class = '', bool $lazy = true, string $extra = '', string $sizes = '100vw'): string
-{
-    static $dims = [];
-    $dims[$path] ??= @getimagesize(__DIR__ . '/' . $path) ?: [null, null];
-    [$w, $h] = $dims[$path];
-    $v = ab_variants($path);
-    $src = $v[960] ?? $path;
-    // Offer the original too when it is larger than the biggest resized copy
-    if ($v && $w && $w > max(array_keys($v))) $v[$w] = $path;
-    $srcset = $v ? implode(', ', array_map(fn($vw, $rel) => asset_url($rel) . " {$vw}w", array_keys($v), $v)) : '';
-    return '<img src="' . h(asset_url($src)) . '"' . ($srcset ? ' srcset="' . h($srcset) . '" sizes="' . h($sizes) . '"' : '')
-        . ' alt="' . h($alt) . '"'
-        . ($w ? ' width="' . $w . '" height="' . $h . '"' : '')
-        . ($class ? ' class="' . h($class) . '"' : '')
-        . ($lazy ? ' loading="lazy" decoding="async"' : ' fetchpriority="high"')
-        . ($extra ? ' ' . $extra : '') . '>';
-}
-
-/** Split text into its first sentence and the remainder. */
-function ab_split(string $text): array
-{
-    $text = trim($text);
-    if (preg_match('/^(.+?[.!?])\s+(.+)$/su', $text, $m)) return [$m[1], $m[2]];
-    return [$text, ''];
-}
-
-/** Photo that opens in the lightbox (a plain link to the full image without JavaScript). */
-function ab_photo(string $path, string $alt, string $caption, string $gallery, string $class = '', string $sizes = '400px'): string
-{
-    return '<a href="' . h(asset_url($path)) . '" class="ab-lb ' . h($class) . '" data-gallery="' . h($gallery) . '" data-caption="' . h($caption) . '" aria-label="View larger: ' . h($caption) . '">'
-        . ab_img($path, $alt, '', true, '', $sizes) . '<span class="ab-lb-icon" aria-hidden="true">' . icon('search', 16) . '</span></a>';
-}
-
+require_once __DIR__ . '/includes/media.php';
 
 // Figures (verified). Shown separately; never summed.
 $figures = [

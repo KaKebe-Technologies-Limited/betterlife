@@ -1,161 +1,210 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
-$pageTitle = 'Our Work';
+require_once __DIR__ . '/includes/programmes.php';
+$pageTitle = 'Our Programmes';
 $activePage = 'programs';
-$pageDescription = 'BetterLife works across climate-resilient agriculture, green skills and livelihoods, climate education and youth leadership, clean energy and restoration, and digital innovation for farmers.';
+$pageDescription = 'BetterLife’s programmes help families grow food, earn a steady income and cope with a changing climate across five connected areas of work.';
+
+$areas = pp_areas();
+$projects = pp_projects();
+$featured = ['womens-climate-resilience-yumbe', 'smiles', 'betterlife-spring'];
+
+// Three documented results, each kept with its project, group and measurement context
+$evidence = [
+    ['72%', 'Adopted sack or box gardening', 'Women in the programme, reported after training', 'womens-climate-resilience-yumbe', 'confirm'],
+    ['78%', 'Moved into sustainable income pathways', 'Refugee and host-community participants, reported across target groups', 'smiles', 'confirm'],
+    ['3,000+', 'Books for young people in Alebtong', 'Opened in December 2023 with ten computers and space for around 400 young people', 'apala-youth-centre'],
+];
+
+// How the work connects: four petals and two circles
+$petals = [
+    ['Farming', 'assets/img/about/rukungiri-community-field.jpg', 'People preparing a field together in Rukungiri', '50% 55%'],
+    ['Water',   'assets/img/children-at-borehole.webp', 'Children collecting water at a borehole in Yumbe', '45% 40%'],
+    ['Energy',  'assets/img/solar-panel-installation-2.webp', 'A solar panel in Rukungiri', '50% 45%'],
+    ['Markets', 'assets/img/market-stall-vendor.webp', 'A woman standing at her market stall', '72% 45%'],
+];
+$dots = [
+    ['Skills', 'assets/img/betterlifeint-source/programs/program-photo-10.jpg', 'Women taking notes during a training session', '55% 40%'],
+    ['Information', 'assets/img/soilla-app-field-demo.webp', 'The Soilla app open on a phone in a field', '50% 50%'],
+];
+
+$strip = [
+    ['assets/img/about/yumbe-cabbages.jpg', 'Cabbages growing at a BetterLife-supported site in Yumbe'],
+    ['assets/img/about/yumbe-listening-circle.jpg', 'BetterLife staff and community members seated in a circle for a session in Yumbe'],
+    ['assets/img/about/rukungiri-pupils-desks.jpg', 'Pupils at their desks in a classroom in Rukungiri'],
+    ['assets/img/woman-winnowing-grain.webp', 'Winnowing grain in Rukungiri'],
+    ['assets/img/solar-panel-farm-sky.webp', 'A solar panel under an open sky in Rukungiri'],
+    ['assets/img/about/soroti-wac-gathering.jpg', 'Women gathered for a Women’s Action Circle session in Soroti'],
+    ['assets/img/grain-milling-machine.webp', 'Grain being processed with a milling machine in Rukungiri'],
+    ['assets/img/about/yumbe-poultry-feeders.jpg', 'Participants celebrating with new poultry feeders in Yumbe'],
+    ['assets/img/betterlifeint-source/projects/project-renewable-pathways-alt.jpg', 'Adding a bottle to a plastic bank for recycling'],
+    ['assets/img/about/yumbe-beehives.jpg', 'Beehives at a BetterLife-supported site in Yumbe'],
+    ['assets/img/about/rukungiri-poultry.jpg', 'A woman feeding chickens in a poultry house in Rukungiri'],
+    ['assets/img/about/yumbe-greenhouse-aerial.jpg', 'Aerial view of a greenhouse and farm plots in Yumbe'],
+];
+
+$heroImg = 'assets/img/about/rukungiri-farmer-maize.jpg';
+$heroV = ab_variants($heroImg);
+$pageStyles  = ['assets/css/about.css', 'assets/css/programmes.css'];
+$pageScripts = ['assets/js/about.js', 'assets/js/programmes.js'];
+$pageHead = ($heroV
+        ? '<link rel="preload" as="image" imagesrcset="' . h(implode(', ', array_map(fn($w, $r) => asset_url($r) . " {$w}w", array_keys($heroV), $heroV))) . '" imagesizes="100vw" fetchpriority="high">'
+        : '')
+    . '<script>document.documentElement.classList.add("ab-js")</script>';
 
 require __DIR__ . '/includes/header.php';
-
-/**
- * Render one sub-programme block from a content_items row. The list of
- * blocks per area of work is stored in the database and managed from
- * Admin → Page Content (page "programs", section = the area's id below),
- * so staff can edit the wording or add/remove sub-programmes there.
- */
-function workblock_row(array $row): void {
-    echo '<article class="workblock fade-up">';
-    echo '<h3>' . h($row['title']) . '</h3>';
-    if ($row['subtitle']) echo '<p class="workblock-note">' . h($row['subtitle']) . '</p>';
-    echo nl2p($row['body']);
-    if ($row['cta_label'] && $row['cta_href']) echo '<a href="' . h(SITE_URL . '/' . ltrim($row['cta_href'], '/')) . '" class="btn btn-outline-dark btn-sm">' . h($row['cta_label']) . '</a>';
-    echo '</article>';
-}
-/** Render every block in a "programs" section, in order. */
-function workblocks(PDO $pdo, string $sectionKey): void {
-    foreach (content_items($pdo, 'programs', $sectionKey) as $row) workblock_row($row);
-}
 ?>
 
-<section class="page-header">
-  <div class="container">
-    <div class="crumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span>/</span>Our Work</div>
-    <h1>Food. Income. Knowledge. Energy. Opportunity.</h1>
-    <p style="max-width:660px;color:#e2f0e9;">One Life Does Not Fit into One Project Box.</p>
-  </div>
-</section>
+<main class="ab pg" id="top">
+  <?= ab_brush_defs() ?>
 
-<section>
-  <div class="container">
-    <div class="prose-narrow fade-up">
-      <p>A family facing climate pressure may also be dealing with hunger, unemployment, displacement and weak access to markets. Our programmes are organised by area of work, but they are designed to connect around the person.</p>
+  <!-- 1. Photographic hero -->
+  <section class="pg-hero" aria-labelledby="pgTitle">
+    <div class="pg-hero-media"><?= ab_img($heroImg, 'A farmer tending a tall maize crop in Rukungiri, Uganda', '', false, 'style="object-position: 58% 42%"', '100vw') ?></div>
+    <div class="container pg-hero-inner">
+      <nav class="ab-crumb" aria-label="Breadcrumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span aria-hidden="true">/</span><span aria-current="page">Programmes</span></nav>
+      <p class="pg-hero-kicker">Our programmes</p>
+      <h1 id="pgTitle">Food security and sustainable <?= ab_mark('livelihoods', 31) ?></h1>
+      <p class="pg-hero-lead">Our programmes help families grow more reliable food, earn a steady income and cope with a changing climate. A family facing drought may also face hunger, unemployment and weak access to markets, so our work connects around the person.</p>
+      <div class="pg-hero-actions">
+        <a href="#areas" class="pg-btn">Explore the five programme areas <?= icon('chevron-down', 16) ?></a>
+        <a href="<?= SITE_URL ?>/projects.php" class="pg-btn pg-btn-ghost">See all projects</a>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ===================== Climate-Resilient Agriculture ===================== -->
-<section id="climate-resilient-agriculture" class="section-cream">
-  <div class="container">
-    <div class="split" style="margin-bottom:10px;">
-      <div class="fade-up">
-        <span class="eyebrow">Area of Work</span>
-        <h2>Climate-Resilient Agriculture and Food Security</h2>
-        <p class="muted">When the rains become unreliable, the first loss may be a crop. What follows can be a loss of income, fewer meals, unpaid school costs and debt carried into the next season.</p>
-        <p class="muted">BetterLife works with farmers, women, refugees and vulnerable households to make food production more reliable. We use demonstration gardens and practical training in composting, mulching, water conservation, drought-tolerant crops, sack and box gardening, agroforestry, greenhouse farming, irrigation, poultry, aquaculture and beekeeping.</p>
-        <p class="muted">We also help participants think beyond the harvest. Savings groups, enterprise support, digital information and market connections make it more possible for farming to provide both food and income.</p>
+  <!-- 2. How the work connects -->
+  <section class="pg-connect" aria-labelledby="pgConnectTitle">
+    <div class="container pg-connect-grid">
+      <div class="pg-clover ab-reveal">
+        <svg class="ab-strokes" viewBox="0 0 600 600" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g filter="url(#lpBrush)">
+            <path class="f-green" d="<?= lp_brush_d(-40, 300, 120, 270, 46, 61) ?>"/>
+            <path class="f-blue"  d="<?= lp_brush_d(430, 40, 610, 18, 40, 63) ?>"/>
+            <path class="f-green" d="<?= lp_brush_d(380, 590, 590, 560, 34, 65) ?>"/>
+          </g>
+        </svg>
+        <div class="pg-clover-petals">
+          <?php foreach ($petals as $i => [$tag, $p, $alt, $pos]): ?>
+            <figure class="pg-petal pg-petal-<?= $i + 1 ?>"><?= ab_img($p, $alt, '', true, 'style="object-position: ' . $pos . '"', '(max-width: 900px) 45vw, 280px') ?><span class="pg-tag"><?= h($tag) ?></span></figure>
+          <?php endforeach; ?>
+        </div>
+        <?php foreach ($dots as $i => [$tag, $p, $alt, $pos]): ?>
+          <figure class="pg-dot pg-dot-<?= $i + 1 ?>"><span class="pg-dot-inner"><?= ab_img($p, $alt, '', true, 'style="object-position: ' . $pos . '"', '(max-width: 900px) 30vw, 170px') ?></span><span class="pg-tag"><?= h($tag) ?></span></figure>
+        <?php endforeach; ?>
+        <div class="pg-clover-core" aria-hidden="true"><?= icon('leaf', 20) ?><span>Food</span></div>
       </div>
-      <div class="fade-up img-frame">
-        <img src="<?= asset_url('assets/img/betterlifeint-source/programs/program-photo-7.jpg') ?>" alt="Drip-irrigated vegetable rows on a BetterLife demonstration plot">
+      <div class="pg-connect-copy ab-reveal">
+        <span class="ab-eyebrow">How the work connects</span>
+        <h2 id="pgConnectTitle">A harvest depends on more than <?= ab_mark('seed', 67) ?></h2>
+        <p>Farmers need skills they have seen working, water close enough to use and energy that does not cost hours of firewood collection. Information helps them decide what to plant, and markets turn a good season into income. Our programmes are designed so these pieces support each other.</p>
+        <a href="<?= SITE_URL ?>/about.php#approach" class="pg-link">Read about our approach <?= icon('arrow-right', 15) ?></a>
       </div>
     </div>
-    <div class="workblock-list">
-      <?php workblocks($pdo, 'climate-resilient-agriculture'); ?>
-      <div class="workblock-photo fade-up"><img src="<?= asset_url('assets/img/betterlifeint-source/programs/program-photo-2.jpg') ?>" alt="Greenhouse farming on a BetterLife demonstration plot"><span class="cap">Greenhouse farming in practice</span></div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- ===================== Green Skills & Livelihoods ===================== -->
-<section id="green-skills-livelihoods">
-  <div class="container">
-    <div style="max-width:760px;margin:0 auto 10px;">
-      <div class="fade-up">
-        <span class="eyebrow">Area of Work</span>
-        <h2>Green Skills, Livelihoods and Market Access</h2>
-        <p class="muted">Learning a trade is one step. Finding tools, capital and customers is another.</p>
-        <p class="muted">BetterLife combines practical skills with enterprise coaching, savings, finance and market connections. Participants train in areas suited to local demand, including agriculture, poultry, carpentry, tailoring, barbering, weaving and solar technology.</p>
-        <p class="muted">The work continues beyond the training day. We help people test a business idea, understand costs, join a savings group, approach finance and find a route into the market.</p>
+  <!-- 3. Five programme areas -->
+  <section class="pg-areas" id="areas" aria-labelledby="pgAreasTitle">
+    <div class="container">
+      <div class="ab-head ab-reveal">
+        <span class="ab-eyebrow">Programme areas</span>
+        <h2 id="pgAreasTitle">Five areas of work</h2>
+        <p class="ab-head-sub">Each area brings together related activities, projects and partners. Choose one to see how the work is delivered and what it has achieved.</p>
       </div>
+      <ol class="pg-area-grid">
+        <?php $n = 0; foreach ($areas as $slug => $a): $n++; [$img, $alt, $pos] = $a['image']; ?>
+          <li class="pg-area ab-reveal" id="<?= h($slug) ?>">
+            <article class="pg-area-card">
+              <div class="pg-area-media">
+                <?= ab_img($img, $alt, '', true, 'style="object-position: ' . h($pos) . '"', $n <= 2 ? '(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 600px' : '(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 400px') ?>
+                <span class="pg-area-num"><?= icon($a['icon'], 15) ?> <?= str_pad((string) $n, 2, '0', STR_PAD_LEFT) ?></span>
+              </div>
+              <div class="pg-area-body">
+                <h3><?= h($a['short']) ?></h3>
+                <p><?= h($a['card']) ?></p>
+                <a href="<?= h(pp_area_url($slug)) ?>" class="pg-link">Explore Programme<span class="sr-only">: <?= h($a['short']) ?></span> <?= icon('arrow-right', 15) ?></a>
+              </div>
+            </article>
+          </li>
+        <?php endforeach; ?>
+      </ol>
     </div>
-    <div class="workblock-list">
-      <?php workblocks($pdo, 'green-skills-livelihoods'); ?>
-      <div class="workblock-photo fade-up"><img src="<?= asset_url('assets/img/impact-story-2.jpg') ?>" alt="SMILES participants at a livelihoods training session"><span class="cap">Refugees and host-community members training together</span></div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- ===================== Climate Education & Youth Leadership ===================== -->
-<section id="climate-education-youth-leadership" class="section-cream">
-  <div class="container">
-    <div class="split" style="margin-bottom:10px;">
-      <div class="fade-up">
-        <span class="eyebrow">Area of Work</span>
-        <h2>Climate Education, Youth Leadership and Innovation</h2>
-        <p class="muted">Young people will live longest with today&rsquo;s climate decisions. They should be doing more than listening to adults explain the future to them.</p>
-        <p class="muted">BetterLife creates spaces where children and young people can learn, question, debate, build and take part in decisions. The work moves between classrooms, youth centres, digital spaces, policy conversations and practical community action.</p>
+  <!-- 4. Selected projects -->
+  <section class="pg-projects" aria-labelledby="pgProjectsTitle">
+    <div class="container">
+      <div class="pg-head-row ab-reveal">
+        <div class="ab-head">
+          <span class="ab-eyebrow">Selected projects</span>
+          <h2 id="pgProjectsTitle">How the work looks in practice</h2>
+        </div>
+        <a href="<?= SITE_URL ?>/projects.php" class="pg-link">Explore all projects <?= icon('arrow-right', 15) ?></a>
       </div>
-      <div class="fade-up img-frame">
-        <img src="<?= asset_url('assets/img/betterlifeint-source/programs/program-photo-5.jpg') ?>" alt="Students with school environment club banners">
+      <div class="pg-project-grid">
+        <?php foreach ($featured as $slug): ?>
+          <?= pp_project_card($slug, $projects[$slug], $areas) ?>
+        <?php endforeach; ?>
       </div>
     </div>
-    <div class="workblock-list">
-      <?php workblocks($pdo, 'climate-education-youth-leadership'); ?>
-      <div class="workblock-photo fade-up"><img src="<?= asset_url('assets/img/betterlifeint-source/programs/program-photo-4.jpg') ?>" alt="Students taking part in a BetterLife school climate club"><span class="cap">School climate clubs in action</span></div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- ===================== Clean Energy, Water & Restoration ===================== -->
-<section id="clean-energy-water-restoration">
-  <div class="container">
-    <div class="split" style="margin-bottom:10px;">
-      <div class="fade-up img-frame bg-blue">
-        <img src="<?= asset_url('assets/img/project-spring.jpg') ?>" alt="Women drawing water at a BetterLife-supported community borehole">
+  <!-- 5. Evidence -->
+  <section class="pg-evidence" aria-labelledby="pgEvidenceTitle">
+    <div class="container">
+      <div class="ab-head ab-reveal">
+        <span class="ab-eyebrow">Evidence from the field</span>
+        <h2 id="pgEvidenceTitle">What changed, project by project</h2>
       </div>
-      <div class="fade-up">
-        <span class="eyebrow">Area of Work</span>
-        <h2>Clean Energy, Water and Environmental Restoration</h2>
-        <p class="muted">Energy poverty, water insecurity and environmental loss often sit inside the same household.</p>
-        <p class="muted">When firewood is scarce, women and girls walk farther. When a water source dries up, food production and school attendance suffer. When land is degraded, a farmer&rsquo;s options narrow with every season.</p>
-        <p class="muted">BetterLife works on practical solutions that reduce those pressures while restoring the environment.</p>
-      </div>
+      <ul class="pg-results">
+        <?php foreach ($evidence as $r): ?><?= pp_result($r, null, $projects) ?><?php endforeach; ?>
+      </ul>
+      <p class="pg-evidence-note ab-reveal">Each result belongs to the project and group named with it, and should not be read as an organisation-wide figure. Fuller context is on each project page and in our <a href="<?= SITE_URL ?>/impact-reports.php">impact reports</a>.</p>
     </div>
-    <div class="workblock-list">
-      <?php workblocks($pdo, 'clean-energy-water-restoration'); ?>
-      <div class="workblock-photo fade-up"><img src="<?= asset_url('assets/img/betterlifeint-source/projects/project-renewable-pathways-alt.jpg') ?>" alt="BetterLife Renewable Pathways plastic recycling work"><span class="cap">Renewable Pathways: turning waste into value</span></div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- ===================== Digital Innovation ===================== -->
-<section id="digital-innovation" class="section-cream">
-  <div class="container">
-    <div class="split" style="margin-bottom:10px;">
-      <div class="fade-up">
-        <span class="eyebrow">Area of Work</span>
-        <h2>Digital Innovation for Agriculture</h2>
-        <p class="muted">Technology is useful when it shortens the distance between a farmer and a good decision.</p>
-        <p class="muted">BetterLife develops digital tools around practical gaps: understanding soil, preparing for weather, finding a service, accessing finance and reaching a buyer.</p>
+  <!-- 6. Community photo strip -->
+  <section class="pg-strip" aria-labelledby="pgStripTitle" data-strip>
+    <div class="container pg-strip-head ab-reveal">
+      <div>
+        <span class="ab-eyebrow">Around the programmes</span>
+        <h2 id="pgStripTitle">Fields, classrooms, circles and solar panels</h2>
       </div>
-      <div class="fade-up img-frame">
-        <img src="<?= asset_url('assets/img/project-soilla-app.jpg') ?>" alt="The Soilla mobile app for soil and crop guidance">
+      <div class="pg-strip-nav" hidden>
+        <button type="button" class="pg-round" data-dir="-1" aria-controls="pgStripRow" aria-label="Previous photographs"><?= icon('arrow-right', 18) ?></button>
+        <button type="button" class="pg-round" data-dir="1" aria-controls="pgStripRow" aria-label="Next photographs"><?= icon('arrow-right', 18) ?></button>
       </div>
     </div>
-    <div class="workblock-list">
-      <?php workblocks($pdo, 'digital-innovation'); ?>
-    </div>
-  </div>
-</section>
+    <ul class="pg-strip-row" id="pgStripRow" tabindex="0" aria-label="Photographs from our programmes. Select one to see it larger.">
+      <?php foreach ($strip as [$p, $cap]): ?>
+        <li><?= ab_photo($p, $cap, $cap, 'strip', 'pg-strip-item', '(max-width: 720px) 200px, 280px') ?></li>
+      <?php endforeach; ?>
+    </ul>
+  </section>
 
-<!-- ===================== Strengthening the Organisation ===================== -->
-<section id="our-projects">
-  <div class="container">
-    <div class="section-head fade-up">
-      <span class="eyebrow">Strengthening the Organisation Behind the Work</span>
+  <!-- 7. Closing invitation -->
+  <section class="pg-close" aria-labelledby="pgCloseTitle">
+    <div class="pg-close-bg"><?= ab_img('assets/img/about/rukungiri-communal-farm.jpg', '', '', true, '', '100vw') ?></div>
+    <div class="container">
+      <div class="pg-close-inner ab-reveal">
+        <span class="ab-eyebrow">Partner with us</span>
+        <h2 id="pgCloseTitle">Help deliver the next season of this work</h2>
+        <p>Partners help us reach more farmers, families and schools, and help results last after a project ends. These are some of the ways to contribute.</p>
+      </div>
+      <ul class="pg-ways">
+        <li class="pg-way ab-reveal"><span class="pg-way-ico" aria-hidden="true"><?= icon('heart', 20) ?></span><h3>Funding</h3><p>Support a programme area or a specific project, from one season to several years.</p></li>
+        <li class="pg-way ab-reveal"><span class="pg-way-ico" aria-hidden="true"><?= icon('box', 20) ?></span><h3>Equipment</h3><p>Irrigation and solar systems, seedlings, farm tools, computers or books.</p></li>
+        <li class="pg-way ab-reveal"><span class="pg-way-ico" aria-hidden="true"><?= icon('award', 20) ?></span><h3>Technical expertise</h3><p>Agronomy, engineering, data, enterprise coaching or training for our teams.</p></li>
+        <li class="pg-way ab-reveal"><span class="pg-way-ico" aria-hidden="true"><?= icon('basket', 20) ?></span><h3>Market connections</h3><p>Buyers, processors and retailers who can turn farmers’ produce into income.</p></li>
+      </ul>
+      <div class="pg-hero-actions ab-reveal">
+        <a href="<?= SITE_URL ?>/contact.php?subject=<?= rawurlencode('Partnership enquiry') ?>" class="pg-btn">Start a partnership conversation <?= icon('arrow-right', 16) ?></a>
+        <a href="<?= SITE_URL ?>/partners.php" class="pg-btn pg-btn-ghost">Meet our partners</a>
+      </div>
     </div>
-    <div class="workblock-list">
-      <?php workblocks($pdo, 'our-projects'); ?>
-    </div>
-  </div>
-</section>
+  </section>
+</main>
+
+<?= ab_lightbox() ?>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>
