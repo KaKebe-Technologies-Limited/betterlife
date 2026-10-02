@@ -500,22 +500,6 @@
 .pg-area-nav-ico { display: inline-flex; flex: 0 0 48px; width: 48px; height: 48px; align-items: center; justify-content: center; border-radius: 50%; background: rgba(8, 114, 45, .1); color: var(--ab-green); }
 .pg-area-nav.has-icons a > svg { display: none; }
 
-/* Participant voices (English, French and Arabic; Arabic right to left with English beneath) */
-.ab .pg-voices { background: #fff; }
-.pg-vgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: clamp(16px, 2vw, 24px); list-style: none; margin: 0; padding: 0; }
-.pg-vcard { display: flex; flex-direction: column; padding: 26px 26px 22px; border-radius: 28px 28px 28px 8px; background: var(--ab-cream); border: 1px solid var(--ab-line); }
-.pg-vcard:nth-child(3n+2) { border-radius: 28px 28px 8px 28px; }
-.pg-vcard-mark { display: block; height: 34px; font-family: var(--ab-serif); font-size: 76px; line-height: .9; color: var(--ab-green); }
-.pg-vcard blockquote { margin: 8px 0 0; }
-.pg-vcard blockquote p { margin: 0 !important; font-family: var(--ab-serif); font-size: clamp(18px, 1.5vw, 21px) !important; line-height: 1.45 !important; color: var(--ab-deep) !important; }
-.pg-vcard blockquote.is-rtl p { font-family: 'Noto Naskh Arabic', 'Segoe UI', Tahoma, serif; font-size: clamp(20px, 1.7vw, 24px) !important; line-height: 1.85 !important; text-align: right; }
-.pg-vcard-tr { margin: 14px 0 0 !important; padding-top: 12px; border-top: 1px dashed #d6d0c2; font-size: 15px !important; line-height: 1.6 !important; font-style: italic; color: var(--ab-soft) !important; }
-.pg-vcard footer { margin-top: auto; padding-top: 18px; display: flex; flex-direction: column; gap: 3px; }
-.pg-vcard footer strong { font-size: 15.5px; color: var(--ab-deep); }
-.pg-vcard footer strong [dir="rtl"] { font-family: 'Noto Naskh Arabic', 'Segoe UI', Tahoma, serif; font-weight: 500; }
-.pg-vcard footer > span { font-size: 13.5px; color: var(--ab-soft); }
-.pg-vcard-flag { align-self: flex-start; margin-top: 8px; padding: 4px 10px; border-radius: 999px; background: #fff4d6; color: #7a5a00; font-style: normal; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; }
-.pg-vgrid:has(> li:nth-child(4):last-child) { grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }
 
 /* Opening film on the overview, with the area index following the shot on screen */
 .pg-hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.4s ease; }
@@ -529,3 +513,63 @@
   .ab-motion-paused .pg-hero.has-video .pg-hero-index a.is-active::before { transition: none; }
 }
 @media (prefers-reduced-motion: reduce) { .pg-hero-video { display: none; } }
+
+/* =========================================================
+   Evidence as tall tiles: the figure over a photograph
+   ========================================================= */
+.ab .pg-proof { background: var(--ab-cream); }
+.pg-tiles { display: grid; grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr)); gap: clamp(16px, 2vw, 24px); list-style: none; margin: 0; padding: 0; }
+.pg-tile { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: clamp(420px, 40vw, 540px); border-radius: 28px; overflow: hidden; color: #fff; background: linear-gradient(160deg, #0f5a3f 0%, #0b3d2e 55%, #03384d 100%); isolation: isolate; }
+.pg-tile:nth-child(3n+1) { border-radius: 28px 140px 28px 28px; }
+.pg-tile:nth-child(3n+2) { border-radius: 28px 28px 140px 28px; }
+.pg-tile:nth-child(3n+2) .pg-tile-body { padding-right: 64px; }
+.pg-tile:nth-child(3n+3) { border-radius: 140px 28px 28px 28px; }
+.pg-tile-img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100% !important; max-width: none; object-fit: cover; transition: transform 1s ease; }
+.pg-tile:hover .pg-tile-img { transform: scale(1.04); }
+.pg-tile.has-photo::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(6, 22, 15, 0) 28%, rgba(6, 22, 15, .55) 58%, rgba(6, 22, 15, .92) 100%); }
+.pg-tile-strokes { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; opacity: .55; }
+.pg-tile-body { padding: clamp(22px, 2.4vw, 30px); }
+.pg-tile-num { display: block; font-family: var(--ab-serif); font-weight: 600; font-size: clamp(60px, 6.4vw, 96px); line-height: .92; letter-spacing: -.03em; color: #fff; font-variant-numeric: lining-nums; }
+.pg-tile-num small { font-size: .5em; margin-left: 2px; color: #9fd6b2; letter-spacing: 0; }
+.pg-tile-label { display: block; margin-top: 14px; font-size: 18px; font-weight: 700; line-height: 1.35; color: #fff; }
+.pg-tile-ctx { display: block; margin-top: 6px; font-size: 14px; line-height: 1.5; color: rgba(255,255,255,.8); }
+.pg-tile-link { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: 7px; margin-top: 16px; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.14); border: 1px solid rgba(255,255,255,.32); color: #fff; font-size: 13.5px; font-weight: 700; backdrop-filter: blur(4px); transition: background .2s ease; }
+.pg-tile-link:hover { background: rgba(255,255,255,.26); color: #fff; }
+.pg-tile-link:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.pg-proof .pg-head-note a { color: var(--ab-blue); font-weight: 700; }
+
+/* =========================================================
+   Questions people bring: a conversation thread
+   ========================================================= */
+.ab .pg-asks { position: relative; overflow: hidden; background: linear-gradient(135deg, #07392a 0%, #0b3d2e 50%, #03384d 100%); color: #fff; }
+.pg-asks-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+.pg-asks-intro { position: sticky; top: 110px; }
+.pg-asks-intro .ab-eyebrow { color: #9fd6b2; }
+.pg-asks-intro .ab-eyebrow::before { background: #9fd6b2; }
+.pg-asks-intro h2 { color: #fff; }
+.pg-asks-intro p { margin: 18px 0 20px; color: rgba(255,255,255,.82) !important; font-size: 17px; }
+.pg-asks-intro .pg-link { color: #9fd6b2; }
+.pg-thread { display: flex; flex-direction: column; gap: 16px; list-style: none; margin: 0; padding: 0; }
+.pg-bubble { max-width: 88%; align-self: flex-start; padding: 20px 24px 16px; border-radius: 26px 26px 26px 6px; background: #fff; color: var(--ab-deep); box-shadow: 0 16px 34px rgba(0, 0, 0, .18); }
+.pg-bubble.is-reply { align-self: flex-end; border-radius: 26px 26px 6px 26px; background: #dff1e6; }
+.pg-bubble-q { margin: 0 !important; font-family: var(--ab-serif); font-weight: 500; font-size: clamp(19px, 1.7vw, 23px) !important; line-height: 1.38 !important; color: var(--ab-deep) !important; }
+.pg-bubble-q.is-rtl { font-family: 'Noto Naskh Arabic', 'Segoe UI', Tahoma, serif; font-size: clamp(21px, 1.9vw, 25px) !important; line-height: 1.8 !important; text-align: right; }
+.pg-bubble-en { margin: 10px 0 0 !important; padding-top: 10px; border-top: 1px dashed rgba(11, 61, 46, .22); font-size: 15px !important; line-height: 1.55 !important; font-style: italic; color: var(--ab-soft) !important; }
+.pg-bubble-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 12px 0 0 !important; font-size: 12.5px !important; color: var(--ab-soft) !important; }
+.pg-bubble-lang { padding: 3px 9px; border-radius: 999px; background: var(--ab-deep); color: #fff; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; }
+.pg-bubble-lang[lang="ar"] { font-family: 'Noto Naskh Arabic', 'Segoe UI', Tahoma, serif; letter-spacing: 0; }
+
+@media (max-width: 1100px) {
+  .pg-tiles { grid-template-columns: repeat(min(var(--n, 3), 2), minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .pg-asks-grid { grid-template-columns: 1fr; }
+  .pg-asks-intro { position: static; }
+}
+@media (max-width: 720px) {
+  .pg-tiles { grid-template-columns: 1fr; }
+  .pg-tile { min-height: 300px; }
+  .pg-tile:nth-child(n) { border-radius: 24px 90px 24px 24px; }
+  .pg-bubble { max-width: 94%; padding: 16px 18px 13px; }
+}
+@media (prefers-reduced-motion: reduce) { .pg-tile-img, .pg-tile-link { transition: none; } }

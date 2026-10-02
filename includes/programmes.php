@@ -27,7 +27,6 @@ function pp_areas(): array
             'image'  => ['assets/img/programmes/rukungiri-maize-woman.jpg', 'A woman standing in her maize field in Rukungiri', '50% 50%'],
             'hero_side' => 'right',
             'hero'   => ['assets/img/programmes/yumbe-trellis-garden.jpg', 'A BetterLife team member in a trellised vegetable garden in Yumbe', '62% 50%'],
-            'quote'  => 'Women adopt what they can see. When a neighbour’s garden keeps producing through a dry spell, a new method stops being an idea and becomes a choice.',
             'collage' => [
                 ['assets/img/programmes/yumbe-sack-garden.jpg', 'A tiered sack garden in Yumbe'],
                 ['assets/img/programmes/yumbe-cabbage-mulch.jpg', 'A cabbage growing through straw mulch in Yumbe'],
@@ -64,7 +63,6 @@ function pp_areas(): array
             'card'   => 'Learning a trade is one step. Finding tools, capital and customers is another. We pair practical skills, from tailoring and carpentry to poultry and solar technology, with savings groups, enterprise coaching, finance and routes to market.',
             'image'  => ['assets/img/programmes/yumbe-market-shade.jpg', 'Women selling produce under a shade shelter at a market in Yumbe', '40% 55%'],
             'hero'   => ['assets/img/market-stall-vendor.webp', 'A woman standing at her market stall in Yumbe', '70% 35%'],
-            'quote'  => 'Training is only the first step. The real test is whether someone can buy tools, find a customer and still be in business a year later.',
             'collage' => [
                 ['assets/img/programmes/yumbe-shop-counter.jpg', 'A woman serving at her shop counter in Yumbe'],
                 ['assets/img/programmes/carpentry-workshop.jpg', 'A carpentry workshop in Yumbe'],
@@ -100,7 +98,6 @@ function pp_areas(): array
             'image'  => ['assets/img/programmes/lcoy-youth-panel.jpg', 'A young speaker on a BetterLife youth panel at LCOY Uganda 2026', '62% 40%'],
             'hero_side' => 'right',
             'hero'   => ['assets/img/about/rukungiri-pupils-desks.jpg', 'Pupils writing at their desks in a classroom in Rukungiri', '70% 50%'],
-            'quote'  => 'Young people will live longest with the decisions made today. They deserve a seat at the table, not only a lesson about it.',
             'collage' => [
                 ['assets/img/programmes/lcoy-group.jpg', 'Speakers and participants at a BetterLife session at LCOY Uganda 2026'],
                 ['assets/img/programmes/lcoy-speaker-banner.jpg', 'Speaking beside the BetterLife banner at LCOY Uganda 2026'],
@@ -134,7 +131,6 @@ function pp_areas(): array
             'card'   => 'Energy poverty, water insecurity and environmental loss often sit inside the same household. We work with communities on tree nurseries, biogas, briquettes, waste recovery and water access, easing pressure on families and the land at the same time.',
             'image'  => ['assets/img/programmes/clean-cooking-cookoff.jpg', 'BetterLife team members with students at a clean cooking cook-off', '60% 40%'],
             'hero'   => ['assets/img/programmes/rukungiri-solar-sky.jpg', 'A solar panel under a wide sky in Rukungiri', '65% 40%'],
-            'quote'  => 'When a woman no longer walks for hours to find firewood or water, she gets time back. Time is where every other change begins.',
             'collage' => [
                 ['assets/img/programmes/yumbe-tree-nursery.jpg', 'Tree seedlings under a shade net in Yumbe'],
                 ['assets/img/programmes/yumbe-water-point.jpg', 'Women collecting water at a water point in Yumbe'],
@@ -178,7 +174,6 @@ function pp_areas(): array
             'image'  => ['assets/img/programmes/rukungiri-soilla-phone.jpg', 'A young farmer smiling as he shows the Soilla app on his phone in Rukungiri', '50% 30%'],
             'hero_side' => 'narrow',
             'hero'   => ['assets/img/programmes/yumbe-weather-app.jpg', 'A weather forecast open on a phone held up in a field in Yumbe', '50% 40%'],
-            'quote'  => 'A phone is only useful when the information on it fits your soil, your crop and your market. That is why every tool we build comes with people who can explain it.',
             'collage' => [
                 ['assets/img/programmes/yumbe-phones-session.jpg', 'Two participants checking their phones during a training session in Yumbe'],
                 ['assets/img/programmes/yumbe-phone-session.jpg', 'Women looking at a phone together during a session in Yumbe'],
@@ -487,97 +482,107 @@ function pp_voice(string $quote, string $name, string $role, int $seed = 141): s
 const PP_FOUNDER = ['Denise Ayebare', 'Founder and Executive Director'];
 
 /**
- * Participant voices.
- *
- * The entries below are ILLUSTRATIVE PLACEHOLDERS supplied by BetterLife (October 2026) to test
- * the design. They are not the words of real participants, so they appear only on a local preview
- * (localhost) and always carry the label "Illustrative placeholder". To publish a voice, replace the
- * text with a participant's own words (given with consent) and set 'illustrative' => false.
- * Arabic is shown right to left with the English translation beneath it.
+ * Questions people bring to the work: short questions in English, French and Arabic, without
+ * names. Drawn from the examples BetterLife supplied (October 2026); BetterLife confirms these
+ * reflect questions its teams hear. Real, consented participant quotes go on project pages
+ * ('voices' on a project) instead. Arabic is shown right to left with the English beneath it.
  */
-function pp_voices(): array
+function pp_questions(): array
 {
     return [
-        'grace' => ['name' => 'Grace Uwimana', 'role' => 'Farming participant', 'lang' => 'en', 'illustrative' => true,
-            'quote' => '“During the training, I wanted to know what I could grow with the little space I had at home. Seeing the demonstration garden helped me understand where to start.”'],
-        'peter' => ['name' => 'Peter Lado', 'role' => 'Livelihoods participant', 'lang' => 'en', 'illustrative' => true,
-            'quote' => '“My first question was what would happen after the training. I wanted to understand how to find customers and what I would need to begin working.”'],
-        'amina' => ['name' => 'Amina Hassan', 'role' => 'Community group participant', 'lang' => 'en', 'illustrative' => true,
-            'quote' => '“We came to the group with different experiences, but many of our questions were the same: how to earn, how to save and how to provide for our families.”'],
-        'chantal' => ['name' => 'Chantal Mukamana', 'role' => 'Agricultural training participant', 'lang' => 'fr', 'illustrative' => true,
-            'quote' => '« J’avais besoin de voir comment faire, pas seulement d’écouter les explications. Dans le jardin de démonstration, je pouvais essayer et poser mes questions. »',
-            'translation' => '“I needed to see how to do it, not just listen to explanations. In the demonstration garden, I could try and ask my questions.”'],
-        'josephine' => ['name' => 'Josephine Ilunga', 'role' => 'Livelihoods participant', 'lang' => 'fr', 'illustrative' => true,
-            'quote' => '« Quand on doit recommencer sa vie ailleurs, on apporte aussi ses compétences. J’aimerais pouvoir les utiliser pour gagner ma vie ici. »',
-            'translation' => '“When you have to start your life again elsewhere, you also bring your skills. I would like to use mine to earn a living here.”'],
-        'esther' => ['name' => 'Esther Kabeya', 'role' => 'Savings group participant', 'lang' => 'fr', 'illustrative' => true,
-            'quote' => '« Dans le groupe, nous pouvons parler de nos difficultés et réfléchir ensemble. Pour moi, épargner commence par savoir ce que je peux mettre de côté sans priver ma famille. »',
-            'translation' => '“In the group, we can discuss our difficulties and think together. For me, saving starts with knowing what I can set aside without depriving my family.”'],
-        'mariam' => ['name' => 'Mariam Adam', 'native' => 'مريم آدم', 'role' => 'Farming participant', 'lang' => 'ar', 'illustrative' => true,
-            'quote' => '«أريد أن أزرع شيئًا نستطيع أن نأكله في البيت. وإذا بقي جزء من المحصول، يمكنني بيعه لتغطية بعض المصاريف.»',
-            'translation' => '“I want to grow something we can eat at home. If some of the harvest remains, I can sell it to cover some expenses.”'],
-        'ahmed' => ['name' => 'Ahmed Musa', 'native' => 'أحمد موسى', 'role' => 'Skills training participant', 'lang' => 'ar', 'illustrative' => true,
-            'quote' => '«لديّ مهارة، لكن بدء العمل يحتاج أيضًا إلى أدوات وزبائن. هذا ما أريد أن أعرفه: كيف أبدأ بالإمكانيات الموجودة عندي؟»',
-            'translation' => '“I have a skill, but starting work also requires tools and customers. That is what I want to know: how do I begin with the resources I have?”'],
-        'fatima' => ['name' => 'Fatima Idris', 'native' => 'فاطمة إدريس', 'role' => 'Community group participant', 'lang' => 'ar', 'illustrative' => true,
-            'quote' => '«في المجموعة أستطيع أن أسأل عندما لا أفهم. وأحيانًا يشرح أحد المشاركين الفكرة بطريقة أقرب إلى تجربتي.»',
-            'translation' => '“In the group, I can ask when I do not understand. Sometimes another participant explains the idea in a way that is closer to my experience.”'],
+        'grace'     => ['lang' => 'en', 'where' => 'Asked in farming training',
+            'q' => 'I have only a little space at home. What can I grow there?'],
+        'peter'     => ['lang' => 'en', 'where' => 'Asked in livelihoods training',
+            'q' => 'What happens after the training? How will I find customers, and what do I need to begin?'],
+        'amina'     => ['lang' => 'en', 'where' => 'Asked in community groups',
+            'q' => 'How do we earn, how do we save, and how do we provide for our families?'],
+        'chantal'   => ['lang' => 'fr', 'where' => 'Asked in agricultural training',
+            'q' => 'Pouvez-vous me montrer comment faire, et pas seulement me l’expliquer ?',
+            'en' => 'Can you show me how to do it, not just explain it?'],
+        'josephine' => ['lang' => 'fr', 'where' => 'Asked in livelihoods training',
+            'q' => 'J’ai apporté mes compétences en recommençant ma vie ici. Comment les utiliser pour gagner ma vie ?',
+            'en' => 'I brought my skills when I started my life again here. How can I use them to earn a living?'],
+        'esther'    => ['lang' => 'fr', 'where' => 'Asked in savings groups',
+            'q' => 'Combien puis-je mettre de côté sans priver ma famille ?',
+            'en' => 'How much can I set aside without depriving my family?'],
+        'mariam'    => ['lang' => 'ar', 'where' => 'Asked in farming training',
+            'q' => 'ماذا أزرع لنأكله في البيت؟ وإذا بقي جزء من المحصول، كيف أبيعه لتغطية بعض المصاريف؟',
+            'en' => 'What can I grow for us to eat at home? And if some of the harvest remains, how can I sell it to cover some expenses?'],
+        'ahmed'     => ['lang' => 'ar', 'where' => 'Asked in skills training',
+            'q' => 'لديّ مهارة، لكن بدء العمل يحتاج أيضًا إلى أدوات وزبائن. كيف أبدأ بالإمكانيات الموجودة عندي؟',
+            'en' => 'I have a skill, but starting work also needs tools and customers. How do I begin with what I have?'],
+        'fatima'    => ['lang' => 'ar', 'where' => 'Asked in community groups',
+            'q' => 'في المجموعة، هل يمكن أن يشرح لي أحد المشاركين الفكرة بطريقة أقرب إلى تجربتي؟',
+            'en' => 'In the group, can another participant explain the idea in a way closer to my experience?'],
     ];
 }
 
-/** Local preview only: localhost, 127.0.0.1, ::1, *.localhost or *.test. */
-function pp_is_local_preview(): bool
+/** Arabic typeface, loaded only when an Arabic question is on the page. */
+function pp_asks_head(array $keys): string
 {
-    $host = strtolower(preg_replace('/:\d+$/', '', $_SERVER['HTTP_HOST'] ?? ''));
-    return in_array($host, ['localhost', '127.0.0.1', '[::1]', '::1'], true) || str_ends_with($host, '.localhost') || str_ends_with($host, '.test');
-}
-
-/** The voices from a list that may be shown on this request. */
-function pp_visible_voices(array $keys): array
-{
-    $all = pp_voices();
-    $out = [];
-    foreach ($keys as $k) {
-        if (!isset($all[$k])) continue;
-        if (!empty($all[$k]['illustrative']) && !pp_is_local_preview()) continue;
-        $out[$k] = $all[$k];
-    }
-    return $out;
-}
-
-/** Arabic typeface, loaded only when an Arabic voice is on the page. */
-function pp_voice_head(array $voices): string
-{
-    foreach ($voices as $v) if (($v['lang'] ?? '') === 'ar') return '<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500&display=swap" rel="stylesheet">';
+    $all = pp_questions();
+    foreach ($keys as $k) if (($all[$k]['lang'] ?? '') === 'ar') return '<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500&display=swap" rel="stylesheet">';
     return '';
 }
 
-/** A section of participant voices. */
-function pp_voice_section(array $voices, string $title = 'In their own words', string $id = 'pgVoicesTitle'): string
+/** Questions as a conversation thread beside a short introduction. */
+function pp_asks_section(array $keys, string $title = 'The questions people bring', string $id = 'pgAsksTitle'): string
 {
-    if (!$voices) return '';
+    $all = pp_questions();
+    $items = array_values(array_filter(array_map(fn($k) => $all[$k] ?? null, $keys)));
+    if (!$items) return '';
+    $langName = ['en' => 'English', 'fr' => 'Français', 'ar' => 'العربية'];
     ob_start(); ?>
-    <section class="pg-voices" aria-labelledby="<?= h($id) ?>">
-      <div class="container">
-        <div class="ab-head ab-reveal">
-          <span class="ab-eyebrow">Voices</span>
+    <section class="pg-asks" aria-labelledby="<?= h($id) ?>">
+      <div class="container pg-asks-grid">
+        <div class="pg-asks-intro ab-reveal">
+          <span class="ab-eyebrow">Where the work begins</span>
           <h2 id="<?= h($id) ?>"><?= h($title) ?></h2>
+          <p>Our programmes start from the questions people ask us. These are some we hear often in training sessions and community groups, in English, French and Arabic.</p>
+          <a href="<?= SITE_URL ?>/about.php#approach" class="pg-link">How we work <?= icon('arrow-right', 15) ?></a>
         </div>
-        <ul class="pg-vgrid">
-          <?php foreach ($voices as $v): $rtl = ($v['lang'] ?? 'en') === 'ar'; ?>
-            <li class="pg-vcard ab-reveal">
-              <span class="pg-vcard-mark" aria-hidden="true">“</span>
-              <blockquote lang="<?= h($v['lang'] ?? 'en') ?>"<?= $rtl ? ' dir="rtl" class="is-rtl"' : '' ?>><p><?= h($v['quote']) ?></p></blockquote>
-              <?php if (!empty($v['translation'])): ?><p class="pg-vcard-tr" lang="en"><span class="sr-only">English translation: </span><?= h($v['translation']) ?></p><?php endif; ?>
-              <footer>
-                <strong><?= h($v['name']) ?><?php if (!empty($v['native'])): ?> <span aria-hidden="true">|</span> <span lang="ar" dir="rtl"><?= h($v['native']) ?></span><?php endif; ?></strong>
-                <span><?= h($v['role']) ?></span>
-                <?php if (!empty($v['illustrative'])): ?><em class="pg-vcard-flag">Illustrative placeholder</em><?php endif; ?>
-              </footer>
+        <ul class="pg-thread">
+          <?php foreach ($items as $i => $q): $rtl = $q['lang'] === 'ar'; ?>
+            <li class="pg-bubble ab-reveal<?= $i % 2 ? ' is-reply' : '' ?>">
+              <p class="pg-bubble-q<?= $rtl ? ' is-rtl' : '' ?>" lang="<?= h($q['lang']) ?>"<?= $rtl ? ' dir="rtl"' : '' ?>><?= h($q['q']) ?></p>
+              <?php if (!empty($q['en'])): ?><p class="pg-bubble-en" lang="en"><span class="sr-only">In English: </span><?= h($q['en']) ?></p><?php endif; ?>
+              <p class="pg-bubble-meta"><span class="pg-bubble-lang" lang="<?= h($q['lang']) ?>"><?= h($langName[$q['lang']] ?? '') ?></span><?= h($q['where']) ?></p>
             </li>
           <?php endforeach; ?>
         </ul>
       </div>
     </section>
+    <?php return ob_get_clean();
+}
+
+/**
+ * Results as tall tiles: a large figure over a photograph (or a brand-colour panel when there is
+ * no photograph), with the label, the group it describes and a link to its project.
+ * $items: [[value, label, context, projectSlug?, photo?], ...] where photo = [path, alt, position].
+ */
+function pp_tiles(array $items, array $projects): string
+{
+    ob_start(); ?>
+    <ul class="pg-tiles" style="--n: <?= min(3, max(1, count($items))) ?>">
+      <?php foreach ($items as $i => $r):
+        [$value, $label, $context] = $r;
+        $slug = $r[3] ?? null; $photo = $r[4] ?? null;
+        $proj = $slug && isset($projects[$slug]) ? $projects[$slug] : null;
+        $count = preg_match('/^([\d,]+)(\D*)$/u', $value, $m) ? [(int) str_replace(',', '', $m[1]), $m[1], $m[2]] : null; ?>
+        <li class="pg-tile ab-reveal<?= $photo ? ' has-photo' : '' ?>">
+          <?php if ($photo): ?>
+            <?= ab_img($photo[0], $photo[1], 'pg-tile-img', true, 'style="object-position: ' . h($photo[2] ?? '50% 40%') . '"', '(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 420px') ?>
+          <?php else: ?>
+            <svg class="pg-tile-strokes" viewBox="0 0 400 500" preserveAspectRatio="none" aria-hidden="true" focusable="false"><g filter="url(#lpBrush)"><path class="f-green" d="<?= lp_brush_d(220, 60, 460, 30, 46, 201 + $i) ?>"/><path class="f-blue" d="<?= lp_brush_d(-60, 230, 160, 210, 40, 211 + $i) ?>"/></g></svg>
+          <?php endif; ?>
+          <div class="pg-tile-body">
+            <strong class="pg-tile-num"><?php if ($count): ?><span class="ab-count" data-count="<?= $count[0] ?>"><?= h($count[1]) ?></span><?php if ($count[2] !== ''): ?><small><?= h($count[2]) ?></small><?php endif; ?><?php else: ?><?= h($value) ?><?php endif; ?></strong>
+            <span class="pg-tile-label"><?= h($label) ?></span>
+            <span class="pg-tile-ctx"><?= h($context) ?></span>
+            <?php if ($proj): ?><a class="pg-tile-link" href="<?= h(pp_project_url($slug, $proj)) ?>"><?= h($proj['title']) ?> <?= icon('arrow-right', 14) ?></a><?php endif; ?>
+          </div>
+        </li>
+      <?php endforeach; ?>
+    </ul>
     <?php return ob_get_clean();
 }

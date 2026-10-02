@@ -16,9 +16,12 @@ foreach ($areas as $slug => $a) {
 
 // Three documented results, each kept with its project, group and measurement context
 $evidence = [
-    ['72%', 'Adopted sack or box gardening', 'Women in the programme, reported after training', 'womens-climate-resilience-yumbe'],
-    ['78%', 'Moved into sustainable income pathways', 'Refugee and host-community participants, reported across target groups', 'smiles'],
-    ['3,000+', 'Books for young people in Alebtong', 'Opened in December 2023 with ten computers and space for around 400 young people', 'apala-youth-centre'],
+    ['72%', 'Adopted sack or box gardening', 'Women in the programme, reported after training', 'womens-climate-resilience-yumbe',
+        ['assets/img/programmes/yumbe-participant-smile.jpg', 'A smiling participant in the Yumbe programme', '50% 22%']],
+    ['78%', 'Moved into sustainable income pathways', 'Refugee and host-community participants, reported across target groups', 'smiles',
+        ['assets/img/programmes/yumbe-stall-woman.jpg', 'A woman at her stall beside a brick shop', '72% 50%']],
+    ['4,500+', 'Students engaged through school climate education', 'Learners at partner schools, across BetterLife’s school work', 'green-libraries-eco-labs',
+        ['assets/img/betterlifeint-source/programs/program-photo-8.jpg', 'Pupils gathered outdoors for a school session', '50% 45%']],
 ];
 
 // How the work connects: four petals and two circles (photographs not used on the About page)
@@ -49,8 +52,8 @@ $strip = [
     ['assets/img/programmes/yumbe-trellis-rows.jpg', 'Trellised vegetables in Yumbe'],
 ];
 
-// Voices (illustrative placeholders show on a local preview only; see pp_voices())
-$voices = pp_visible_voices(['amina', 'chantal', 'fatima']);
+// Questions people bring to the work (see pp_questions())
+$asks = ['amina', 'chantal', 'fatima', 'esther'];
 
 $feature = 'womens-climate-resilience-yumbe';
 $side = ['smiles', 'betterlife-spring'];
@@ -62,7 +65,7 @@ $pageScripts = ['assets/js/about.js', 'assets/js/programmes.js'];
 $pageHead = ($heroV
         ? '<link rel="preload" as="image" imagesrcset="' . h(implode(', ', array_map(fn($w, $r) => asset_url($r) . " {$w}w", array_keys($heroV), $heroV))) . '" imagesizes="100vw" fetchpriority="high">'
         : '')
-    . pp_voice_head($voices)
+    . pp_asks_head($asks)
     . '<script>document.documentElement.classList.add("ab-js")</script>';
 
 require __DIR__ . '/includes/header.php';
@@ -195,34 +198,21 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
-  <!-- A voice from BetterLife (draft for Denise Ayebare's approval) -->
-  <section class="pg-voice-band" aria-label="From our founder">
+  <!-- 5. Evidence: three results, each with its project and a photograph -->
+  <section class="pg-proof" aria-labelledby="pgEvidenceTitle">
     <div class="container">
-      <?= pp_voice('We do not start with a solution. We start by asking what makes it hard for a family to grow food, earn and plan ahead, and we build from their answers.', PP_FOUNDER[0], PP_FOUNDER[1]) ?>
-    </div>
-  </section>
-
-  <!-- 5. Evidence beside a photograph from the field -->
-  <section class="pg-evidence" aria-labelledby="pgEvidenceTitle">
-    <div class="container pg-evidence-grid">
-      <figure class="pg-evidence-photo ab-reveal">
-        <span class="pg-evidence-frame"><?= ab_img('assets/img/programmes/yumbe-participant-smile.jpg', 'A smiling participant in the Yumbe programme, wearing the programme T-shirt', '', true, 'style="object-position: 50% 25%"', '(max-width: 900px) 100vw, 520px') ?></span>
-        <figcaption>A participant in the Yumbe programme</figcaption>
-      </figure>
-      <div>
-        <div class="ab-head ab-reveal">
+      <div class="pg-head-row ab-reveal">
+        <div class="ab-head">
           <span class="ab-eyebrow">Evidence from the field</span>
           <h2 id="pgEvidenceTitle">What changed, project by project</h2>
         </div>
-        <ul class="pg-results is-stack">
-          <?php foreach ($evidence as $r): ?><?= pp_result($r, null, $projects) ?><?php endforeach; ?>
-        </ul>
-        <p class="pg-evidence-note ab-reveal">Each result belongs to the project and group named with it, and should not be read as an organisation-wide figure. Fuller context is on each project page and in our <a href="<?= SITE_URL ?>/impact-reports.php">impact reports</a>.</p>
+        <p class="ab-head-sub pg-head-note">Each figure belongs to the project and group named with it, not to the organisation as a whole. Fuller context is on each project page and in our <a href="<?= SITE_URL ?>/impact-reports.php">impact reports</a>.</p>
       </div>
+      <?= pp_tiles($evidence, $projects) ?>
     </div>
   </section>
 
-  <?= pp_voice_section($voices, 'Questions people bring to the work') ?>
+  <?= pp_asks_section($asks) ?>
 
   <!-- 6. Community photo strip -->
   <section class="pg-strip" aria-labelledby="pgStripTitle" data-strip>

@@ -28,9 +28,10 @@ $featureSlug = isset($own[$a['feature'] ?? '']) ? $a['feature'] : array_key_firs
 $feature = $featureSlug ? $own[$featureSlug] : null;
 $others = array_filter($own, fn($k) => $k !== $featureSlug, ARRAY_FILTER_USE_KEY);
 $collage = $a['collage'] ?? [];
-// Voices for this area (illustrative placeholders show on a local preview only; see pp_voices())
-$voiceKeys = ['climate-resilient-agriculture' => ['grace', 'mariam'], 'green-skills-livelihoods' => ['peter', 'josephine', 'ahmed', 'esther']][$slug] ?? [];
-$voices = pp_visible_voices($voiceKeys);
+// Questions people bring to this area of work (see pp_questions()); none repeat the overview's
+$asks = ['climate-resilient-agriculture' => ['grace', 'mariam'], 'green-skills-livelihoods' => ['peter', 'josephine', 'ahmed']][$slug] ?? [];
+// Evidence as tiles: the first result carries the area's field photograph
+$tiles = array_map(fn($r, $i) => $i === 0 && !empty($a['evidence_photo']) ? array_replace(array_pad($r, 4, null), [4 => [$a['evidence_photo'][0], $a['evidence_photo'][1], '50% 30%']]) : $r, $a['evidence'], array_keys($a['evidence']));
 $strip = $a['gallery'] ?? [];
 
 $pageTitle = $a['short'];
@@ -42,7 +43,7 @@ $pageScripts = ['assets/js/about.js', 'assets/js/programmes.js'];
 $pageHead = ($heroV
         ? '<link rel="preload" as="image" imagesrcset="' . h(implode(', ', array_map(fn($w, $r) => asset_url($r) . " {$w}w", array_keys($heroV), $heroV))) . '" imagesizes="100vw" fetchpriority="high">'
         : '')
-    . pp_voice_head($voices)
+    . pp_asks_head($asks)
     . '<script>document.documentElement.classList.add("ab-js")</script>';
 $contactUrl = SITE_URL . '/contact.php?subject=' . rawurlencode('Partnership enquiry: ' . $a['short']);
 $seed = 100 + $index * 7;   // each area gets its own brush strokes
@@ -127,13 +128,6 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
-  <!-- A voice from BetterLife (draft for Denise Ayebare's approval) -->
-  <?php if (!empty($a['quote'])): ?>
-    <section class="pg-voice-band is-white" aria-label="From our founder">
-      <div class="container"><?= pp_voice($a['quote'], PP_FOUNDER[0], PP_FOUNDER[1], 150 + $index) ?></div>
-    </section>
-  <?php endif; ?>
-
   <!-- Projects: one feature, then the rest -->
   <?php if ($own || $linked): ?>
     <section id="projects" aria-labelledby="pgProjectsTitle">
@@ -176,31 +170,23 @@ require __DIR__ . '/includes/header.php';
     </section>
   <?php endif; ?>
 
-  <!-- Selected evidence beside a photograph -->
+  <!-- Selected evidence as tiles -->
   <?php if ($a['evidence']): ?>
-    <section class="pg-evidence" aria-labelledby="pgEvidenceTitle">
-      <div class="container<?= !empty($a['evidence_photo']) ? ' pg-evidence-grid' : '' ?>">
-        <?php if (!empty($a['evidence_photo'])): ?>
-          <figure class="pg-evidence-photo ab-reveal">
-            <span class="pg-evidence-frame"><?= ab_img($a['evidence_photo'][0], $a['evidence_photo'][1], '', true, '', '(max-width: 900px) 100vw, 520px') ?></span>
-            <figcaption><?= h($a['evidence_photo'][1]) ?></figcaption>
-          </figure>
-        <?php endif; ?>
-        <div>
-          <div class="ab-head ab-reveal">
+    <section class="pg-proof" aria-labelledby="pgEvidenceTitle">
+      <div class="container">
+        <div class="pg-head-row ab-reveal">
+          <div class="ab-head">
             <span class="ab-eyebrow">Selected evidence</span>
             <h2 id="pgEvidenceTitle">What the figures show</h2>
           </div>
-          <ul class="pg-results is-stack">
-            <?php foreach ($a['evidence'] as $r): ?><?= pp_result($r, null, $projects) ?><?php endforeach; ?>
-          </ul>
-          <p class="pg-evidence-note ab-reveal">Each figure belongs to the project or activity named with it. Figures are shown separately and should not be added together.</p>
+          <p class="ab-head-sub pg-head-note">Each figure belongs to the project or activity named with it. Figures are shown separately and should not be added together.</p>
         </div>
+        <?= pp_tiles($tiles, $projects) ?>
       </div>
     </section>
   <?php endif; ?>
 
-  <?= pp_voice_section($voices) ?>
+  <?= pp_asks_section($asks) ?>
 
   <!-- Photographs: a strip with controls, or a pair when there are only a few -->
   <?php if (count($strip) >= 4): ?>
