@@ -73,7 +73,18 @@ require __DIR__ . '/includes/header.php';
 
   <!-- 1. Photographic hero, with an index of the five programme areas -->
   <section class="pg-hero is-narrow has-index" aria-labelledby="pgTitle">
-    <div class="pg-hero-media"><?= ab_img($heroImg, 'A farmer tending a tall maize crop in Rukungiri, Uganda', '', false, 'style="object-position: 58% 42%"', '100vw') ?></div>
+    <div class="pg-hero-media">
+      <?= ab_img($heroImg, 'A farmer tending a tall maize crop in Rukungiri, Uganda', '', false, 'style="object-position: 58% 42%"', '100vw') ?>
+      <?php if (is_file(__DIR__ . '/assets/video/programmes-hero-720.mp4')): ?>
+        <!-- Silent film, one shot per programme area in index order (sowing, milling, a classroom, solar, a phone);
+             loaded after the page on wider screens only (see programmes.js); the photograph stays as the fallback -->
+        <video class="pg-hero-video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-cues="0,3.2,6,8.8,11.6" data-src="<?= h(asset_url('assets/video/programmes-hero-720.mp4')) ?>" data-src-hd="<?= h(asset_url('assets/video/programmes-hero-1080.mp4')) ?>"></video>
+      <?php endif; ?>
+    </div>
+    <button type="button" class="ab-motion-toggle pg-film-toggle" aria-pressed="false" aria-label="Pause background film" hidden>
+      <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg>
+      <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5Z"/></svg>
+    </button>
     <div class="container pg-hero-inner">
       <div class="pg-hero-copy">
         <nav class="ab-crumb" aria-label="Breadcrumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span aria-hidden="true">/</span><span aria-current="page">Programmes</span></nav>
@@ -87,7 +98,7 @@ require __DIR__ . '/includes/header.php';
       </div>
       <nav class="pg-hero-index" aria-label="Programme areas">
         <?php $n = 0; foreach ($areas as $slug => $a): $n++; ?>
-          <a href="#<?= h($slug) ?>"><b><?= str_pad((string) $n, 2, '0', STR_PAD_LEFT) ?></b><span><?= h($a['short']) ?></span></a>
+          <a href="#<?= h($slug) ?>" data-i="<?= $n - 1 ?>"><b><?= str_pad((string) $n, 2, '0', STR_PAD_LEFT) ?></b><span><?= h($a['short']) ?></span></a>
         <?php endforeach; ?>
       </nav>
     </div>

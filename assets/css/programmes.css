@@ -516,3 +516,16 @@
 .pg-vcard footer > span { font-size: 13.5px; color: var(--ab-soft); }
 .pg-vcard-flag { align-self: flex-start; margin-top: 8px; padding: 4px 10px; border-radius: 999px; background: #fff4d6; color: #7a5a00; font-style: normal; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; }
 .pg-vgrid:has(> li:nth-child(4):last-child) { grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }
+
+/* Opening film on the overview, with the area index following the shot on screen */
+.pg-hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1.4s ease; }
+.pg-hero.has-video .pg-hero-video { opacity: 1; }
+.pg-film-toggle[hidden] { display: none; }
+@media (min-width: 1000px) {
+  .pg-hero-index a { position: relative; transition: opacity .5s ease, color .2s ease; }
+  .pg-hero-index a::before { content: ''; position: absolute; left: 0; top: -19px; height: 2px; width: 0; background: #9fd6b2; }
+  .pg-hero.has-video .pg-hero-index a:not(.is-active) { opacity: .55; }
+  .pg-hero.has-video .pg-hero-index a.is-active::before { width: 100%; transition: width 2.8s linear; }
+  .ab-motion-paused .pg-hero.has-video .pg-hero-index a.is-active::before { transition: none; }
+}
+@media (prefers-reduced-motion: reduce) { .pg-hero-video { display: none; } }
