@@ -195,9 +195,9 @@ require __DIR__ . '/includes/header.php';
       <?php foreach ($heroSlides as $i => $slide): [$p, $alt, $pos] = $slide; $w = $slide[3] ?? '100%'; ?>
         <?= ab_img($p, $i === 0 ? $alt : '', 'ab-hero-img', $i > 0, 'style="--i: ' . $i . '; --pos: ' . $pos . '; --w: ' . $w . '"') ?>
       <?php endforeach; ?>
-      <?php if (is_file(__DIR__ . '/assets/video/about-hero.mp4')): ?>
+      <?php if (is_file(__DIR__ . '/assets/video/about-hero-720.mp4')): ?>
         <!-- Silent film from Rukungiri; loaded after the page on wider screens only (see about.js), photographs remain the fallback -->
-        <video class="ab-hero-video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-src="<?= h(asset_url('assets/video/about-hero.mp4')) ?>"></video>
+        <video class="ab-hero-video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-src="<?= h(asset_url('assets/video/about-hero-720.mp4')) ?>" data-src-hd="<?= h(asset_url('assets/video/about-hero-1080.mp4')) ?>"></video>
       <?php endif; ?>
     </div>
     <div class="container ab-hero-inner">

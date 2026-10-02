@@ -50,7 +50,9 @@
     if (video && !reduceMotion && !saveData && window.matchMedia('(min-width: 720px)').matches) {
       var start = function () {
         video.addEventListener('playing', function () { hero.classList.add('has-video'); }, { once: true });
-        video.src = video.getAttribute('data-src');
+        // Full HD where the opening is drawn with more than ~1400 device pixels across, 720p otherwise
+        var hd = video.getAttribute('data-src-hd');
+        video.src = hd && hero.offsetWidth * (window.devicePixelRatio || 1) > 1400 ? hd : video.getAttribute('data-src');
         syncVideo();
       };
       if (document.readyState === 'complete') setTimeout(start, 300); else window.addEventListener('load', function () { setTimeout(start, 300); });
