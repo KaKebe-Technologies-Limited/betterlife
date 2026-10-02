@@ -137,7 +137,8 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
-  <!-- 3. Five programme areas -->
+  <!-- 3. Five programme areas: a list beside one large photograph that follows the area pointed at or focused
+       (on touch screens and narrow windows each area is a card with its own photograph) -->
   <section class="pg-areas" id="areas" aria-labelledby="pgAreasTitle">
     <div class="container">
       <div class="pg-head-row ab-reveal">
@@ -147,24 +148,39 @@ require __DIR__ . '/includes/header.php';
         </div>
         <p class="ab-head-sub pg-head-note">Each area brings together related activities, projects and partners. Choose one to see how the work is delivered and what it has achieved.</p>
       </div>
-      <ol class="pg-area-grid">
-        <?php $n = 0; foreach ($areas as $slug => $a): $n++; [$img, $alt, $pos] = $a['image']; ?>
-          <li class="pg-area ab-reveal" id="<?= h($slug) ?>">
-            <article class="pg-area-card">
-              <div class="pg-area-media">
-                <?= ab_img($img, $alt, '', true, 'style="object-position: ' . h($pos) . '"', $n <= 2 ? '(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 600px' : '(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 400px') ?>
-                <span class="pg-area-num" aria-hidden="true"><?= str_pad((string) $n, 2, '0', STR_PAD_LEFT) ?></span>
-              </div>
-              <div class="pg-area-body">
+      <div class="pg-atlas ab-reveal" data-atlas>
+        <ol class="pg-atlas-list">
+          <?php $n = 0; foreach ($areas as $slug => $a): $n++; [$img, $alt, $pos] = $a['image']; $num = str_pad((string) $n, 2, '0', STR_PAD_LEFT); ?>
+            <li class="pg-atlas-item<?= $n === 1 ? ' is-on' : '' ?>" id="<?= h($slug) ?>" data-i="<?= $n - 1 ?>">
+              <div class="pg-atlas-thumb"><?= ab_img($img, $alt, '', true, 'style="object-position: ' . h($pos) . '"', '(max-width: 720px) 100vw, 50vw') ?><span aria-hidden="true"><?= $num ?></span></div>
+              <span class="pg-atlas-n" aria-hidden="true"><?= $num ?></span>
+              <div class="pg-atlas-body">
                 <p class="pg-area-meta"><?= icon($a['icon'], 15) ?> <?= $projectCount[$slug] ?> <?= $projectCount[$slug] === 1 ? 'project' : 'projects' ?></p>
-                <h3><?= h($a['short']) ?></h3>
-                <p><?= h($a['card']) ?></p>
-                <a href="<?= h(pp_area_url($slug)) ?>" class="pg-link">Explore Programme<span class="sr-only">: <?= h($a['short']) ?></span> <?= icon('arrow-right', 15) ?></a>
+                <h3><a href="<?= h(pp_area_url($slug)) ?>"><?= h($a['short']) ?></a></h3>
+                <p class="pg-atlas-desc"><?= h($a['card']) ?></p>
+                <span class="pg-atlas-cta" aria-hidden="true">Explore Programme <?= icon('arrow-right', 15) ?></span>
               </div>
-            </article>
-          </li>
-        <?php endforeach; ?>
-      </ol>
+              <span class="pg-atlas-go" aria-hidden="true"><?= icon('arrow-right', 18) ?></span>
+            </li>
+          <?php endforeach; ?>
+        </ol>
+        <p class="pg-atlas-hint" aria-hidden="true">Swipe to see all five areas <?= icon('arrow-right', 14) ?></p>
+        <div class="pg-atlas-stage" aria-hidden="true">
+          <?php $n = 0; foreach ($areas as $slug => $a): $n++; [$img, , $pos] = $a['image']; ?>
+            <div class="pg-atlas-slide<?= $n === 1 ? ' is-on' : '' ?>">
+              <div class="pg-atlas-shot">
+                <?= ab_img($img, '', '', true, 'style="object-position: ' . h($pos) . '"', '(max-width: 1000px) 1px, 680px') ?>
+                <span class="pg-atlas-big"><?= str_pad((string) $n, 2, '0', STR_PAD_LEFT) ?></span>
+              </div>
+              <div class="pg-atlas-panel">
+                <span class="pg-kicker"><?= h($a['short']) ?></span>
+                <p><?= h($a['card']) ?></p>
+                <a href="<?= h(pp_area_url($slug)) ?>" class="pg-link" tabindex="-1">Explore Programme <?= icon('arrow-right', 15) ?></a>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -182,6 +198,7 @@ require __DIR__ . '/includes/header.php';
         <?php $f = $projects[$feature]; ?>
         <article class="pg-feature ab-reveal">
           <?= ab_img($f['image'][0], $f['image'][1], 'pg-feature-img', true, 'style="object-position: ' . h($f['image'][2]) . '"', '(max-width: 900px) 100vw, 700px') ?>
+          <?= $feature === pp_film()['project'] ? pp_film_button() : '' ?>
           <div class="pg-feature-panel">
             <span class="pg-kicker"><?= h($areas[$f['area']]['short']) ?></span>
             <h3><a href="<?= h(pp_project_url($feature, $f)) ?>"><?= h($f['title']) ?></a></h3>
@@ -197,9 +214,6 @@ require __DIR__ . '/includes/header.php';
       </div>
     </div>
   </section>
-
-  <!-- The Yumbe film -->
-  <?= pp_film_band($projects) ?>
 
   <!-- 5. Evidence: three results, each with its project and a photograph -->
   <section class="pg-proof" aria-labelledby="pgEvidenceTitle">

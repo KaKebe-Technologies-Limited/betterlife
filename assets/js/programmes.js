@@ -6,9 +6,34 @@
 
   document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('[data-strip]').forEach(initStrip);
+    document.querySelectorAll('[data-atlas]').forEach(initAtlas);
     initHeroFilm();
     initFilmDialog();
   });
+
+  /* Programme areas: the large photograph follows the area pointed at, focused or linked to (#area) */
+  function initAtlas(root) {
+    var items = root.querySelectorAll('.pg-atlas-item');
+    var slides = root.querySelectorAll('.pg-atlas-slide');
+    if (!items.length || items.length !== slides.length) return;
+    var current = 0;
+    function show(i) {
+      if (i === current) return;
+      current = i;
+      items.forEach(function (li, k) { li.classList.toggle('is-on', k === i); });
+      slides.forEach(function (s, k) { s.classList.toggle('is-on', k === i); });
+    }
+    items.forEach(function (li, k) {
+      li.addEventListener('mouseenter', function () { show(k); });
+      li.addEventListener('focusin', function () { show(k); });
+    });
+    function fromHash() {
+      var id = decodeURIComponent(location.hash.slice(1));
+      items.forEach(function (li, k) { if (id && li.id === id) show(k); });
+    }
+    window.addEventListener('hashchange', fromHash);
+    fromHash();
+  }
 
   /* The Yumbe film opens in a player dialog; nothing downloads until play is pressed */
   function initFilmDialog() {

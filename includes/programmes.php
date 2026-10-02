@@ -596,7 +596,6 @@ function pp_film(): array
     return [
         'src'      => 'assets/video/yumbe-film-720.mp4',
         'poster'   => 'assets/img/programmes/yumbe-film-poster.jpg',
-        'band'     => 'assets/img/programmes/yumbe-film-band.jpg',  // the same frame, cropped wide for the band
         'title'    => 'Our first step towards sustainable change',
         'minutes'  => 8,
         'summary'  => 'A film from Yumbe: the women, local leaders and BetterLife team behind the programme, at their farms, groups and training sessions.',
@@ -611,29 +610,14 @@ function pp_film_src(array $f): string
     return asset_url($f['src']) . (is_file($path) ? '?v=' . filemtime($path) : '');
 }
 
-/** A wide band with the film's poster and a play button that opens the player. */
-function pp_film_band(array $projects): string
+/** A play button that opens the film in the player dialog (sits on the Yumbe feature on the overview). */
+function pp_film_button(): string
 {
     $f = pp_film();
     if (!is_file(dirname(__DIR__) . '/' . $f['src'])) return '';
-    $proj = $projects[$f['project']] ?? null;
-    ob_start(); ?>
-    <section class="pg-film" aria-labelledby="pgFilmTitle">
-      <div class="pg-film-bg"><?= ab_img($f['band'], '', '', true, '', '100vw') ?></div>
-      <div class="container pg-film-inner">
-        <div class="pg-film-copy ab-reveal">
-          <span class="ab-eyebrow">Watch the film</span>
-          <h2 id="pgFilmTitle"><?= h($f['title']) ?></h2>
-          <p><?= h($f['summary']) ?></p>
-          <?php if ($proj): ?><a href="<?= h(pp_project_url($f['project'], $proj)) ?>" class="pg-link">About <?= h($proj['title']) ?> <?= icon('arrow-right', 15) ?></a><?php endif; ?>
-        </div>
-        <button type="button" class="pg-film-play ab-reveal" data-film="<?= h(pp_film_src($f)) ?>" data-film-title="<?= h($f['title']) ?>">
-          <span class="pg-film-play-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5Z"/></svg></span>
-          <span class="pg-film-play-text">Play the film<small><?= (int) $f['minutes'] ?> minutes, with sound</small></span>
-        </button>
-      </div>
-    </section>
-    <?php return ob_get_clean();
+    return '<button type="button" class="pg-film-play" data-film="' . h(pp_film_src($f)) . '" data-film-title="' . h($f['title']) . '">'
+        . '<span class="pg-film-play-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5Z"/></svg></span>'
+        . '<span class="pg-film-play-text">Watch the film<small>' . (int) $f['minutes'] . ' minutes, with sound</small></span></button>';
 }
 
 /** The player dialog (one per page). */
