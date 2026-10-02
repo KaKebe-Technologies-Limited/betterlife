@@ -22,6 +22,7 @@ $managerCountries = array_map(
 $leadersHavePhotos = $leaders && !array_filter($leaders, fn($l) => empty($l['photo']));
 
 $map = require __DIR__ . '/includes/map-paths.php';
+require_once __DIR__ . '/includes/brush.php';
 
 /** Resized copies made by tools/make_sized_images.php live in assets/img/sized/. */
 function ab_variants(string $path): array
@@ -74,7 +75,7 @@ function ab_photo(string $path, string $alt, string $caption, string $gallery, s
 
 // Figures (verified). Shown separately; never summed.
 $figures = [
-    ['value' => '110,000', 'count' => 110000, 'label' => 'people reached',               'prefix' => '',      'img' => 'assets/img/team-conference-group-photo.webp',                  'alt' => 'Participants gathered at a BetterLife event'],
+    ['value' => '110,000', 'count' => 110000, 'label' => 'people reached',               'prefix' => '',      'img' => 'assets/img/smiles-group-under-tree-2.webp',                    'alt' => 'Community members gathered under a tree'],
     ['value' => '122',     'count' => 122,    'label' => 'farms established',            'prefix' => 'About', 'img' => 'assets/img/farm-aerial-view-2.webp',                           'alt' => 'Aerial view of cultivated farm plots and a greenhouse'],
     ['value' => '5',       'count' => 5,      'label' => 'community farms established',  'prefix' => '',      'img' => 'assets/img/betterlifeint-source/programs/program-photo-2.jpg', 'alt' => 'A field of cabbages'],
     ['value' => '310',     'count' => 310,    'label' => 'households supported',         'prefix' => '',      'img' => 'assets/img/vendor-and-children-food-stall.webp',               'alt' => 'A woman preparing food at a stall with children nearby'],
@@ -103,7 +104,7 @@ $howPhotos = [
 $whoPhotos = [
     'Women and Girls'                 => ['assets/img/betterlifeint-source/programs/program-photo-3.jpg', 'A woman in a BetterLife shirt holding a young plant'],
     'Children and Young People'       => ['assets/img/classroom-climate-club.webp', 'Pupils raising their hands in a classroom'],
-    'Refugees and Displaced Families' => ['assets/img/smiles-group-under-tree-2.webp', 'Community members gathered under a tree'],
+    'Refugees and Displaced Families' => ['assets/img/project-women-idps.jpg', 'Women seated together at a community session'],
     'Smallholder Farmers'             => ['assets/img/farmer-spraying-crops.webp', 'A farmer tending a maize crop'],
 ];
 
@@ -138,7 +139,7 @@ $journeyPhotos = [
 ];
 
 $strip = [
-    ['assets/img/betterlifeint-source/programs/program-photo-1.jpg', 'A tray of seedlings ready for transplanting'],
+    ['assets/img/impact-story-1.jpg', 'A community group meeting outdoors'],
     ['assets/img/betterlifeint-source/projects/project-spring-alt.jpeg', 'Collecting water at a spring'],
     ['assets/img/children-at-borehole.webp', 'Children fetching water at a borehole'],
     ['assets/img/betterlifeint-source/impact-reports/impact-photo-3.jpeg', 'Leafy greens growing in a hydroponic system'],
@@ -152,7 +153,13 @@ $strip = [
 
 $contact = fn(string $subject): string => SITE_URL . '/contact.php?subject=' . rawurlencode($subject);
 
-$heroImg = 'assets/img/smiles-group-under-tree-1.webp';
+// Opening: three candid photographs crossfade slowly behind the headline (first one is the LCP image)
+$heroSlides = [
+    ['assets/img/woman-winnowing-grain.webp',     'A woman winnowing grain',                         '56% 28%'],
+    ['assets/img/farmers-planting-together.webp', 'Two people planting seedlings together',          '50% 46%'],
+    ['assets/img/smiles-group-under-tree-1.webp', 'A community group gathered under a large tree',   '50% 58%'],
+];
+$heroImg = $heroSlides[0][0];
 $heroV = ab_variants($heroImg);
 $pageStyles  = ['assets/css/about.css'];
 $pageScripts = ['assets/js/about.js'];
@@ -167,32 +174,81 @@ require __DIR__ . '/includes/header.php';
 <main class="ab" id="top">
 
   <!-- 1. Opening -->
+  <!-- Painted brush-stroke filter shared by every stroke on the page (same as the homepage) -->
+  <svg class="ab-defs" width="0" height="0" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="lpBrush" x="-15%" y="-60%" width="130%" height="220%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="4" result="edgeNoise"/>
+        <feDisplacementMap in="SourceGraphic" in2="edgeNoise" scale="6" xChannelSelector="R" yChannelSelector="G" result="rough"/>
+        <feTurbulence type="fractalNoise" baseFrequency="0.006 0.42" numOctaves="2" seed="9" result="bristles"/>
+        <feColorMatrix in="bristles" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  4.2 0 0 0 -1.55" result="streaks"/>
+        <feComposite in="rough" in2="streaks" operator="in" result="dry"/>
+        <feMorphology in="rough" operator="erode" radius="3" result="core"/>
+        <feMerge><feMergeNode in="dry"/><feMergeNode in="core"/></feMerge>
+      </filter>
+    </defs>
+  </svg>
+
   <section class="ab-hero" aria-labelledby="abHeroTitle">
-    <div class="ab-hero-media"><?= ab_img($heroImg, 'Members of a BetterLife community programme gathered under a large tree', 'ab-hero-img', false) ?></div>
-    <div class="container ab-hero-inner">
-      <nav class="ab-crumb" aria-label="Breadcrumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span aria-hidden="true">/</span><span aria-current="page">About Us</span></nav>
-      <p class="ab-kicker"><span>Refugee-led</span> <i aria-hidden="true">&middot;</i> <span>Youth-led</span> <i aria-hidden="true">&middot;</i> <span>Women-led</span></p>
-      <h1 id="abHeroTitle">It Began with the Lives We Knew</h1>
-      <p class="ab-hero-lead">This work did not begin in a conference room. It began with young people who knew that poverty, displacement and climate change do not arrive one at a time, and who wanted solutions that make sense in the whole of a person&rsquo;s life.</p>
-      <a href="#beginnings" class="ab-hero-scroll">Read our story <?= icon('chevron-down', 16) ?></a>
+    <div class="ab-hero-media">
+      <?php foreach ($heroSlides as $i => $slide): [$p, $alt, $pos] = $slide; $w = $slide[3] ?? '100%'; ?>
+        <?= ab_img($p, $i === 0 ? $alt : '', 'ab-hero-img', $i > 0, 'style="--i: ' . $i . '; --pos: ' . $pos . '; --w: ' . $w . '"') ?>
+      <?php endforeach; ?>
     </div>
+    <div class="container ab-hero-inner">
+      <div class="ab-hero-copy">
+        <nav class="ab-crumb" aria-label="Breadcrumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span aria-hidden="true">/</span><span aria-current="page">About Us</span></nav>
+        <p class="ab-kicker"><span>Refugee-led</span> <i aria-hidden="true">&middot;</i> <span>Youth-led</span> <i aria-hidden="true">&middot;</i> <span>Women-led</span></p>
+        <h1 id="abHeroTitle">It Began with the <span class="ab-mark">Lives We Knew<svg viewBox="0 0 240 30" preserveAspectRatio="none" aria-hidden="true"><path filter="url(#lpBrush)" d="<?= lp_brush_d(4, 17, 238, 14, 22, 17, 0.02) ?>"/></svg></span></h1>
+        <p class="ab-hero-lead">This work did not begin in a conference room. It began with young people who knew that poverty, displacement and climate change do not arrive one at a time, and who wanted solutions that make sense in the whole of a person&rsquo;s life.</p>
+        <a href="#beginnings" class="ab-hero-scroll">Read our story <?= icon('chevron-down', 16) ?></a>
+      </div>
+      <!-- Brand mark from the homepage: a photograph inside an accurate outline of Africa -->
+      <figure class="ab-hero-africa" aria-hidden="true">
+        <svg viewBox="10 30 600 660" preserveAspectRatio="xMidYMid meet" focusable="false">
+          <defs><clipPath id="abHeroAfrica" clipPathUnits="userSpaceOnUse"><path d="<?= $map['africa'] ?>"/></clipPath></defs>
+          <g clip-path="url(#abHeroAfrica)">
+            <rect x="0" y="0" width="640" height="720" fill="#d9cbb8"/>
+            <image href="<?= h(asset_url(ab_variants('assets/img/about-real-1.jpg')[960] ?? 'assets/img/about-real-1.jpg')) ?>" x="-80" y="-194" width="820" height="1230" preserveAspectRatio="xMidYMid slice"/>
+          </g>
+          <!-- crisp white coastline so the continent reads clearly over the photographs behind it -->
+          <path class="ab-hero-africa-edge" d="<?= $map['africa'] ?>"/>
+          <g filter="url(#lpBrush)">
+            <path class="f-green" d="<?= lp_brush_d(-30, 250, 118, 218, 46, 3) ?>"/>
+            <path class="f-blue"  d="<?= lp_brush_d(414, 376, 572, 430, 40, 7, -0.04) ?>"/>
+            <path class="f-blue"  d="<?= lp_brush_d(168, 474, 298, 482, 44, 5) ?>"/>
+          </g>
+        </svg>
+      </figure>
+    </div>
+    <button type="button" class="ab-motion-toggle" aria-pressed="false" aria-label="Pause background photos">
+      <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg>
+      <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5Z"/></svg>
+    </button>
   </section>
 
   <!-- 2. Our beginnings, then the team -->
   <section class="ab-begin" id="beginnings" aria-labelledby="abBeginTitle">
     <div class="container ab-begin-grid">
       <div class="ab-collage ab-reveal">
+        <svg class="ab-strokes" viewBox="0 0 600 648" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <g filter="url(#lpBrush)">
+            <path class="f-green" d="<?= lp_brush_d(-34, 452, 150, 430, 46, 41) ?>"/>
+            <path class="f-blue"  d="<?= lp_brush_d(300, 18, 520, -4, 40, 43) ?>"/>
+            <path class="f-green" d="<?= lp_brush_d(360, 628, 560, 604, 34, 45) ?>"/>
+          </g>
+        </svg>
         <?= ab_photo('assets/img/field-team-group-under-tree.webp', 'Members of the BetterLife field team standing together outdoors', 'Members of the BetterLife field team', 'beginnings', 'ab-col ab-col-a', '(max-width: 900px) 50vw, 300px') ?>
         <?= ab_photo('assets/img/yumbe-greenhouse-group.webp', 'A community group outside a greenhouse', 'A community group outside a greenhouse in Yumbe, Uganda', 'beginnings', 'ab-col ab-col-b', '(max-width: 900px) 50vw, 320px') ?>
         <?= ab_photo('assets/img/betterlifeint-source/programs/program-photo-10.jpg', 'Women taking notes during a training session', 'Women taking notes during a BetterLife training session', 'beginnings', 'ab-col ab-col-c', '(max-width: 900px) 45vw, 260px') ?>
-        <?= ab_photo('assets/img/betterlifeint-source/projects/project-smiles-alt.jpg', 'Women gathered at a community session', 'Women gathered at a community session', 'beginnings', 'ab-col ab-col-d', '(max-width: 900px) 45vw, 260px') ?>
+        <?= ab_photo('assets/img/village-girl-portrait.webp', 'A girl standing outside a thatched home', 'A girl standing outside a thatched home', 'beginnings', 'ab-col ab-col-d', '(max-width: 900px) 45vw, 260px') ?>
         <div class="ab-stamp ab-stamp-year" aria-hidden="true"><span>Founded</span><strong>2021</strong></div>
         <div class="ab-stamp ab-stamp-money" aria-hidden="true"><span>Started with</span><strong>USD 200</strong></div>
       </div>
 
       <div class="ab-begin-copy ab-reveal">
         <span class="ab-eyebrow">Our beginnings</span>
-        <h2 id="abBeginTitle">Started by people who had lived it</h2>
+        <h2 id="abBeginTitle">Started by people who had <span class="ab-mark">lived it<svg viewBox="0 0 240 30" preserveAspectRatio="none" aria-hidden="true"><path filter="url(#lpBrush)" d="<?= lp_brush_d(4, 17, 238, 14, 22, 47, 0.02) ?>"/></svg></span></h2>
         <p class="ab-lead">Denise Ayebare founded BetterLife International in Uganda in 2021, at nineteen, with USD&nbsp;200 and a small team of young people. As a refugee-led team, we had grown up experiencing many of the challenges facing the communities we wanted to work alongside.</p>
         <p>We knew the uncertainty of providing for a household when food, income and opportunity were difficult to secure. We had also seen the knowledge and determination within communities. Our commitment was to help people build on that ability, with practical support to grow food, earn, save and access markets.</p>
         <p>That beginning has grown into an organisation reaching 110,000 people across five African countries. The work continues through community members, staff, volunteers and partners who help shape it every day.</p>
@@ -229,6 +285,13 @@ require __DIR__ . '/includes/header.php';
         <span class="ab-eyebrow">Impact in pictures</span>
         <h2 id="abImpactTitle">Since 2021, counted in people, farms, homes and schools</h2>
       </div>
+      <div class="ab-figures-wrap">
+      <svg class="ab-strokes" viewBox="0 0 1200 400" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+        <g filter="url(#lpBrush)">
+          <path class="f-green" d="<?= lp_brush_d(-60, 70, 70, 50, 44, 53) ?>"/>
+          <path class="f-blue"  d="<?= lp_brush_d(1140, 330, 1262, 300, 40, 55) ?>"/>
+        </g>
+      </svg>
       <ul class="ab-figures">
         <?php foreach ($figures as $i => $f): ?>
           <li class="ab-figure ab-reveal">
@@ -240,6 +303,7 @@ require __DIR__ . '/includes/header.php';
           </li>
         <?php endforeach; ?>
       </ul>
+      </div>
       <p class="ab-figures-note ab-reveal">Each figure counts a different part of the work, so they should not be added together. The people we reach take part in different activities and receive different kinds of support.</p>
 
       <!-- One programme as proof; the full account lives on the Programmes page -->
@@ -292,7 +356,7 @@ require __DIR__ . '/includes/header.php';
         <p class="ab-lead">When a woman tells us her harvest failed, seeds may appear to be the answer. Listen longer and the picture changes. She may have no water nearby. She may spend much of the day collecting firewood. She may lack money for inputs, access to a phone or a buyer for what she grows.</p>
         <p class="ab-pull ab-pull-sm">Giving her seeds alone leaves most of the problem untouched.</p>
         <p>We take a systems approach because people live in systems. One programme may include a demonstration garden, a savings group, a digital tool and a buyer connection, shaped by the barriers people actually face.</p>
-        <figure class="ab-systems-photo"><?= ab_img('assets/img/farmers-planting-together.webp', 'Two people planting seedlings together in a field', '', true, '', '(max-width: 900px) 100vw, 560px') ?></figure>
+        <figure class="ab-systems-photo"><?= ab_img('assets/img/betterlifeint-source/programs/program-photo-1.jpg', 'A man holding a tray of seedlings in a field', '', true, '', '(max-width: 900px) 100vw, 560px') ?></figure>
       </div>
 
       <div class="ab-web ab-reveal">
@@ -403,7 +467,7 @@ require __DIR__ . '/includes/header.php';
     <div class="container">
       <div class="ab-head ab-reveal">
         <span class="ab-eyebrow">Where we work</span>
-        <h2 id="abWhereTitle">Rooted in Uganda, working across five countries</h2>
+        <h2 id="abWhereTitle">Rooted in Uganda, working across <span class="ab-mark">five countries<svg viewBox="0 0 240 30" preserveAspectRatio="none" aria-hidden="true"><path filter="url(#lpBrush)" d="<?= lp_brush_d(4, 17, 238, 14, 22, 57, 0.02) ?>"/></svg></span></h2>
       </div>
       <div class="ab-where-grid" data-map>
         <div class="ab-map-wrap ab-reveal">

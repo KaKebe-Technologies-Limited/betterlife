@@ -64,21 +64,41 @@
    ========================================================= */
 .ab .ab-hero { position: relative; display: flex; align-items: flex-end; min-height: min(84vh, 780px); padding: 0; overflow: hidden; background: var(--ab-deep); color: #fff; }
 .ab-hero-media { position: absolute; inset: 0; }
-.ab-hero-img { width: 100%; height: 100% !important; object-fit: cover; object-position: 50% 58%; animation: abSettle 18s cubic-bezier(.2, .6, .2, 1) both; }
-@keyframes abSettle { from { transform: scale(1.09); } to { transform: scale(1); } }
+/* Three photographs crossfade slowly (8s each, 2s fades, gentle settle-in zoom) */
+/* --w widens a portrait photo so its subject sits to the right of the headline */
+.ab .ab-hero-img { max-width: none; }
+.ab-hero-img { position: absolute; top: 0; left: 0; width: var(--w, 100%); height: 100% !important; object-fit: cover; object-position: var(--pos, 50% 50%); opacity: 0; animation: abHeroCycle 24s linear infinite; animation-delay: calc(var(--i) * 8s - 26s); will-change: opacity, transform; }
+@keyframes abHeroCycle {
+  0%      { opacity: 0; transform: scale(1.07); }
+  8.33%   { opacity: 1; }
+  33.33%  { opacity: 1; }
+  41.67%  { opacity: 0; transform: scale(1); }
+  100%    { opacity: 0; transform: scale(1); }
+}
+.ab-motion-paused .ab-hero-img, .ab-hero.is-offscreen .ab-hero-img { animation-play-state: paused; }
 .ab-hero-media::after {
   content: ''; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(6, 22, 15, .35) 0%, rgba(6, 22, 15, .2) 30%, rgba(6, 22, 15, .78) 72%, rgba(6, 22, 15, .92) 100%),
-              linear-gradient(90deg, rgba(6, 22, 15, .55), rgba(6, 22, 15, 0) 65%);
+  background: linear-gradient(180deg, rgba(6, 22, 15, .28) 0%, rgba(6, 22, 15, .08) 32%, rgba(6, 22, 15, .62) 70%, rgba(6, 22, 15, .86) 100%),
+              linear-gradient(90deg, rgba(6, 22, 15, .5), rgba(6, 22, 15, 0) 58%);
 }
-.ab-hero-inner { position: relative; z-index: 1; padding-top: 150px; padding-bottom: clamp(52px, 7vw, 92px); }
+.ab-hero-inner { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr minmax(0, 380px); align-items: end; gap: 40px; padding-top: 150px; padding-bottom: clamp(52px, 7vw, 92px); }
+.ab-hero-africa { margin: 0 0 -10px; align-self: end; filter: drop-shadow(0 24px 40px rgba(0, 0, 0, .35)); }
+.ab-hero-africa svg { display: block; width: 100%; height: auto; overflow: visible; }
+.ab-hero-africa-edge { fill: none; stroke: #fff; stroke-width: 5; stroke-linejoin: round; }
+.ab-motion-toggle { position: absolute; right: 18px; bottom: 18px; z-index: 2; width: 38px; height: 38px; border-radius: 50%; padding: 0; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.35); color: #fff; transition: background .2s ease; }
+.ab-motion-toggle:hover { background: rgba(255,255,255,.28); }
+.ab-motion-toggle:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+.ab-motion-toggle svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
+.ab-motion-toggle .i-play { display: none; fill: currentColor; stroke: none; }
+.ab-motion-paused .ab-motion-toggle .i-pause { display: none; }
+.ab-motion-paused .ab-motion-toggle .i-play { display: block; }
 .ab-crumb { display: flex; gap: 8px; font-size: 13.5px; color: rgba(255,255,255,.75); margin-bottom: 22px; }
 .ab-crumb a { color: #fff; font-weight: 600; }
 .ab-kicker { margin: 0 0 14px; font: 700 12.5px/1 var(--font-body) !important; letter-spacing: .16em; text-transform: uppercase; color: #bfe3cc !important; }
 .ab-kicker i { font-style: normal; margin: 0 .35em; color: rgba(255,255,255,.5); }
 .ab-kicker span { white-space: nowrap; }
 .ab-hero h1 { font-family: var(--ab-serif); font-weight: 600; font-size: clamp(42px, 6.4vw, 86px); line-height: 1.02; letter-spacing: -.02em; color: #fff; max-width: 13ch; margin: 0 0 22px; }
-.ab-hero-lead { max-width: 58ch; font-size: clamp(16.5px, 1.35vw, 19px) !important; line-height: 1.6 !important; color: rgba(255,255,255,.9) !important; margin: 0; }
+.ab-hero-lead { max-width: 48ch; font-size: clamp(16.5px, 1.35vw, 19px) !important; line-height: 1.6 !important; color: rgba(255,255,255,.9) !important; margin: 0; }
 .ab-hero-scroll { display: inline-flex; align-items: center; gap: 8px; margin-top: 30px; font-weight: 700; font-size: 14px; color: #fff; padding: 11px 20px; border: 1.5px solid rgba(255,255,255,.55); border-radius: 999px; transition: background .2s ease; }
 .ab-hero-scroll:hover { background: rgba(255,255,255,.12); }
 
@@ -385,7 +405,7 @@ html:not(.ab-js) .ab-how-step { min-height: 0; }
   .ab section { padding: 60px 0; }
   .ab p { font-size: 16px; }
   .ab .ab-hero { min-height: 82svh; }
-  .ab-hero-img { object-position: 42% 60%; }
+  .ab-hero-africa { display: none; }
   .ab-hero-inner { padding-top: 110px; }
   .ab-lead { font-size: 17.5px !important; }
   .ab-pull { font-size: 21px !important; }
@@ -423,7 +443,7 @@ html:not(.ab-js) .ab-how-step { min-height: 0; }
 
 /* Reduced motion: no settle-in zoom, no reveals, instant swaps */
 @media (prefers-reduced-motion: reduce) {
-  .ab-hero-img { animation: none; }
+  .ab-hero-img { animation: none; } .ab-hero-img:first-child { opacity: 1; } .ab-motion-toggle { display: none; }
   .ab-js .ab-reveal { opacity: 1; transform: none; transition: none; }
   .ab-how-img, .ab-lb img, .ab-figure-img, .ab-who-photo img { transition: none; }
 }
@@ -482,4 +502,40 @@ html:not(.ab-js) .ab-how-step { min-height: 0; }
 }
 @media (max-width: 720px) {
   .ab-proof-stat { grid-template-columns: 1fr; gap: 6px; }
+}
+
+/* ---------- Brand marks shared with the homepage ---------- */
+.ab-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.ab .f-green { fill: var(--ab-green); }
+.ab .f-blue  { fill: var(--ab-blue); }
+/* Painted highlighter under key words in headlines */
+.ab h1, .ab h2 { position: relative; z-index: 0; }
+.ab-mark { position: relative; white-space: nowrap; }
+.ab-mark svg { position: absolute; left: -3%; bottom: .04em; width: 106%; height: .5em; z-index: -1; overflow: visible; }
+.ab-mark path { fill: var(--ab-blue); opacity: .55; }
+.ab-hero .ab-mark path { fill: var(--ab-green); opacity: .9; }
+/* Painted strokes peeking from behind the collage and the figures */
+.ab-strokes { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 0; }
+.ab-collage .ab-col, .ab-collage .ab-stamp { z-index: 1; }
+.ab-figures-wrap { position: relative; }
+.ab-figures-wrap .ab-figures { position: relative; z-index: 1; }
+
+/* ---------- Organic photo shapes, echoing the founding collage ---------- */
+.ab-who-card:nth-child(odd) .ab-who-photo { border-radius: 999px 999px var(--ab-radius) var(--ab-radius); }
+.ab-who-card:nth-child(even) .ab-who-photo { border-radius: 90px 22px 90px 22px; }
+.ab-country-photo { border-radius: 110px 22px 110px 22px; }
+.ab-milestone-photo { border-radius: 56px 14px 56px 14px; }
+.ab-systems-photo { border-radius: 26px 120px 26px 120px; }
+
+@media (max-width: 1100px) {
+  .ab-hero-inner { grid-template-columns: 1fr minmax(0, 300px); }
+}
+@media (max-width: 720px) {
+  .ab-mark svg { height: .45em; }
+  .ab-who-card:nth-child(odd) .ab-who-photo { border-radius: 160px 160px var(--ab-radius) var(--ab-radius); }
+}
+
+@media (max-width: 900px) {
+  .ab-hero-inner { grid-template-columns: 1fr; }
+  .ab-hero-africa { display: none; }
 }

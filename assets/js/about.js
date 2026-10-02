@@ -6,6 +6,7 @@
   var hasIO = 'IntersectionObserver' in window;
 
   document.addEventListener('DOMContentLoaded', function () {
+    initHeroMotion();
     initReveal();
     initCounters();
     document.querySelectorAll('[role="tablist"]').forEach(initTabs);
@@ -14,6 +15,27 @@
     initMap();
     initLightbox();
   });
+
+  /* ---------- Opening photographs: pause control (remembered) and pause when off screen ---------- */
+  function initHeroMotion() {
+    var hero = document.querySelector('.ab-hero');
+    var btn = document.querySelector('.ab-motion-toggle');
+    var root = document.documentElement;
+    if (!hero || !btn) return;
+    function setPaused(paused) {
+      root.classList.toggle('ab-motion-paused', paused);
+      btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      btn.setAttribute('aria-label', paused ? 'Play background photos' : 'Pause background photos');
+      try { localStorage.setItem('abMotionPaused', paused ? '1' : '0'); } catch (e) {}
+    }
+    try { if (localStorage.getItem('abMotionPaused') === '1') setPaused(true); } catch (e) {}
+    btn.addEventListener('click', function () { setPaused(!root.classList.contains('ab-motion-paused')); });
+    if (hasIO) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { hero.classList.toggle('is-offscreen', !en.isIntersecting); });
+      }).observe(hero);
+    }
+  }
 
   /* ---------- Reveal on scroll (one time) ---------- */
   function initReveal() {
