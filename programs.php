@@ -198,6 +198,9 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
+  <!-- The Yumbe film -->
+  <?= pp_film_band($projects) ?>
+
   <!-- 5. Evidence: three results, each with its project and a photograph -->
   <section class="pg-proof" aria-labelledby="pgEvidenceTitle">
     <div class="container">
@@ -257,5 +260,6 @@ require __DIR__ . '/includes/header.php';
 </main>
 
 <?= ab_lightbox() ?>
+<?= pp_film_dialog() ?>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>

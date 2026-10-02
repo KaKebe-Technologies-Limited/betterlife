@@ -84,6 +84,20 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
+  <!-- The film from this project -->
+  <?php $film = pp_film(); if ($film['project'] === $slug && is_file(__DIR__ . '/' . $film['src'])): ?>
+    <section class="pg-section-cream" aria-labelledby="pgFilmTitle">
+      <div class="container">
+        <div class="ab-head ab-reveal">
+          <span class="ab-eyebrow">Watch the film</span>
+          <h2 id="pgFilmTitle"><?= h($film['title']) ?></h2>
+        </div>
+        <div class="pg-film-inline ab-reveal"><video controls playsinline preload="none" poster="<?= h(asset_url($film['poster'])) ?>" aria-label="<?= h($film['title']) ?>"><source src="<?= h(pp_film_src($film)) ?>" type="video/mp4"></video></div>
+        <p class="pg-film-caption ab-reveal"><?= h($film['summary']) ?> <?= (int) $film['minutes'] ?> minutes, with sound.</p>
+      </div>
+    </section>
+  <?php endif; ?>
+
   <!-- Voices from the project: shown only when real, consented quotes have been added -->
   <?php foreach ($p['voices'] ?? [] as $vi => [$vq, $vn, $vr]): ?>
     <section class="pg-voice-band<?= $vi ? ' is-white' : '' ?>" aria-label="In their words">

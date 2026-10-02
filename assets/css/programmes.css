@@ -573,3 +573,48 @@
   .pg-bubble { max-width: 94%; padding: 16px 18px 13px; }
 }
 @media (prefers-reduced-motion: reduce) { .pg-tile-img, .pg-tile-link { transition: none; } }
+
+/* =========================================================
+   The Yumbe film: a wide band with a play button, and a player dialog
+   ========================================================= */
+.ab .pg-film { position: relative; overflow: hidden; display: flex; align-items: flex-end; min-height: clamp(460px, 52vw, 680px); padding: 0; color: #fff; background: var(--ab-deep); }
+.pg-film-bg { position: absolute; inset: 0; }
+.pg-film-bg img { width: 100%; height: 100% !important; max-width: none; object-fit: cover; transition: transform 1.2s ease; }
+.pg-film:hover .pg-film-bg img { transform: scale(1.03); }
+.pg-film-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6, 22, 15, .86) 0%, rgba(6, 22, 15, .45) 48%, rgba(6, 22, 15, .1) 100%), linear-gradient(0deg, rgba(6, 22, 15, .6), rgba(6, 22, 15, 0) 45%); }
+.pg-film-inner { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 28px 48px; width: 100%; padding-top: 80px; padding-bottom: clamp(48px, 6vw, 80px); }
+.pg-film-copy { max-width: 560px; }
+.pg-film-copy .ab-eyebrow { color: #9fd6b2; }
+.pg-film-copy .ab-eyebrow::before { background: #9fd6b2; }
+.pg-film-copy h2 { color: #fff; font-size: clamp(32px, 4vw, 54px); }
+.pg-film-copy p { margin: 16px 0 18px; color: rgba(255,255,255,.88) !important; font-size: 17px; }
+.pg-film-copy .pg-link { color: #9fd6b2; }
+.pg-film-play { display: inline-flex; align-items: center; gap: 18px; padding: 12px 26px 12px 12px; border: 0; border-radius: 999px; background: rgba(255,255,255,.14); color: #fff; cursor: pointer; backdrop-filter: blur(6px); border: 1px solid rgba(255,255,255,.3); transition: background .2s ease, transform .2s ease; font: inherit; text-align: left; }
+.pg-film-play:hover { background: rgba(255,255,255,.24); transform: translateY(-2px); }
+.pg-film-play:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+.pg-film-play-ico { position: relative; display: inline-flex; width: 76px; height: 76px; align-items: center; justify-content: center; border-radius: 50%; background: var(--ab-green); box-shadow: 0 12px 30px rgba(0,0,0,.3); }
+.pg-film-play-ico::after { content: ''; position: absolute; inset: -8px; border-radius: 50%; border: 2px solid rgba(159, 214, 178, .6); animation: pgPulse 2.4s ease-out infinite; }
+@keyframes pgPulse { 0% { transform: scale(.9); opacity: 1; } 100% { transform: scale(1.25); opacity: 0; } }
+.pg-film-play-ico svg { width: 30px; height: 30px; margin-left: 4px; fill: #fff; }
+.pg-film-play-text { display: flex; flex-direction: column; font-weight: 700; font-size: 18px; line-height: 1.2; }
+.pg-film-play-text small { margin-top: 4px; font-weight: 500; font-size: 13.5px; color: rgba(255,255,255,.78); }
+.pg-film-dialog { width: 100vw; height: 100vh; max-width: 100vw; max-height: 100vh; margin: 0; padding: 0; border: 0; background: transparent; }
+.pg-film-dialog::backdrop { background: rgba(4, 14, 9, .94); }
+.pg-film-dialog[open] { display: flex; align-items: center; justify-content: center; }
+.pg-film-dialog video { width: min(1200px, 92vw); max-height: 84vh; border-radius: 14px; background: #000; box-shadow: 0 30px 80px rgba(0,0,0,.5); }
+.pg-film-close { position: fixed; top: 18px; right: 18px; width: 50px; height: 50px; border-radius: 50%; border: 0; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,.14); color: #fff; cursor: pointer; }
+.pg-film-close:hover { background: rgba(255,255,255,.26); }
+.pg-film-close:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+/* Inline player on the project page */
+.pg-film-inline { position: relative; border-radius: 26px; overflow: hidden; background: #000; box-shadow: 0 24px 60px rgba(11, 61, 46, .18); }
+.pg-film-inline video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; }
+.pg-film-caption { margin: 14px 0 0 !important; font-size: 14px !important; color: var(--ab-soft) !important; }
+@media (max-width: 900px) {
+  .pg-film-inner { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .ab .pg-film { min-height: 520px; }
+  .pg-film-bg img { object-position: 66% 50%; }
+  .pg-film-play-ico { width: 62px; height: 62px; }
+}
+@media (prefers-reduced-motion: reduce) { .pg-film-play-ico::after { animation: none; } .pg-film-bg img, .pg-film-play { transition: none; } }

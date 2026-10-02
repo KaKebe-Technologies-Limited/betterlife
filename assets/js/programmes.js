@@ -7,7 +7,35 @@
   document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('[data-strip]').forEach(initStrip);
     initHeroFilm();
+    initFilmDialog();
   });
+
+  /* The Yumbe film opens in a player dialog; nothing downloads until play is pressed */
+  function initFilmDialog() {
+    var dlg = document.getElementById('pgFilmDialog');
+    var buttons = document.querySelectorAll('[data-film]');
+    if (!dlg || !buttons.length || typeof dlg.showModal !== 'function') return;
+    var video = dlg.querySelector('video'), close = dlg.querySelector('.pg-film-close'), opener = null;
+    var heroFilm = document.querySelector('.pg-hero-video'), heroWasPlaying = false;
+    buttons.forEach(function (b) {
+      b.addEventListener('click', function () {
+        opener = b;
+        if (video.getAttribute('src') !== b.getAttribute('data-film')) video.src = b.getAttribute('data-film');
+        video.setAttribute('aria-label', b.getAttribute('data-film-title') || 'Film');
+        if (heroFilm) { heroWasPlaying = !heroFilm.paused; heroFilm.pause(); }
+        dlg.showModal();
+        video.play().catch(function () {});
+        close.focus();
+      });
+    });
+    close.addEventListener('click', function () { dlg.close(); });
+    dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+    dlg.addEventListener('close', function () {
+      video.pause();
+      if (heroFilm && heroWasPlaying && !document.documentElement.classList.contains('ab-motion-paused')) heroFilm.play().catch(function () {});
+      if (opener) opener.focus();
+    });
+  }
 
   /* Opening film: one shot per programme area; the index along the hero follows the shot on screen.
      Loads after the page on wider screens, never with reduced motion or data saving; can be paused. */
