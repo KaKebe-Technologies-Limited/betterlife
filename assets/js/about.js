@@ -11,7 +11,8 @@
     initCounters();
     document.querySelectorAll('[role="tablist"]').forEach(initTabs);
     initToggles();
-    initStickySteps();
+    initPrinciples();
+    initRail();
     initMap();
     initLightbox();
   });
@@ -123,23 +124,48 @@
     });
   }
 
-  /* ---------- How we work: sticky photograph follows the principle in view ---------- */
-  function initStickySteps() {
-    var steps = document.querySelectorAll('.ab-how-step');
+  /* ---------- How we work: one principle open at a time; the photograph follows it ---------- */
+  function initPrinciples() {
+    var steps = Array.prototype.slice.call(document.querySelectorAll('.ab-how-step'));
     var imgs = document.querySelectorAll('.ab-how-img');
     var count = document.querySelector('.ab-how-count b');
-    if (!steps.length || !imgs.length || !hasIO) return;
+    if (!steps.length) return;
     function activate(i) {
       imgs.forEach(function (img) { img.classList.toggle('is-active', img.getAttribute('data-step') === String(i)); });
-      steps.forEach(function (s) { s.classList.toggle('is-current', s.getAttribute('data-step') === String(i)); });
       if (count) count.textContent = (i + 1 < 10 ? '0' : '') + (i + 1);
     }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        if (en.isIntersecting) activate(parseInt(en.target.getAttribute('data-step'), 10));
+    steps.forEach(function (d, i) {
+      d.addEventListener('toggle', function () {
+        if (!d.open) return;
+        // Browsers without exclusive <details name> still close the others
+        steps.forEach(function (o) { if (o !== d && o.open) o.open = false; });
+        activate(i);
       });
-    }, { rootMargin: '-45% 0px -45% 0px' });
-    steps.forEach(function (s) { io.observe(s); });
+    });
+  }
+
+  /* ---------- Journey rail: previous / next buttons, disabled at either end ---------- */
+  function initRail() {
+    var rail = document.querySelector('.ab-timeline');
+    var nav = document.querySelector('.ab-rail-nav');
+    if (!rail || !nav) return;
+    var btns = nav.querySelectorAll('.ab-rail-btn');
+    function update() {
+      var max = rail.scrollWidth - rail.clientWidth - 2;
+      nav.hidden = max <= 0;
+      btns[0].disabled = rail.scrollLeft <= 2;
+      btns[1].disabled = rail.scrollLeft >= max;
+    }
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        var card = rail.querySelector('.ab-milestone');
+        var step = card ? card.getBoundingClientRect().width + 22 : rail.clientWidth * 0.8;
+        rail.scrollBy({ left: step * Number(b.getAttribute('data-dir')), behavior: reduceMotion ? 'auto' : 'smooth' });
+      });
+    });
+    rail.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
   }
 
   /* ---------- Interactive map: tabs and countries stay in sync; zoom preserves proportions ---------- */

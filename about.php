@@ -327,7 +327,7 @@ require __DIR__ . '/includes/header.php';
     <div class="ab-purpose-bg"><?= ab_img('assets/img/solar-panel-farm-sky.webp', '', '', true, '', '60vw') ?></div>
     <div class="container">
       <div class="ab-purpose-head ab-reveal">
-        <span class="ab-eyebrow">Our vision and mission</span>
+        <span class="ab-eyebrow">Vision, mission and values</span>
         <h2 id="abPurposeTitle"><?= h($slogan) ?></h2>
       </div>
       <div class="ab-purpose-grid">
@@ -339,11 +339,28 @@ require __DIR__ . '/includes/header.php';
           <span class="ab-purpose-label"><?= icon('target', 18) ?> Our mission</span>
           <p><?= h($mission) ?></p>
         </article>
+        <article class="ab-purpose-card ab-practice ab-reveal">
+          <span class="ab-purpose-label"><?= icon('leaf', 18) ?> In practice</span>
+          <p>Our focus is food security and sustainable livelihoods. Alongside refugees, displaced people and host communities, we help families grow food, earn an income, save and reach markets, and build the climate resilience that keeps those gains in place.</p>
+        </article>
       </div>
-      <div class="ab-practice ab-reveal">
-        <span class="ab-purpose-label"><?= icon('leaf', 18) ?> What this means in practice</span>
-        <p>Our focus is food security and sustainable livelihoods. Alongside refugees, displaced people and host communities, we help families grow food, earn an income, save and reach markets, and build the climate resilience that keeps those gains in place.</p>
-      </div>
+      <?php if ($guides): ?>
+        <div class="ab-values">
+          <div class="ab-values-intro ab-reveal">
+            <h3 class="ab-purpose-label" id="abValuesTitle"><?= icon('heart', 18) ?> What guides us</h3>
+            <p class="ab-statement">People closest to a problem must have a real hand in defining it, designing the response and deciding what success looks like.</p>
+          </div>
+          <ol class="ab-guides-grid" aria-labelledby="abValuesTitle">
+            <?php foreach ($guides as $i => $g): ?>
+              <li class="ab-guide ab-reveal">
+                <span class="ab-guide-num"><?= str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) ?></span>
+                <h4><?= h($g['title']) ?></h4>
+                <p><?= h($g['body']) ?></p>
+              </li>
+            <?php endforeach; ?>
+          </ol>
+        </div>
+      <?php endif; ?>
     </div>
   </section>
 
@@ -356,7 +373,6 @@ require __DIR__ . '/includes/header.php';
         <p class="ab-lead">When a woman tells us her harvest failed, seeds may appear to be the answer. Listen longer and the picture changes. She may have no water nearby. She may spend much of the day collecting firewood. She may lack money for inputs, access to a phone or a buyer for what she grows.</p>
         <p class="ab-pull ab-pull-sm">Giving her seeds alone leaves most of the problem untouched.</p>
         <p>We take a systems approach because people live in systems. One programme may include a demonstration garden, a savings group, a digital tool and a buyer connection, shaped by the barriers people actually face.</p>
-        <figure class="ab-systems-photo"><?= ab_img('assets/img/betterlifeint-source/programs/program-photo-1.jpg', 'A man holding a tray of seedlings in a field', '', true, '', '(max-width: 900px) 100vw, 560px') ?></figure>
       </div>
 
       <div class="ab-web ab-reveal">
@@ -391,47 +407,33 @@ require __DIR__ . '/includes/header.php';
       <div class="ab-how-intro ab-reveal">
         <h3 class="ab-subhead">Five principles, learned in the field</h3>
       </div>
+      <!-- One principle open at a time; the photograph beside the list follows it -->
       <div class="ab-how-grid">
-        <div class="ab-how-sticky" aria-hidden="true">
-          <div class="ab-how-frame">
-            <?php foreach ($howWeWork as $i => $s): [$p] = $howPhotos[$i] ?? $howPhotos[0]; ?>
-              <?= ab_img($p, '', 'ab-how-img' . ($i === 0 ? ' is-active' : ''), true, 'data-step="' . $i . '"', '560px') ?>
-            <?php endforeach; ?>
-            <span class="ab-how-count"><b>01</b> / <?= str_pad((string) count($howWeWork), 2, '0', STR_PAD_LEFT) ?></span>
-          </div>
-        </div>
-        <ol class="ab-how-steps">
-          <?php foreach ($howWeWork as $i => $s): [$p, $alt] = $howPhotos[$i] ?? $howPhotos[0]; ?>
-            <li class="ab-how-step" data-step="<?= $i ?>">
-              <figure class="ab-how-step-photo"><?= ab_img($p, $alt, '', true, '', '100vw') ?></figure>
-              <span class="ab-how-num"><?= str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) ?></span>
-              <h4><?= h($s['title']) ?></h4>
-              <p><?= h($s['body']) ?></p>
-              <?php if ($i === 3): ?>
-                <p class="ab-trust"><?= icon('users', 20) ?><span>People learn faster in groups they already trust.</span></p>
-              <?php endif; ?>
-            </li>
+        <div class="ab-how-frame ab-reveal" aria-hidden="true">
+          <?php foreach ($howWeWork as $i => $s): [$p] = $howPhotos[$i] ?? $howPhotos[0]; ?>
+            <?= ab_img($p, '', 'ab-how-img' . ($i === 0 ? ' is-active' : ''), true, 'data-step="' . $i . '"', '(max-width: 900px) 100vw, 580px') ?>
           <?php endforeach; ?>
-        </ol>
+          <span class="ab-how-count"><b>01</b> / <?= str_pad((string) count($howWeWork), 2, '0', STR_PAD_LEFT) ?></span>
+        </div>
+        <div class="ab-how-steps ab-reveal">
+          <?php foreach ($howWeWork as $i => $s): [$p, $alt] = $howPhotos[$i] ?? $howPhotos[0]; ?>
+            <details class="ab-how-step" name="abPrinciples" data-step="<?= $i ?>"<?= $i === 0 ? ' open' : '' ?>>
+              <summary>
+                <span class="ab-how-num"><?= str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) ?></span>
+                <h4><?= h($s['title']) ?></h4>
+                <span class="ab-how-chev" aria-hidden="true"><?= icon('chevron-down', 18) ?></span>
+              </summary>
+              <div class="ab-how-body">
+                <figure class="ab-how-step-photo"><?= ab_img($p, $alt, '', true, '', '100vw') ?></figure>
+                <p><?= h($s['body']) ?></p>
+                <?php if ($i === 3): ?>
+                  <p class="ab-trust"><?= icon('users', 20) ?><span>People learn faster in groups they already trust.</span></p>
+                <?php endif; ?>
+              </div>
+            </details>
+          <?php endforeach; ?>
+        </div>
       </div>
-    </div>
-  </section>
-
-  <section class="ab-guides" aria-labelledby="abGuidesTitle">
-    <div class="container">
-      <div class="ab-guides-intro ab-reveal">
-        <h2 class="ab-eyebrow" id="abGuidesTitle">What guides us</h2>
-        <p class="ab-statement">People closest to a problem must have a real hand in defining it, designing the response and deciding what success looks like.</p>
-      </div>
-      <ol class="ab-guides-grid">
-        <?php foreach ($guides as $i => $g): ?>
-          <li class="ab-guide ab-reveal">
-            <span class="ab-guide-num"><?= str_pad((string) ($i + 1), 2, '0', STR_PAD_LEFT) ?></span>
-            <h3><?= h($g['title']) ?></h3>
-            <p><?= h($g['body']) ?></p>
-          </li>
-        <?php endforeach; ?>
-      </ol>
     </div>
   </section>
 
@@ -519,56 +521,62 @@ require __DIR__ . '/includes/header.php';
 
   <!-- 8. Photographic journey -->
   <section class="ab-journey" aria-labelledby="abJourneyTitle">
-    <div class="container">
-      <div class="ab-head ab-head-center ab-reveal">
+    <div class="container ab-rail-head ab-reveal">
+      <div>
         <span class="ab-eyebrow">Our journey</span>
         <h2 id="abJourneyTitle">From a local idea to work across five countries</h2>
       </div>
-      <ol class="ab-timeline">
-        <?php foreach ($journey as $i => $j): [$firstLine, $rest] = ab_split($j['body']); $ph = $journeyPhotos[$j['title']] ?? null; ?>
-          <li class="ab-milestone ab-reveal">
-            <span class="ab-year"><?= h($j['title']) ?></span>
-            <div class="ab-milestone-card">
-              <?php if ($ph): ?><?= ab_photo($ph[0], $ph[1], $ph[2], 'journey', 'ab-milestone-photo', '(max-width: 720px) 90vw, 440px') ?><?php endif; ?>
-              <p><?= h($firstLine) ?></p>
-              <?php if ($rest): ?>
-                <p class="ab-milestone-more" id="abMs<?= $i ?>"><?= h($rest) ?></p>
-                <button type="button" class="ab-who-toggle" aria-expanded="false" aria-controls="abMs<?= $i ?>" hidden><span>Read more</span> <?= icon('chevron-down', 15) ?></button>
-              <?php endif; ?>
-            </div>
-          </li>
-        <?php endforeach; ?>
-      </ol>
+      <div class="ab-rail-nav" hidden>
+        <button type="button" class="ab-rail-btn" data-dir="-1" aria-label="Earlier years"><?= icon('arrow-right', 18) ?></button>
+        <button type="button" class="ab-rail-btn" data-dir="1" aria-label="Later years"><?= icon('arrow-right', 18) ?></button>
+      </div>
     </div>
+    <!-- Years run left to right; the rail scrolls sideways (swipe, trackpad, arrow buttons or keyboard) -->
+    <ol class="ab-timeline" tabindex="0" aria-label="<?= h($journey ? 'Our journey, ' . $journey[0]['title'] . ' to ' . $journey[count($journey) - 1]['title'] : 'Our journey') ?>">
+      <?php foreach ($journey as $i => $j): [$firstLine, $rest] = ab_split($j['body']); $ph = $journeyPhotos[$j['title']] ?? null; ?>
+        <li class="ab-milestone<?= $ph ? '' : ' is-text' ?>">
+          <span class="ab-year"><?= h($j['title']) ?></span>
+          <div class="ab-milestone-card">
+            <?php if ($ph): ?><?= ab_photo($ph[0], $ph[1], $ph[2], 'journey', 'ab-milestone-photo', '(max-width: 720px) 80vw, 360px') ?><?php endif; ?>
+            <p><?= h($firstLine) ?></p>
+            <?php if ($rest): ?>
+              <p class="ab-milestone-more" id="abMs<?= $i ?>"><?= h($rest) ?></p>
+              <button type="button" class="ab-who-toggle" aria-expanded="false" aria-controls="abMs<?= $i ?>" hidden><span>Read more</span> <?= icon('chevron-down', 15) ?></button>
+            <?php endif; ?>
+          </div>
+        </li>
+      <?php endforeach; ?>
+    </ol>
   </section>
 
   <!-- 9. Tools that extend the work -->
   <section class="ab-tools" aria-labelledby="abToolsTitle">
     <div class="container">
-      <div class="ab-head ab-reveal">
-        <span class="ab-eyebrow">Tools that extend the work</span>
-        <h2 id="abToolsTitle">Practical guidance. Connections to opportunity.</h2>
+      <div class="ab-head ab-head-split ab-reveal">
+        <div>
+          <span class="ab-eyebrow">Tools that extend the work</span>
+          <h2 id="abToolsTitle">Practical guidance. Connections to opportunity.</h2>
+        </div>
         <p class="ab-head-sub">Two BetterLife platforms help farmers make production decisions and reach buyers, always paired with field training.</p>
       </div>
       <div class="ab-tools-grid">
         <article class="ab-tool ab-reveal">
-          <div class="ab-tool-media">
-            <?= ab_photo('assets/img/betterlifeint-source/projects/project-soilla-app-alt.jpeg', 'Screens from the Soilla app', 'Screens from the Soilla app', 'tools', 'ab-tool-screens', '400px') ?>
-            <figure class="ab-tool-person"><?= ab_img('assets/img/soilla-app-portrait.webp', 'A young man holding up a phone showing the Soilla app', '', true, '', '200px') ?></figure>
+          <?= ab_photo('assets/img/soilla-app-portrait.webp', 'A young man holding up a phone showing the Soilla app', 'The Soilla app in use', 'tools', 'ab-tool-photo', '(max-width: 720px) 100vw, 240px') ?>
+          <div class="ab-tool-body">
+            <span class="ab-status">Launched in 2023</span>
+            <h3>Soilla</h3>
+            <p>Our digital agricultural advisory platform. Farmers use it for soil and crop guidance, climate information, market prices and agricultural services, and to find suppliers, experts and other producers.</p>
+            <a href="<?= SITE_URL ?>/programs.php#digital-innovation" class="ab-link">How Soilla fits our programmes <?= icon('arrow-right', 15) ?></a>
           </div>
-          <span class="ab-status">Launched in 2023</span>
-          <h3>Soilla</h3>
-          <p>Our digital agricultural advisory platform. Farmers use it for soil and crop guidance, climate information, market prices and agricultural services, and to find suppliers, experts and other producers.</p>
-          <a href="<?= SITE_URL ?>/programs.php#digital-innovation" class="ab-link">How Soilla fits our programmes <?= icon('arrow-right', 15) ?></a>
         </article>
         <article class="ab-tool ab-reveal">
-          <div class="ab-tool-media ab-tool-media-single">
-            <figure class="ab-tool-person"><?= ab_img('assets/img/agribusiness-connekt-app.webp', 'A person holding up a phone showing the Agribusiness Connekt app', '', true, '', '(max-width: 900px) 100vw, 540px') ?></figure>
+          <?= ab_photo('assets/img/agribusiness-connekt-app.webp', 'A person holding up a phone showing the Agribusiness Connekt app', 'The Agribusiness Connekt app', 'tools', 'ab-tool-photo', '(max-width: 720px) 100vw, 240px') ?>
+          <div class="ab-tool-body">
+            <span class="ab-status ab-status-soft">Work continuing in 2026</span>
+            <h3>Agribusiness Connekt</h3>
+            <p>Where Soilla supports production decisions, Agribusiness Connekt focuses on the business around the farm. It links farmers and small agricultural enterprises to buyers, finance, services and market information.</p>
+            <a href="<?= SITE_URL ?>/programs.php#digital-innovation" class="ab-link">Explore our digital work <?= icon('arrow-right', 15) ?></a>
           </div>
-          <span class="ab-status ab-status-soft">Work continuing in 2026</span>
-          <h3>Agribusiness Connekt</h3>
-          <p>Where Soilla supports production decisions, Agribusiness Connekt focuses on the business around the farm. It links farmers and small agricultural enterprises to buyers, finance, services and market information.</p>
-          <a href="<?= SITE_URL ?>/programs.php#digital-innovation" class="ab-link">Explore our digital work <?= icon('arrow-right', 15) ?></a>
         </article>
       </div>
     </div>
@@ -576,16 +584,10 @@ require __DIR__ . '/includes/header.php';
 
   <!-- 10. Community photo strip -->
   <section class="ab-strip" aria-labelledby="abStripTitle">
-    <div class="container ab-strip-head ab-reveal">
-      <div>
-        <span class="ab-eyebrow">Around the work</span>
-        <h2 id="abStripTitle">Seedlings, springs and solar panels</h2>
-      </div>
-      <p>Select any photograph to see it larger.</p>
-    </div>
+    <h2 class="sr-only" id="abStripTitle">Photographs from our work</h2>
     <ul class="ab-strip-row">
       <?php foreach ($strip as [$p, $cap]): ?>
-        <li><?= ab_photo($p, $cap, $cap, 'strip', 'ab-strip-item', '300px') ?><span class="ab-strip-cap"><?= h($cap) ?></span></li>
+        <li><?= ab_photo($p, $cap, $cap, 'strip', 'ab-strip-item', '240px') ?></li>
       <?php endforeach; ?>
     </ul>
   </section>
