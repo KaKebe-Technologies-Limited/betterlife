@@ -82,9 +82,22 @@ $countryLabels = [
             <clipPath id="lpAfricaClip" clipPathUnits="userSpaceOnUse"><path d="<?= $map['africa'] ?>"/></clipPath>
           </defs>
           <path class="lp-world" d="<?= $map['world'] ?>"/>
+          <!-- The clip is on this fixed group; only the photos inside it fade and zoom,
+               so the outline of Africa never moves. Each photo is placed so faces sit
+               in the upper middle of the continent and watermarks fall below the coast;
+               --o is the zoom origin (the faces). -->
           <g clip-path="url(#lpAfricaClip)">
             <rect x="0" y="0" width="640" height="720" fill="#d9cbb8"/>
-            <image class="lp-africa-photo" href="<?= $img ?>village-children-portrait.webp" x="-85" y="-215" width="960" height="1440" preserveAspectRatio="xMidYMid slice"/>
+            <?php
+            $africaPhotos = [
+                ['village-children-portrait.webp', -85,  -215, 960,  '42% 33%'],
+                ['about-real-1.jpg',               -80,  -194, 820,  '50% 33%'],
+                ['hero-real-1.jpg',                -99,  -208, 900,  '51% 31%'],
+                ['village-girl-portrait.webp',     -479, -807, 1500, '53% 47%'],
+            ];
+            foreach ($africaPhotos as $i => [$file, $x, $y, $w, $origin]): ?>
+              <image class="lp-africa-photo" href="<?= $img . $file ?>" x="<?= $x ?>" y="<?= $y ?>" width="<?= $w ?>" height="<?= $w * 1.5 ?>" preserveAspectRatio="xMidYMid slice" style="--o: <?= $origin ?>; --i: <?= $i ?>"/>
+            <?php endforeach; ?>
           </g>
           <g class="lp-brushes" filter="url(#lpBrush)">
             <path class="b-green" d="<?= lp_brush_d(-42, 250, 108, 216, 50, 3) ?>"/>
@@ -94,6 +107,11 @@ $countryLabels = [
             <path class="b-green" d="<?= lp_brush_d(250, 508, 292, 556, 30, 13) ?>"/>
           </g>
         </svg>
+
+        <button type="button" class="lp-motion-toggle" aria-pressed="false" aria-label="Pause photo animation">
+          <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg>
+          <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5Z"/></svg>
+        </button>
 
         <div class="lp-stat">
           <svg class="lp-stat-brush" viewBox="0 0 130 80" aria-hidden="true"><path filter="url(#lpBrush)" d="<?= lp_brush_d(6, 48, 126, 34, 40, 21) ?>"/></svg>
@@ -153,10 +171,11 @@ $countryLabels = [
             <path class="f-blue" d="<?= lp_brush_d(404, 436, 562, 426, 30, 43) ?>"/>
           </g>
         </svg>
-        <figure class="lp-ph ph-b"><img src="<?= $img ?>smiles-group-under-tree-2.webp" alt="A large community group gathered under a tree"></figure>
-        <figure class="lp-ph ph-a"><img src="<?= $img ?>program-trees.jpg" alt="A woman with a baby on her back planting crops"></figure>
-        <figure class="lp-ph ph-d"><img src="<?= $img ?>soilla-app-portrait.webp" alt="A young man holding up a phone with the Soilla app"></figure>
-        <figure class="lp-ph ph-c"><img src="<?= $img ?>impact-story-2.jpg" alt="Women writing in notebooks at a group meeting"></figure>
+        <!-- Each frame holds two photos that slowly swap; frames float a few pixels -->
+        <figure class="lp-ph ph-b"><img src="<?= $img ?>smiles-group-under-tree-2.webp" alt="A large community group gathered under a tree"><img class="lp-ph-alt" src="<?= $img ?>smiles-group-under-tree-1.webp" alt="" loading="lazy"></figure>
+        <figure class="lp-ph ph-a"><img src="<?= $img ?>program-trees.jpg" alt="A woman with a baby on her back planting crops"><img class="lp-ph-alt" src="<?= $img ?>farm-field-2.jpg" alt="" loading="lazy"></figure>
+        <figure class="lp-ph ph-d"><img src="<?= $img ?>soilla-app-portrait.webp" alt="A young man holding up a phone with the Soilla app"><img class="lp-ph-alt" src="<?= $img ?>agribusiness-connekt-app.webp" alt="" loading="lazy"></figure>
+        <figure class="lp-ph ph-c"><img src="<?= $img ?>impact-story-2.jpg" alt="Women writing in notebooks at a group meeting"><img class="lp-ph-alt" src="<?= $img ?>impact-story-1.jpg" alt="" loading="lazy"></figure>
         <svg class="lp-collage-brush is-front" viewBox="0 0 620 521" aria-hidden="true">
           <g filter="url(#lpBrush)"><path class="f-green" d="<?= lp_brush_d(168, 326, 368, 312, 46, 45) ?>"/></g>
         </svg>
@@ -233,14 +252,6 @@ $countryLabels = [
           <div class="lp-figure"><strong><span class="num"><span class="lp-partner-dot is-green" aria-hidden="true"></span>5</span></strong><p>schools supported with meals</p></div>
         </div>
 
-        <div class="lp-partner-list">
-          <h3>Working alongside</h3>
-          <p><?php
-            $partnerNames = ['Foundation S (The Sanofi Collective)', 'Farm Radio International', 'Dovetail Impact Foundation', 'World Food Programme', 'HBCU Green Fund', 'FADECO', 'ICPAC', 'Moonshot'];
-            echo implode(' <i aria-hidden="true">&middot;</i> ', array_map(fn($n) => '<span class="pn">' . htmlspecialchars($n) . '</span>', $partnerNames));
-          ?></p>
-          <a href="<?= $site ?>/contact.php?subject=Partnership enquiry" class="lp-textlink lp-textlink-sm">Become a partner <span aria-hidden="true">&rarr;</span></a>
-        </div>
       </div>
 
       <div class="lp-reach-map">
@@ -272,6 +283,32 @@ $countryLabels = [
           </g>
         </svg>
       </div>
+    </div>
+  </section>
+
+  <!-- Partners: logo band leading into the closing invitation -->
+  <section class="lp-partners-band" aria-labelledby="lpPartnersTitle">
+    <div class="lp-narrow">
+      <div class="lp-partners-head">
+        <h2 id="lpPartnersTitle">Working alongside</h2>
+        <a href="<?= $site ?>/contact.php?subject=Partnership enquiry" class="lp-textlink lp-textlink-sm">Become a partner <span aria-hidden="true">&rarr;</span></a>
+      </div>
+      <ul class="lp-logos">
+        <?php
+        $partners = [
+            ['foundation-s.png',                'Foundation S, The Sanofi Collective'],
+            ['farm-radio-international.jpg',    'Farm Radio International'],
+            ['dovetail-impact-foundation.webp', 'Dovetail Impact Foundation'],
+            ['world-food-programme.svg',        'World Food Programme'],
+            ['hbcu-green-fund.png',             'HBCU Green Fund'],
+            ['fadeco.png',                      'FADECO'],
+            ['icpac.svg',                       'ICPAC, IGAD Climate Prediction and Applications Centre'],
+            ['moonshot.svg',                    'Moonshot'],
+        ];
+        foreach ($partners as [$file, $name]): ?>
+          <li class="lp-logo-<?= pathinfo($file, PATHINFO_FILENAME) ?>"><img src="<?= $img ?>partners/<?= $file ?>" alt="<?= htmlspecialchars($name) ?>" loading="lazy"></li>
+        <?php endforeach; ?>
+      </ul>
     </div>
   </section>
 

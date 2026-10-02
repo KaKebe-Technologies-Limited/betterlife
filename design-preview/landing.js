@@ -49,3 +49,29 @@ document.addEventListener('DOMContentLoaded', function () {
   window.addEventListener('resize', update);
   update();
 });
+
+// Motion: pause/play button for all photo animation (remembered per visitor),
+// plus automatic pausing of each animated section while it is off screen.
+document.addEventListener('DOMContentLoaded', function () {
+  var btn = document.querySelector('.lp-motion-toggle');
+  var root = document.documentElement;
+  function setPaused(paused) {
+    root.classList.toggle('motion-paused', paused);
+    if (btn) {
+      btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
+      btn.setAttribute('aria-label', paused ? 'Play photo animation' : 'Pause photo animation');
+    }
+    try { localStorage.setItem('lpMotionPaused', paused ? '1' : '0'); } catch (e) {}
+  }
+  var saved = null;
+  try { saved = localStorage.getItem('lpMotionPaused'); } catch (e) {}
+  if (saved === '1') setPaused(true);
+  if (btn) btn.addEventListener('click', function () { setPaused(!root.classList.contains('motion-paused')); });
+
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { en.target.classList.toggle('is-offscreen', !en.isIntersecting); });
+    }, { rootMargin: '80px' });
+    document.querySelectorAll('.lp-hero, .lp-impact').forEach(function (el) { io.observe(el); });
+  }
+});
