@@ -67,8 +67,8 @@ h1, h2, h3, p { margin: 0; }
 }
 .lp-mark { position: relative; white-space: nowrap; }
 /* Highlighter swipe across the lower part of the letters (centre ≈ 0.12em above the baseline) */
-.lp-mark svg { position: absolute; left: -4%; bottom: .12em; width: 108%; height: .6em; z-index: -1; overflow: visible; }
-.lp-mark path { fill: var(--blue); opacity: .85; }
+.lp-mark svg { position: absolute; left: -4%; bottom: .06em; width: 108%; height: .55em; z-index: -1; overflow: visible; }
+.lp-mark path { fill: var(--blue); opacity: .6; }
 .lp-lead { margin-top: calc(33 * var(--u)); max-width: calc(360 * var(--u)); font-size: max(13px, calc(14 * var(--u))); line-height: 1.6; color: var(--ink-2); }
 .lp-actions { display: flex; align-items: center; gap: calc(34 * var(--u)); margin-top: calc(34 * var(--u)); }
 
@@ -94,7 +94,7 @@ h1, h2, h3, p { margin: 0; }
 .lp-stat-label { right: calc(196 / 880 * 100%); top: calc(572 / 720 * 100%); font-size: max(10px, 1.2cqw); line-height: 1.4; color: var(--ink-2); text-align: right; white-space: nowrap; }
 
 /* ---------- 3. Icon row ---------- */
-.lp-pillars { padding: calc(20 * var(--u)) 0 calc(80 * var(--u)); overflow-x: clip; }
+.lp-pillars { padding: calc(20 * var(--u)) 0 0; overflow-x: clip; }
 .lp-pillars-row { display: flex; align-items: flex-start; gap: calc(40 * var(--u)); }
 .lp-rule { height: 1px; background: #e7e4de; margin-top: calc(13 * var(--u)); }
 .lp-rule-l { flex: 0 0 calc(140 * var(--u)); }
@@ -134,4 +134,133 @@ h1, h2, h3, p { margin: 0; }
   .lp-ico { width: 24px; height: 24px; }
   .lp-pillar h3 { margin-top: 10px; font-size: 14px; }
   .lp-pillar p { font-size: 13px; }
+}
+
+/* =========================================================
+   Sections 4–7 sit in the reference's narrower centred column
+   (832 design px); the CTA banner is wider (1199).
+   ========================================================= */
+.lp-narrow { position: relative; width: calc(832 * var(--u)); margin: 0 auto; }
+.lp-h2 { position: relative; z-index: 0; font: 800 calc(40 * var(--u))/1.12 var(--serif); letter-spacing: -.01em; color: var(--ink); }
+.lp-body { font-size: max(12px, calc(12.5 * var(--u))); line-height: 1.65; color: var(--ink-2); }
+.lp-body + .lp-body { margin-top: calc(14 * var(--u)); }
+.lp-body.is-strong { color: var(--ink); font-weight: 500; }
+.f-green { fill: var(--green); }
+.f-blue  { fill: var(--blue); }
+
+/* ---------- 4. Collage + copy ---------- */
+.lp-impact { padding: calc(110 * var(--u)) 0 calc(110 * var(--u)); }
+.lp-impact-inner { height: calc(521 * var(--u)); }
+/* Collage box: 620x521, its left edge 211px left of the column (photo A bleeds out) */
+.lp-collage { position: absolute; left: calc(-211 * var(--u)); top: 0; width: calc(620 * var(--u)); aspect-ratio: 620 / 521; }
+.lp-ph { position: absolute; margin: 0; overflow: hidden; background: var(--photo-bg); }
+.lp-ph img { width: 100%; height: 100%; object-fit: cover; }
+.ph-a { left: 0;      top: 7.49%;  width: 32.26%; height: 38.39%; z-index: 2; }
+.ph-b { left: 34.03%; top: 0;      width: 49.35%; height: 58.93%; z-index: 1; }
+.ph-c { left: 67.74%; top: 40.5%;  width: 32.26%; height: 38.39%; z-index: 3; box-shadow: 0 0 0 calc(5 * var(--u)) #fff; }
+.ph-d { left: 34.03%; top: 60.27%; width: 32.74%; height: 39.73%; z-index: 2; }
+.lp-collage-brush { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.lp-collage-brush.is-back { z-index: 0; }
+.lp-collage-brush.is-front { z-index: 4; opacity: .95; }
+.lp-impact-copy { position: absolute; left: calc(499 * var(--u)); top: calc(32 * var(--u)); width: calc(333 * var(--u)); text-align: right; }
+.lp-impact-copy .lp-h2 { margin-bottom: calc(28 * var(--u)); }
+.lp-actions-end { justify-content: flex-end; margin-top: calc(36 * var(--u)); }
+
+/* ---------- 5. Story cards ---------- */
+.lp-stories { padding: 0 0 calc(90 * var(--u)); }
+.lp-stories-head { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-bottom: calc(34 * var(--u)); }
+.lp-arrows { display: flex; gap: calc(10 * var(--u)); }
+.lp-arrow {
+  width: max(30px, calc(32 * var(--u))); height: max(30px, calc(32 * var(--u))); border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center; padding: 0; cursor: pointer;
+  background: #fff; border: 1px solid #e3e0da; color: var(--ink); transition: border-color .15s ease, background .15s ease;
+}
+.lp-arrow svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.lp-arrow:hover { border-color: var(--ink); }
+.lp-arrow:disabled { opacity: .35; cursor: default; }
+.lp-cards-wrap { position: relative; }
+.lp-cards-brush { position: absolute; left: 0; top: 0; width: 100%; aspect-ratio: 832 / 420; overflow: visible; pointer-events: none; z-index: 0; }
+.lp-cards {
+  position: relative; z-index: 1; display: grid; grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 2 * 14 * var(--u)) / 3); gap: calc(14 * var(--u));
+  overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none;
+}
+.lp-cards::-webkit-scrollbar { display: none; }
+.lp-card { scroll-snap-align: start; background: #fff; }
+.lp-card-img { aspect-ratio: 268 / 272; overflow: hidden; background: var(--photo-bg); }
+.lp-card-img img { width: 100%; height: 100%; object-fit: cover; }
+.lp-card h3 { margin-top: calc(26 * var(--u)); font: 700 max(13px, calc(13.5 * var(--u)))/1.3 var(--serif); color: var(--ink); }
+.lp-card-meta { display: block; margin-top: 3px; font-size: max(10.5px, calc(10.5 * var(--u))); color: #9a9a9a; }
+.lp-card p { margin-top: calc(12 * var(--u)); font-size: max(11.5px, calc(11.5 * var(--u))); line-height: 1.6; color: var(--ink-2); }
+.lp-textlink-sm { margin-top: calc(22 * var(--u)); font-size: max(11.5px, calc(11.5 * var(--u))); }
+
+/* ---------- 6. Partners + second map ---------- */
+.lp-reach { padding: calc(20 * var(--u)) 0 calc(80 * var(--u)); }
+.lp-reach-inner { min-height: calc(450 * var(--u)); }
+.lp-reach-copy { width: calc(410 * var(--u)); padding-top: calc(35 * var(--u)); }
+.lp-partners { display: grid; grid-template-columns: repeat(2, calc(170 * var(--u))); gap: calc(40 * var(--u)) calc(39 * var(--u)); margin-top: calc(48 * var(--u)); }
+.lp-partner { position: relative; }
+.lp-partner-dot { position: absolute; left: calc(-6 * var(--u)); top: calc(-8 * var(--u)); width: calc(25 * var(--u)); height: calc(25 * var(--u)); min-width: 18px; min-height: 18px; border-radius: 50%; opacity: .9; }
+.lp-partner-dot.is-green { background: var(--green); }
+.lp-partner-dot.is-blue { background: var(--blue); }
+.lp-partner img { position: relative; height: max(30px, calc(36 * var(--u))); width: auto; max-width: calc(150 * var(--u)); object-fit: contain; mix-blend-mode: multiply; }
+.lp-partner p { margin-top: calc(14 * var(--u)); max-width: calc(140 * var(--u)); font-size: max(11px, calc(11.5 * var(--u))); line-height: 1.55; color: var(--ink-2); }
+.lp-reach-map { position: absolute; left: calc(423 * var(--u)); top: calc(-34 * var(--u)); width: calc(420 * var(--u)); }
+.lp-reach-map svg { display: block; width: 100%; height: auto; overflow: visible; }
+.lp-map-base  { fill: var(--blue); }
+.lp-map-band2 { fill: #fff; opacity: .14; }
+.lp-map-band1 { fill: #fff; opacity: .26; }
+.lp-markers circle { fill: #fff; }
+.lp-markers .halo { fill: #fff; opacity: .35; }
+.lp-map-brush path { fill: var(--green); opacity: .9; }
+
+/* ---------- 7. CTA banner ---------- */
+.lp-cta { padding: calc(10 * var(--u)) 0 calc(140 * var(--u)); }
+.lp-cta-box { position: relative; width: calc(1199 * var(--u)); height: calc(331 * var(--u)); margin: 0 auto; }
+.lp-cta-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; z-index: 1; }
+.lp-cta-shade { position: absolute; inset: 0; z-index: 2; background: linear-gradient(90deg, rgba(14,12,10,.82), rgba(14,12,10,.6) 55%, rgba(14,12,10,.72)); }
+.lp-cta-brush { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.lp-cta-brush.is-back { z-index: 0; }
+.lp-cta-brush.is-front { z-index: 4; opacity: .85; }
+.lp-cta-content { position: relative; z-index: 3; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 24px; }
+.lp-cta-content h2 { font: 700 calc(34 * var(--u))/1.2 var(--serif); color: #fff; }
+.lp-cta-actions { display: flex; gap: calc(12 * var(--u)); margin-top: calc(26 * var(--u)); flex-wrap: wrap; justify-content: center; }
+.lp-btn-blue { background: var(--blue); color: #fff; }
+.lp-btn-blue:hover { background: #00668f; }
+.lp-btn-green { background: var(--green); color: #fff; }
+.lp-btn-green:hover { background: #065e25; }
+
+@media (max-width: 860px) {
+  .lp-narrow { width: auto; padding: 0 20px; }
+  .lp-h2 { font-size: clamp(27px, 7.6vw, 38px); }
+  .lp-body { font-size: 14px; }
+
+  .lp-impact { padding: 40px 0 64px; }
+  .lp-impact-inner { height: auto; }
+  .lp-collage { position: relative; left: auto; width: 100%; }
+  .lp-impact-copy { position: static; width: auto; margin-top: 36px; text-align: left; }
+  .lp-impact-copy .lp-h2 { margin-bottom: 20px; }
+  .lp-actions-end { justify-content: flex-start; margin-top: 24px; }
+
+  .lp-stories { padding-bottom: 72px; }
+  .lp-stories-head { margin-bottom: 18px; flex-direction: column; align-items: stretch; gap: 14px; }
+  .lp-arrows { align-self: flex-end; }
+  .lp-cards { grid-auto-columns: 76%; gap: 14px; margin-right: -20px; padding-right: 20px; }
+  .lp-card h3 { margin-top: 16px; font-size: 16px; }
+  .lp-card p { font-size: 13.5px; }
+  .lp-textlink-sm { margin-top: 14px; font-size: 13px; }
+
+  .lp-reach { padding: 0 0 64px; }
+  .lp-reach-inner { display: flex; flex-direction: column; }
+  .lp-reach-copy { width: auto; padding-top: 0; }
+  .lp-reach-map { position: relative; left: auto; top: auto; width: min(100%, 440px); margin: 36px auto 0; order: 2; }
+  .lp-partners { grid-template-columns: 1fr 1fr; gap: 30px 24px; margin-top: 32px; }
+  .lp-partner img { height: 34px; max-width: 100%; }
+  .lp-partner p { max-width: none; font-size: 13px; }
+
+  .lp-cta { padding: 16px 20px 72px; }
+  .lp-cta-box { width: auto; height: auto; }
+  .lp-cta-content { padding: 64px 22px; }
+  .lp-cta-content h2 { font-size: clamp(25px, 7vw, 32px); }
+  .lp-cta-actions { gap: 10px; margin-top: 22px; }
 }

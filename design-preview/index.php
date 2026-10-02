@@ -1,11 +1,24 @@
 <?php
 /**
  * Landing-page DESIGN preview (placeholder content only) — recreation of the
- * approved reference layout. Stage 1: static nav + hero Africa-mask
- * composition + icon row. Not linked from the live site.
+ * reference layout. Static stage: all 7 sections (nav, Africa-mask hero, icon
+ * row, collage, story cards, partners + second map, CTA banner); animation
+ * comes after approval. Not linked from the live site.
  */
 $map = require __DIR__ . '/map-paths.php';
 require __DIR__ . '/brush.php';
+
+// Same Web Mercator projection as the generated Africa path (art-box coords)
+$pr = $map['proj'];
+$project = fn(float $lon, float $lat): array => [
+    round(deg2rad($lon) * $pr['scale'] + $pr['ox'], 1),
+    round(-log(tan(M_PI / 4 + deg2rad($lat) / 2)) * $pr['scale'] + $pr['oy'], 1),
+];
+// Placeholder location markers on the second map (real coordinates, so they sit correctly)
+$markers = [
+    [-17.4, 14.7], [-8.0, 12.6], [2.1, 13.5], [-0.2, 5.6], [3.4, 6.5], [3.0, 36.7], [31.2, 30.0],
+    [32.5, 15.6], [38.7, 9.0], [32.6, 0.3], [36.8, -1.3], [15.3, -4.3], [28.3, -15.4], [28.0, -26.2],
+];
 $img = '../assets/img/';
 $v   = @filemtime(__DIR__ . '/landing.css') ?: time();
 ?>
@@ -130,7 +143,147 @@ $v   = @filemtime(__DIR__ . '/landing.css') ?: time();
       <span class="lp-rule lp-rule-r" aria-hidden="true"></span>
     </div>
   </section>
+
+  <!-- 4. Overlapping photo collage left, heading + text + buttons right -->
+  <section class="lp-impact">
+    <div class="lp-narrow lp-impact-inner">
+      <div class="lp-collage">
+        <svg class="lp-collage-brush is-back" viewBox="0 0 620 521" aria-hidden="true">
+          <g filter="url(#lpBrush)">
+            <path class="f-blue" d="<?= lp_brush_d(386, 24, 584, 6, 50, 41) ?>"/>
+            <path class="f-blue" d="<?= lp_brush_d(404, 436, 562, 426, 30, 43) ?>"/>
+          </g>
+        </svg>
+        <figure class="lp-ph ph-b"><img src="<?= $img ?>classroom-climate-club.webp" alt="Placeholder photo"></figure>
+        <figure class="lp-ph ph-a"><img src="<?= $img ?>school-child-drinking-water.webp" alt="Placeholder photo"></figure>
+        <figure class="lp-ph ph-d"><img src="<?= $img ?>soilla-app-portrait.webp" alt="Placeholder photo"></figure>
+        <figure class="lp-ph ph-c"><img src="<?= $img ?>impact-story-2.jpg" alt="Placeholder photo"></figure>
+        <svg class="lp-collage-brush is-front" viewBox="0 0 620 521" aria-hidden="true">
+          <g filter="url(#lpBrush)"><path class="f-green" d="<?= lp_brush_d(168, 326, 368, 312, 46, 45) ?>"/></g>
+        </svg>
+      </div>
+
+      <div class="lp-impact-copy">
+        <h2 class="lp-h2">Lorem ipsum<br>dolor sit amet<br><span class="lp-mark">tempor ut?<svg viewBox="0 0 240 30" preserveAspectRatio="none" aria-hidden="true"><path filter="url(#lpBrush)" d="<?= lp_brush_d(4, 17, 238, 14, 22, 47, 0.02) ?>"/></svg></span></h2>
+        <p class="lp-body is-strong">Placeholder introduction paragraph set slightly darker, running to about three lines in this column.</p>
+        <p class="lp-body">Placeholder body paragraph. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+        <p class="lp-body">Placeholder closing line, about two lines long in the reference layout.</p>
+        <div class="lp-actions lp-actions-end">
+          <a href="#" class="lp-textlink">Text link <span aria-hidden="true">&rarr;</span></a>
+          <a href="#" class="lp-btn lp-btn-dark">Button</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Three photographic story cards -->
+  <section class="lp-stories">
+    <div class="lp-narrow">
+      <div class="lp-stories-head">
+        <h2 class="lp-h2">Lorem <span class="lp-mark">ipsum dolor<svg viewBox="0 0 240 30" preserveAspectRatio="none" aria-hidden="true"><path filter="url(#lpBrush)" d="<?= lp_brush_d(4, 17, 238, 14, 22, 51, 0.02) ?>"/></svg></span> sit amet<br>consectetur elit</h2>
+        <div class="lp-arrows">
+          <button type="button" class="lp-arrow" data-dir="-1" aria-label="Previous stories"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></button>
+          <button type="button" class="lp-arrow" data-dir="1" aria-label="Next stories"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+      <div class="lp-cards-wrap">
+        <svg class="lp-cards-brush" viewBox="0 0 832 420" aria-hidden="true">
+          <g filter="url(#lpBrush)">
+            <path class="f-green" d="<?= lp_brush_d(-70, 66, 24, 52, 40, 53) ?>"/>
+            <path class="f-green" d="<?= lp_brush_d(806, 104, 882, 214, 34, 55) ?>"/>
+          </g>
+        </svg>
+        <div class="lp-cards" id="lpCards">
+          <?php
+          $cards = ['village-girl-portrait.webp', 'about-real-1.jpg', 'market-stall-vendor.webp', 'farmers-planting-together.webp', 'field-team-conversation.webp'];
+          foreach ($cards as $i => $photo): ?>
+            <article class="lp-card">
+              <div class="lp-card-img"><img src="<?= $img . $photo ?>" alt="Placeholder story photo" loading="lazy"></div>
+              <h3>Name <?= $i + 1 ?></h3>
+              <span class="lp-card-meta">Placeholder</span>
+              <p>Placeholder story summary for this card, about three short lines of text.</p>
+              <a href="#" class="lp-textlink lp-textlink-sm">Learn more <span aria-hidden="true">&rarr;</span></a>
+            </article>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. Text + partner logos left, second accurate Africa map right -->
+  <section class="lp-reach">
+    <div class="lp-narrow lp-reach-inner">
+      <div class="lp-reach-copy">
+        <h2 class="lp-h2">Lorem ipsum dolor<br>sit amet <span class="lp-mark">tempor ut.<svg viewBox="0 0 240 30" preserveAspectRatio="none" aria-hidden="true"><path filter="url(#lpBrush)" d="<?= lp_brush_d(4, 17, 238, 14, 22, 57, 0.02) ?>"/></svg></span></h2>
+        <div class="lp-partners">
+          <?php
+          $partners = ['hbcu-green-fund-logo.png', 'iccb-logo.jpeg', 'mentor-me-360-logo.jpeg', 'tuzu-logo.png'];
+          foreach ($partners as $i => $logo): ?>
+            <div class="lp-partner">
+              <span class="lp-partner-dot <?= $i % 3 === 0 ? 'is-green' : 'is-blue' ?>" aria-hidden="true"></span>
+              <img src="<?= $img ?>betterlifeint-source/partner-logos/<?= $logo ?>" alt="Partner logo placeholder" loading="lazy">
+              <p>Placeholder partner text, two short lines.</p>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      </div>
+
+      <div class="lp-reach-map">
+        <svg viewBox="22 35 588 656" role="img" aria-label="Map of Africa with placeholder location markers">
+          <defs>
+            <clipPath id="lpAfricaClip2" clipPathUnits="userSpaceOnUse"><path d="<?= $map['africa'] ?>"/></clipPath>
+          </defs>
+          <g clip-path="url(#lpAfricaClip2)">
+            <rect x="0" y="0" width="640" height="720" class="lp-map-base"/>
+            <!-- two-tone painted bands, as in the reference -->
+            <path class="lp-map-band2" d="M0 262 C 90 238, 190 300, 300 276 S 500 246, 640 284 L 640 720 L 0 720 Z"/>
+            <path class="lp-map-band1" d="M0 300 C 110 280, 210 338, 320 312 S 520 284, 640 322 L 640 720 L 0 720 Z"/>
+          </g>
+          <g class="lp-markers">
+            <?php foreach ($markers as [$lon, $lat]): [$mx, $my] = $project($lon, $lat); ?>
+              <circle cx="<?= $mx ?>" cy="<?= $my ?>" r="11" class="halo"/><circle cx="<?= $mx ?>" cy="<?= $my ?>" r="5"/>
+            <?php endforeach; ?>
+          </g>
+          <g filter="url(#lpBrush)" class="lp-map-brush">
+            <path d="<?= lp_brush_d(436, 196, 566, 222, 34, 61) ?>"/>
+            <path d="<?= lp_brush_d(34, 306, 228, 332, 40, 63) ?>"/>
+            <path d="<?= lp_brush_d(192, 512, 338, 538, 32, 65) ?>"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Wide photographic call-to-action banner -->
+  <section class="lp-cta">
+    <div class="lp-cta-box">
+      <svg class="lp-cta-brush is-back" viewBox="0 0 1199 331" aria-hidden="true">
+        <g filter="url(#lpBrush)">
+          <path class="f-blue"  d="<?= lp_brush_d(140, -6, 250, -14, 26, 71) ?>"/>
+          <path class="f-blue"  d="<?= lp_brush_d(-92, 96, 12, 70, 40, 73) ?>"/>
+          <path class="f-green" d="<?= lp_brush_d(-100, 214, 14, 176, 46, 75) ?>"/>
+        </g>
+      </svg>
+      <img class="lp-cta-photo" src="<?= $img ?>woman-winnowing-grain.webp" alt="" loading="lazy">
+      <div class="lp-cta-shade" aria-hidden="true"></div>
+      <div class="lp-cta-content">
+        <h2>Lorem ipsum dolor!<br>Sit amet consectetur.</h2>
+        <div class="lp-cta-actions">
+          <a href="#" class="lp-btn lp-btn-blue">Button</a>
+          <a href="#" class="lp-btn lp-btn-green">Second button</a>
+        </div>
+      </div>
+      <svg class="lp-cta-brush is-front" viewBox="0 0 1199 331" aria-hidden="true">
+        <g filter="url(#lpBrush)">
+          <path class="f-green" d="<?= lp_brush_d(1004, 252, 1300, 214, 54, 77) ?>"/>
+          <path class="f-blue"  d="<?= lp_brush_d(1040, 318, 1170, 300, 30, 79) ?>"/>
+        </g>
+      </svg>
+    </div>
+  </section>
 </main>
+
+<script src="landing.js?v=<?= @filemtime(__DIR__ . '/landing.js') ?: time() ?>"></script>
 
 </body>
 </html>
