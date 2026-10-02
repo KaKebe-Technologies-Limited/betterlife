@@ -195,6 +195,10 @@ require __DIR__ . '/includes/header.php';
       <?php foreach ($heroSlides as $i => $slide): [$p, $alt, $pos] = $slide; $w = $slide[3] ?? '100%'; ?>
         <?= ab_img($p, $i === 0 ? $alt : '', 'ab-hero-img', $i > 0, 'style="--i: ' . $i . '; --pos: ' . $pos . '; --w: ' . $w . '"') ?>
       <?php endforeach; ?>
+      <?php if (is_file(__DIR__ . '/assets/video/about-hero.mp4')): ?>
+        <!-- Silent film from Rukungiri; loaded after the page on wider screens only (see about.js), photographs remain the fallback -->
+        <video class="ab-hero-video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-src="<?= h(asset_url('assets/video/about-hero.mp4')) ?>"></video>
+      <?php endif; ?>
     </div>
     <div class="container ab-hero-inner">
       <div class="ab-hero-copy">
@@ -222,7 +226,7 @@ require __DIR__ . '/includes/header.php';
         </svg>
       </figure>
     </div>
-    <button type="button" class="ab-motion-toggle" aria-pressed="false" aria-label="Pause background photos">
+    <button type="button" class="ab-motion-toggle" aria-pressed="false" aria-label="Pause background motion">
       <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6v12M15 6v12"/></svg>
       <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5Z"/></svg>
     </button>
@@ -252,6 +256,10 @@ require __DIR__ . '/includes/header.php';
         <h2 id="abBeginTitle">Started by people who had <span class="ab-mark">lived it<svg viewBox="0 0 240 30" preserveAspectRatio="none" aria-hidden="true"><path filter="url(#lpBrush)" d="<?= lp_brush_d(4, 17, 238, 14, 22, 47, 0.02) ?>"/></svg></span></h2>
         <p class="ab-lead">Denise Ayebare founded BetterLife International in Uganda in 2021, at nineteen, with USD&nbsp;200 and a small team of young people. As a refugee-led team, we had grown up experiencing many of the challenges facing the communities we wanted to work alongside.</p>
         <p>We knew the uncertainty of providing for a household when food, income and opportunity were difficult to secure. We had also seen the knowledge and determination within communities. Our commitment was to help people build on that ability, with practical support to grow food, earn, save and access markets.</p>
+        <figure class="ab-founder-quote">
+          <blockquote><p>We were tired of watching communities receive short-term help while the conditions keeping them vulnerable stayed the same. BetterLife was created to work differently.</p></blockquote>
+          <figcaption><strong>Denise Ayebare</strong>, Founder and Executive Director <span>Forbes Africa 30 Under 30, Class of 2026</span></figcaption>
+        </figure>
         <p>That beginning has grown into an organisation reaching 110,000 people across five African countries. The work continues through community members, staff, volunteers and partners who help shape it every day.</p>
         <p class="ab-facts"><span><strong>2021</strong> founded in Uganda</span><span><strong>USD 200</strong> starting budget</span><span><strong>5</strong> countries today</span></p>
       </div>
@@ -509,13 +517,9 @@ require __DIR__ . '/includes/header.php';
           <?php $byTitle = []; foreach ($whereWeWork as $w) $byTitle[$w['title']] = $w['body']; ?>
           <?php foreach ($countryMeta as $name => $c): ?>
             <div class="ab-country-panel" role="tabpanel" id="abCPanel-<?= $c['key'] ?>" aria-labelledby="abCTab-<?= $c['key'] ?>" data-key="<?= $c['key'] ?>">
-              <div class="ab-country-photo">
-                <?php if ($c['photo']): ?>
-                  <?= ab_img($c['photo'][0], $c['photo'][1], '', true, '', '(max-width: 900px) 100vw, 520px') ?>
-                <?php else: ?>
-                  <div class="ab-photo-needed"><?= icon('map-pin', 20) ?><span>Photograph from our <?= h($name) ?> work needed</span></div>
-                <?php endif; ?>
-              </div>
+              <?php if ($c['photo']): ?>
+                <div class="ab-country-photo"><?= ab_img($c['photo'][0], $c['photo'][1], '', true, '', '(max-width: 900px) 100vw, 520px') ?></div>
+              <?php endif; ?>
               <h3><?= h($name) ?></h3>
               <?php if ($c['note'] || $c['places']): ?>
                 <ul class="ab-country-tags">
@@ -602,6 +606,38 @@ require __DIR__ . '/includes/header.php';
         <li><?= ab_photo($p, $cap, $cap, 'strip', 'ab-strip-item', '240px') ?></li>
       <?php endforeach; ?>
     </ul>
+  </section>
+
+  <!-- Partners and accountability -->
+  <section class="ab-partners" aria-labelledby="abPartnersTitle">
+    <div class="container">
+      <div class="ab-head ab-head-split ab-reveal">
+        <div>
+          <span class="ab-eyebrow">Our partners</span>
+          <h2 id="abPartnersTitle">Stronger in partnership</h2>
+        </div>
+        <p class="ab-head-sub">We work with organisations that bring resources, knowledge and reach while respecting the experience of the communities at the centre of the work.</p>
+      </div>
+      <?php $partners = [
+          ['foundation-s.png',                'Foundation S, The Sanofi Collective'],
+          ['farm-radio-international.jpg',    'Farm Radio International'],
+          ['dovetail-impact-foundation.webp', 'Dovetail Impact Foundation'],
+          ['world-food-programme.svg',        'World Food Programme'],
+          ['hbcu-green-fund.png',             'HBCU Green Fund'],
+          ['fadeco.png',                      'FADECO'],
+          ['icpac.svg',                       'ICPAC, IGAD Climate Prediction and Applications Centre'],
+          ['moonshot.svg',                    'Moonshot'],
+      ]; ?>
+      <ul class="ab-logos ab-reveal">
+        <?php foreach ($partners as [$file, $pname]): ?>
+          <li class="ab-logo-<?= h(pathinfo($file, PATHINFO_FILENAME)) ?>"><img src="<?= h(asset_url('assets/img/partners/' . $file)) ?>" alt="<?= h($pname) ?>" loading="lazy" decoding="async"></li>
+        <?php endforeach; ?>
+      </ul>
+      <p class="ab-partners-links ab-reveal">
+        <a href="<?= SITE_URL ?>/impact-reports.php" class="ab-link">Read our impact reports <?= icon('arrow-right', 15) ?></a>
+        <a href="<?= h($contact('Partnership enquiry')) ?>" class="ab-link">Become a partner <?= icon('arrow-right', 15) ?></a>
+      </p>
+    </div>
   </section>
 
   <!-- 11. Join us: a path for each visitor -->

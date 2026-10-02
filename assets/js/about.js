@@ -23,18 +23,37 @@
     var btn = document.querySelector('.ab-motion-toggle');
     var root = document.documentElement;
     if (!hero || !btn) return;
+    var video = hero.querySelector('.ab-hero-video');
+    var userPaused = function () { return root.classList.contains('ab-motion-paused'); };
+    var offscreen = false;
+    function syncVideo() {
+      if (!video || !video.getAttribute('src')) return;
+      if (userPaused() || offscreen) video.pause(); else video.play().catch(function () {});
+    }
     function setPaused(paused) {
       root.classList.toggle('ab-motion-paused', paused);
       btn.setAttribute('aria-pressed', paused ? 'true' : 'false');
-      btn.setAttribute('aria-label', paused ? 'Play background photos' : 'Pause background photos');
+      btn.setAttribute('aria-label', paused ? 'Play background motion' : 'Pause background motion');
       try { localStorage.setItem('abMotionPaused', paused ? '1' : '0'); } catch (e) {}
+      syncVideo();
     }
     try { if (localStorage.getItem('abMotionPaused') === '1') setPaused(true); } catch (e) {}
-    btn.addEventListener('click', function () { setPaused(!root.classList.contains('ab-motion-paused')); });
+    btn.addEventListener('click', function () { setPaused(!userPaused()); });
     if (hasIO) {
       new IntersectionObserver(function (entries) {
-        entries.forEach(function (en) { hero.classList.toggle('is-offscreen', !en.isIntersecting); });
+        entries.forEach(function (en) { offscreen = !en.isIntersecting; hero.classList.toggle('is-offscreen', offscreen); syncVideo(); });
       }).observe(hero);
+    }
+    // The film loads only after the page has finished loading, on wider screens, without
+    // reduced motion or data saving; it fades in over the photographs once it is playing.
+    var saveData = navigator.connection && navigator.connection.saveData;
+    if (video && !reduceMotion && !saveData && window.matchMedia('(min-width: 720px)').matches) {
+      var start = function () {
+        video.addEventListener('playing', function () { hero.classList.add('has-video'); }, { once: true });
+        video.src = video.getAttribute('data-src');
+        syncVideo();
+      };
+      if (document.readyState === 'complete') setTimeout(start, 300); else window.addEventListener('load', function () { setTimeout(start, 300); });
     }
   }
 
