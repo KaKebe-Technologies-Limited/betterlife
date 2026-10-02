@@ -8,6 +8,8 @@ $staticPages = [
     ['url' => '/index.php', 'priority' => '1.0', 'freq' => 'weekly'],
     ['url' => '/about.php', 'priority' => '0.8', 'freq' => 'monthly'],
     ['url' => '/programs.php', 'priority' => '0.8', 'freq' => 'monthly'],
+    ['url' => '/projects.php', 'priority' => '0.7', 'freq' => 'monthly'],
+    ['url' => '/partners.php', 'priority' => '0.6', 'freq' => 'monthly'],
     ['url' => '/impact-reports.php', 'priority' => '0.7', 'freq' => 'monthly'],
     ['url' => '/farm.php', 'priority' => '0.8', 'freq' => 'monthly'],
     ['url' => '/products.php', 'priority' => '0.9', 'freq' => 'weekly'],
@@ -18,6 +20,11 @@ $staticPages = [
 
 $products = $pdo->query("SELECT slug, updated_at FROM products WHERE status = 1")->fetchAll();
 $posts = $pdo->query("SELECT slug, updated_at FROM blog_posts WHERE status = 'published'")->fetchAll();
+
+// Programme-area and project pages
+require_once __DIR__ . '/includes/programmes.php';
+foreach (array_keys(pp_areas()) as $slug) $staticPages[] = ['url' => '/program.php?slug=' . $slug, 'priority' => '0.7', 'freq' => 'monthly'];
+foreach (pp_projects() as $slug => $proj) if (empty($proj['href'])) $staticPages[] = ['url' => '/project.php?slug=' . $slug, 'priority' => '0.6', 'freq' => 'monthly'];
 
 echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
 ?>

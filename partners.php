@@ -2,7 +2,7 @@
 require_once __DIR__ . '/includes/functions.php';
 require_once __DIR__ . '/includes/programmes.php';
 $pageTitle = 'Our Partners';
-$activePage = 'about';
+$activePage = 'partners';
 $pageDescription = 'The organisations that work alongside BetterLife International, and how each partnership supports the work.';
 
 // What each partnership involves, from BetterLife's own programme material
@@ -44,7 +44,7 @@ require __DIR__ . '/includes/header.php';
       <ul class="pg-partner-list">
         <?php foreach ($partners as [$logo, $name, $what, $link]): ?>
           <li class="pg-partner-card ab-reveal">
-            <div class="pg-partner-logo"><img src="<?= h(asset_url('assets/img/partners/' . $logo)) ?>" alt="<?= h($name) ?> logo" loading="lazy" decoding="async"></div>
+            <div class="pg-partner-logo pg-logo-<?= h(pathinfo($logo, PATHINFO_FILENAME)) ?>"><img src="<?= h(asset_url('assets/img/partners/' . $logo)) ?>" alt="<?= h($name) ?> logo" loading="lazy" decoding="async"></div>
             <div>
               <h3><?= h($name) ?></h3>
               <?php if ($what): ?><p><?= h($what) ?></p><?php endif; ?>

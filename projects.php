@@ -16,7 +16,7 @@ $country = in_array($_GET['country'] ?? '', $countries, true) ? $_GET['country']
 
 $inArea = fn($p, $a) => $p['area'] === $a || in_array($a, $p['also'] ?? [], true);
 $list = array_filter($projects, fn($p) => (!$area || $inArea($p, $area)) && (!$country || ($p['country'] ?? '') === $country));
-$url = function (string $a, string $c): string {
+$filterUrl = function (string $a, string $c): string {
     $q = array_filter(['area' => $a, 'country' => $c]);
     return SITE_URL . '/projects.php' . ($q ? '?' . http_build_query($q) : '') . '#directory';
 };
@@ -46,28 +46,28 @@ require __DIR__ . '/includes/header.php';
       <div class="pg-filters">
         <nav class="pg-filter-row" aria-label="Filter by programme area">
           <span>Programme area</span>
-          <a href="<?= h($url('', $country)) ?>" class="pg-pill"<?= !$area ? ' aria-current="true"' : '' ?>>All <small>(<?= $countFor('', $country) ?>)</small></a>
+          <a href="<?= h($filterUrl('', $country)) ?>" class="pg-pill"<?= !$area ? ' aria-current="true"' : '' ?>>All <small>(<?= $countFor('', $country) ?>)</small></a>
           <?php foreach ($areas as $as => $a): $c = $countFor($as, $country); ?>
-            <a href="<?= h($url($as, $country)) ?>" class="pg-pill"<?= $area === $as ? ' aria-current="true"' : '' ?>><?= h($a['short']) ?> <small>(<?= $c ?>)</small></a>
+            <a href="<?= h($filterUrl($as, $country)) ?>" class="pg-pill"<?= $area === $as ? ' aria-current="true"' : '' ?>><?= h($a['short']) ?> <small>(<?= $c ?>)</small></a>
           <?php endforeach; ?>
         </nav>
         <nav class="pg-filter-row" aria-label="Filter by country">
           <span>Country</span>
-          <a href="<?= h($url($area, '')) ?>" class="pg-pill"<?= !$country ? ' aria-current="true"' : '' ?>>All <small>(<?= $countFor($area, '') ?>)</small></a>
+          <a href="<?= h($filterUrl($area, '')) ?>" class="pg-pill"<?= !$country ? ' aria-current="true"' : '' ?>>All <small>(<?= $countFor($area, '') ?>)</small></a>
           <?php foreach ($countries as $c): ?>
-            <a href="<?= h($url($area, $c)) ?>" class="pg-pill"<?= $country === $c ? ' aria-current="true"' : '' ?>><?= h($c === 'Regional' ? 'Regional and virtual' : $c) ?> <small>(<?= $countFor($area, $c) ?>)</small></a>
+            <a href="<?= h($filterUrl($area, $c)) ?>" class="pg-pill"<?= $country === $c ? ' aria-current="true"' : '' ?>><?= h($c === 'Regional' ? 'Regional and virtual' : $c) ?> <small>(<?= $countFor($area, $c) ?>)</small></a>
           <?php endforeach; ?>
         </nav>
       </div>
 
-      <p class="pg-count" role="status">Showing <?= count($list) ?> <?= count($list) === 1 ? 'project' : 'projects' ?><?= $area ? ' in ' . h($areas[$area]['short']) : '' ?><?= $country ? ' · ' . h($country === 'Regional' ? 'regional and virtual' : $country) : '' ?><?php if ($area || $country): ?> · <a href="<?= h($url('', '')) ?>">Clear filters</a><?php endif; ?></p>
+      <p class="pg-count" role="status">Showing <?= count($list) ?> <?= count($list) === 1 ? 'project' : 'projects' ?><?= $area ? ' in ' . h($areas[$area]['short']) : '' ?><?= $country ? ' · ' . h($country === 'Regional' ? 'regional and virtual' : $country) : '' ?><?php if ($area || $country): ?> · <a href="<?= h($filterUrl('', '')) ?>">Clear filters</a><?php endif; ?></p>
 
       <?php if ($list): ?>
         <div class="pg-project-grid">
           <?php foreach ($list as $ps => $p): ?><?= pp_project_card($ps, $p, $areas) ?><?php endforeach; ?>
         </div>
       <?php else: ?>
-        <p class="pg-empty">No projects match these filters yet. <a href="<?= h($url('', '')) ?>">Show all projects</a>.</p>
+        <p class="pg-empty">No projects match these filters yet. <a href="<?= h($filterUrl('', '')) ?>">Show all projects</a>.</p>
       <?php endif; ?>
     </div>
   </section>

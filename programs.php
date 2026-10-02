@@ -59,9 +59,10 @@ require __DIR__ . '/includes/header.php';
   <?= ab_brush_defs() ?>
 
   <!-- 1. Photographic hero -->
-  <section class="pg-hero" aria-labelledby="pgTitle">
+  <section class="pg-hero is-narrow" aria-labelledby="pgTitle">
     <div class="pg-hero-media"><?= ab_img($heroImg, 'A farmer tending a tall maize crop in Rukungiri, Uganda', '', false, 'style="object-position: 58% 42%"', '100vw') ?></div>
     <div class="container pg-hero-inner">
+     <div class="pg-hero-copy">
       <nav class="ab-crumb" aria-label="Breadcrumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span aria-hidden="true">/</span><span aria-current="page">Programmes</span></nav>
       <p class="pg-hero-kicker">Our programmes</p>
       <h1 id="pgTitle">Food security and sustainable <?= ab_mark('livelihoods', 31) ?></h1>
@@ -70,6 +71,7 @@ require __DIR__ . '/includes/header.php';
         <a href="#areas" class="pg-btn">Explore the five programme areas <?= icon('chevron-down', 16) ?></a>
         <a href="<?= SITE_URL ?>/projects.php" class="pg-btn pg-btn-ghost">See all projects</a>
       </div>
+     </div>
     </div>
   </section>
 

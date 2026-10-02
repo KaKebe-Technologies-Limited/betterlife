@@ -45,7 +45,7 @@ $footerPrograms = $pdo->query("SELECT title, slug FROM programs WHERE status = 1
         <h4>Our Programs</h4>
         <ul class="footer-links">
           <?php foreach ($footerPrograms as $p): ?>
-            <li><a href="<?= SITE_URL ?>/programs.php#<?= h($p['slug']) ?>"><?= h($p['title']) ?></a></li>
+            <li><a href="<?= SITE_URL ?>/program.php?slug=<?= h($p['slug']) ?>"><?= h($p['title']) ?></a></li>
           <?php endforeach; ?>
         </ul>
       </div>

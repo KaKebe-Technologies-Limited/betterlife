@@ -242,7 +242,7 @@ require __DIR__ . '/includes/header.php';
   </section>
 
   <!-- 3. Impact: figures, then results from one programme -->
-  <section class="ab-impact" aria-labelledby="abImpactTitle">
+  <section class="ab-impact" id="impact" aria-labelledby="abImpactTitle">
     <div class="container">
       <div class="ab-head ab-reveal">
         <span class="ab-eyebrow">Impact in pictures</span>
@@ -288,7 +288,7 @@ require __DIR__ . '/includes/header.php';
           </ul>
           <figcaption>Some of the women taking part in the programme in Yumbe</figcaption>
         </figure>
-        <a href="<?= SITE_URL ?>/programs.php#climate-resilient-agriculture" class="ab-link">Read the full programme story <?= icon('arrow-right', 15) ?></a>
+        <a href="<?= SITE_URL ?>/project.php?slug=womens-climate-resilience-yumbe" class="ab-link">Read the full programme story <?= icon('arrow-right', 15) ?></a>
       </article>
     </div>
   </section>
@@ -336,7 +336,7 @@ require __DIR__ . '/includes/header.php';
   </section>
 
   <!-- 5. How we work: the failed-harvest view, the five principles, the values -->
-  <section class="ab-systems" aria-labelledby="abSystemsTitle">
+  <section class="ab-systems" id="approach" aria-labelledby="abSystemsTitle">
     <div class="container ab-systems-grid">
       <div class="ab-systems-copy ab-reveal">
         <span class="ab-eyebrow">How we work</span>
@@ -533,7 +533,7 @@ require __DIR__ . '/includes/header.php';
             <span class="ab-status">Launched in 2023</span>
             <h3>Soilla</h3>
             <p>Our digital agricultural advisory platform. Farmers use it for soil and crop guidance, climate information, market prices and agricultural services, and to find suppliers, experts and other producers.</p>
-            <a href="<?= SITE_URL ?>/programs.php#digital-innovation" class="ab-link">How Soilla fits our programmes <?= icon('arrow-right', 15) ?></a>
+            <a href="<?= SITE_URL ?>/project.php?slug=soilla" class="ab-link">How Soilla fits our programmes <?= icon('arrow-right', 15) ?></a>
           </div>
         </article>
         <article class="ab-tool ab-reveal">
@@ -542,7 +542,7 @@ require __DIR__ . '/includes/header.php';
             <span class="ab-status ab-status-soft">Work continuing in 2026</span>
             <h3>Agribusiness Connekt</h3>
             <p>Where Soilla supports production decisions, Agribusiness Connekt focuses on the business around the farm. It links farmers and small agricultural enterprises to buyers, finance, services and market information.</p>
-            <a href="<?= SITE_URL ?>/programs.php#digital-innovation" class="ab-link">Explore our digital work <?= icon('arrow-right', 15) ?></a>
+            <a href="<?= SITE_URL ?>/project.php?slug=agribusiness-connekt" class="ab-link">Explore Agribusiness Connekt <?= icon('arrow-right', 15) ?></a>
           </div>
         </article>
       </div>
@@ -586,6 +586,7 @@ require __DIR__ . '/includes/header.php';
       </ul>
       <p class="ab-partners-links ab-reveal">
         <a href="<?= SITE_URL ?>/impact-reports.php" class="ab-link">Read our impact reports <?= icon('arrow-right', 15) ?></a>
+        <a href="<?= SITE_URL ?>/partners.php" class="ab-link">How each partner supports the work <?= icon('arrow-right', 15) ?></a>
         <a href="<?= h($contact('Partnership enquiry')) ?>" class="ab-link">Become a partner <?= icon('arrow-right', 15) ?></a>
       </p>
     </div>

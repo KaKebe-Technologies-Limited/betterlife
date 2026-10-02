@@ -217,6 +217,7 @@ function pp_projects(): array
             // Photograph from Yumbe, Uganda (no SPRING photograph supplied yet); the caption says so
             'image'    => ['assets/img/about/yumbe-solar-irrigation.jpg', 'Solar-powered irrigation above a maize crop at a BetterLife-supported site in Yumbe, Uganda', '50% 45%'],
             'image_note' => 'Photograph: solar-powered irrigation at a BetterLife-supported site in Yumbe, Uganda.',
+            'photo_place' => 'Photo: Yumbe, Uganda',
             'blocks'   => [['climate-resilient-agriculture', 'BetterLife SPRING']],
             'results'  => [],
             'gallery'  => [],
@@ -400,6 +401,7 @@ function pp_project_card(string $slug, array $p, array $areas, string $sizes = '
           <span class="pg-project-mono" aria-hidden="true"><?= icon($areas[$p['area']]['icon'] ?? 'leaf', 30) ?></span>
         <?php endif; ?>
         <?php if (!empty($p['location'])): ?><span class="pg-chip"><?= icon('map-pin', 13) ?> <?= h($p['location']) ?></span><?php endif; ?>
+        <?php if (!empty($p['photo_place'])): ?><span class="pg-photo-note"><?= h($p['photo_place']) ?></span><?php endif; ?>
       </div>
       <div class="pg-project-body">
         <?php if ($showArea && $area): ?><span class="pg-kicker"><?= h($area) ?></span><?php endif; ?>

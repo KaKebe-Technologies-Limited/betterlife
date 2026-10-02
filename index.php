@@ -177,7 +177,7 @@ require __DIR__ . '/includes/header.php';
             <div class="icon-badge"><?= icon($p['icon'] ?: 'leaf', 20) ?></div>
             <h3><?= h($p['title']) ?></h3>
             <p class="muted" style="font-size:14px;"><?= h($p['summary']) ?></p>
-            <a href="<?= SITE_URL ?>/programs.php#<?= h($p['slug']) ?>" class="more"><?= h($programCta[$p['slug']] ?? 'Learn more') ?></a>
+            <a href="<?= SITE_URL ?>/program.php?slug=<?= h($p['slug']) ?>" class="more"><?= h($programCta[$p['slug']] ?? 'Learn more') ?></a>
           </div>
         </div>
       <?php endforeach; ?>
@@ -220,7 +220,7 @@ require __DIR__ . '/includes/header.php';
         <p class="muted">They spoke about the hours spent looking for water, the distance travelled for firewood, the cost of buying vegetables and the choices families made when a harvest failed. With support from Foundation S &ndash; The Sanofi Collective, BetterLife worked with refugee, displaced and host-community women in Yumbe to respond to those realities together.</p>
         <p class="muted">Women learnt through gardens they could see and practices they could try: composting, mulching, sack and box gardening, drought-tolerant crops, agroforestry, briquette-making and simple digital tools for soil and market information.</p>
         <p class="muted">The lesson was straightforward. Women adopt what they can see. Groups learn faster than individuals working alone. And information becomes useful when people have the confidence and support to act on it.</p>
-        <a href="<?= SITE_URL ?>/programs.php#climate-resilient-agriculture" class="btn btn-outline-dark" style="margin-top:8px;">Read the Yumbe Story</a>
+        <a href="<?= SITE_URL ?>/project.php?slug=womens-climate-resilience-yumbe" class="btn btn-outline-dark" style="margin-top:8px;">Read the Yumbe Story</a>
       </div>
     </div>
   </div>

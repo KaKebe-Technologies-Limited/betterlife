@@ -19,7 +19,9 @@ $siteName        = setting($pdo, 'site_name', 'BetterLife International');
 $logo            = setting($pdo, 'logo', 'assets/img/logo.png');
 $pageDescription = $pageDescription ?? excerpt(setting($pdo, 'hero_subtitle'), 160);
 $pageImage       = $pageImage ?? setting($pdo, 'hero_image_1', $logo);
-$canonicalUrl    = public_base_url() . SITE_URL . '/' . ltrim($_SERVER['REQUEST_URI'] ?? '', '/');
+$requestPath     = '/' . ltrim($_SERVER['REQUEST_URI'] ?? '', '/');
+// REQUEST_URI already includes the site folder when the site lives in a subfolder (e.g. /betterlife)
+$canonicalUrl    = public_base_url() . (SITE_URL !== '' && str_starts_with($requestPath, SITE_URL . '/') ? '' : SITE_URL) . $requestPath;
 $ogType          = $ogType ?? 'website';
 ?>
 <!DOCTYPE html>
@@ -142,10 +144,12 @@ $cartLink = function (int $size) use ($cartCount): string {
       </div>
       <a href="<?= SITE_URL ?>/index.php" class="<?= $activePage === 'home' ? 'active' : '' ?>">Home</a>
       <a href="<?= SITE_URL ?>/about.php" class="<?= $activePage === 'about' ? 'active' : '' ?>">About Us</a>
-      <div class="nav-dropdown <?= in_array($activePage, ['programs', 'impact']) ? 'active' : '' ?>">
+      <div class="nav-dropdown <?= in_array($activePage, ['programs', 'impact', 'partners']) ? 'active' : '' ?>">
         <button type="button" class="nav-dropdown-toggle" aria-haspopup="true">Our Work <?= icon('chevron-down', 15) ?></button>
         <div class="nav-dropdown-menu">
           <a href="<?= SITE_URL ?>/programs.php"><?= icon('leaf', 17) ?> Our Programmes</a>
+          <a href="<?= SITE_URL ?>/projects.php"><?= icon('grid', 17) ?> Projects</a>
+          <a href="<?= SITE_URL ?>/partners.php"><?= icon('heart', 17) ?> Our Partners</a>
           <a href="<?= SITE_URL ?>/impact-reports.php"><?= icon('trending-up', 17) ?> Impact &amp; Reports</a>
         </div>
       </div>
