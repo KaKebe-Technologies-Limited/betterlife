@@ -41,9 +41,10 @@ require __DIR__ . '/includes/header.php';
 <main class="ab pg" id="top">
   <?= ab_brush_defs() ?>
 
-  <section class="pg-hero is-compact" aria-labelledby="pgTitle">
+  <section class="pg-hero is-compact<?= ['right' => ' is-right', 'narrow' => ' is-narrow'][$a['hero_side'] ?? ''] ?? '' ?>" aria-labelledby="pgTitle">
     <div class="pg-hero-media"><?= ab_img($heroImg, $heroAlt, '', false, 'style="object-position: ' . h($heroPos) . '"', '100vw') ?></div>
     <div class="container pg-hero-inner">
+     <div class="pg-hero-copy">
       <nav class="pg-crumb-trail" aria-label="Breadcrumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span aria-hidden="true">/</span><a href="<?= SITE_URL ?>/programs.php">Programmes</a><span aria-hidden="true">/</span><span aria-current="page"><?= h($a['short']) ?></span></nav>
       <p class="pg-hero-kicker">Programme area <?= str_pad((string) $index, 2, '0', STR_PAD_LEFT) ?></p>
       <h1 id="pgTitle"><?= h($a['formal']) ?></h1>
@@ -52,6 +53,7 @@ require __DIR__ . '/includes/header.php';
         <?php if ($own || $linked): ?><a href="#projects" class="pg-btn">See the projects <?= icon('chevron-down', 16) ?></a><?php endif; ?>
         <a href="<?= h($contactUrl) ?>" class="pg-btn pg-btn-ghost">Partner on this programme</a>
       </div>
+     </div>
     </div>
   </section>
 

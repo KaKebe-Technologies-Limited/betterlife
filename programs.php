@@ -7,7 +7,12 @@ $pageDescription = 'BetterLife’s programmes help families grow food, earn a st
 
 $areas = pp_areas();
 $projects = pp_projects();
-$featured = ['womens-climate-resilience-yumbe', 'smiles', 'betterlife-spring'];
+
+// How many projects sit behind each programme area (home area or linked)
+$projectCount = [];
+foreach ($areas as $slug => $a) {
+    $projectCount[$slug] = count(array_filter($projects, fn($p) => $p['area'] === $slug || in_array($slug, $p['also'] ?? [], true)));
+}
 
 // Three documented results, each kept with its project, group and measurement context
 $evidence = [
@@ -16,32 +21,36 @@ $evidence = [
     ['3,000+', 'Books for young people in Alebtong', 'Opened in December 2023 with ten computers and space for around 400 young people', 'apala-youth-centre'],
 ];
 
-// How the work connects: four petals and two circles
+// How the work connects: four petals and two circles (photographs not used on the About page)
 $petals = [
-    ['Farming', 'assets/img/about/rukungiri-community-field.jpg', 'People preparing a field together in Rukungiri', '50% 55%'],
-    ['Water',   'assets/img/children-at-borehole.webp', 'Children collecting water at a borehole in Yumbe', '45% 40%'],
-    ['Energy',  'assets/img/solar-panel-installation-2.webp', 'A solar panel in Rukungiri', '50% 45%'],
-    ['Markets', 'assets/img/market-stall-vendor.webp', 'A woman standing at her market stall', '72% 45%'],
+    ['Farming', 'assets/img/programmes/yumbe-sack-tower.jpg', 'A tiered sack garden planted with seedlings in Yumbe', '50% 55%'],
+    ['Water',   'assets/img/programmes/yumbe-water-carrying.jpg', 'A woman carrying water past a maize field in Yumbe', '50% 30%'],
+    ['Energy',  'assets/img/solar-panel-installation-1.webp', 'A BetterLife team member checking a solar panel in Yumbe', '45% 35%'],
+    ['Markets', 'assets/img/market-stall-vendor.webp', 'A woman standing at her market stall in Yumbe', '72% 45%'],
 ];
 $dots = [
-    ['Skills', 'assets/img/betterlifeint-source/programs/program-photo-10.jpg', 'Women taking notes during a training session', '55% 40%'],
-    ['Information', 'assets/img/soilla-app-field-demo.webp', 'The Soilla app open on a phone in a field', '50% 50%'],
+    ['Skills', 'assets/img/programmes/yumbe-training-listener.jpg', 'A participant listening during a training session in Yumbe', '35% 40%'],
+    ['Information', 'assets/img/programmes/radio-studio-session.jpg', 'BetterLife team members on air in a radio studio in Yumbe', '50% 40%'],
 ];
 
+// Farming, training, school learning, food processing, clean energy and community organising
 $strip = [
-    ['assets/img/about/yumbe-cabbages.jpg', 'Cabbages growing at a BetterLife-supported site in Yumbe'],
-    ['assets/img/about/yumbe-listening-circle.jpg', 'BetterLife staff and community members seated in a circle for a session in Yumbe'],
-    ['assets/img/about/rukungiri-pupils-desks.jpg', 'Pupils at their desks in a classroom in Rukungiri'],
-    ['assets/img/woman-winnowing-grain.webp', 'Winnowing grain in Rukungiri'],
-    ['assets/img/solar-panel-farm-sky.webp', 'A solar panel under an open sky in Rukungiri'],
-    ['assets/img/about/soroti-wac-gathering.jpg', 'Women gathered for a Women’s Action Circle session in Soroti'],
+    ['assets/img/programmes/yumbe-fish-pond.jpg', 'A fish pond at a BetterLife-supported site in Yumbe'],
+    ['assets/img/programmes/yumbe-circle-mat.jpg', 'A group meeting on a mat under a tree in Yumbe'],
+    ['assets/img/programmes/bucket-garden.jpg', 'Vegetables growing in hanging buckets'],
+    ['assets/img/programmes/rukungiri-pupils-writing.jpg', 'A pupil writing in class in Rukungiri'],
     ['assets/img/grain-milling-machine.webp', 'Grain being processed with a milling machine in Rukungiri'],
-    ['assets/img/about/yumbe-poultry-feeders.jpg', 'Participants celebrating with new poultry feeders in Yumbe'],
-    ['assets/img/betterlifeint-source/projects/project-renewable-pathways-alt.jpg', 'Adding a bottle to a plastic bank for recycling'],
-    ['assets/img/about/yumbe-beehives.jpg', 'Beehives at a BetterLife-supported site in Yumbe'],
-    ['assets/img/about/rukungiri-poultry.jpg', 'A woman feeding chickens in a poultry house in Rukungiri'],
-    ['assets/img/about/yumbe-greenhouse-aerial.jpg', 'Aerial view of a greenhouse and farm plots in Yumbe'],
+    ['assets/img/programmes/rukungiri-solar-banana.jpg', 'A solar panel among banana plants in Rukungiri'],
+    ['assets/img/programmes/yumbe-shared-meal.jpg', 'Preparing a meal at a training day in Yumbe'],
+    ['assets/img/programmes/rukungiri-sowing.jpg', 'Sowing seed by hand in Rukungiri'],
+    ['assets/img/programmes/bottle-tower-garden.jpg', 'A tower garden built from plastic bottles'],
+    ['assets/img/programmes/yumbe-circle-staff.jpg', 'BetterLife team members with a women’s group in Yumbe'],
+    ['assets/img/programmes/rukungiri-grass-bundle.jpg', 'Carrying cut grass across a field in Rukungiri'],
+    ['assets/img/programmes/yumbe-trellis-rows.jpg', 'Trellised vegetables in Yumbe'],
 ];
+
+$feature = 'womens-climate-resilience-yumbe';
+$side = ['smiles', 'betterlife-spring'];
 
 $heroImg = 'assets/img/about/rukungiri-farmer-maize.jpg';
 $heroV = ab_variants($heroImg);
@@ -58,20 +67,25 @@ require __DIR__ . '/includes/header.php';
 <main class="ab pg" id="top">
   <?= ab_brush_defs() ?>
 
-  <!-- 1. Photographic hero -->
-  <section class="pg-hero is-narrow" aria-labelledby="pgTitle">
+  <!-- 1. Photographic hero, with an index of the five programme areas -->
+  <section class="pg-hero is-narrow has-index" aria-labelledby="pgTitle">
     <div class="pg-hero-media"><?= ab_img($heroImg, 'A farmer tending a tall maize crop in Rukungiri, Uganda', '', false, 'style="object-position: 58% 42%"', '100vw') ?></div>
     <div class="container pg-hero-inner">
-     <div class="pg-hero-copy">
-      <nav class="ab-crumb" aria-label="Breadcrumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span aria-hidden="true">/</span><span aria-current="page">Programmes</span></nav>
-      <p class="pg-hero-kicker">Our programmes</p>
-      <h1 id="pgTitle">Food security and sustainable <?= ab_mark('livelihoods', 31) ?></h1>
-      <p class="pg-hero-lead">Our programmes help families grow more reliable food, earn a steady income and cope with a changing climate. A family facing drought may also face hunger, unemployment and weak access to markets, so our work connects around the person.</p>
-      <div class="pg-hero-actions">
-        <a href="#areas" class="pg-btn">Explore the five programme areas <?= icon('chevron-down', 16) ?></a>
-        <a href="<?= SITE_URL ?>/projects.php" class="pg-btn pg-btn-ghost">See all projects</a>
+      <div class="pg-hero-copy">
+        <nav class="ab-crumb" aria-label="Breadcrumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span aria-hidden="true">/</span><span aria-current="page">Programmes</span></nav>
+        <p class="pg-hero-kicker">Our programmes</p>
+        <h1 id="pgTitle">Food security and sustainable <?= ab_mark('livelihoods', 31) ?></h1>
+        <p class="pg-hero-lead">Our programmes help families grow more reliable food, earn a steady income and cope with a changing climate. A family facing drought may also face hunger, unemployment and weak access to markets, so our work connects around the person.</p>
+        <div class="pg-hero-actions">
+          <a href="#areas" class="pg-btn">Explore the five programme areas <?= icon('chevron-down', 16) ?></a>
+          <a href="<?= SITE_URL ?>/projects.php" class="pg-btn pg-btn-ghost">See all projects</a>
+        </div>
       </div>
-     </div>
+      <nav class="pg-hero-index" aria-label="Programme areas">
+        <?php $n = 0; foreach ($areas as $slug => $a): $n++; ?>
+          <a href="#<?= h($slug) ?>"><b><?= str_pad((string) $n, 2, '0', STR_PAD_LEFT) ?></b><span><?= h($a['short']) ?></span></a>
+        <?php endforeach; ?>
+      </nav>
     </div>
   </section>
 
@@ -108,10 +122,12 @@ require __DIR__ . '/includes/header.php';
   <!-- 3. Five programme areas -->
   <section class="pg-areas" id="areas" aria-labelledby="pgAreasTitle">
     <div class="container">
-      <div class="ab-head ab-reveal">
-        <span class="ab-eyebrow">Programme areas</span>
-        <h2 id="pgAreasTitle">Five areas of work</h2>
-        <p class="ab-head-sub">Each area brings together related activities, projects and partners. Choose one to see how the work is delivered and what it has achieved.</p>
+      <div class="pg-head-row ab-reveal">
+        <div class="ab-head">
+          <span class="ab-eyebrow">Programme areas</span>
+          <h2 id="pgAreasTitle">Five areas of work</h2>
+        </div>
+        <p class="ab-head-sub pg-head-note">Each area brings together related activities, projects and partners. Choose one to see how the work is delivered and what it has achieved.</p>
       </div>
       <ol class="pg-area-grid">
         <?php $n = 0; foreach ($areas as $slug => $a): $n++; [$img, $alt, $pos] = $a['image']; ?>
@@ -119,9 +135,10 @@ require __DIR__ . '/includes/header.php';
             <article class="pg-area-card">
               <div class="pg-area-media">
                 <?= ab_img($img, $alt, '', true, 'style="object-position: ' . h($pos) . '"', $n <= 2 ? '(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 600px' : '(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 400px') ?>
-                <span class="pg-area-num"><?= icon($a['icon'], 15) ?> <?= str_pad((string) $n, 2, '0', STR_PAD_LEFT) ?></span>
+                <span class="pg-area-num" aria-hidden="true"><?= str_pad((string) $n, 2, '0', STR_PAD_LEFT) ?></span>
               </div>
               <div class="pg-area-body">
+                <p class="pg-area-meta"><?= icon($a['icon'], 15) ?> <?= $projectCount[$slug] ?> <?= $projectCount[$slug] === 1 ? 'project' : 'projects' ?></p>
                 <h3><?= h($a['short']) ?></h3>
                 <p><?= h($a['card']) ?></p>
                 <a href="<?= h(pp_area_url($slug)) ?>" class="pg-link">Explore Programme<span class="sr-only">: <?= h($a['short']) ?></span> <?= icon('arrow-right', 15) ?></a>
@@ -133,7 +150,7 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
-  <!-- 4. Selected projects -->
+  <!-- 4. Selected projects: one feature and two companions -->
   <section class="pg-projects" aria-labelledby="pgProjectsTitle">
     <div class="container">
       <div class="pg-head-row ab-reveal">
@@ -143,25 +160,43 @@ require __DIR__ . '/includes/header.php';
         </div>
         <a href="<?= SITE_URL ?>/projects.php" class="pg-link">Explore all projects <?= icon('arrow-right', 15) ?></a>
       </div>
-      <div class="pg-project-grid">
-        <?php foreach ($featured as $slug): ?>
-          <?= pp_project_card($slug, $projects[$slug], $areas) ?>
-        <?php endforeach; ?>
+      <div class="pg-feature-grid">
+        <?php $f = $projects[$feature]; ?>
+        <article class="pg-feature ab-reveal">
+          <?= ab_img($f['image'][0], $f['image'][1], 'pg-feature-img', true, 'style="object-position: 50% 12%"', '(max-width: 900px) 100vw, 700px') ?>
+          <div class="pg-feature-panel">
+            <span class="pg-kicker"><?= h($areas[$f['area']]['short']) ?></span>
+            <h3><a href="<?= h(pp_project_url($feature, $f)) ?>"><?= h($f['title']) ?></a></h3>
+            <p class="pg-feature-place"><?= icon('map-pin', 14) ?> <?= h($f['location']) ?></p>
+            <p><?= h($f['summary']) ?></p>
+            <p class="pg-partner"><?= icon('heart', 14) ?> With <?= h($f['partner']) ?></p>
+            <span class="pg-more" aria-hidden="true">Read the project <?= icon('arrow-right', 15) ?></span>
+          </div>
+        </article>
+        <div class="pg-side">
+          <?php foreach ($side as $slug): ?><?= pp_project_card($slug, $projects[$slug], $areas, '(max-width: 900px) 100vw, 260px') ?><?php endforeach; ?>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- 5. Evidence -->
+  <!-- 5. Evidence beside a photograph from the field -->
   <section class="pg-evidence" aria-labelledby="pgEvidenceTitle">
-    <div class="container">
-      <div class="ab-head ab-reveal">
-        <span class="ab-eyebrow">Evidence from the field</span>
-        <h2 id="pgEvidenceTitle">What changed, project by project</h2>
+    <div class="container pg-evidence-grid">
+      <figure class="pg-evidence-photo ab-reveal">
+        <span class="pg-evidence-frame"><?= ab_img('assets/img/programmes/yumbe-training-hands.jpg', 'Women raising their hands during a training session in Yumbe', '', true, 'style="object-position: 55% 50%"', '(max-width: 900px) 100vw, 520px') ?></span>
+        <figcaption>A training session in Yumbe</figcaption>
+      </figure>
+      <div>
+        <div class="ab-head ab-reveal">
+          <span class="ab-eyebrow">Evidence from the field</span>
+          <h2 id="pgEvidenceTitle">What changed, project by project</h2>
+        </div>
+        <ul class="pg-results is-stack">
+          <?php foreach ($evidence as $r): ?><?= pp_result($r, null, $projects) ?><?php endforeach; ?>
+        </ul>
+        <p class="pg-evidence-note ab-reveal">Each result belongs to the project and group named with it, and should not be read as an organisation-wide figure. Fuller context is on each project page and in our <a href="<?= SITE_URL ?>/impact-reports.php">impact reports</a>.</p>
       </div>
-      <ul class="pg-results">
-        <?php foreach ($evidence as $r): ?><?= pp_result($r, null, $projects) ?><?php endforeach; ?>
-      </ul>
-      <p class="pg-evidence-note ab-reveal">Each result belongs to the project and group named with it, and should not be read as an organisation-wide figure. Fuller context is on each project page and in our <a href="<?= SITE_URL ?>/impact-reports.php">impact reports</a>.</p>
     </div>
   </section>
 
@@ -170,7 +205,7 @@ require __DIR__ . '/includes/header.php';
     <div class="container pg-strip-head ab-reveal">
       <div>
         <span class="ab-eyebrow">Around the programmes</span>
-        <h2 id="pgStripTitle">Fields, classrooms, circles and solar panels</h2>
+        <h2 id="pgStripTitle">Ponds, classrooms, circles and seedlings</h2>
       </div>
       <div class="pg-strip-nav" hidden>
         <button type="button" class="pg-round" data-dir="-1" aria-controls="pgStripRow" aria-label="Previous photographs"><?= icon('arrow-right', 18) ?></button>
@@ -186,7 +221,7 @@ require __DIR__ . '/includes/header.php';
 
   <!-- 7. Closing invitation -->
   <section class="pg-close" aria-labelledby="pgCloseTitle">
-    <div class="pg-close-bg"><?= ab_img('assets/img/about/rukungiri-communal-farm.jpg', '', '', true, '', '100vw') ?></div>
+    <div class="pg-close-bg"><?= ab_img('assets/img/programmes/yumbe-women-walking.jpg', '', '', true, 'style="object-position: 50% 60%"', '100vw') ?></div>
     <div class="container">
       <div class="pg-close-inner ab-reveal">
         <span class="ab-eyebrow">Partner with us</span>

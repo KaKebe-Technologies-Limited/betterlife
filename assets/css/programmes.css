@@ -312,3 +312,81 @@
   .pg-dot-1 { right: -2%; top: -2%; }
   .pg-dot-2 { left: 0; bottom: -2%; }
 }
+
+/* =========================================================
+   Overview, second edition
+   ========================================================= */
+/* Hero: index of the five programme areas along the bottom */
+.ab .pg-hero.has-index { min-height: min(84vh, 760px); }
+.pg-hero-index { display: none; }
+@media (min-width: 1000px) {
+  .pg-hero-index { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0 18px; margin-top: clamp(36px, 5vh, 56px); padding-top: 18px; border-top: 1px solid rgba(255,255,255,.28); }
+  .pg-hero-index a { display: flex; flex-direction: column; gap: 6px; padding: 4px 0; color: #fff; transition: color .2s ease; }
+  .pg-hero-index b { font-family: var(--ab-serif); font-weight: 600; font-size: 15px; color: #9fd6b2; letter-spacing: .06em; font-variant-numeric: lining-nums; }
+  .pg-hero-index span { font-size: 14.5px; font-weight: 600; line-height: 1.35; max-width: 22ch; }
+  .pg-hero-index a:hover span { text-decoration: underline; text-underline-offset: 4px; }
+  .pg-hero.has-index .pg-hero-inner { padding-top: 60px; padding-bottom: clamp(26px, 3.5vh, 40px); }
+}
+.pg-head-note { max-width: 440px; margin: 0 !important; }
+
+/* Programme-area cards: big serif numeral, project count, organic photo corners */
+.pg-area-num { left: auto; right: 16px; top: auto; bottom: 12px; padding: 0; background: none; color: #fff; font-family: var(--ab-serif); font-weight: 600; font-size: clamp(40px, 4vw, 58px); letter-spacing: -.02em; line-height: 1; text-shadow: 0 4px 18px rgba(0,0,0,.35); font-variant-numeric: lining-nums; }
+.pg-area-media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,22,15,0) 55%, rgba(6,22,15,.45) 100%); pointer-events: none; }
+.pg-area:nth-child(odd) .pg-area-media { border-radius: 0 0 0 90px; }
+.pg-area:nth-child(even) .pg-area-media { border-radius: 0 0 90px 0; }
+.pg-area-meta { display: inline-flex; align-items: center; gap: 7px; margin: 0 0 10px !important; font-size: 12.5px !important; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ab-green) !important; }
+
+/* Selected projects: magazine spread */
+.pg-feature-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(18px, 2.2vw, 26px); }
+.pg-feature { position: relative; min-height: 660px; border-radius: 28px 140px 28px 28px; overflow: hidden; background: var(--ab-deep); transition: transform .3s ease, box-shadow .3s ease; }
+.pg-feature:hover, .pg-feature:focus-within { transform: translateY(-4px); box-shadow: 0 26px 54px rgba(11, 61, 46, .16); }
+.pg-feature-img { position: absolute; inset: 0; width: 100%; height: 100% !important; max-width: none; object-fit: cover; transition: transform .9s ease; }
+.pg-feature:hover .pg-feature-img { transform: scale(1.04); }
+.pg-feature-panel { position: absolute; left: 18px; right: 18px; bottom: 18px; max-width: 500px; padding: 22px 24px 22px; border-radius: 22px; background: rgba(255,255,255,.96); box-shadow: 0 18px 40px rgba(0,0,0,.18); }
+.pg-feature-panel h3 { font-family: var(--ab-serif); font-weight: 600; font-size: clamp(24px, 2.4vw, 32px); line-height: 1.15; margin: 0 0 8px; }
+.pg-feature-panel h3 a { color: var(--ab-deep); }
+.pg-feature-panel h3 a::after { content: ''; position: absolute; inset: 0; border-radius: inherit; }
+.pg-feature-panel h3 a:focus-visible { outline: none; }
+.pg-feature:has(h3 a:focus-visible) { outline: 3px solid var(--ab-blue); outline-offset: 3px; }
+.pg-feature-panel p { margin: 0 0 12px; font-size: 15.5px; line-height: 1.6; }
+.pg-feature-place { display: inline-flex; align-items: center; gap: 6px; font-size: 13.5px !important; font-weight: 700; color: var(--ab-deep) !important; }
+.pg-feature-place svg { color: var(--ab-green); }
+.pg-side { display: grid; grid-template-rows: 1fr 1fr; gap: clamp(18px, 2.2vw, 26px); }
+.pg-side .pg-project { display: grid; grid-template-columns: 40% minmax(0, 1fr); }
+.pg-side .pg-project-media { aspect-ratio: auto; height: 100%; min-height: 250px; }
+.pg-side .pg-project-body { padding: 20px 22px; }
+.pg-side .pg-project-body p:not(.pg-partner) { font-size: 14.5px; }
+
+/* Evidence beside a photograph */
+.pg-evidence-grid { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(32px, 5vw, 80px); align-items: center; }
+.pg-evidence-photo { margin: 0; }
+.pg-evidence-frame { display: block; aspect-ratio: 4 / 4.6; border-radius: 200px 28px 200px 28px; overflow: hidden; background: rgba(255,255,255,.08); }
+.pg-evidence-frame img { width: 100%; height: 100% !important; object-fit: cover; }
+.pg-evidence-photo figcaption { margin-top: 12px; font-size: 13.5px; color: rgba(255,255,255,.7); }
+.pg-results.is-stack { grid-template-columns: 1fr; gap: 0; }
+.pg-results.is-stack .pg-result { display: grid; grid-template-columns: clamp(150px, 15vw, 210px) minmax(0, 1fr); align-items: baseline; gap: 4px 26px; padding: 20px 0; }
+.pg-results.is-stack .pg-result strong { grid-row: span 2; font-size: clamp(40px, 4vw, 56px); }
+.pg-results.is-stack .pg-result:last-child { border-bottom: 1px solid rgba(255,255,255,.22); }
+
+@media (max-width: 1100px) {
+  .pg-feature-grid { grid-template-columns: 1fr; }
+  .pg-side { grid-template-rows: none; grid-template-columns: 1fr 1fr; }
+  .pg-side .pg-project { display: flex; }
+  .pg-side .pg-project-media { aspect-ratio: 4 / 3; height: auto; min-height: 0; }
+}
+@media (max-width: 900px) {
+  .pg-evidence-grid { grid-template-columns: 1fr; }
+  .pg-evidence-frame { aspect-ratio: 16 / 11; border-radius: 120px 24px 120px 24px; }
+}
+@media (max-width: 720px) {
+  .pg-feature { min-height: 0; border-radius: 22px 80px 22px 22px; display: flex; flex-direction: column; }
+  .pg-feature-img { position: relative; height: 260px !important; }
+  .pg-feature-panel { position: relative; left: auto; right: auto; bottom: auto; margin: -40px 12px 12px; padding: 20px; }
+  .pg-side { grid-template-columns: 1fr; }
+  .pg-results.is-stack .pg-result { grid-template-columns: 1fr; }
+  .pg-results.is-stack .pg-result strong { grid-row: auto; }
+  .pg-area:nth-child(odd) .pg-area-media, .pg-area:nth-child(even) .pg-area-media { border-radius: 0 0 0 60px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pg-feature, .pg-feature-img { transition: none; }
+}

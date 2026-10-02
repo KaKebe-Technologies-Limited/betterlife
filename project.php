@@ -78,6 +78,7 @@ require __DIR__ . '/includes/header.php';
           <div><dt>Who is involved</dt><dd><?= h($p['who']) ?></dd></div>
           <?php if (!empty($p['partner'])): ?><div><dt>Partner</dt><dd><?= h($p['partner']) ?></dd></div><?php endif; ?>
           <?php if (!empty($p['status'])): ?><div><dt>Status</dt><dd><?= h($p['status']) ?></dd></div><?php endif; ?>
+          <?php if (!empty($p['launch'])): ?><div><dt>Launch</dt><dd><?= h($p['launch']) ?></dd></div><?php endif; ?>
         </dl>
       </aside>
     </div>
