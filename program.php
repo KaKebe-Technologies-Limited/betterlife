@@ -28,8 +28,8 @@ $featureSlug = isset($own[$a['feature'] ?? '']) ? $a['feature'] : array_key_firs
 $feature = $featureSlug ? $own[$featureSlug] : null;
 $others = array_filter($own, fn($k) => $k !== $featureSlug, ARRAY_FILTER_USE_KEY);
 $collage = $a['collage'] ?? [];
-// Questions people bring to this area of work (see pp_questions()); none repeat the overview's
-$asks = ['climate-resilient-agriculture' => ['grace', 'mariam'], 'green-skills-livelihoods' => ['peter', 'josephine', 'ahmed']][$slug] ?? [];
+// Participants in their own words for this area (see pp_quotes()); none repeat the overview's
+$voices = ['climate-resilient-agriculture' => ['grace', 'chantal', 'mariam'], 'green-skills-livelihoods' => ['peter', 'josephine', 'ahmed']][$slug] ?? [];
 // Evidence as tiles: the first result carries the area's field photograph
 $tiles = array_map(fn($r, $i) => $i === 0 && !empty($a['evidence_photo']) ? array_replace(array_pad($r, 4, null), [4 => [$a['evidence_photo'][0], $a['evidence_photo'][1], '50% 30%']]) : $r, $a['evidence'], array_keys($a['evidence']));
 $strip = $a['gallery'] ?? [];
@@ -43,7 +43,7 @@ $pageScripts = ['assets/js/about.js', 'assets/js/programmes.js'];
 $pageHead = ($heroV
         ? '<link rel="preload" as="image" imagesrcset="' . h(implode(', ', array_map(fn($w, $r) => asset_url($r) . " {$w}w", array_keys($heroV), $heroV))) . '" imagesizes="100vw" fetchpriority="high">'
         : '')
-    . pp_asks_head($asks)
+    . pp_quotes_head($voices)
     . '<script>document.documentElement.classList.add("ab-js")</script>';
 $contactUrl = SITE_URL . '/contact.php?subject=' . rawurlencode('Partnership enquiry: ' . $a['short']);
 $seed = 100 + $index * 7;   // each area gets its own brush strokes
@@ -186,7 +186,7 @@ require __DIR__ . '/includes/header.php';
     </section>
   <?php endif; ?>
 
-  <?= pp_asks_section($asks) ?>
+  <?= pp_quotes_section($voices) ?>
 
   <!-- Photographs: a strip with controls, or a pair when there are only a few -->
   <?php if (count($strip) >= 4): ?>

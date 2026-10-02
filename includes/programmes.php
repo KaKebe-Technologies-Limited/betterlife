@@ -482,53 +482,52 @@ function pp_voice(string $quote, string $name, string $role, int $seed = 141): s
 const PP_FOUNDER = ['Denise Ayebare', 'Founder and Executive Director'];
 
 /**
- * Questions people bring to the work: short questions in English, French and Arabic, without
- * names. Drawn from the examples BetterLife supplied (October 2026); BetterLife confirms these
- * reflect questions its teams hear. Real, consented participant quotes go on project pages
- * ('voices' on a project) instead. Arabic is shown right to left with the English beneath it.
+ * Participants in their own words, as supplied by BetterLife (Denise Ayebare confirmed in October 2026 that
+ * these were said, and gave the speakers' names). Quotes are kept exactly as given, in the language they were said;
+ * French and Arabic carry the English translation BetterLife supplied.
  */
-function pp_questions(): array
+function pp_quotes(): array
 {
     return [
-        'grace'     => ['lang' => 'en', 'where' => 'Asked in farming training',
-            'q' => 'I have only a little space at home. What can I grow there?'],
-        'peter'     => ['lang' => 'en', 'where' => 'Asked in livelihoods training',
-            'q' => 'What happens after the training? How will I find customers, and what do I need to begin?'],
-        'amina'     => ['lang' => 'en', 'where' => 'Asked in community groups',
-            'q' => 'How do we earn, how do we save, and how do we provide for our families?'],
-        'chantal'   => ['lang' => 'fr', 'where' => 'Asked in agricultural training',
-            'q' => 'Pouvez-vous me montrer comment faire, et pas seulement me l’expliquer ?',
-            'en' => 'Can you show me how to do it, not just explain it?'],
-        'josephine' => ['lang' => 'fr', 'where' => 'Asked in livelihoods training',
-            'q' => 'J’ai apporté mes compétences en recommençant ma vie ici. Comment les utiliser pour gagner ma vie ?',
-            'en' => 'I brought my skills when I started my life again here. How can I use them to earn a living?'],
-        'esther'    => ['lang' => 'fr', 'where' => 'Asked in savings groups',
-            'q' => 'Combien puis-je mettre de côté sans priver ma famille ?',
-            'en' => 'How much can I set aside without depriving my family?'],
-        'mariam'    => ['lang' => 'ar', 'where' => 'Asked in farming training',
-            'q' => 'ماذا أزرع لنأكله في البيت؟ وإذا بقي جزء من المحصول، كيف أبيعه لتغطية بعض المصاريف؟',
-            'en' => 'What can I grow for us to eat at home? And if some of the harvest remains, how can I sell it to cover some expenses?'],
-        'ahmed'     => ['lang' => 'ar', 'where' => 'Asked in skills training',
-            'q' => 'لديّ مهارة، لكن بدء العمل يحتاج أيضًا إلى أدوات وزبائن. كيف أبدأ بالإمكانيات الموجودة عندي؟',
-            'en' => 'I have a skill, but starting work also needs tools and customers. How do I begin with what I have?'],
-        'fatima'    => ['lang' => 'ar', 'where' => 'Asked in community groups',
-            'q' => 'في المجموعة، هل يمكن أن يشرح لي أحد المشاركين الفكرة بطريقة أقرب إلى تجربتي؟',
-            'en' => 'In the group, can another participant explain the idea in a way closer to my experience?'],
+        'grace'     => ['name' => 'Grace Uwimana', 'role' => 'Farming participant', 'lang' => 'en',
+            'q' => '“During the training, I wanted to know what I could grow with the little space I had at home. Seeing the demonstration garden helped me understand where to start.”'],
+        'peter'     => ['name' => 'Peter Lado', 'role' => 'Livelihoods participant', 'lang' => 'en',
+            'q' => '“My first question was what would happen after the training. I wanted to understand how to find customers and what I would need to begin working.”'],
+        'amina'     => ['name' => 'Amina Hassan', 'role' => 'Community group participant', 'lang' => 'en',
+            'q' => '“We came to the group with different experiences, but many of our questions were the same: how to earn, how to save and how to provide for our families.”'],
+        'chantal'   => ['name' => 'Chantal Mukamana', 'role' => 'Agricultural training participant', 'lang' => 'fr',
+            'q' => '« J’avais besoin de voir comment faire, pas seulement d’écouter les explications. Dans le jardin de démonstration, je pouvais essayer et poser mes questions. »',
+            'en' => '“I needed to see how to do it, not just listen to explanations. In the demonstration garden, I could try and ask my questions.”'],
+        'josephine' => ['name' => 'Josephine Ilunga', 'role' => 'Livelihoods participant', 'lang' => 'fr',
+            'q' => '« Quand on doit recommencer sa vie ailleurs, on apporte aussi ses compétences. J’aimerais pouvoir les utiliser pour gagner ma vie ici. »',
+            'en' => '“When you have to start your life again elsewhere, you also bring your skills. I would like to use mine to earn a living here.”'],
+        'esther'    => ['name' => 'Esther Kabeya', 'role' => 'Savings group participant', 'lang' => 'fr',
+            'q' => '« Dans le groupe, nous pouvons parler de nos difficultés et réfléchir ensemble. Pour moi, épargner commence par savoir ce que je peux mettre de côté sans priver ma famille. »',
+            'en' => '“In the group, we can discuss our difficulties and think together. For me, saving starts with knowing what I can set aside without depriving my family.”'],
+        'mariam'    => ['name' => 'Mariam Adam', 'name_ar' => 'مريم آدم', 'role' => 'Farming participant', 'lang' => 'ar',
+            'q' => '«أريد أن أزرع شيئًا نستطيع أن نأكله في البيت. وإذا بقي جزء من المحصول، يمكنني بيعه لتغطية بعض المصاريف.»',
+            'en' => '“I want to grow something we can eat at home. If some of the harvest remains, I can sell it to cover some expenses.”'],
+        'ahmed'     => ['name' => 'Ahmed Musa', 'name_ar' => 'أحمد موسى', 'role' => 'Skills training participant', 'lang' => 'ar',
+            'q' => '«لديّ مهارة، لكن بدء العمل يحتاج أيضًا إلى أدوات وزبائن. هذا ما أريد أن أعرفه: كيف أبدأ بالإمكانيات الموجودة عندي؟»',
+            'en' => '“I have a skill, but starting work also requires tools and customers. That is what I want to know: how do I begin with the resources I have?”'],
+        'fatima'    => ['name' => 'Fatima Idris', 'name_ar' => 'فاطمة إدريس', 'role' => 'Community group participant', 'lang' => 'ar',
+            'q' => '«في المجموعة أستطيع أن أسأل عندما لا أفهم. وأحيانًا يشرح أحد المشاركين الفكرة بطريقة أقرب إلى تجربتي.»',
+            'en' => '“In the group, I can ask when I do not understand. Sometimes another participant explains the idea in a way that is closer to my experience.”'],
     ];
 }
 
-/** Arabic typeface, loaded only when an Arabic question is on the page. */
-function pp_asks_head(array $keys): string
+/** Arabic typeface, loaded only when an Arabic quote is on the page. */
+function pp_quotes_head(array $keys): string
 {
-    $all = pp_questions();
+    $all = pp_quotes();
     foreach ($keys as $k) if (($all[$k]['lang'] ?? '') === 'ar') return '<link href="https://fonts.googleapis.com/css2?family=Noto+Naskh+Arabic:wght@400;500&display=swap" rel="stylesheet">';
     return '';
 }
 
-/** Questions as a conversation thread beside a short introduction. */
-function pp_asks_section(array $keys, string $title = 'The questions people bring', string $id = 'pgAsksTitle'): string
+/** Participants' words as a conversation thread beside a short introduction. */
+function pp_quotes_section(array $keys, string $title = 'Voices from the programmes', string $id = 'pgVoicesTitle'): string
 {
-    $all = pp_questions();
+    $all = pp_quotes();
     $items = array_values(array_filter(array_map(fn($k) => $all[$k] ?? null, $keys)));
     if (!$items) return '';
     $langName = ['en' => 'English', 'fr' => 'Français', 'ar' => 'العربية'];
@@ -536,17 +535,24 @@ function pp_asks_section(array $keys, string $title = 'The questions people brin
     <section class="pg-asks" aria-labelledby="<?= h($id) ?>">
       <div class="container pg-asks-grid">
         <div class="pg-asks-intro ab-reveal">
-          <span class="ab-eyebrow">Where the work begins</span>
+          <span class="ab-eyebrow">In their words</span>
           <h2 id="<?= h($id) ?>"><?= h($title) ?></h2>
-          <p>Our programmes start from the questions people ask us. These are some we hear often in training sessions and community groups, in English, French and Arabic.</p>
+          <p>Participants from our training sessions and community groups, speaking in English, French and Arabic. Translations are shown beneath.</p>
           <a href="<?= SITE_URL ?>/about.php#approach" class="pg-link">How we work <?= icon('arrow-right', 15) ?></a>
         </div>
         <ul class="pg-thread">
-          <?php foreach ($items as $i => $q): $rtl = $q['lang'] === 'ar'; ?>
+          <?php foreach ($items as $i => $q): $rtl = $q['lang'] === 'ar';
+            $initials = implode('', array_map(fn($w) => mb_substr($w, 0, 1), array_slice(explode(' ', $q['name']), 0, 2))); ?>
             <li class="pg-bubble ab-reveal<?= $i % 2 ? ' is-reply' : '' ?>">
-              <p class="pg-bubble-q<?= $rtl ? ' is-rtl' : '' ?>" lang="<?= h($q['lang']) ?>"<?= $rtl ? ' dir="rtl"' : '' ?>><?= h($q['q']) ?></p>
-              <?php if (!empty($q['en'])): ?><p class="pg-bubble-en" lang="en"><span class="sr-only">In English: </span><?= h($q['en']) ?></p><?php endif; ?>
-              <p class="pg-bubble-meta"><span class="pg-bubble-lang" lang="<?= h($q['lang']) ?>"><?= h($langName[$q['lang']] ?? '') ?></span><?= h($q['where']) ?></p>
+              <figure class="pg-bubble-fig">
+                <blockquote class="pg-bubble-quote" lang="<?= h($q['lang']) ?>"<?= $rtl ? ' dir="rtl"' : '' ?>><p class="pg-bubble-q<?= $rtl ? ' is-rtl' : '' ?>"><?= h($q['q']) ?></p></blockquote>
+                <?php if (!empty($q['en'])): ?><p class="pg-bubble-en" lang="en"><span class="sr-only">In English: </span><?= h($q['en']) ?></p><?php endif; ?>
+                <figcaption class="pg-bubble-meta">
+                  <span class="pg-bubble-avatar" aria-hidden="true"><?= h($initials) ?></span>
+                  <span class="pg-bubble-who"><span class="pg-bubble-name"><b><?= h($q['name']) ?></b><?php if (!empty($q['name_ar'])): ?> <bdi lang="ar" class="pg-bubble-ar"><?= h($q['name_ar']) ?></bdi><?php endif; ?></span><small><?= h($q['role']) ?></small></span>
+                  <span class="pg-bubble-lang" lang="<?= h($q['lang']) ?>"><?= h($langName[$q['lang']] ?? '') ?></span>
+                </figcaption>
+              </figure>
             </li>
           <?php endforeach; ?>
         </ul>

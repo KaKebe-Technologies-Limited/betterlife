@@ -52,8 +52,8 @@ $strip = [
     ['assets/img/programmes/yumbe-trellis-rows.jpg', 'Trellised vegetables in Yumbe'],
 ];
 
-// Questions people bring to the work (see pp_questions())
-$asks = ['amina', 'chantal', 'fatima', 'esther'];
+// Participants in their own words (see pp_quotes()): three voices from community and savings groups, one per language
+$voices = ['amina', 'esther', 'fatima'];
 
 $feature = 'womens-climate-resilience-yumbe';
 $side = ['smiles', 'betterlife-spring'];
@@ -65,7 +65,7 @@ $pageScripts = ['assets/js/about.js', 'assets/js/programmes.js'];
 $pageHead = ($heroV
         ? '<link rel="preload" as="image" imagesrcset="' . h(implode(', ', array_map(fn($w, $r) => asset_url($r) . " {$w}w", array_keys($heroV), $heroV))) . '" imagesizes="100vw" fetchpriority="high">'
         : '')
-    . pp_asks_head($asks)
+    . pp_quotes_head($voices)
     . '<script>document.documentElement.classList.add("ab-js")</script>';
 
 require __DIR__ . '/includes/header.php';
@@ -229,7 +229,7 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
-  <?= pp_asks_section($asks) ?>
+  <?= pp_quotes_section($voices) ?>
 
   <!-- 6. Community photo strip -->
   <section class="pg-strip" aria-labelledby="pgStripTitle" data-strip>
