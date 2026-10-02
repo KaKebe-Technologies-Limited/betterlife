@@ -364,8 +364,8 @@
 .pg-evidence-frame img { width: 100%; height: 100% !important; object-fit: cover; }
 .pg-evidence-photo figcaption { margin-top: 12px; font-size: 13.5px; color: rgba(255,255,255,.7); }
 .pg-results.is-stack { grid-template-columns: 1fr; gap: 0; }
-.pg-results.is-stack .pg-result { display: grid; grid-template-columns: clamp(150px, 15vw, 210px) minmax(0, 1fr); align-items: baseline; gap: 4px 26px; padding: 20px 0; }
-.pg-results.is-stack .pg-result strong { grid-row: span 2; font-size: clamp(40px, 4vw, 56px); }
+.pg-results.is-stack .pg-result { display: grid; grid-template-columns: clamp(150px, 17vw, 236px) minmax(0, 1fr); align-items: baseline; gap: 4px 26px; padding: 20px 0; }
+.pg-results.is-stack .pg-result strong { grid-row: span 2; font-size: clamp(34px, 3.4vw, 50px); white-space: nowrap; }
 .pg-results.is-stack .pg-result:last-child { border-bottom: 1px solid rgba(255,255,255,.22); }
 
 @media (max-width: 1100px) {
@@ -389,4 +389,80 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .pg-feature, .pg-feature-img { transition: none; }
+}
+
+/* =========================================================
+   Programme-area pages, second edition
+   ========================================================= */
+.pg-area-intro-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(36px, 6vw, 96px); align-items: center; }
+.pg-glance { display: grid; gap: 0; margin: 26px 0 0; border-top: 1px solid var(--ab-line); }
+.pg-glance div { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 4px 18px; padding: 14px 0; border-bottom: 1px solid var(--ab-line); }
+.pg-glance dt { display: inline-flex; align-items: center; gap: 8px; font: 700 12px/1.3 var(--font-body); letter-spacing: .1em; text-transform: uppercase; color: var(--ab-green); }
+.pg-glance dd { margin: 0; font-size: 15.5px; line-height: 1.5; color: var(--ab-ink); }
+/* Three photographs: arch, circle and leaf, with painted strokes behind */
+.pg-trio { position: relative; aspect-ratio: 1 / 1.05; max-width: 560px; width: 100%; margin: 0 auto; }
+.pg-trio .ab-lb { position: absolute; z-index: 1; box-shadow: 0 18px 40px rgba(11, 61, 46, .15); }
+.pg-trio-1 { left: 0; top: 4%; width: 54%; height: 70%; border-radius: 999px 999px 22px 22px; }
+.pg-trio-2 { right: 2%; top: 0; width: 40%; aspect-ratio: 1; border-radius: 50%; }
+.pg-trio-3 { right: 0; bottom: 0; width: 52%; height: 50%; border-radius: 120px 18px 120px 18px; }
+.pg-trio .ab-strokes { z-index: 0; }
+/* Activity write-ups numbered */
+.pg-block-num { display: block; margin-bottom: 8px; font-family: var(--ab-serif); font-size: 15px; font-weight: 600; color: var(--ab-blue); letter-spacing: .06em; }
+/* Featured project across the full width */
+.pg-feature-wide { min-height: 520px; border-radius: 28px 160px 28px 28px; }
+.pg-feature-wide .pg-feature-panel { left: auto; right: 22px; bottom: 22px; }
+.pg-feature-wide.is-text { min-height: 0; background: linear-gradient(135deg, #07392a, #0b3d2e 55%, #03384d); }
+.pg-feature-wide.is-text .pg-feature-panel { position: relative; inset: auto; margin: clamp(24px, 4vw, 48px); }
+/* Closing banner on area pages: no ways grid, so slightly shorter */
+.ab .pg-close.is-area { padding: clamp(68px, 8vw, 110px) 0; }
+/* Other programme areas as photo cards */
+.pg-area-nav.has-photos a { gap: 14px; padding: 10px 16px 10px 10px; }
+.pg-area-nav-img { flex: 0 0 64px; width: 64px; height: 64px; border-radius: 50%; overflow: hidden; background: var(--ab-sand); }
+.pg-area-nav-img img { width: 100%; height: 100% !important; object-fit: cover; }
+.pg-area-nav small { display: block; margin-bottom: 3px; font-family: var(--ab-serif); font-size: 13px; color: var(--ab-blue); }
+
+@media (max-width: 900px) {
+  .pg-area-intro-grid { grid-template-columns: 1fr; }
+  .pg-trio { max-width: 460px; }
+  .pg-feature-wide .pg-feature-panel { left: 18px; right: 18px; }
+}
+@media (max-width: 720px) {
+  .pg-glance div { grid-template-columns: 1fr; }
+  .pg-feature-wide { min-height: 0; border-radius: 22px 80px 22px 22px; }
+  .pg-feature-wide .pg-feature-panel { left: auto; right: auto; bottom: auto; }
+}
+
+/* =========================================================
+   Phones: a shorter overview
+   ========================================================= */
+@media (max-width: 720px) {
+  .ab.pg section { padding: 46px 0; }
+  .ab.pg .pg-hero { padding: 0; }
+  .pg-area-media, .pg-area:nth-child(-n+2) .pg-area-media { aspect-ratio: 16 / 8.5; }
+  .pg-area-body { padding: 16px 18px 20px; }
+  .pg-area-body p { font-size: 14.5px; margin-bottom: 12px; }
+  .pg-area-grid { gap: 14px; }
+  .pg-area-num { font-size: 36px; }
+  .pg-clover { max-width: 330px; }
+  .pg-connect-copy p { font-size: 16px; }
+  .pg-strip-item { height: 200px; }
+  .pg-ways { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .pg-way { padding: 14px; }
+  .pg-way-ico { width: 36px; height: 36px; margin-bottom: 10px; }
+  .pg-way h3 { font-size: 15.5px; }
+  .pg-way p { font-size: 13px !important; }
+  .pg-evidence-frame { aspect-ratio: 16 / 9; }
+  .pg-evidence-photo figcaption { display: none; }
+  .pg-results.is-stack .pg-result { padding: 14px 0; }
+  .pg-results.is-stack .pg-result strong { font-size: 38px; }
+  .pg-feature-img { height: 220px !important; }
+  .pg-side .pg-project-media { aspect-ratio: 16 / 9; }
+  .pg-head-note { display: none; }
+  .pg-trio { max-width: 340px; }
+}
+@media (max-width: 720px) {
+  .pg-area-media, .pg-area:nth-child(-n+2) .pg-area-media { aspect-ratio: 16 / 7.5; }
+  .pg-evidence-photo { display: none; }
+  .pg-side .pg-project-media { aspect-ratio: 16 / 7.5; }
+  .pg-close-inner > p { font-size: 16px; }
 }

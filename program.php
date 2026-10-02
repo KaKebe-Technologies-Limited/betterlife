@@ -23,6 +23,13 @@ $partners = array_values(array_unique(array_filter(array_map(fn($p) => $p['partn
 $blocks = array_map(fn($b) => ['title' => $b[1], 'paras' => pp_paragraphs($pdo, [$b])], $a['blocks'] ?? []);
 $index = array_search($slug, array_keys($areas), true) + 1;
 
+// One project leads the page as a feature; the others follow as cards
+$featureSlug = isset($own[$a['feature'] ?? '']) ? $a['feature'] : array_key_first($own);
+$feature = $featureSlug ? $own[$featureSlug] : null;
+$others = array_filter($own, fn($k) => $k !== $featureSlug, ARRAY_FILTER_USE_KEY);
+$collage = $a['collage'] ?? [];
+$strip = $a['gallery'] ?? [];
+
 $pageTitle = $a['short'];
 $pageDescription = $a['card'];
 [$heroImg, $heroAlt, $heroPos] = $a['hero'];
@@ -34,6 +41,7 @@ $pageHead = ($heroV
         : '')
     . '<script>document.documentElement.classList.add("ab-js")</script>';
 $contactUrl = SITE_URL . '/contact.php?subject=' . rawurlencode('Partnership enquiry: ' . $a['short']);
+$seed = 100 + $index * 7;   // each area gets its own brush strokes
 
 require __DIR__ . '/includes/header.php';
 ?>
@@ -41,6 +49,7 @@ require __DIR__ . '/includes/header.php';
 <main class="ab pg" id="top">
   <?= ab_brush_defs() ?>
 
+  <!-- Opening -->
   <section class="pg-hero is-compact<?= ['right' => ' is-right', 'narrow' => ' is-narrow'][$a['hero_side'] ?? ''] ?? '' ?>" aria-labelledby="pgTitle">
     <div class="pg-hero-media"><?= ab_img($heroImg, $heroAlt, '', false, 'style="object-position: ' . h($heroPos) . '"', '100vw') ?></div>
     <div class="container pg-hero-inner">
@@ -57,28 +66,34 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
-  <!-- Introduction and who takes part -->
-  <section aria-labelledby="pgIntroTitle">
-    <div class="container pg-intro-grid">
+  <!-- Introduction beside an organic photo collage -->
+  <section class="pg-area-intro" aria-labelledby="pgIntroTitle">
+    <div class="container pg-area-intro-grid">
       <div class="pg-intro-copy ab-reveal">
         <span class="ab-eyebrow">About this programme</span>
         <h2 id="pgIntroTitle" class="sr-only">About this programme</h2>
         <?php foreach ($a['intro'] as $i => $para): ?>
           <p<?= $i === 0 ? ' class="pg-intro-lead"' : '' ?>><?= h($para) ?></p>
         <?php endforeach; ?>
+        <dl class="pg-glance">
+          <div><dt><?= icon('users', 16) ?> Who participates</dt><dd><?= h($a['who']) ?></dd></div>
+          <?php if ($own || $linked): ?><div><dt><?= icon('grid', 16) ?> Projects</dt><dd><?= count($own) ?> in this area<?php if ($linked): ?>, <?= count($linked) ?> connected<?php endif; ?></dd></div><?php endif; ?>
+          <?php if ($partners): ?><div><dt><?= icon('heart', 16) ?> Partners</dt><dd><?= h(implode(' · ', $partners)) ?></dd></div><?php endif; ?>
+        </dl>
       </div>
-      <aside class="pg-aside ab-reveal" aria-label="At a glance">
-        <h3>Who participates</h3>
-        <p><?= h($a['who']) ?></p>
-        <?php if ($own): ?>
-          <h3>Projects in this area</h3>
-          <p><?= count($own) ?> <?= count($own) === 1 ? 'project' : 'projects' ?><?php if ($linked): ?>, plus <?= count($linked) ?> connected from other areas<?php endif; ?></p>
-        <?php endif; ?>
-        <?php if ($partners): ?>
-          <h3>Partners</h3>
-          <p><?= h(implode(' · ', $partners)) ?></p>
-        <?php endif; ?>
-      </aside>
+      <?php if (count($collage) >= 3): ?>
+        <div class="pg-trio ab-reveal">
+          <svg class="ab-strokes" viewBox="0 0 600 640" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <g filter="url(#lpBrush)">
+              <path class="f-green" d="<?= lp_brush_d(-30, 470, 150, 446, 46, $seed) ?>"/>
+              <path class="f-blue"  d="<?= lp_brush_d(330, 22, 560, 0, 40, $seed + 2) ?>"/>
+            </g>
+          </svg>
+          <?php foreach (array_slice($collage, 0, 3) as $i => [$p, $cap]): ?>
+            <?= ab_photo($p, $cap, $cap, 'trio', 'pg-trio-' . ($i + 1), '(max-width: 900px) 50vw, 320px') ?>
+          <?php endforeach; ?>
+        </div>
+      <?php endif; ?>
     </div>
   </section>
 
@@ -96,8 +111,9 @@ require __DIR__ . '/includes/header.php';
       <?php endif; ?>
       <?php if ($blocks): ?>
         <div class="pg-blocks">
-          <?php foreach ($blocks as $b): if (!$b['paras']) continue; ?>
+          <?php foreach ($blocks as $n => $b): if (!$b['paras']) continue; ?>
             <article class="pg-block ab-reveal">
+              <span class="pg-block-num"><?= str_pad((string) ($n + 1), 2, '0', STR_PAD_LEFT) ?></span>
               <h3><?= h($b['title']) ?></h3>
               <?php foreach ($b['paras'] as $para): ?><p><?= h($para) ?></p><?php endforeach; ?>
             </article>
@@ -107,7 +123,7 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
-  <!-- Projects -->
+  <!-- Projects: one feature, then the rest -->
   <?php if ($own || $linked): ?>
     <section id="projects" aria-labelledby="pgProjectsTitle">
       <div class="container">
@@ -118,9 +134,24 @@ require __DIR__ . '/includes/header.php';
           </div>
           <a href="<?= SITE_URL ?>/projects.php?area=<?= h(rawurlencode($slug)) ?>" class="pg-link">Filter the project directory <?= icon('arrow-right', 15) ?></a>
         </div>
-        <?php if ($own): ?>
-          <div class="pg-project-grid">
-            <?php foreach ($own as $ps => $p): ?><?= pp_project_card($ps, $p, $areas, '(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 380px', false) ?><?php endforeach; ?>
+        <?php if ($feature): ?>
+          <article class="pg-feature pg-feature-wide ab-reveal<?= empty($feature['image']) ? ' is-text' : '' ?>">
+            <?php if (!empty($feature['image'])): ?>
+              <?= ab_img($feature['image'][0], $feature['image'][1], 'pg-feature-img', true, 'style="object-position: ' . h($feature['image'][2] ?? '50% 50%') . '"', '(max-width: 900px) 100vw, 1240px') ?>
+            <?php endif; ?>
+            <div class="pg-feature-panel">
+              <span class="pg-kicker">Featured project</span>
+              <h3><a href="<?= h(pp_project_url($featureSlug, $feature)) ?>"><?= h($feature['title']) ?></a></h3>
+              <?php if (!empty($feature['location'])): ?><p class="pg-feature-place"><?= icon('map-pin', 14) ?> <?= h($feature['location']) ?></p><?php endif; ?>
+              <p><?= h($feature['summary']) ?></p>
+              <?php if (!empty($feature['partner'])): ?><p class="pg-partner"><?= icon('heart', 14) ?> With <?= h($feature['partner']) ?></p><?php endif; ?>
+              <span class="pg-more" aria-hidden="true">Read the project <?= icon('arrow-right', 15) ?></span>
+            </div>
+          </article>
+        <?php endif; ?>
+        <?php if ($others): ?>
+          <div class="pg-project-grid" style="margin-top: clamp(18px, 2.2vw, 26px);">
+            <?php foreach ($others as $ps => $p): ?><?= pp_project_card($ps, $p, $areas, '(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 380px', false) ?><?php endforeach; ?>
           </div>
         <?php endif; ?>
         <?php if ($linked): ?>
@@ -133,60 +164,89 @@ require __DIR__ . '/includes/header.php';
     </section>
   <?php endif; ?>
 
-  <!-- Selected evidence -->
+  <!-- Selected evidence beside a photograph -->
   <?php if ($a['evidence']): ?>
-    <section class="pg-section-cream" aria-labelledby="pgEvidenceTitle">
-      <div class="container">
-        <div class="ab-head ab-reveal">
-          <span class="ab-eyebrow">Selected evidence</span>
-          <h2 id="pgEvidenceTitle">What the figures show</h2>
+    <section class="pg-evidence" aria-labelledby="pgEvidenceTitle">
+      <div class="container<?= !empty($a['evidence_photo']) ? ' pg-evidence-grid' : '' ?>">
+        <?php if (!empty($a['evidence_photo'])): ?>
+          <figure class="pg-evidence-photo ab-reveal">
+            <span class="pg-evidence-frame"><?= ab_img($a['evidence_photo'][0], $a['evidence_photo'][1], '', true, '', '(max-width: 900px) 100vw, 520px') ?></span>
+            <figcaption><?= h($a['evidence_photo'][1]) ?></figcaption>
+          </figure>
+        <?php endif; ?>
+        <div>
+          <div class="ab-head ab-reveal">
+            <span class="ab-eyebrow">Selected evidence</span>
+            <h2 id="pgEvidenceTitle">What the figures show</h2>
+          </div>
+          <ul class="pg-results is-stack">
+            <?php foreach ($a['evidence'] as $r): ?><?= pp_result($r, null, $projects) ?><?php endforeach; ?>
+          </ul>
+          <p class="pg-evidence-note ab-reveal">Each figure belongs to the project or activity named with it. Figures are shown separately and should not be added together.</p>
         </div>
-        <ul class="pg-results is-light<?= count($a['evidence']) === 4 ? ' is-four' : '' ?>">
-          <?php foreach ($a['evidence'] as $r): ?><?= pp_result($r, null, $projects) ?><?php endforeach; ?>
-        </ul>
-        <p class="pg-evidence-note ab-reveal" style="color: var(--ab-soft) !important;">Each figure belongs to the project or activity named with it. Figures are shown separately and should not be added together.</p>
       </div>
     </section>
   <?php endif; ?>
 
-  <!-- Photographs -->
-  <?php if ($a['gallery']): ?>
+  <!-- Photographs: a strip with controls, or a pair when there are only a few -->
+  <?php if (count($strip) >= 4): ?>
+    <section class="pg-strip" aria-labelledby="pgGalleryTitle" data-strip>
+      <div class="container pg-strip-head ab-reveal">
+        <div>
+          <span class="ab-eyebrow">In pictures</span>
+          <h2 id="pgGalleryTitle">From the field</h2>
+        </div>
+        <div class="pg-strip-nav" hidden>
+          <button type="button" class="pg-round" data-dir="-1" aria-controls="pgStripRow" aria-label="Previous photographs"><?= icon('arrow-right', 18) ?></button>
+          <button type="button" class="pg-round" data-dir="1" aria-controls="pgStripRow" aria-label="Next photographs"><?= icon('arrow-right', 18) ?></button>
+        </div>
+      </div>
+      <ul class="pg-strip-row" id="pgStripRow" tabindex="0" aria-label="Photographs from this programme. Select one to see it larger.">
+        <?php foreach ($strip as [$p, $cap]): ?>
+          <li><?= ab_photo($p, $cap, $cap, 'area', 'pg-strip-item', '(max-width: 720px) 200px, 280px') ?></li>
+        <?php endforeach; ?>
+      </ul>
+    </section>
+  <?php elseif ($strip): ?>
     <section aria-labelledby="pgGalleryTitle">
       <div class="container">
         <div class="ab-head ab-reveal">
           <span class="ab-eyebrow">In pictures</span>
           <h2 id="pgGalleryTitle">From the field</h2>
         </div>
-        <ul class="pg-gallery ab-reveal">
-          <?php foreach ($a['gallery'] as $i => [$p, $cap]): ?>
-            <li><?= ab_photo($p, $cap, $cap, 'area', '', $i === 0 ? '(max-width: 720px) 100vw, 800px' : '(max-width: 720px) 50vw, 400px') ?></li>
-          <?php endforeach; ?>
+        <ul class="pg-gallery is-two ab-reveal">
+          <?php foreach ($strip as [$p, $cap]): ?><li><?= ab_photo($p, $cap, $cap, 'area', '', '(max-width: 720px) 50vw, 600px') ?></li><?php endforeach; ?>
         </ul>
       </div>
     </section>
   <?php endif; ?>
 
-  <!-- Partnership invitation -->
-  <section class="pg-invite" aria-labelledby="pgInviteTitle">
+  <!-- Partnership invitation on a wide photograph -->
+  <section class="pg-close is-area" aria-labelledby="pgInviteTitle">
+    <?php if (!empty($a['invite_bg'])): ?><div class="pg-close-bg"><?= ab_img($a['invite_bg'], '', '', true, '', '100vw') ?></div><?php endif; ?>
     <div class="container">
-      <div class="pg-invite-card ab-reveal">
-        <svg class="ab-strokes" viewBox="0 0 1200 300" preserveAspectRatio="none" aria-hidden="true" focusable="false"><g filter="url(#lpBrush)"><path class="f-green" d="<?= lp_brush_d(980, 40, 1260, 10, 44, 71) ?>"/><path class="f-blue" d="<?= lp_brush_d(-60, 280, 220, 262, 40, 73) ?>"/></g></svg>
-        <div>
-          <h2 id="pgInviteTitle">Partner on <?= h($a['short']) ?></h2>
-          <p><?= h($a['invite']) ?></p>
-        </div>
+      <div class="pg-close-inner ab-reveal">
+        <span class="ab-eyebrow">Partner with us</span>
+        <h2 id="pgInviteTitle">Partner on <?= h($a['short']) ?></h2>
+        <p><?= h($a['invite']) ?></p>
+      </div>
+      <div class="pg-hero-actions ab-reveal" style="margin-top: 28px;">
         <a href="<?= h($contactUrl) ?>" class="pg-btn">Talk to our team <?= icon('arrow-right', 16) ?></a>
+        <a href="<?= SITE_URL ?>/partners.php" class="pg-btn pg-btn-ghost">Meet our partners</a>
       </div>
     </div>
   </section>
 
-  <!-- Other programme areas -->
-  <section class="pg-section-cream" aria-labelledby="pgOtherTitle" style="padding-top: clamp(40px, 5vw, 64px); padding-bottom: clamp(48px, 6vw, 80px);">
+  <!-- Other programme areas, as photo cards -->
+  <section class="pg-section-cream" aria-labelledby="pgOtherTitle" style="padding-top: clamp(44px, 5vw, 68px); padding-bottom: clamp(48px, 6vw, 80px);">
     <div class="container">
-      <h2 id="pgOtherTitle" class="ab-subhead" style="border-top: 0; padding-top: 0; margin-bottom: 20px;">Explore the other programme areas</h2>
-      <ul class="pg-area-nav">
-        <?php foreach ($areas as $os => $oa): if ($os === $slug) continue; ?>
-          <li><a href="<?= h(pp_area_url($os)) ?>"><?= icon($oa['icon'], 18) ?> <?= h($oa['short']) ?></a></li>
+      <h2 id="pgOtherTitle" class="ab-subhead" style="border-top: 0; padding-top: 0; margin-bottom: 22px;">Explore the other programme areas</h2>
+      <ul class="pg-area-nav has-photos">
+        <?php $n = 0; foreach ($areas as $os => $oa): $n++; if ($os === $slug) continue; ?>
+          <li><a href="<?= h(pp_area_url($os)) ?>">
+            <span class="pg-area-nav-img"><?= ab_img($oa['image'][0], '', '', true, 'style="object-position: ' . h($oa['image'][2]) . '"', '160px') ?></span>
+            <span><small><?= str_pad((string) $n, 2, '0', STR_PAD_LEFT) ?></small><?= h($oa['short']) ?></span>
+          </a></li>
         <?php endforeach; ?>
       </ul>
     </div>
