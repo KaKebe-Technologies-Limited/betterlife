@@ -266,13 +266,16 @@ require __DIR__ . '/includes/header.php';
       <div class="container">
         <div class="ab-team ab-reveal">
           <?php if ($leadersHavePhotos): ?>
+            <span class="ab-eyebrow">Who leads BetterLife</span>
             <ul class="ab-team-faces">
               <?php foreach ($leaders as $l): ?>
-                <li><?= ab_img($l['photo'], $l['name'], 'ab-team-photo', true, '', '96px') ?><strong><?= h($l['name']) ?></strong><small><?= h($l['role']) ?></small></li>
+                <li><?= ab_img($l['photo'], $l['name'], 'ab-team-photo', true, '', '(max-width: 720px) 72px, 104px') ?><strong><?= h($l['name']) ?></strong><small><?= h($l['role']) ?></small></li>
               <?php endforeach; ?>
             </ul>
+            <?php if ($managerCountries): ?><p class="ab-team-line">Our leadership works alongside country managers in <?= h($listJoin($managerCountries)) ?>.</p><?php endif; ?>
+          <?php else: ?>
+            <p class="ab-team-line">BetterLife is led by its founder and Executive Director, Denise Ayebare<?php if ($others): ?>, with <?= h($listJoin(array_map(fn($l) => $l['name'] . ' (' . $l['role'] . ')', $others))) ?><?php endif; ?><?php if ($managerCountries): ?>, alongside country managers in <?= h($listJoin($managerCountries)) ?><?php endif; ?>.</p>
           <?php endif; ?>
-          <p class="ab-team-line">BetterLife is led by its founder and Executive Director, Denise Ayebare<?php if ($others): ?>, with <?= h($listJoin(array_map(fn($l) => $l['name'] . ' (' . $l['role'] . ')', $others))) ?><?php endif; ?><?php if ($managerCountries): ?>, alongside country managers in <?= h($listJoin($managerCountries)) ?><?php endif; ?>.</p>
           <a href="<?= SITE_URL ?>/team.php" class="ab-link">Meet the full team and board <?= icon('arrow-right', 15) ?></a>
         </div>
       </div>
