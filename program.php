@@ -123,6 +123,13 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
+  <!-- A voice from BetterLife (draft for Denise Ayebare's approval) -->
+  <?php if (!empty($a['quote'])): ?>
+    <section class="pg-voice-band is-white" aria-label="From our founder">
+      <div class="container"><?= pp_voice($a['quote'], PP_FOUNDER[0], PP_FOUNDER[1], 150 + $index) ?></div>
+    </section>
+  <?php endif; ?>
+
   <!-- Projects: one feature, then the rest -->
   <?php if ($own || $linked): ?>
     <section id="projects" aria-labelledby="pgProjectsTitle">

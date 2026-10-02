@@ -24,9 +24,10 @@ function pp_areas(): array
             'formal' => 'Climate-Resilient Agriculture and Food Security',
             'icon'   => 'leaf',
             'card'   => 'When the rains become unreliable, the first loss may be a crop. We help farmers and families grow food more reliably through demonstration gardens and practical training, from composting and drought-tolerant crops to irrigation, poultry and beekeeping.',
-            'image'  => ['assets/img/programmes/yumbe-garden-woman.jpg', 'A woman in a programme T-shirt working in a garden in Yumbe', '50% 18%'],
+            'image'  => ['assets/img/programmes/yumbe-sack-garden-session.jpg', 'Women laughing as a BetterLife trainer teaches beside their sack gardens in Yumbe', '50% 40%'],
             'hero_side' => 'right',
             'hero'   => ['assets/img/programmes/yumbe-trellis-garden.jpg', 'A BetterLife team member in a trellised vegetable garden in Yumbe', '62% 50%'],
+            'quote'  => 'Women adopt what they can see. When a neighbour’s garden keeps producing through a dry spell, a new method stops being an idea and becomes a choice.',
             'collage' => [
                 ['assets/img/programmes/yumbe-sack-garden.jpg', 'A tiered sack garden in Yumbe'],
                 ['assets/img/programmes/yumbe-cabbage-mulch.jpg', 'A cabbage growing through straw mulch in Yumbe'],
@@ -62,12 +63,13 @@ function pp_areas(): array
             'formal' => 'Green Skills, Livelihoods and Market Access',
             'icon'   => 'basket',
             'card'   => 'Learning a trade is one step. Finding tools, capital and customers is another. We pair practical skills, from tailoring and carpentry to poultry and solar technology, with savings groups, enterprise coaching, finance and routes to market.',
-            'image'  => ['assets/img/programmes/yumbe-poultry-house.jpg', 'A woman standing in the doorway of her poultry house in Yumbe', '50% 6%'],
+            'image'  => ['assets/img/programmes/yumbe-market-shade.jpg', 'Women selling produce under a shade shelter at a market in Yumbe', '40% 55%'],
             'hero'   => ['assets/img/market-stall-vendor.webp', 'A woman standing at her market stall in Yumbe', '70% 35%'],
+            'quote'  => 'Training is only the first step. The real test is whether someone can buy tools, find a customer and still be in business a year later.',
             'collage' => [
-                ['assets/img/programmes/yumbe-market-shade.jpg', 'Women selling produce under a shade shelter in Yumbe'],
-                ['assets/img/programmes/carpentry-workshop.jpg', 'A carpentry workshop in Yumbe'],
                 ['assets/img/programmes/yumbe-shop-counter.jpg', 'A woman serving at her shop counter in Yumbe'],
+                ['assets/img/programmes/carpentry-workshop.jpg', 'A carpentry workshop in Yumbe'],
+                ['assets/img/programmes/rukungiri-scale.jpg', 'A hanging scale used to weigh produce in Rukungiri'],
             ],
             'feature' => 'smiles',
             'evidence_photo' => ['assets/img/vendor-and-children-food-stall.webp', 'A woman preparing food at her stall in Yumbe'],
@@ -80,13 +82,13 @@ function pp_areas(): array
             'who'    => 'Refugees and host-community members, women and young people looking for a route into work or enterprise.',
             'activities' => ['Vocational skills training', 'Enterprise coaching', 'Savings groups', 'Access to finance and small loans', 'Mentorship and business support', 'Market connections'],
             'evidence' => [
-                ['78%', 'Of participants moved into sustainable income pathways', 'SMILES, reported across target groups', 'smiles', 'confirm'],
-                ['85%', 'Reported improved refugee-host relations', 'SMILES, reported across target groups', 'smiles', 'confirm'],
+                ['78%', 'Of participants moved into sustainable income pathways', 'SMILES, reported across target groups', 'smiles'],
+                ['85%', 'Reported improved refugee-host relations', 'SMILES, reported across target groups', 'smiles'],
             ],
             'gallery' => [
+                ['assets/img/programmes/yumbe-poultry-house.jpg', 'A woman standing in the doorway of her poultry house in Yumbe'],
                 ['assets/img/programmes/yumbe-poultry-flock.jpg', 'A poultry house in Yumbe'],
-                ['assets/img/programmes/rukungiri-scale.jpg', 'A hanging scale used to weigh produce in Rukungiri'],
-                ['assets/img/programmes/yumbe-poultry-care.jpg', 'Refilling a drinker in a poultry house'],
+                ['assets/img/programmes/yumbe-coaching-tree.jpg', 'A BetterLife team member speaking with a women’s group in Yumbe'],
                 ['assets/img/programmes/yumbe-poultry-closeup.jpg', 'Chickens at a feeder in Yumbe'],
             ],
             'invite' => 'Back the step after training: start-up tools, small-loan guarantees, business mentoring or a market connection for producers.',
@@ -99,6 +101,7 @@ function pp_areas(): array
             'image'  => ['assets/img/programmes/lcoy-youth-panel.jpg', 'A young speaker on a BetterLife youth panel at LCOY Uganda 2026', '62% 40%'],
             'hero_side' => 'right',
             'hero'   => ['assets/img/about/rukungiri-pupils-desks.jpg', 'Pupils writing at their desks in a classroom in Rukungiri', '70% 50%'],
+            'quote'  => 'Young people will live longest with the decisions made today. They deserve a seat at the table, not only a lesson about it.',
             'collage' => [
                 ['assets/img/programmes/lcoy-group.jpg', 'Speakers and participants at a BetterLife session at LCOY Uganda 2026'],
                 ['assets/img/betterlifeint-source/programs/program-photo-5.jpg', 'Students holding placards at a school environment event'],
@@ -132,6 +135,7 @@ function pp_areas(): array
             'card'   => 'Energy poverty, water insecurity and environmental loss often sit inside the same household. We work with communities on tree nurseries, biogas, briquettes, waste recovery and water access, easing pressure on families and the land at the same time.',
             'image'  => ['assets/img/programmes/clean-cooking-cookoff.jpg', 'BetterLife team members with students at a clean cooking cook-off', '60% 40%'],
             'hero'   => ['assets/img/programmes/rukungiri-solar-sky.jpg', 'A solar panel under a wide sky in Rukungiri', '65% 40%'],
+            'quote'  => 'When a woman no longer walks for hours to find firewood or water, she gets time back. Time is where every other change begins.',
             'collage' => [
                 ['assets/img/programmes/yumbe-tree-nursery.jpg', 'Tree seedlings under a shade net in Yumbe'],
                 ['assets/img/programmes/yumbe-water-point.jpg', 'Women collecting water at a water point in Yumbe'],
@@ -175,6 +179,7 @@ function pp_areas(): array
             'image'  => ['assets/img/programmes/rukungiri-phone-solar.jpg', 'A BetterLife team member using a phone beside a solar panel in Rukungiri', '50% 30%'],
             'hero_side' => 'narrow',
             'hero'   => ['assets/img/programmes/yumbe-weather-app.jpg', 'A weather forecast open on a phone held up in a field in Yumbe', '50% 40%'],
+            'quote'  => 'A phone is only useful when the information on it fits your soil, your crop and your market. That is why every tool we build comes with people who can explain it.',
             'collage' => [
                 ['assets/img/programmes/yumbe-phone-session.jpg', 'Women looking at a phone during a session in Yumbe'],
                 ['assets/img/programmes/radio-studio-mic.jpg', 'BetterLife team members in a radio studio in Yumbe'],
@@ -218,12 +223,12 @@ function pp_projects(): array
             'blocks'   => [['climate-resilient-agriculture', 'Women’s Climate Resilience in Yumbe']],
             'results'  => [
                 ['22% → 92%', 'Knowledge of climate-smart agriculture', 'Among the 72 women who completed structured training'],
-                ['72%', 'Adopted sack or box gardening', 'Women in the programme, reported after training', 'confirm'],
-                ['63%', 'Took up composting', 'Women in the programme, reported after training', 'confirm'],
+                ['72%', 'Adopted sack or box gardening', 'Women in the programme, reported after training'],
+                ['63%', 'Took up composting', 'Women in the programme, reported after training'],
                 ['35%', 'Average reduction in household spending on vegetables', 'Reported by participating households'],
             ],
             'gallery'  => [
-                ['assets/img/programmes/yumbe-sack-garden-session.jpg', 'Women and a BetterLife team member beside sack gardens in Yumbe'],
+                ['assets/img/programmes/yumbe-training-banner.jpg', 'Women at an outdoor training session in Yumbe'],
                 ['assets/img/programmes/yumbe-participant-a.jpg', 'A participant in the programme in Yumbe'],
                 ['assets/img/programmes/yumbe-trainer-flipchart.jpg', 'A trainer at a flip chart during a session in Yumbe'],
                 ['assets/img/programmes/yumbe-large-session.jpg', 'Women in programme T-shirts at a training session in Yumbe'],
@@ -284,14 +289,18 @@ function pp_projects(): array
             'area'     => 'green-skills-livelihoods',
             'who'      => 'Refugees and host-community members',
             'summary'  => 'SMILES brings refugees and host-community members into the same training groups and local economy. Participants learn practical trades, then receive mentorship, business support, market connections and access to small loans, building relationships as they train, save and trade together.',
-            'image'    => ['assets/img/betterlifeint-source/projects/project-smiles-alt.jpg', 'A group of women holding rolled mats at a SMILES activity', '50% 35%'],
+            'image'    => ['assets/img/programmes/yumbe-poultry-care.jpg', 'A young man refilling a drinker in a poultry house in Yumbe, Uganda', '45% 8%'],
+            'image_note' => 'Photograph: poultry work in Yumbe, Uganda. Poultry is one of the trades taught through SMILES.',
+            'photo_place' => 'Photo: Yumbe, Uganda',
             'blocks'   => [['green-skills-livelihoods', 'SMILES']],
             'results'  => [
-                ['78%', 'Moved into sustainable income pathways', 'Reported across SMILES target groups', 'confirm'],
-                ['85%', 'Reported improved refugee-host relations', 'Reported across SMILES target groups', 'confirm'],
-                ['40%', 'Fall in food insecurity', 'Reported across SMILES target groups', 'confirm'],
+                ['78%', 'Moved into sustainable income pathways', 'Reported across SMILES target groups'],
+                ['85%', 'Reported improved refugee-host relations', 'Reported across SMILES target groups'],
+                ['40%', 'Fall in food insecurity', 'Reported across SMILES target groups'],
             ],
-            'gallery'  => [],
+            'gallery'  => [
+                ['assets/img/betterlifeint-source/projects/project-smiles-alt.jpg', 'Participants holding rolled mats at a SMILES activity'],
+            ],
             'related'  => [['project.php?slug=agribusiness-connekt', 'Agribusiness Connekt: links to buyers and finance']],
         ],
         'green-libraries-eco-labs' => [
@@ -471,3 +480,22 @@ function pp_result(array $r, ?string $projectSlug = null, array $projects = []):
     </li>
     <?php return ob_get_clean();
 }
+
+/**
+ * A quotation set large with a painted underline. Quotes in Denise Ayebare's voice are drafts
+ * for her approval; participant quotes are only added once someone has said them and agreed
+ * to their use (add them to a project as 'voices' => [[quote, name, role], ...]).
+ */
+function pp_voice(string $quote, string $name, string $role, int $seed = 141): string
+{
+    ob_start(); ?>
+    <figure class="pg-voice ab-reveal">
+      <span class="pg-voice-mark" aria-hidden="true">“</span>
+      <blockquote><p><?= h($quote) ?></p></blockquote>
+      <svg class="pg-voice-stroke" viewBox="0 0 240 30" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path filter="url(#lpBrush)" class="f-green" d="<?= lp_brush_d(4, 17, 238, 14, 22, $seed, 0.02) ?>"/></svg>
+      <figcaption><strong><?= h($name) ?></strong><span><?= h($role) ?></span></figcaption>
+    </figure>
+    <?php return ob_get_clean();
+}
+
+const PP_FOUNDER = ['Denise Ayebare', 'Founder and Executive Director'];

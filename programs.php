@@ -16,8 +16,8 @@ foreach ($areas as $slug => $a) {
 
 // Three documented results, each kept with its project, group and measurement context
 $evidence = [
-    ['72%', 'Adopted sack or box gardening', 'Women in the programme, reported after training', 'womens-climate-resilience-yumbe', 'confirm'],
-    ['78%', 'Moved into sustainable income pathways', 'Refugee and host-community participants, reported across target groups', 'smiles', 'confirm'],
+    ['72%', 'Adopted sack or box gardening', 'Women in the programme, reported after training', 'womens-climate-resilience-yumbe'],
+    ['78%', 'Moved into sustainable income pathways', 'Refugee and host-community participants, reported across target groups', 'smiles'],
     ['3,000+', 'Books for young people in Alebtong', 'Opened in December 2023 with ten computers and space for around 400 young people', 'apala-youth-centre'],
 ];
 
@@ -177,6 +177,13 @@ require __DIR__ . '/includes/header.php';
           <?php foreach ($side as $slug): ?><?= pp_project_card($slug, $projects[$slug], $areas, '(max-width: 900px) 100vw, 260px') ?><?php endforeach; ?>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- A voice from BetterLife (draft for Denise Ayebare's approval) -->
+  <section class="pg-voice-band" aria-label="From our founder">
+    <div class="container">
+      <?= pp_voice('We do not start with a solution. We start by asking what makes it hard for a family to grow food, earn and plan ahead, and we build from their answers.', PP_FOUNDER[0], PP_FOUNDER[1]) ?>
     </div>
   </section>
 

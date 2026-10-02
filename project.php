@@ -84,6 +84,13 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
+  <!-- Voices from the project: shown only when real, consented quotes have been added -->
+  <?php foreach ($p['voices'] ?? [] as $vi => [$vq, $vn, $vr]): ?>
+    <section class="pg-voice-band<?= $vi ? ' is-white' : '' ?>" aria-label="In their words">
+      <div class="container"><?= pp_voice($vq, $vn, $vr, 170 + $vi) ?></div>
+    </section>
+  <?php endforeach; ?>
+
   <!-- Documented results -->
   <?php if (!empty($p['results'])): ?>
     <section class="pg-section-cream" aria-labelledby="pgResultsTitle">

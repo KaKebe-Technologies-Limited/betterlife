@@ -466,3 +466,18 @@
   .pg-side .pg-project-media { aspect-ratio: 16 / 7.5; }
   .pg-close-inner > p { font-size: 16px; }
 }
+
+/* Voices: a quotation set large, with a painted underline */
+.ab .pg-voice-band { background: var(--ab-cream); padding: clamp(56px, 7vw, 96px) 0; }
+.pg-voice { position: relative; max-width: 900px; margin: 0 auto; text-align: center; }
+.pg-voice-mark { display: block; height: 70px; font-family: var(--ab-serif); font-size: 140px; line-height: 1; color: var(--ab-green); opacity: .9; }
+.pg-voice blockquote { margin: 0; }
+.pg-voice blockquote p { margin: 0 !important; font-family: var(--ab-serif); font-weight: 500; font-size: clamp(25px, 2.9vw, 40px) !important; line-height: 1.3 !important; letter-spacing: -.01em; color: var(--ab-deep) !important; }
+.pg-voice-stroke { display: block; width: 180px; height: 18px; margin: 26px auto 14px; overflow: visible; }
+.pg-voice figcaption strong { display: block; font-size: 16px; color: var(--ab-deep); }
+.pg-voice figcaption span { display: block; margin-top: 3px; font-size: 14px; color: var(--ab-soft); }
+@media (max-width: 720px) {
+  .ab .pg-voice-band { padding: 44px 0; }
+  .pg-voice-mark { height: 50px; font-size: 100px; }
+}
+.ab .pg-voice-band.is-white { background: #fff; padding-bottom: 0; }
