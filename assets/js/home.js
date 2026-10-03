@@ -7,6 +7,7 @@
   document.addEventListener('DOMContentLoaded', function () {
     initHeroFilm();
     initPanels();
+    initLoop();
     initMap();
   });
 
@@ -64,9 +65,35 @@
     });
   }
 
+  /* The farm model: pointing at a step lights it in the loop and the list; when nobody is
+     interacting and the loop is on screen, the highlight moves round slowly (not with reduced motion) */
+  function initLoop() {
+    var loop = document.querySelector('[data-loop]');
+    var steps = document.querySelectorAll('.hm-steps li[data-i]');
+    if (!loop || !steps.length) return;
+    var nodes = loop.querySelectorAll('.hm-node'), current = 0, hold = false, visible = false;
+    function show(i) {
+      current = i;
+      nodes.forEach(function (n, k) { n.classList.toggle('is-on', k === i); });
+      steps.forEach(function (s, k) { s.classList.toggle('is-on', k === i); });
+    }
+    [nodes, steps].forEach(function (list) {
+      list.forEach(function (el, k) {
+        el.addEventListener('mouseenter', function () { hold = true; show(k); });
+        el.addEventListener('mouseleave', function () { hold = false; });
+      });
+    });
+    if (reduceMotion || !('IntersectionObserver' in window)) return;
+    new IntersectionObserver(function (entries) { entries.forEach(function (en) { visible = en.isIntersecting; }); }, { threshold: 0.4 }).observe(loop);
+    setInterval(function () {
+      if (hold || !visible || document.documentElement.classList.contains('ab-motion-paused')) return;
+      show((current + 1) % nodes.length);
+    }, 3200);
+  }
+
   /* Where we work: pointing at a country in the list or on the map lights up both */
   function initMap() {
-    var map = document.querySelector('[data-map]');
+    var map = document.querySelector('[data-reach-map]');
     var list = document.querySelector('.hm-countries-list');
     if (!map || !list) return;
     var rows = list.querySelectorAll('li[data-key]');

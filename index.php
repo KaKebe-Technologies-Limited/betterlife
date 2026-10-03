@@ -47,7 +47,7 @@ $areaPhotos = [
     'climate-resilient-agriculture'      => ['assets/img/programmes/yumbe-garden-woman.jpg', 'A woman standing in a vegetable garden in Yumbe', '50% 30%'],
     'green-skills-livelihoods'           => ['assets/img/programmes/yumbe-poultry-house.jpg', 'A woman standing in the doorway of her poultry house', '50% 35%'],
     'climate-education-youth-leadership' => ['assets/img/classroom-climate-club.webp', 'Pupils raising their hands in a school climate club', '50% 40%'],
-    'clean-energy-water-restoration'     => ['assets/img/school-child-drinking-water.webp', 'A child drinking water at school', '50% 40%'],
+    'clean-energy-water-restoration'     => ['assets/img/programmes/yumbe-water-girl.jpg', 'A girl at a water point in Yumbe', '50% 40%'],
     'digital-innovation'                 => ['assets/img/programmes/rukungiri-phone-solar.jpg', 'A young woman using her phone beside a solar panel in Rukungiri', '50% 30%'],
 ];
 
@@ -68,6 +68,39 @@ $countries = [
     'drc'         => ['DR Congo',    'Democratic Republic of the Congo', 'Programme activity.'],
 ];
 $uganda = $map['countries']['Uganda']['c'];
+
+// School feeding (Rukungiri): five photographs in a mosaic, first one tall
+$schoolPhotos = [
+    ['assets/img/home/school-cup-up.jpg', 'A pupil drinking from a cup at school in Rukungiri', '45% 40%'],
+    ['assets/img/home/school-friends.jpg', 'Four pupils smiling together at school in Rukungiri', '50% 35%'],
+    ['assets/img/home/school-pink-cups.jpg', 'Pupils with their pink cups in class', '55% 45%'],
+    ['assets/img/home/school-washing-cups.jpg', 'Pupils washing their cups in a basin at school', '50% 55%'],
+    ['assets/img/home/school-yellow-cup.jpg', 'A pupil drinking from a blue cup outside the classroom', '50% 35%'],
+];
+
+// The farm model as a loop (supplied by BetterLife; see also farm.php)
+$loop = [
+    ['short' => 'Seedlings and manure', 'title' => 'Seedlings and organic manure',
+        'text' => 'Refugee, displaced and vulnerable host-community families receive seedlings, organic manure and practical training to start producing at home.',
+        'img' => ['assets/img/programmes/yumbe-seedling-trays.jpg', 'Seedling trays in a nursery', '50% 50%']],
+    ['short' => 'A harvest at home', 'title' => 'A harvest at home',
+        'text' => 'Families grow food to eat first. What the household does not need becomes surplus it can sell.',
+        'img' => ['assets/img/home/harvest-tomatoes.jpg', 'A woven basket full of ripe tomatoes', '50% 62%']],
+    ['short' => 'We buy the surplus', 'title' => 'We buy the surplus',
+        'text' => 'BetterLife Agro Tourism Farm buys surplus produce from participating farmers, turning a good season into cash and capital for the next one.',
+        'img' => ['assets/img/home/farm-weighing.jpg', 'A woman weighing a sack of produce on a hanging scale', '45% 45%']],
+    ['short' => 'Value added, sold on', 'title' => 'Value added, sold on',
+        'text' => 'The farm processes, packages and sells ghee, yoghurt, honey and organic manure, creating a market that keeps buying.',
+        'img' => ['assets/img/home/farm-mill.jpg', 'A woman feeding grain into a milling machine', '50% 40%']],
+];
+
+// Products from the farm, each photographed by BetterLife
+$products = [
+    ['assets/img/home/product-yoghurt.jpg', 'BetterLife Yoghurt', 'Strawberry and vanilla', 'Bottles of BetterLife strawberry and vanilla yoghurt'],
+    ['assets/img/home/product-honey.jpg', 'BetterLife Honey', 'Pure honey in jars', 'Stacked jars of BetterLife Honey'],
+    ['assets/img/home/product-ghee.jpg', 'BetterLife Organic Ghee', '100% pure cow butter', 'Jars of BetterLife Organic Ghee'],
+    ['assets/img/product-organic-boost.jpg', 'Organic manure', 'BetterLife Organic Boost liquid fertiliser', 'Containers of BetterLife Organic Boost organic fertiliser'],
+];
 
 $partners = [
     ['foundation-s.png',                'Foundation S, The Sanofi Collective'],
@@ -240,7 +273,90 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
-  <!-- 5. Featured work and the Yumbe film -->
+  <!-- 5. School feeding: why a meal at school matters -->
+  <section class="hm-school" aria-labelledby="hmSchoolTitle">
+    <div class="container hm-school-grid">
+      <div class="hm-school-copy ab-reveal">
+        <span class="ab-eyebrow">School feeding</span>
+        <h2 id="hmSchoolTitle">Feeding children so they can <?= ab_mark('learn', 81) ?></h2>
+        <p class="ab-lead">Most of our work in schools begins with food. We support school feeding in five schools, so the food security work that starts on family farms also reaches children during the school day.</p>
+        <ul class="hm-why">
+          <li><span class="hm-why-ico" aria-hidden="true"><?= icon('sun', 18) ?></span><span><b>Energy to learn.</b> Hungry children struggle to concentrate. A meal at school helps them stay focused through the day.</span></li>
+          <li><span class="hm-why-ico" aria-hidden="true"><?= icon('heart', 18) ?></span><span><b>Less pressure at home.</b> When a harvest falls short, a school meal takes some of the weight off families.</span></li>
+          <li><span class="hm-why-ico" aria-hidden="true"><?= icon('book', 18) ?></span><span><b>More than a meal.</b> The same schools are where our climate clubs, Green Libraries and Eco Labs reach young people.</span></li>
+        </ul>
+        <div class="hm-school-foot">
+          <p class="hm-school-fig"><strong>5</strong><span>schools supported<br>with meals</span></p>
+          <a href="<?= h(pp_area_url('climate-education-youth-leadership')) ?>" class="pg-link">Our work with schools <?= icon('arrow-right', 15) ?></a>
+        </div>
+      </div>
+      <div class="hm-mosaic ab-reveal" aria-label="Photographs of school feeding in Rukungiri">
+        <?php foreach ($schoolPhotos as $i => [$p, $alt, $pos]): ?>
+          <?= ab_photo($p, $alt, $alt, 'school', 'hm-tile t-' . ($i + 1), $i === 0 ? '(max-width: 900px) 50vw, 300px' : '(max-width: 900px) 50vw, 260px', 'style="--pos: ' . h($pos) . '"') ?>
+        <?php endforeach; ?>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. The farm model: inputs out, surplus bought back, value added, sold on -->
+  <section class="hm-farm" aria-labelledby="hmFarmTitle">
+    <div class="container">
+      <div class="hm-farm-head ab-reveal">
+        <div class="ab-head">
+          <span class="ab-eyebrow">BetterLife Agro Tourism Farm</span>
+          <h2 id="hmFarmTitle">From a farmer&rsquo;s surplus to the <?= ab_mark('market shelf', 83) ?></h2>
+        </div>
+        <p class="ab-head-sub">The farm is our engine for food security and value addition. It is a stepping-stone, not a destination: the aim is for families to grow, sell and plan for themselves.</p>
+      </div>
+      <div class="hm-loop-grid">
+        <div class="hm-loop ab-reveal" data-loop>
+          <svg class="hm-loop-ring" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+            <defs><marker id="hmArrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4.2" markerHeight="4.2" orient="auto-start-reverse"><path d="M1 1L9 5L1 9Z"/></marker></defs>
+            <?php // Four quarter arcs, clockwise from the top node, each ending in an arrow before the next node
+            $arc = fn(float $a1, float $a2): string => sprintf('M%.2f %.2f A38 38 0 0 1 %.2f %.2f', 50 + 38 * cos(deg2rad($a1)), 50 + 38 * sin(deg2rad($a1)), 50 + 38 * cos(deg2rad($a2)), 50 + 38 * sin(deg2rad($a2)));
+            foreach ([[-62, -28], [28, 62], [118, 152], [208, 242]] as [$a1, $a2]): ?>
+              <path class="hm-loop-arc" d="<?= $arc($a1, $a2) ?>" marker-end="url(#hmArrow)"/>
+            <?php endforeach; ?>
+          </svg>
+          <div class="hm-loop-core"><span aria-hidden="true"><?= icon('leaf', 22) ?></span><strong>The farm model</strong><small>Every season builds on the last</small></div>
+          <?php foreach ($loop as $i => $s): ?>
+            <figure class="hm-node n-<?= $i + 1 ?><?= $i === 0 ? ' is-on' : '' ?>" data-i="<?= $i ?>">
+              <span class="hm-node-img"><?= ab_img($s['img'][0], $s['img'][1], '', true, 'style="object-position: ' . h($s['img'][2]) . '"', '(max-width: 720px) 34vw, 200px') ?></span>
+              <figcaption><b><?= $i + 1 ?></b><span><?= h($s['short']) ?></span></figcaption>
+            </figure>
+          <?php endforeach; ?>
+        </div>
+        <ol class="hm-steps ab-reveal">
+          <?php foreach ($loop as $i => $s): ?>
+            <li class="<?= $i === 0 ? 'is-on' : '' ?>" data-i="<?= $i ?>">
+              <span class="hm-step-num" aria-hidden="true"><?= $i + 1 ?></span>
+              <div><h3><?= h($s['title']) ?></h3><p><?= h($s['text']) ?></p></div>
+            </li>
+          <?php endforeach; ?>
+          <li class="hm-steps-again" aria-hidden="true"><?= icon('trending-up', 16) ?> And the loop starts again.</li>
+        </ol>
+      </div>
+
+      <div class="hm-shelf-head ab-reveal">
+        <h3>Made from what community farmers produce</h3>
+        <a href="<?= SITE_URL ?>/products.php" class="pg-link">Shop our products <?= icon('arrow-right', 15) ?></a>
+      </div>
+      <ul class="hm-shelf ab-reveal">
+        <?php foreach ($products as [$img, $name, $line, $alt]): ?>
+          <li class="hm-product">
+            <div class="hm-product-img"><?= ab_img($img, $alt, '', true, '', '(max-width: 720px) 70vw, 280px') ?></div>
+            <h4><a href="<?= SITE_URL ?>/products.php"><?= h($name) ?></a></h4>
+            <p><?= h($line) ?></p>
+          </li>
+        <?php endforeach; ?>
+      </ul>
+      <div class="hm-links hm-farm-links ab-reveal">
+        <a href="<?= SITE_URL ?>/farm.php" class="pg-btn">Discover the farm <?= icon('arrow-right', 16) ?></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. Featured work and the Yumbe film -->
   <section class="hm-film" aria-labelledby="hmFilmTitle">
     <div class="container hm-film-grid">
       <div class="hm-film-copy ab-reveal">
@@ -262,7 +378,7 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
-  <!-- 6. In their words -->
+  <!-- 8. In their words -->
   <section class="hm-voice" aria-labelledby="hmVoiceTitle">
     <div class="container">
       <figure class="hm-voice-fig ab-reveal">
@@ -276,10 +392,10 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
-  <!-- 7. Where we work: a night map with lines from Uganda, where it began -->
+  <!-- 9. Where we work: a night map with lines from Uganda, where it began -->
   <section class="hm-reach" aria-labelledby="hmReachTitle">
     <div class="container hm-reach-grid">
-      <div class="hm-map ab-reveal" data-map>
+      <div class="hm-map ab-reveal" data-reach-map>
         <svg viewBox="28 45 580 638" role="img" aria-label="Map of Africa with lines from Uganda to South Sudan, Tanzania, the Democratic Republic of the Congo and Ghana">
           <defs>
             <pattern id="hmDots" width="9" height="9" patternUnits="userSpaceOnUse"><circle cx="4.5" cy="4.5" r="1.5"/></pattern>
@@ -326,28 +442,7 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
-  <!-- 8. BetterLife Farm and its products -->
-  <section class="hm-farm" aria-labelledby="hmFarmTitle">
-    <div class="container hm-farm-grid">
-      <div class="hm-farm-media ab-reveal">
-        <div class="hm-farm-photo"><?= ab_img('assets/img/farm-field-1.jpg', 'A farm worker tending young crops at the BetterLife farm', '', true, 'style="object-position: 40% 50%"', '(max-width: 900px) 100vw, 600px') ?></div>
-        <a href="<?= SITE_URL ?>/products.php" class="hm-jar j-honey" aria-label="Shop BetterLife Honey"><?= ab_img('assets/img/product-honey-real.jpg', '', '', true, '', '220px') ?><span aria-hidden="true">Honey</span></a>
-        <a href="<?= SITE_URL ?>/products.php" class="hm-jar j-ghee" aria-label="Shop BetterLife Ghee"><?= ab_img('assets/img/product-ghee-real.jpg', '', '', true, '', '220px') ?><span aria-hidden="true">Ghee</span></a>
-      </div>
-      <div class="hm-farm-copy ab-reveal">
-        <span class="ab-eyebrow">BetterLife Farm</span>
-        <h2 id="hmFarmTitle">From training to a real market</h2>
-        <p>BetterLife Agro Tourism Farm is where our work in agriculture, clean energy and livelihoods meets production and sales. It demonstrates solar-powered irrigation, greenhouse farming, dairy, beekeeping and livestock, and gives farmers trained by BetterLife a route to supply produce for processing and sale.</p>
-        <ul class="hm-products" aria-label="Our products"><li>BetterLife Honey</li><li>Ghee</li><li>Vanilla Yoghurt</li></ul>
-        <div class="hm-links">
-          <a href="<?= SITE_URL ?>/farm.php" class="pg-btn">Discover the farm <?= icon('arrow-right', 16) ?></a>
-          <a href="<?= SITE_URL ?>/products.php" class="pg-link">Shop our products <?= icon('arrow-right', 15) ?></a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 9. Partners -->
+  <!-- 10. Partners -->
   <section class="hm-partners" aria-labelledby="hmPartnersTitle">
     <div class="container">
       <div class="hm-partners-head ab-reveal">
@@ -362,7 +457,7 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
-  <!-- 10. Closing invitation -->
+  <!-- 11. Closing invitation -->
   <section class="hm-close" aria-labelledby="hmCloseTitle">
     <div class="hm-close-bg"><?= ab_img('assets/img/smiles-group-under-tree-1.webp', '', '', true, 'style="object-position: 50% 55%"', '100vw') ?></div>
     <div class="container">
@@ -379,6 +474,7 @@ require __DIR__ . '/includes/header.php';
   </section>
 </main>
 
+<?= ab_lightbox() ?>
 <?= pp_film_dialog() ?>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>

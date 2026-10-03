@@ -189,21 +189,76 @@
 .hm-voice figcaption span { font-size: 13.5px; color: var(--ab-soft); }
 .hm-voice-stroke { display: block; width: 170px; height: 22px; margin: 16px auto 0; overflow: visible; }
 
-/* ---------- 8. BetterLife Farm ---------- */
+/* ---------- 5. School feeding ---------- */
+.ab .hm-school { background: #fff; }
+.hm-school-grid { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: clamp(36px, 5vw, 80px); align-items: center; }
+.hm-school-copy h2 { margin-bottom: 20px; }
+.hm-why { display: grid; gap: 16px; margin: 26px 0 28px; padding: 0; list-style: none; }
+.hm-why li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; align-items: start; font-size: 15.5px; line-height: 1.55; color: var(--ab-soft); }
+.hm-why b { color: var(--ab-deep); }
+.hm-why-ico { display: inline-flex; width: 44px; height: 44px; align-items: center; justify-content: center; border-radius: 50%; background: rgba(8, 114, 45, .1); color: var(--ab-green); }
+.hm-school-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 32px; padding-top: 22px; border-top: 1px solid var(--ab-line); }
+.hm-school-fig { display: flex; align-items: center; gap: 14px; margin: 0 !important; }
+.hm-school-fig strong { font-family: var(--ab-serif); font-weight: 600; font-size: 64px; line-height: .9; color: var(--ab-green); font-variant-numeric: lining-nums; }
+.hm-school-fig span { font-size: 14px; font-weight: 700; line-height: 1.35; color: var(--ab-deep); }
+.hm-mosaic { display: grid; grid-template-columns: 1.15fr 1fr 1fr; grid-template-rows: repeat(3, clamp(130px, 13vw, 186px)); gap: 12px; }
+.hm-tile { border-radius: 18px; }
+.hm-tile img { object-position: var(--pos, 50% 50%); }
+.hm-tile.t-1 { grid-column: 1; grid-row: 1 / 4; border-radius: 120px 18px 18px 18px; }
+.hm-tile.t-2 { grid-column: 2 / 4; grid-row: 1; border-radius: 18px 80px 18px 18px; }
+.hm-tile.t-3 { grid-column: 2; grid-row: 2 / 4; }
+.hm-tile.t-4 { grid-column: 3; grid-row: 2; }
+.hm-tile.t-5 { grid-column: 3; grid-row: 3; border-radius: 18px 18px 70px 18px; }
+
+/* ---------- 6. The farm model: a loop of four steps, and the products ---------- */
 .ab .hm-farm { background: var(--ab-cream); }
-.hm-farm-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(40px, 6vw, 96px); align-items: center; }
-.hm-farm-media { position: relative; padding-bottom: 54px; }
-.hm-farm-photo { aspect-ratio: 5 / 4; border-radius: 28px 28px 28px 140px; overflow: hidden; background: var(--ab-sand); box-shadow: 0 30px 60px rgba(11, 61, 46, .14); }
-.hm-farm-photo img { width: 100%; height: 100% !important; object-fit: cover; }
-.hm-jar { position: absolute; display: block; width: clamp(128px, 13vw, 180px); aspect-ratio: 1; border-radius: 50%; overflow: hidden; border: 6px solid #fff; background: #fff; box-shadow: 0 18px 40px rgba(11, 61, 46, .22); transition: transform .4s ease; }
-.hm-jar img { width: 100%; height: 100% !important; object-fit: cover; }
-.hm-jar span { position: absolute; left: 50%; bottom: 10px; transform: translateX(-50%); padding: 4px 12px; border-radius: 999px; background: #fff; color: var(--ab-deep); font-size: 12.5px; font-weight: 700; }
-.hm-jar:hover { transform: translateY(-6px) rotate(-3deg); }
-.hm-jar.j-honey { right: -3%; top: 6%; }
-.hm-jar.j-ghee { right: 16%; bottom: 0; }
-.hm-farm-copy h2 { margin-bottom: 20px; }
-.hm-products { display: flex; flex-wrap: wrap; gap: 10px; margin: 22px 0 0; padding: 0; list-style: none; }
-.hm-products li { padding: 8px 15px; border-radius: 999px; background: #fff; border: 1px solid var(--ab-line); font-size: 14px; font-weight: 700; color: var(--ab-deep); }
+.hm-farm-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, .85fr); gap: 16px 56px; align-items: end; margin-bottom: clamp(34px, 4vw, 56px); }
+.hm-farm-head .ab-head { margin-bottom: 0; }
+.hm-farm-head .ab-head-sub { margin: 0; }
+.hm-loop-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(32px, 5vw, 80px); align-items: center; }
+.hm-loop { position: relative; width: min(100%, 540px); aspect-ratio: 1; margin: 0 auto; }
+.hm-loop-ring { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.hm-loop-arc { fill: none; stroke: var(--ab-green); stroke-width: .7; stroke-linecap: round; stroke-dasharray: 1.6 1.5; animation: hmFlow 1.6s linear infinite; }
+#hmArrow path { fill: var(--ab-green); }
+@keyframes hmFlow { to { stroke-dashoffset: -6.2; } }
+.hm-loop-core { position: absolute; left: 50%; top: 50%; width: 36%; aspect-ratio: 1; padding: 12px; transform: translate(-50%, -50%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border-radius: 50%; background: var(--ab-deep); color: #fff; text-align: center; box-shadow: 0 0 0 10px rgba(11, 61, 46, .08), 0 24px 50px rgba(11, 61, 46, .25); }
+.hm-loop-core span { color: #9fd6b2; }
+.hm-loop-core strong { font-family: var(--ab-serif); font-weight: 600; font-size: clamp(16px, 1.7vw, 21px); line-height: 1.15; }
+.hm-loop-core small { max-width: 14ch; font-size: 12px; line-height: 1.3; color: rgba(255, 255, 255, .75); }
+.hm-node { position: absolute; width: 29%; margin: 0; transform: translate(-50%, -50%); }
+.hm-node.n-1 { left: 50%; top: 12%; }
+.hm-node.n-2 { left: 88%; top: 50%; }
+.hm-node.n-3 { left: 50%; top: 88%; }
+.hm-node.n-4 { left: 12%; top: 50%; }
+.hm-node-img { display: block; aspect-ratio: 1; border-radius: 50%; overflow: hidden; border: 5px solid #fff; background: var(--ab-sand); box-shadow: 0 16px 34px rgba(11, 61, 46, .18); transition: transform .45s ease, box-shadow .45s ease; }
+.hm-node-img img { width: 100%; height: 100% !important; object-fit: cover; }
+.hm-node figcaption { position: absolute; left: 50%; top: calc(100% - 16px); transform: translateX(-50%); display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px 5px 5px; border-radius: 999px; white-space: nowrap; background: #fff; box-shadow: 0 8px 18px rgba(11, 61, 46, .12); font-size: 12.5px; font-weight: 700; color: var(--ab-deep); }
+.hm-node figcaption b { display: inline-flex; width: 22px; height: 22px; align-items: center; justify-content: center; border-radius: 50%; background: var(--ab-green); color: #fff; font-size: 12px; }
+.hm-node.is-on .hm-node-img { transform: scale(1.08); box-shadow: 0 0 0 4px var(--ab-green), 0 20px 40px rgba(11, 61, 46, .24); }
+.hm-steps { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.hm-steps li { display: grid; grid-template-columns: 46px minmax(0, 1fr); gap: 16px; align-items: start; padding: 16px 18px; border-radius: 18px; transition: background .3s ease, box-shadow .3s ease; }
+.hm-steps li.is-on { background: #fff; box-shadow: 0 14px 30px rgba(11, 61, 46, .08); }
+.hm-step-num { display: inline-flex; width: 46px; height: 46px; align-items: center; justify-content: center; border-radius: 50%; border: 1.5px solid #d3cfc2; font-family: var(--ab-serif); font-weight: 600; font-size: 20px; color: var(--ab-deep); transition: background .3s ease, color .3s ease, border-color .3s ease; }
+.hm-steps li.is-on .hm-step-num { background: var(--ab-green); border-color: var(--ab-green); color: #fff; }
+.ab .hm-steps h3 { margin: 2px 0 4px; font-family: var(--ab-serif); font-weight: 600; font-size: 20px; line-height: 1.2; }
+.hm-steps p { margin: 0 !important; font-size: 15px !important; line-height: 1.55 !important; }
+.hm-steps .hm-steps-again { display: flex; align-items: center; gap: 8px; padding: 6px 18px; font-family: var(--ab-serif); font-style: italic; font-size: 16px; color: var(--ab-green); }
+.hm-shelf-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 10px 24px; margin: clamp(48px, 6vw, 80px) 0 22px; padding-top: 30px; border-top: 1px solid #ddd8cb; }
+.ab .hm-shelf-head h3 { margin: 0; font-family: var(--ab-serif); font-weight: 600; font-size: clamp(22px, 2.2vw, 28px); }
+.hm-shelf { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 2vw, 24px); margin: 0; padding: 0; list-style: none; }
+.hm-product { position: relative; border-radius: 22px; overflow: hidden; background: #fff; border: 1px solid var(--ab-line); transition: transform .3s ease, box-shadow .3s ease; }
+.hm-product:hover, .hm-product:focus-within { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(11, 61, 46, .12); }
+.hm-product-img { aspect-ratio: 4 / 5; overflow: hidden; background: #f3f1ec; }
+.hm-product-img img { width: 100%; height: 100% !important; object-fit: cover; transition: transform .8s ease; }
+.hm-product:hover .hm-product-img img { transform: scale(1.04); }
+.ab .hm-product h4 { margin: 16px 18px 4px; font-family: var(--ab-serif); font-weight: 600; font-size: 19px; line-height: 1.2; }
+.hm-product h4 a { color: var(--ab-deep); }
+.hm-product h4 a::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+.hm-product h4 a:focus-visible { outline: none; }
+.hm-product:has(h4 a:focus-visible) { outline: 3px solid var(--ab-blue); outline-offset: 3px; }
+.hm-product p { margin: 0 18px 18px !important; font-size: 14px !important; line-height: 1.45 !important; }
+.hm-farm-links { margin-top: 30px; }
+.ab-motion-paused .hm-loop-arc { animation-play-state: paused; }
 
 /* ---------- 9. Partners ---------- */
 .ab .hm-partners { background: #fff; padding: clamp(44px, 5vw, 70px) 0; }
@@ -230,11 +285,12 @@
   .hm-logos { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 @media (max-width: 1000px) {
-  .hm-hero-grid, .hm-origin-grid, .hm-film-grid, .hm-reach-grid, .hm-farm-grid { grid-template-columns: 1fr; }
+  .hm-hero-grid, .hm-origin-grid, .hm-film-grid, .hm-reach-grid, .hm-school-grid, .hm-farm-head, .hm-loop-grid { grid-template-columns: 1fr; }
+  .hm-shelf { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hm-mosaic { max-width: 640px; }
   .hm-art { width: min(100%, 620px); margin: 0 auto; }
   .hm-polaroids { max-width: 600px; width: 100%; margin: 0 auto; }
   .hm-map { max-width: 560px; margin: 0 auto; }
-  .hm-farm-media { max-width: 620px; }
 }
 @media (max-width: 720px) {
   .hm-hero h1 { font-size: clamp(34px, 9vw, 44px); }
@@ -261,18 +317,29 @@
   .hm-cinema-label small { display: none; }
   .hm-countries-list li { grid-template-columns: 1fr; }
   .hm-voice-mark { height: 50px; font-size: 110px; }
-  .hm-farm-photo { border-radius: 22px 22px 22px 90px; }
-  .hm-jar { width: 112px; border-width: 4px; }
+  .hm-mosaic { grid-template-rows: repeat(3, 118px); gap: 8px; }
+  .hm-tile.t-1 { border-radius: 70px 14px 14px 14px; }
+  .hm-school-fig strong { font-size: 52px; }
+  .hm-node figcaption { top: calc(100% - 22px); padding: 3px; }
+  .hm-node figcaption span, .hm-loop-core small { display: none; }
+  .hm-node figcaption b { width: 24px; height: 24px; font-size: 12px; }
+  .hm-node-img { border-width: 3px; }
+  .hm-steps p { font-size: 14px !important; }
+  .hm-steps li { grid-template-columns: 38px minmax(0, 1fr); gap: 12px; padding: 14px 12px; }
+  .hm-step-num { width: 38px; height: 38px; font-size: 17px; }
+  .hm-shelf { gap: 12px; }
+  .ab .hm-product h4 { margin: 12px 12px 3px; font-size: 16px; }
+  .hm-product p { margin: 0 12px 14px !important; font-size: 12.5px !important; }
   .hm-logos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hm-logos li { height: 80px; }
   .hm-close-bg::after { background: linear-gradient(180deg, rgba(6, 22, 15, .55) 0%, rgba(6, 22, 15, .9) 100%); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hm-kicker-dot, .hm-pulse, .hm-map-glow, .ab-js .hm-outline { animation: none; }
+  .hm-kicker-dot, .hm-pulse, .hm-map-glow, .ab-js .hm-outline, .hm-loop-arc { animation: none; }
   .hm-pulse { display: none; }
   .ab-js .hm-arcs path { stroke-dashoffset: 0; animation: none !important; }
   .hm-ribbon-track { width: auto; animation: none; justify-content: center; }
   .hm-ribbon-list[aria-hidden="true"] { display: none; }
   .hm-ribbon-list { flex-wrap: wrap; justify-content: center; row-gap: 10px; }
-  .hm-panel, .hm-panel-img, .hm-panel-body, .hm-panel-tab, .hm-polaroid, .hm-jar, .hm-cinema-img, .hm-window-video { transition: none; }
+  .hm-panel, .hm-panel-img, .hm-panel-body, .hm-panel-tab, .hm-polaroid, .hm-product, .hm-product-img img, .hm-node-img, .hm-cinema-img, .hm-window-video { transition: none; }
 }
