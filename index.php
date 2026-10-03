@@ -45,9 +45,31 @@ $figures = [
     ['5', 'countries'],
 ];
 
+// Who we are: the collage. Each tile is placed on a named grid area (see home.css); no captions on the page,
+// descriptions only for screen readers and the photo viewer. 'extra' tiles are left out on narrow screens.
+$story = [
+    'a' => ['assets/img/home/story-team-children.jpg', 'Two BetterLife team members laughing with a group of children outside a home', '50% 55%'],
+    'b' => ['assets/img/home/story-child.jpg', 'A young child looking back over his shoulder', '50% 30%'],
+    'c' => ['assets/img/home/yumbe-laughing.jpg', 'A woman laughing on a blue chair outside her home', '50% 35%'],
+    'd' => ['assets/img/home/yumbe-facilitator.jpg', 'A woman leading a training session at a flipchart', '60% 35%'],
+    'e' => ['assets/img/home/story-team-mat.jpg', 'The BetterLife team sitting on a mat with a women\'s group', '50% 50%'],
+    'f' => ['assets/img/home/story-mother-baby.jpg', 'A mother with her baby on her back', '50% 30%'],
+    'g' => ['assets/img/home/story-girl-door.jpg', 'A girl standing at the door of her home', '50% 40%'],
+    'h' => ['assets/img/home/story-baby.jpg', 'A baby eating a snack', '50% 35%'],
+    'i' => ['assets/img/home/story-pouring.jpg', 'A woman pouring a warm drink into a cup', '55% 40%'],
+    'j' => ['assets/img/home/story-learning.jpg', 'A participant and a BetterLife team member going over notes together', '50% 30%'],
+    'l' => ['assets/img/home/story-bucket-garden.jpg', 'Vegetables growing in buckets hung along a wall', '50% 40%', true],
+    'm' => ['assets/img/home/yumbe-listening.jpg', 'A woman standing in a field', '50% 30%', true],
+    'n' => ['assets/img/home/story-homes.jpg', 'Two homes with thatched roofs', '50% 55%', true],
+    'o' => ['assets/img/home/story-pupil.jpg', 'A young pupil in her school uniform', '50% 30%', true],
+    'q' => ['assets/img/home/story-bottle-tower.jpg', 'A tower garden built from recycled plastic bottles', '50% 45%', true],
+    'r' => ['assets/img/home/story-drip-greens.jpg', 'Leafy greens growing under a drip irrigation line', '50% 50%', true],
+];
+$storyMore = count(array_filter($story, fn($t) => !empty($t[3])));
+
 // Five programme areas, each with a portrait not used on the Programmes overview
 $areaPhotos = [
-    'climate-resilient-agriculture'      => ['assets/img/programmes/yumbe-garden-woman.jpg', 'A woman standing in a vegetable garden in Yumbe', '50% 30%'],
+    'climate-resilient-agriculture'      => ['assets/img/home/area-food-garden.jpg', 'Vegetables and herbs growing in a vertical garden of white pipes', '45% 40%'],
     'green-skills-livelihoods'           => ['assets/img/programmes/yumbe-poultry-house.jpg', 'A woman standing in the doorway of her poultry house', '50% 35%'],
     'climate-education-youth-leadership' => ['assets/img/classroom-climate-club.webp', 'Pupils raising their hands in a school climate club', '50% 40%'],
     'clean-energy-water-restoration'     => ['assets/img/programmes/yumbe-water-girl.jpg', 'A girl at a water point in Yumbe', '50% 40%'],
@@ -222,31 +244,40 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
-  <!-- 3. Who we are -->
+  <!-- 3. Who we are: the story in words, then the people and places behind it, unlabelled -->
   <section class="hm-origin" aria-labelledby="hmOriginTitle">
-    <div class="container hm-origin-grid">
-      <div class="hm-origin-copy ab-reveal">
-        <span class="ab-eyebrow">Who we are</span>
-        <h2 id="hmOriginTitle">Started in 2021 with USD 200 and <?= ab_mark('lived experience', 47) ?></h2>
-        <p class="ab-lead">BetterLife International was founded in Uganda by a refugee-led team of young people who had grown up facing many of the challenges our communities face today.</p>
-        <p>For a family living with displacement, unreliable rain and few ways to earn, finding the next meal can take up much of the day. So we work on what changes that: land to farm, skills to use and enterprises that bring in money.</p>
-        <div class="hm-links">
-          <a href="<?= SITE_URL ?>/about.php" class="pg-btn">Read our story <?= icon('arrow-right', 16) ?></a>
-          <a href="<?= SITE_URL ?>/team.php" class="pg-link">Meet the team <?= icon('arrow-right', 15) ?></a>
+    <div class="container">
+      <div class="hm-origin-head ab-reveal">
+        <div>
+          <span class="ab-eyebrow">Who we are</span>
+          <h2 id="hmOriginTitle">Started in 2021 with USD 200 and <?= ab_mark('lived experience', 47) ?></h2>
+        </div>
+        <div class="hm-origin-text">
+          <p class="ab-lead">BetterLife International was founded in Uganda by a refugee-led team of young people who had grown up facing many of the challenges our communities face today.</p>
+          <p>For a family living with displacement, unreliable rain and few ways to earn, finding the next meal can take up much of the day. So we work on what changes that: land to farm, skills to use and enterprises that bring in money.</p>
+          <div class="hm-links">
+            <a href="<?= SITE_URL ?>/about.php" class="pg-btn">Read our story <?= icon('arrow-right', 16) ?></a>
+            <a href="<?= SITE_URL ?>/team.php" class="pg-link">Meet the team <?= icon('arrow-right', 15) ?></a>
+          </div>
         </div>
       </div>
-      <div class="hm-polaroids ab-reveal" aria-label="Photographs of the BetterLife team and communities">
-        <svg class="ab-strokes" viewBox="0 0 600 560" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+      <div class="hm-collage ab-reveal" role="group" aria-label="Photographs of the people and places behind our work">
+        <svg class="ab-strokes" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true" focusable="false">
           <g filter="url(#lpBrush)">
-            <path class="f-blue"  d="<?= lp_brush_d(360, 30, 600, 6, 48, 41) ?>"/>
-            <path class="f-green" d="<?= lp_brush_d(-20, 470, 220, 500, 44, 45) ?>"/>
+            <path class="f-green" d="<?= lp_brush_d(-40, 560, 260, 610, 60, 41) ?>"/>
+            <path class="f-blue"  d="<?= lp_brush_d(985, 140, 1045, 380, 46, 45) ?>"/>
           </g>
         </svg>
-        <figure class="hm-polaroid p-1"><?= ab_img('assets/img/home/yumbe-facilitator.jpg', 'A woman leading a training session at a flipchart in Yumbe', '', true, 'style="object-position: 60% 40%"', '(max-width: 900px) 70vw, 360px') ?><figcaption>A training session in Yumbe</figcaption></figure>
-        <figure class="hm-polaroid p-2 is-tall"><?= ab_img('assets/img/home/yumbe-listening.jpg', 'A woman standing in a field in Yumbe', '', true, 'style="object-position: 50% 30%"', '(max-width: 900px) 45vw, 240px') ?><figcaption>A participant in Yumbe</figcaption></figure>
-        <figure class="hm-polaroid p-3 is-tall"><?= ab_img('assets/img/home/yumbe-laughing.jpg', 'A woman laughing on a blue chair outside her home in Yumbe', '', true, 'style="object-position: 50% 35%"', '(max-width: 900px) 45vw, 240px') ?><figcaption>At home in Yumbe</figcaption></figure>
-        <div class="hm-stamp s-year" aria-hidden="true"><span>Founded</span><strong>2021</strong></div>
-        <div class="hm-stamp s-money" aria-hidden="true"><span>Started with</span><strong>USD 200</strong></div>
+        <?php foreach ($story as $area => $t): [$p, $alt, $pos] = $t; $extra = !empty($t[3]);
+          $big = $area === 'a'; $more = $area === 'j' ? ' data-more="+' . $storyMore . '"' : '';
+          echo ab_photo($p, $alt, $alt, 'story', 'hm-cl' . ($extra ? ' is-extra' : '') . ($more ? ' has-more' : ''),
+              $big ? '(max-width: 900px) 100vw, 640px' : '(max-width: 900px) 50vw, 300px',
+              'style="grid-area: ' . $area . '; --pos: ' . $pos . '"' . $more);
+          if ($area === 'j'): ?>
+            <div class="hm-cl hm-cl-note is-stamp is-extra" style="grid-area: k" aria-hidden="true"><span>Founded</span><strong>2021</strong><span>with USD 200</span></div>
+          <?php endif;
+        endforeach; ?>
+        <div class="hm-cl hm-cl-note is-quote is-extra" style="grid-area: p" aria-hidden="true"><p>Started by people who had lived it.</p></div>
       </div>
     </div>
   </section>
@@ -382,7 +413,7 @@ require __DIR__ . '/includes/header.php';
       </div>
       <div class="hm-cinema-col ab-reveal">
         <div class="hm-cinema">
-          <?= ab_img('assets/img/home/yumbe-film-still.jpg', 'Two women in conversation at a training session in Yumbe', 'hm-cinema-img', true, '', '(max-width: 900px) 100vw, 720px') ?>
+          <?= ab_img('assets/img/home/yumbe-tour-poster.jpg', 'A woman stands to speak at a training session', 'hm-cinema-img', true, 'style="object-position: 50% 30%"', '(max-width: 900px) 100vw, 720px') ?>
           <?php if ($hasTour): ?>
             <button type="button" class="hm-cinema-play" data-film="<?= h(asset_url($tour['src'])) ?>?v=<?= filemtime(__DIR__ . '/' . $tour['src']) ?>" data-film-title="<?= h($tour['title']) ?>">
               <span class="pg-film-play-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5Z"/></svg></span>

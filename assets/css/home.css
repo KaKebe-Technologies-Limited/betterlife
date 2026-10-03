@@ -72,23 +72,35 @@
 
 /* ---------- 3. Who we are ---------- */
 .ab .hm-origin { background: #fff; }
-.hm-origin-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(36px, 6vw, 96px); align-items: center; }
-.hm-origin h2 { margin-bottom: 22px; font-size: clamp(32px, 3.8vw, 52px); }
-.hm-polaroids { position: relative; min-height: 560px; }
-.hm-polaroid { position: absolute; margin: 0; padding: 12px 12px 46px; border-radius: 6px; background: #fff; box-shadow: 0 22px 50px rgba(11, 61, 46, .16); transition: transform .5s ease, box-shadow .5s ease; }
-.hm-polaroid img { width: 100%; aspect-ratio: 4 / 3; height: auto !important; object-fit: cover; border-radius: 3px; }
-.hm-polaroid.is-tall img { aspect-ratio: 4 / 5; }
-.hm-polaroid.is-tall figcaption { font-size: 14px; white-space: nowrap; }
-.hm-polaroid figcaption { position: absolute; left: 0; right: 0; bottom: 13px; text-align: center; font-family: var(--ab-serif); font-style: italic; font-size: 16px; color: var(--ab-deep); }
-.hm-polaroid.p-1 { z-index: 1; left: 0; top: 10%; width: 60%; transform: rotate(-4deg); }
-.hm-polaroid.p-2 { z-index: 2; right: 0; top: 0; width: 38%; transform: rotate(5deg); }
-.hm-polaroid.p-3 { z-index: 3; left: 30%; bottom: 0; width: 36%; transform: rotate(-3deg); }
-.hm-polaroid:hover { z-index: 4; transform: rotate(0) scale(1.03); box-shadow: 0 30px 60px rgba(11, 61, 46, .22); }
-.hm-stamp { position: absolute; z-index: 5; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 112px; height: 112px; border-radius: 50%; background: var(--ab-green); color: #fff; text-align: center; box-shadow: 0 14px 30px rgba(8, 114, 45, .3); }
-.hm-stamp span { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: .85; }
-.hm-stamp strong { font-family: var(--ab-serif); font-weight: 600; font-size: 25px; line-height: 1.1; }
-.hm-stamp.s-year { left: 6%; bottom: 6%; transform: rotate(-10deg); }
-.hm-stamp.s-money { right: 2%; top: auto; bottom: 10%; background: var(--ab-blue); transform: rotate(8deg); box-shadow: 0 14px 30px rgba(0, 124, 173, .3); }
+.hm-origin-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px clamp(36px, 6vw, 96px); align-items: end; margin-bottom: clamp(30px, 4vw, 52px); }
+.hm-origin h2 { margin: 0; font-size: clamp(32px, 3.8vw, 52px); }
+.hm-origin-text .ab-lead { margin-top: 0 !important; }
+.hm-origin-text .hm-links { margin-top: 22px; }
+/* The collage: 8 columns of photographs on a named grid; a row is about two thirds of a column wide,
+   so a 1 x 2 tile is a portrait and a 2 x 2 tile a landscape */
+.hm-collage { --g: 12px; --cols: 8; --gutter: clamp(20px, 5vw, 56px); position: relative; display: grid; gap: var(--g);
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  grid-auto-rows: calc((min(100vw, 1240px) - 2 * var(--gutter) - (var(--cols) - 1) * var(--g)) / var(--cols) * .66);
+  grid-template-areas:
+    "a a a a b c d d"
+    "a a a a b c d d"
+    "a a a a e e f g"
+    "a a a a e e f g"
+    "h i i k k j l m"
+    "h i i k k j l m"
+    "n n o q r r p p"
+    "n n o q r r p p"; }
+.hm-collage .ab-strokes { z-index: 0; inset: -26px -30px; width: calc(100% + 60px); height: calc(100% + 52px); }
+.hm-cl { position: relative; z-index: 1; border-radius: 14px; }
+.hm-cl img { object-position: var(--pos, 50% 40%); }
+.hm-collage > .hm-cl:first-of-type { border-radius: 140px 14px 14px 14px; }
+.hm-cl-note { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 14px; text-align: center; color: #fff; }
+.hm-cl-note.is-stamp { background: var(--ab-green); border-radius: 14px 14px 70px 14px; }
+.hm-cl-note.is-stamp span { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
+.hm-cl-note.is-stamp strong { margin: 2px 0 4px; font-family: var(--ab-serif); font-weight: 600; font-size: clamp(34px, 3.4vw, 50px); line-height: 1; }
+.hm-cl-note.is-quote { background: var(--ab-blue); border-radius: 14px 70px 14px 14px; }
+.ab .hm-cl-note.is-quote p { margin: 0; max-width: 16ch; font-family: var(--ab-serif); font-style: italic; font-weight: 500; font-size: clamp(18px, 1.7vw, 24px) !important; line-height: 1.25 !important; color: #fff !important; }
+.hm-cl.has-more::after { content: attr(data-more); position: absolute; inset: 0; z-index: 1; display: none; align-items: center; justify-content: center; background: rgba(6, 22, 15, .58); color: #fff; font-family: var(--ab-serif); font-weight: 600; font-size: 26px; }
 
 /* ---------- 4. Five areas: a swipeable row; wide screens with a mouse get panels that open ---------- */
 .ab .hm-areas { background: var(--ab-cream); }
@@ -117,7 +129,7 @@
   .hm-panels { height: clamp(500px, 40vw, 580px); gap: 12px; margin: 0; padding: 0; overflow: visible; }
   .hm-panel { flex: 1 1 0; min-width: 0; min-height: 0; transition: flex-grow .75s cubic-bezier(.2, .7, .2, 1); }
   .hm-panel.is-on { flex-grow: 4.4; }
-  .hm-panel::after { background: linear-gradient(180deg, rgba(6, 22, 15, .35) 0%, rgba(6, 22, 15, .15) 30%, rgba(6, 22, 15, .35) 55%, rgba(6, 22, 15, .9) 100%); }
+  .hm-panel::after { background: linear-gradient(180deg, rgba(6, 22, 15, .35) 0%, rgba(6, 22, 15, .15) 28%, rgba(6, 22, 15, .5) 50%, rgba(6, 22, 15, .85) 72%, rgba(6, 22, 15, .94) 100%); }
   .hm-panel-img { transition: transform 1.4s ease; }
   .hm-panel.is-on .hm-panel-img { transform: scale(1.04); }
   .hm-panel-tab { display: block; position: absolute; left: 50%; bottom: 30px; max-height: calc(100% - 110px); overflow: hidden; transform: translateX(-50%) rotate(180deg); writing-mode: vertical-rl; font-family: var(--ab-serif); font-weight: 600; font-size: 20px; line-height: 1.15; color: #fff; text-shadow: 0 2px 12px rgba(0, 0, 0, .4); transition: opacity .3s ease; }
@@ -304,7 +316,10 @@
   .hm-shelf { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hm-mosaic { max-width: 640px; }
   .hm-art { width: min(100%, 620px); margin: 0 auto; }
-  .hm-polaroids { max-width: 600px; width: 100%; margin: 0 auto; }
+  .hm-origin-head { grid-template-columns: 1fr; }
+  .hm-collage { --cols: 4; grid-template-areas: "a a a a" "a a a a" "a a a a" "b c d d" "b c d d" "e e f g" "e e f g" "h i i j" "h i i j"; }
+  .hm-cl.is-extra { display: none; }
+  .hm-cl.has-more::after { display: flex; }
   .hm-map { max-width: 560px; margin: 0 auto; }
 }
 @media (max-width: 720px) {
@@ -319,17 +334,10 @@
   .hm-ribbon-track::-webkit-scrollbar { display: none; }
   .hm-ribbon-list[aria-hidden="true"] { display: none; }
   .hm-ribbon-list { padding: 18px 20px 18px 0; }
-  .hm-polaroids { min-height: 400px; }
-  .hm-polaroid.p-1 { width: 64%; top: 8%; }
-  .hm-polaroid.p-2 { width: 40%; }
-  .hm-polaroid.p-3 { width: 40%; left: 26%; }
+  .hm-collage { --g: 8px; }
+  .hm-collage > .hm-cl:first-of-type { border-radius: 80px 12px 12px 12px; }
+  .hm-cl { border-radius: 12px; }
   .hm-steps.is-js li[data-i]:not(.is-on), .hm-steps.is-js .hm-steps-again { display: none; }
-  .hm-polaroid { padding: 8px 8px 34px; }
-  .hm-polaroid figcaption { bottom: 9px; font-size: 12.5px; }
-  .hm-polaroid.is-tall figcaption { font-size: 11px; }
-  .hm-stamp { width: 78px; height: 78px; }
-  .hm-stamp strong { font-size: 19px; }
-  .hm-stamp span { font-size: 9px; }
   .hm-film-fig { gap: 14px; padding: 14px 16px; }
   .hm-cinema { border-radius: 80px 22px 22px 22px; }
   .hm-cinema-play .pg-film-play-ico { width: 56px; height: 56px; }
@@ -369,5 +377,5 @@
   .hm-ribbon-track { width: auto; animation: none; justify-content: center; }
   .hm-ribbon-list[aria-hidden="true"] { display: none; }
   .hm-ribbon-list { flex-wrap: wrap; justify-content: center; row-gap: 10px; }
-  .hm-panel, .hm-panel-img, .hm-panel-body, .hm-panel-tab, .hm-polaroid, .hm-product, .hm-product-img img, .hm-node-img, .hm-cinema-img, .hm-window-video { transition: none; }
+  .hm-panel, .hm-panel-img, .hm-panel-body, .hm-panel-tab, .hm-product, .hm-product-img img, .hm-node-img, .hm-cinema-img, .hm-window-video { transition: none; }
 }
