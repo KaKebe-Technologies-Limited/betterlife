@@ -97,12 +97,12 @@ $uganda = $map['countries']['Uganda']['c'];
 // School feeding (Rukungiri): a mosaic of five tiles. Tile 2 is a short silent film from the school kitchen
 // (the washing-up photograph stands in until the film exists).
 $schoolPhotos = [
-    // Different schools and uniforms: green, a lesson at the blackboard, everyday clothes, red
+    // Pupils at school: a cup in class, a lesson at the blackboard, a cup outside, four friends
     1 => ['assets/img/school-child-drinking-water.webp', 'A pupil in a green shirt drinking from a blue cup in class', '50% 30%'],
     2 => ['assets/img/home/school-washing-cups.jpg', 'Pupils washing their cups in a basin at school', '50% 55%'],
     3 => ['assets/img/home/school-classroom.jpg', 'A teacher writing on the blackboard in front of pupils in class', '58% 50%'],
     4 => ['assets/img/home/school-yellow-cup.jpg', 'A pupil drinking from a blue cup outside the classroom', '50% 30%'],
-    5 => ['assets/img/betterlifeint-source/projects/project-climate-education-alt.jpg', 'Pupils in red uniforms at a climate education session', '68% 40%'],
+    5 => ['assets/img/about/rukungiri-pupils.jpg', 'Four pupils smiling together at school', '56% 40%'],
 ];
 $schoolFilm = ['src' => 'assets/video/school-kitchen.mp4', 'poster' => 'assets/img/home/school-kitchen.jpg',
     'alt' => 'Cooks and pupils preparing and serving a meal in a school kitchen in Rukungiri', 'label' => 'In the school kitchen'];

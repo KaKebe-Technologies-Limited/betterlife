@@ -54,7 +54,7 @@ $howPhotos = [
 
 $whoPhotos = [
     'Women and Girls'                 => ['assets/img/about/rukungiri-two-women.jpg', 'Two women smiling in a maize field', '18% 50%'],
-    'Children and Young People'       => ['assets/img/betterlifeint-source/projects/project-climate-education-alt.jpg', 'Pupils in red uniforms working together at a climate education session', '60% 45%'],
+    'Children and Young People'       => ['assets/img/about/rukungiri-pupils.jpg', 'Four smiling pupils in school uniform'],
     'Refugees and Displaced Families' => ['assets/img/about/yumbe-four-women.jpg', 'Four women smiling together in Yumbe'],
     'Smallholder Farmers'             => ['assets/img/about/rukungiri-maize-smile.jpg', 'A smiling farmer standing in her maize crop'],
 ];
