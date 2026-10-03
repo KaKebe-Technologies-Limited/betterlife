@@ -21,7 +21,7 @@ $years = [
             ['20', 'Plastic Banks, with 25 local cooperatives formed around them'],
         ],
         'mark'  => 'Green Libraries, Eco Labs and 20 Plastic Banks',
-        'photo' => ['assets/img/home/story-team-children.jpg', 'Two BetterLife team members with a group of children outside a home in Yumbe', '42% 60%'],
+        'photo' => ['assets/img/impact/classroom-hand-up.jpg', 'A pupil raising his hand in class in Rukungiri', '38% 52%'],
     ],
     '2023' => [
         'reach' => 37550,
@@ -33,7 +33,7 @@ $years = [
             ['30', 'schools holding environmental debates, with more than 2,500 students'],
         ],
         'mark'  => 'BetterLife Agro Tourism Farm founded',
-        'photo' => ['assets/img/about/yumbe-girl-running.jpg', 'A girl running along a path in Yumbe', '50% 35%'],
+        'photo' => ['assets/img/woman-winnowing-grain.webp', 'A woman winnowing grain at the farm in Rukungiri', '60% 33%'],
     ],
     '2024' => [
         'reach' => 68500,
@@ -44,8 +44,8 @@ $years = [
             ['5,400+', 'young people and women in SMILES skills training and mentoring'],
             ['2,300+', 'young people in climate leadership and community action'],
         ],
-        'mark'  => 'Climate education in 120+ schools',
-        'photo' => ['assets/img/programmes/yumbe-mother-baby.jpg', 'A mother laughing with her baby at a programme session in Yumbe', '42% 40%'],
+        'mark'  => '9,600+ farmers trained at demonstration farms',
+        'photo' => ['assets/img/impact/maize-woman-smile.jpg', 'A farmer smiling among her maize in Rukungiri', '45% 30%'],
     ],
     '2025' => [
         'reach' => 112430,
@@ -57,7 +57,7 @@ $years = [
             ['60+', 'youth dialogues on climate action'],
         ],
         'mark'  => '18,900 farmers on Soilla',
-        'photo' => ['assets/img/impact/staff-with-child.jpg', 'A BetterLife team member laughing with a child in her arms', '50% 42%'],
+        'photo' => ['assets/img/programmes/rukungiri-soilla-phone.jpg', 'A young farmer smiling as he shows the Soilla app on his phone in Rukungiri', '50% 30%'],
     ],
 ];
 $first = array_key_first($years); $last = array_key_last($years);
@@ -84,18 +84,18 @@ $questions = [
     ['Are people using what they learnt?', '72%', 'adopted sack or box gardening', 'Women in the programme, reported after training', 'womens-climate-resilience-yumbe', 'Women’s Climate Resilience in Yumbe',
         ['assets/img/impact/seedlings-woman.jpg', 'A woman in a programme T-shirt holding seedlings ready to plant in Yumbe', '50% 35%']],
     ['Are families growing more food?', '35%', 'average reduction in household spending on vegetables', 'Reported by participating households as home production improved', 'womens-climate-resilience-yumbe', 'Women’s Climate Resilience in Yumbe',
-        ['assets/img/woman-winnowing-grain.webp', 'A woman winnowing grain with a woven tray', '50% 38%']],
+        ['assets/img/impact/cabbages-mulched.jpg', 'Cabbages growing under straw mulch in Yumbe', '45% 55%']],
     ['Are incomes becoming more stable?', '78%', 'moved into sustainable income pathways', 'Reported across SMILES target groups', 'smiles', 'SMILES',
         ['assets/img/programmes/yumbe-poultry-care.jpg', 'A young man refilling a drinker in a poultry house in Yumbe', '50% 30%']],
     ['Are communities better placed to face the next shock?', '40%', 'fall in food insecurity', 'Reported across SMILES target groups', 'smiles', 'SMILES',
-        ['assets/img/impact/mother-baby-yumbe.jpg', 'A mother holding her smiling baby at a programme session in Yumbe', '55% 45%']],
+        ['assets/img/programmes/yumbe-mother-baby.jpg', 'A mother laughing with her baby at a programme session in Yumbe', '48% 30%']],
 ];
 
 // What change looks like, each line with a photograph
 $changes = [
-    ['Impact is a woman harvesting vegetables from a sack garden beside her home instead of buying everything at the market.', 'assets/img/impact/maize-woman-smile.jpg', 'A woman smiling among her crops in Rukungiri', '45% 30%'],
-    ['It is a young refugee starting a poultry business and trading with the host community.', 'assets/img/impact/poultry-house.jpg', 'Chickens around feeders and drinkers in a poultry house', '50% 55%'],
-    ['It is a farmer checking market information before deciding where to sell.', 'assets/img/impact/scale-dial.jpg', 'A hanging scale weighing a sack of produce in Rukungiri', '50% 30%'],
+    ['Impact is a woman harvesting vegetables from a sack garden beside her home instead of buying everything at the market.', 'assets/img/programmes/yumbe-sack-garden.jpg', 'Cabbages growing in a tiered sack garden in Yumbe', '55% 50%'],
+    ['It is a young refugee starting a poultry business and trading with the host community.', 'assets/img/programmes/yumbe-poultry-house.jpg', 'A woman standing in the doorway of her poultry house in Yumbe', '50% 56%'],
+    ['It is a farmer checking market information before deciding where to sell.', 'assets/img/programmes/yumbe-phone-session.jpg', 'Women looking at a phone together during a session in Yumbe', '42% 45%'],
     ['It is a child eating a meal at school instead of learning on an empty stomach.', 'assets/img/impact/school-cup.jpg', 'A pupil holding his cup at mealtime in a classroom in Rukungiri', '50% 35%'],
     ['It is a household cooking with biogas instead of spending hours looking for firewood.', 'assets/img/impact/biogas-mixing.jpg', 'A young man mixing slurry at the inlet of a biogas digester beside a cattle shed in Rukungiri', '50% 40%'],
 ];
@@ -123,7 +123,7 @@ $reportFile = function (array $r): array {
 $latest = $reports ? $reports[count($reports) - 1] : null;
 $latestFile = $latest ? $reportFile($latest) : null;
 
-$closeBg = 'assets/img/impact/terraced-fields.jpg';
+$closeBg = 'assets/img/impact/cabbage-rows.jpg';
 $pageStyles  = ['assets/css/about.css', 'assets/css/programmes.css', 'assets/css/impact.css'];
 $pageScripts = ['assets/js/about.js', 'assets/js/impact.js'];
 $pageHead = '<script>document.documentElement.classList.add("ab-js")</script>';
