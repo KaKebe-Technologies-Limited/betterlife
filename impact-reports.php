@@ -78,12 +78,17 @@ foreach ($pts as [$x, $y]) {
 $firstPt = reset($pts); $lastPt = end($pts);
 $area = $line . sprintf(' L%.1f %d L%.1f %d Z', $lastPt[0], $py1, $firstPt[0], $py1);
 
-// Four things we track after training, each answered with a documented project result (see pp_projects())
+// Four things we track after training, each answered with a documented project result (see pp_projects()).
+// Shown as photo bars: each result fills its own bar, out of 100 per cent. [question, result, what, context, project slug, project, photo]
 $questions = [
-    ['Are people using what they learnt?', '72%', 'adopted sack or box gardening', 'Women in the programme, reported after training', 'womens-climate-resilience-yumbe', 'Women’s Climate Resilience in Yumbe'],
-    ['Are families growing more food?', '35%', 'average reduction in household spending on vegetables', 'Reported by participating households as home production improved', 'womens-climate-resilience-yumbe', 'Women’s Climate Resilience in Yumbe'],
-    ['Are incomes becoming more stable?', '78%', 'moved into sustainable income pathways', 'Reported across SMILES target groups', 'smiles', 'SMILES'],
-    ['Are communities better placed to face the next shock?', '40%', 'fall in food insecurity', 'Reported across SMILES target groups', 'smiles', 'SMILES'],
+    ['Are people using what they learnt?', '72%', 'adopted sack or box gardening', 'Women in the programme, reported after training', 'womens-climate-resilience-yumbe', 'Women’s Climate Resilience in Yumbe',
+        ['assets/img/impact/greenhouse-seedlings.jpg', 'A young man tending rows of seedlings in a greenhouse', '38% 40%']],
+    ['Are families growing more food?', '35%', 'average reduction in household spending on vegetables', 'Reported by participating households as home production improved', 'womens-climate-resilience-yumbe', 'Women’s Climate Resilience in Yumbe',
+        ['assets/img/impact/drying-harvest.jpg', 'A woman pouring harvested beans onto a drying rack', '52% 45%']],
+    ['Are incomes becoming more stable?', '78%', 'moved into sustainable income pathways', 'Reported across SMILES target groups', 'smiles', 'SMILES',
+        ['assets/img/impact/mushroom-stall.jpg', 'A young man showing mushroom growing bags at an exhibition stand', '50% 35%']],
+    ['Are communities better placed to face the next shock?', '40%', 'fall in food insecurity', 'Reported across SMILES target groups', 'smiles', 'SMILES',
+        ['assets/img/impact/mother-baby-yumbe.jpg', 'A mother holding her smiling baby at a programme session in Yumbe', '55% 45%']],
 ];
 
 // What change looks like, each line with a photograph
@@ -191,7 +196,7 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
-  <!-- 2. Four things we track, each answered with a documented result -->
+  <!-- 2. Four things we track: each answer fills its own photo bar, out of 100 per cent -->
   <section class="im-questions" aria-labelledby="imQTitle">
     <div class="container">
       <div class="ab-head ab-head-split ab-reveal">
@@ -201,23 +206,23 @@ require __DIR__ . '/includes/header.php';
         </div>
         <p class="ab-head-sub">We track four things. Here is what two of our programmes found when they asked.</p>
       </div>
-      <ol class="im-q-grid">
-        <?php foreach ($questions as $n => [$ask, $num, $what, $ctx, $slug, $project]): ?>
-          <li class="im-q ab-reveal">
-            <div class="im-q-ask">
-              <span class="im-q-num"><?= sprintf('%02d', $n + 1) ?></span>
+      <ol class="im-qb-grid">
+        <?php foreach ($questions as $n => [$ask, $num, $what, $ctx, $slug, $project, $photo]): $v = min(100, (int) $num) / 100; ?>
+          <li class="im-qb ab-reveal" style="--v: <?= $v ?>; --i: <?= $n ?>">
+            <div class="im-qb-head">
+              <span class="im-qb-no"><?= sprintf('%02d', $n + 1) ?></span>
               <h3><?= h($ask) ?></h3>
             </div>
-            <div class="im-q-found">
-              <span class="im-q-label">What we found</span>
-              <strong><?= h($num) ?></strong>
-              <p><?= h($what) ?></p>
-              <p class="im-q-ctx"><?= h($ctx) ?></p>
-              <a href="<?= SITE_URL ?>/project.php?slug=<?= h($slug) ?>"><?= h($project) ?> <?= icon('arrow-right', 14) ?></a>
+            <div class="im-qb-track">
+              <span class="im-qb-fill"><?= ab_img($photo[0], $photo[1], '', true, 'style="object-position: ' . h($photo[2]) . '"', '(max-width: 720px) 50vw, 300px') ?></span>
+              <strong class="im-qb-val"><?= h($num) ?></strong>
             </div>
+            <p class="im-qb-what"><?= h($what) ?></p>
+            <p class="im-qb-src"><?= h($ctx) ?>. <a href="<?= SITE_URL ?>/project.php?slug=<?= h($slug) ?>"><?= h($project) ?> <?= icon('arrow-right', 13) ?></a></p>
           </li>
         <?php endforeach; ?>
       </ol>
+      <p class="im-qb-note">Each bar fills to its own result, out of 100 per cent.</p>
     </div>
   </section>
 

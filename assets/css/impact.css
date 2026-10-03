@@ -53,34 +53,30 @@
 .ab-js .im-growth:not(.is-in) .im-stamp { opacity: 0; transform: rotate(-30deg) scale(.6); }
 .ab .im-growth-note { margin: 44px 0 0; font-size: 13px; line-height: 1.5; color: var(--ab-soft); }
 
-/* ---------- 2. Four things we track ---------- */
+/* ---------- 2. Four things we track: photo bars ---------- */
 .ab .im-questions { background: #fff; }
-.im-q-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-.im-q { display: flex; flex-direction: column; border-radius: 26px; overflow: hidden; background: var(--ab-cream); border: 1px solid var(--ab-line); }
-.im-q:nth-child(2) { transition-delay: .08s; }
-.im-q:nth-child(3) { transition-delay: .16s; }
-.im-q:nth-child(4) { transition-delay: .24s; }
-.im-q-ask { flex: 1; padding: 24px 22px 30px; }
-.im-q-num { font: 700 12px/1 var(--font-body); letter-spacing: .16em; color: var(--ab-blue); }
-.im-q h3 { margin: 12px 0 0; font-family: var(--ab-serif); font-weight: 600; font-size: clamp(20px, 1.7vw, 23px); line-height: 1.28; color: var(--ab-deep); }
-.im-q-found { position: relative; padding: 22px 22px 24px; background: var(--ab-green); color: #fff; }
-.im-q:nth-child(2) .im-q-found { background: var(--ab-deep); }
-.im-q:nth-child(3) .im-q-found { background: var(--ab-blue); }
-.im-q:nth-child(4) .im-q-found { background: #03384d; }
-/* A small tail, like the answer to a question */
-.im-q-found::before { content: ''; position: absolute; left: 26px; top: -11px; border: 11px solid transparent; border-top: 0; border-bottom-color: inherit; }
-.im-q-found::before { border-bottom-color: var(--ab-green); }
-.im-q:nth-child(2) .im-q-found::before { border-bottom-color: var(--ab-deep); }
-.im-q:nth-child(3) .im-q-found::before { border-bottom-color: var(--ab-blue); }
-.im-q:nth-child(4) .im-q-found::before { border-bottom-color: #03384d; }
-.im-q-label { display: block; font: 700 11px/1 var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: rgba(255, 255, 255, .78); }
-.im-q-found strong { display: block; margin: 12px 0 6px; font-family: var(--ab-serif); font-weight: 600; font-size: clamp(40px, 3.6vw, 54px); line-height: 1; letter-spacing: -.01em; }
-.ab .im-q-found p { margin: 0; font-size: 15.5px; line-height: 1.45; color: #fff; }
-.ab .im-q-found p.im-q-ctx { margin-top: 8px; font-size: 13px; line-height: 1.45; color: rgba(255, 255, 255, .74); }
-.im-q-found a { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 13.5px; font-weight: 700; color: #fff; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
-.im-q-found a:hover { text-decoration-thickness: 2px; }
-.pg .im-q-found a:focus-visible { outline-color: #fff; }
-
+/* Four columns whose question, bar and answer line up across (subgrid rows) */
+.im-qb-grid { --track: clamp(300px, 32vw, 430px); list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: clamp(14px, 2.2vw, 30px); row-gap: 0; }
+.im-qb { display: grid; grid-row: span 4; grid-template-rows: subgrid; row-gap: 0; align-content: start; }
+.im-qb:nth-child(2) { transition-delay: .08s; }
+.im-qb:nth-child(3) { transition-delay: .16s; }
+.im-qb:nth-child(4) { transition-delay: .24s; }
+.im-qb-head { padding-bottom: 18px; }
+.im-qb-no { display: block; font: 700 12px/1 var(--font-body); letter-spacing: .16em; color: var(--ab-blue); }
+.ab .im-qb h3 { margin: 10px 0 0; font-family: var(--ab-serif); font-weight: 600; font-size: clamp(19px, 1.65vw, 23px); line-height: 1.25; color: var(--ab-deep); }
+/* The track runs from 0 to 100 per cent; the photograph fills it to the result */
+.im-qb-track { position: relative; align-self: end; justify-self: start; width: min(100%, 210px); height: var(--track); border-radius: 999px 999px 18px 18px; background: repeating-linear-gradient(to top, var(--ab-cream) 0 calc(25% - 1px), var(--ab-line) calc(25% - 1px) 25%), var(--ab-cream); }
+.im-qb-fill { position: absolute; left: 0; right: 0; bottom: 0; height: calc(var(--v) * 100%); border-radius: 999px 999px 18px 18px; overflow: hidden; background: var(--ab-sand); clip-path: inset(0 0 0 0); transition: clip-path 1.2s cubic-bezier(.2, .8, .2, 1) calc(var(--i) * 160ms + 200ms); }
+.im-qb-fill img { width: 100%; height: 100% !important; object-fit: cover; }
+.im-qb-fill::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(11, 61, 46, 0) 45%, rgba(11, 61, 46, .4)); }
+.im-qb-val { position: absolute; z-index: 1; left: 50%; bottom: calc(var(--v) * 100% + 10px); transform: translateX(-50%); padding: 7px 16px; border-radius: 999px; background: #fff; box-shadow: 0 10px 24px rgba(11, 61, 46, .16); font-family: var(--ab-serif); font-weight: 600; font-size: clamp(24px, 2.3vw, 32px); line-height: 1; color: var(--ab-green); white-space: nowrap; font-variant-numeric: lining-nums; transition: opacity .5s ease calc(var(--i) * 160ms + 1.1s), transform .5s ease calc(var(--i) * 160ms + 1.1s); }
+.im-qb:nth-child(even) .im-qb-val { color: var(--ab-blue); }
+.ab-js .im-qb:not(.is-in) .im-qb-fill { clip-path: inset(100% 0 0 0); }
+.ab-js .im-qb:not(.is-in) .im-qb-val { opacity: 0; transform: translate(-50%, 10px); }
+.ab .im-qb-what { margin: 16px 0 0; font-family: var(--ab-serif); font-weight: 500; font-size: clamp(17px, 1.45vw, 20px); line-height: 1.3; color: var(--ab-deep); }
+.ab .im-qb-src { margin: 8px 0 0; font-size: 13px; line-height: 1.5; color: var(--ab-soft); }
+.im-qb-src a { display: inline-flex; align-items: center; gap: 5px; font-weight: 700; color: var(--ab-green); }
+.ab .im-qb-note { margin: clamp(26px, 3vw, 38px) 0 0; font-size: 13px; color: var(--ab-soft); }
 /* ---------- 3. Headline figures ---------- */
 .ab .im-reach { background: var(--ab-cream); }
 .im-figs { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: minmax(206px, auto); gap: 14px; }
@@ -195,10 +191,10 @@
 
 /* ---------- Narrower screens ---------- */
 @media (max-width: 1100px) {
-  .im-q-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .im-figs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 900px) {
+  .im-qb-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 44px; }
   .im-hero-grid, .im-years-grid, .im-change-grid { grid-template-columns: 1fr; }
   .im-hero h1 { max-width: 16ch; }
   .im-shelf-col { max-width: 520px; width: 100%; margin-left: auto; margin-right: auto; }
@@ -235,16 +231,19 @@
   .ab .im-change-list p { font-size: 18.5px; }
 }
 @media (max-width: 560px) {
-  /* The four questions become a row to swipe through */
-  .im-q-grid { --pad: clamp(20px, 5vw, 56px); display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; margin: 0 calc(var(--pad) * -1); padding: 0 var(--pad) 6px; scroll-padding-inline: var(--pad); scrollbar-width: none; }
-  .im-q-grid::-webkit-scrollbar { display: none; }
-  .im-q { flex: 0 0 84%; scroll-snap-align: start; }
-  .ab-js .im-q.ab-reveal { opacity: 1; transform: none; }
+  .im-qb-grid { --track: 230px; column-gap: 12px; row-gap: 34px; }
+  .ab .im-qb h3 { font-size: 16.5px; }
+  .im-qb-head { padding-bottom: 12px; }
+  .im-qb-val { font-size: 21px; padding: 6px 12px; }
+  .ab .im-qb-what { font-size: 15.5px; }
+  .ab .im-qb-src { font-size: 12px; }
   .im-btn-meta { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .im-line, .im-area, .im-pt, .im-stamp, .im-dots i, .im-book, .im-change-photo img, .im-fig-bg img { transition: none; }
+  .im-qb-fill, .im-qb-val, .im-line, .im-area, .im-pt, .im-stamp, .im-dots i, .im-book, .im-change-photo img, .im-fig-bg img { transition: none; }
   .ab-js .im-growth:not(.is-in) .im-line { stroke-dashoffset: 0; }
+  .ab-js .im-qb:not(.is-in) .im-qb-fill { clip-path: inset(0 0 0 0); }
+  .ab-js .im-qb:not(.is-in) .im-qb-val { opacity: 1; transform: translateX(-50%); }
   .ab-js .im-growth:not(.is-in) .im-area, .ab-js .im-growth:not(.is-in) .im-pt { opacity: 1; transform: translate(-50%, -50%); }
   .ab-js .im-growth:not(.is-in) .im-stamp { opacity: 1; transform: rotate(-9deg); }
   .ab-js .im-fig:not(.is-in) .im-dots i { transform: none; }
