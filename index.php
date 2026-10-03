@@ -273,10 +273,10 @@ require __DIR__ . '/includes/header.php';
         </div>
       </div>
     </div>
-    <!-- Three rows run the full width; each glides sideways as the page scrolls (see home.js), and can be swiped -->
-    <div class="hm-gallery ab-reveal" role="group" aria-label="Photographs of the people and places behind our work">
+    <!-- Three rows run the full width; each glides sideways as the page scrolls (see about.js), and can be swiped -->
+    <div class="ab-glide hm-gallery ab-reveal" role="group" aria-label="Photographs of the people and places behind our work">
       <?php foreach ($storyRows as $r => $row): ?>
-        <div class="hm-grow<?= $r === 0 ? ' is-tall' : '' ?>" data-glide="<?= $r % 2 ? -1 : 1 ?>">
+        <div class="ab-glide-row<?= $r === 0 ? ' is-tall' : '' ?>" data-glide="<?= $r % 2 ? -1 : 1 ?>">
           <?php foreach ($row as $t):
             if ($t[0] === 'note'):
               if ($t[1] === 'growth'): ?>
@@ -286,7 +286,7 @@ require __DIR__ . '/includes/header.php';
               <?php endif;
             else:
               [$p, $alt, $pos] = $t;
-              echo ab_photo($p, $alt, $alt, 'story', 'hm-gt', $r === 0 ? '(max-width: 720px) 60vw, 520px' : '(max-width: 720px) 50vw, 400px',
+              echo ab_photo($p, $alt, $alt, 'story', 'ab-glide-item', $r === 0 ? '(max-width: 720px) 60vw, 520px' : '(max-width: 720px) 50vw, 400px',
                   'style="--ar: ' . $shape($p) . '; --pos: ' . $pos . '"');
             endif;
           endforeach; ?>

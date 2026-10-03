@@ -90,18 +90,29 @@ $journeyPhotos = [
     '2026' => ['assets/img/about/rukungiri-communal-farm.jpg', 'A wide maize field below forested hills', 'Our 20-acre communal farm in Rukungiri, 2026'],
 ];
 
-$strip = [
-    ['assets/img/about/yumbe-staff-child.jpg', 'A BetterLife team member holding a child in Yumbe'],
-    ['assets/img/about/rukungiri-poultry.jpg', 'A woman feeding chickens in a poultry house in Rukungiri'],
-    ['assets/img/about/yumbe-elder-smile.jpg', 'An older woman smiling outside her shop in Yumbe'],
-    ['assets/img/about/rukungiri-classroom.jpg', 'Pupils at their desks in a classroom in Rukungiri'],
-    ['assets/img/about/yumbe-poultry-feeders.jpg', 'Programme participants celebrating with new poultry feeders in Yumbe'],
-    ['assets/img/about/yumbe-2025-shirt.jpg', 'A smiling woman holding a programme T-shirt in Yumbe'],
-    ['assets/img/about/rukungiri-staff-maize.jpg', 'A BetterLife team member in a maize field in Rukungiri'],
-    ['assets/img/children-at-borehole.webp', 'Children fetching water at a borehole'],
-    ['assets/img/about/yumbe-man-child.jpg', 'A BetterLife team member laughing with a child in Yumbe'],
-    ['assets/img/about/soroti-wac-2026.jpg', 'A Women’s Action Circle session in Soroti'],
+// Photographs from our work: two rows that glide in opposite directions (see the strip below)
+$stripRows = [
+    [
+        ['assets/img/about/yumbe-staff-child.jpg', 'A BetterLife team member holding a child in Yumbe'],
+        ['assets/img/about/yumbe-elder-smile.jpg', 'An older woman smiling outside her shop in Yumbe'],
+        ['assets/img/about/rukungiri-poultry.jpg', 'A woman feeding chickens in a poultry house in Rukungiri'],
+        ['assets/img/about/yumbe-poultry-feeders.jpg', 'Programme participants celebrating with new poultry feeders in Yumbe'],
+        ['assets/img/about/yumbe-girl-running.jpg', 'A girl running along a path'],
+        ['assets/img/about/rukungiri-classroom.jpg', 'Pupils at their desks in a classroom in Rukungiri'],
+    ],
+    [
+        ['assets/img/about/yumbe-2025-shirt.jpg', 'A smiling woman holding a programme T-shirt in Yumbe'],
+        ['assets/img/children-at-borehole.webp', 'Children fetching water at a borehole'],
+        ['assets/img/about/rukungiri-staff-maize.jpg', 'A BetterLife team member in a maize field in Rukungiri'],
+        ['assets/img/about/yumbe-laughing-notes.jpg', 'A woman laughing as she writes during a training session'],
+        ['assets/img/about/yumbe-man-child.jpg', 'A BetterLife team member laughing with a child in Yumbe'],
+        ['assets/img/about/soroti-wac-2026.jpg', 'A Women’s Action Circle session in Soroti'],
+        ['assets/img/about/yumbe-girl-jerrycan.jpg', 'A girl carrying a jerrycan on her head'],
+    ],
 ];
+
+// Natural shape of each photograph, so the strip never crops a face into an awkward box
+$shape = function (string $p): float { $s = @getimagesize(__DIR__ . '/' . $p); return $s ? round($s[0] / $s[1], 3) : 1.0; };
 
 $contact = fn(string $subject): string => SITE_URL . '/contact.php?subject=' . rawurlencode($subject);
 
@@ -155,7 +166,7 @@ require __DIR__ . '/includes/header.php';
       <div class="ab-hero-copy">
         <nav class="ab-crumb" aria-label="Breadcrumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span aria-hidden="true">/</span><span aria-current="page">About Us</span></nav>
         <p class="ab-kicker"><span>Refugee-led</span> <i aria-hidden="true">&middot;</i> <span>Youth-led</span> <i aria-hidden="true">&middot;</i> <span>Women-led</span></p>
-        <h1 id="abHeroTitle">It Began with the <span class="ab-mark">Lives We Knew<svg viewBox="0 0 240 30" preserveAspectRatio="none" aria-hidden="true"><path filter="url(#lpBrush)" d="<?= lp_brush_d(4, 17, 238, 14, 22, 17, 0.02) ?>"/></svg></span></h1>
+        <h1 id="abHeroTitle">It began with the <span class="ab-mark">lives we knew<svg viewBox="0 0 240 30" preserveAspectRatio="none" aria-hidden="true"><path filter="url(#lpBrush)" d="<?= lp_brush_d(4, 17, 238, 14, 22, 17, 0.02) ?>"/></svg></span></h1>
         <p class="ab-hero-lead">This work did not begin in a conference room. It began with young people who knew that poverty, displacement and climate change do not arrive one at a time, and who wanted solutions that make sense in the whole of a person&rsquo;s life.</p>
         <a href="#beginnings" class="ab-hero-scroll">Read our story <?= icon('chevron-down', 16) ?></a>
       </div>
@@ -340,7 +351,7 @@ require __DIR__ . '/includes/header.php';
     <div class="container ab-systems-grid">
       <div class="ab-systems-copy ab-reveal">
         <span class="ab-eyebrow">How we work</span>
-        <h2 id="abSystemsTitle">A Failed Harvest Is Never Just a Farming Problem</h2>
+        <h2 id="abSystemsTitle">A failed harvest is never just a farming problem</h2>
         <p class="ab-lead">When a woman tells us her harvest failed, seeds may appear to be the answer. Listen longer and the picture changes. She may have no water nearby. She may spend much of the day collecting firewood. She may lack money for inputs, access to a phone or a buyer for what she grows.</p>
         <p class="ab-pull ab-pull-sm">Giving her seeds alone leaves most of the problem untouched.</p>
         <p>We take a systems approach because people live in systems. One programme may include a demonstration garden, a savings group, a digital tool and a buyer connection, shaped by the barriers people actually face.</p>
@@ -552,11 +563,16 @@ require __DIR__ . '/includes/header.php';
   <!-- 10. Community photo strip -->
   <section class="ab-strip" aria-labelledby="abStripTitle">
     <h2 class="sr-only" id="abStripTitle">Photographs from our work</h2>
-    <ul class="ab-strip-row">
-      <?php foreach ($strip as [$p, $cap]): ?>
-        <li><?= ab_photo($p, $cap, $cap, 'strip', 'ab-strip-item', '240px') ?></li>
+    <!-- Two rows at the photographs' natural shape, gliding in opposite directions as the page scrolls -->
+    <div class="ab-glide ab-reveal">
+      <?php foreach ($stripRows as $r => $row): ?>
+        <div class="ab-glide-row<?= $r === 0 ? ' is-tall' : '' ?>" data-glide="<?= $r % 2 ? -1 : 1 ?>">
+          <?php foreach ($row as [$p, $cap]): ?>
+            <?= ab_photo($p, $cap, $cap, 'strip', 'ab-glide-item', $r === 0 ? '(max-width: 720px) 60vw, 460px' : '(max-width: 720px) 50vw, 400px', 'style="--ar: ' . $shape($p) . '"') ?>
+          <?php endforeach; ?>
+        </div>
       <?php endforeach; ?>
-    </ul>
+    </div>
   </section>
 
   <!-- Partners and accountability -->

@@ -340,14 +340,27 @@
 /* =========================================================
    12. Community photo strip
    ========================================================= */
-.ab .ab-strip { padding: clamp(28px, 3.5vw, 44px) 0 clamp(20px, 2.5vw, 30px); }
-.ab-strip-row {
-  display: flex; gap: 16px; list-style: none; margin: 0; overflow-x: auto; scroll-snap-type: x mandatory;
-  padding: 4px max(20px, calc((100vw - 1240px) / 2 + 56px)) 18px; scroll-padding-inline: max(20px, calc((100vw - 1240px) / 2 + 56px));
-  scrollbar-width: thin; scrollbar-color: #c9c2b3 transparent;
+.ab .ab-strip { padding: clamp(40px, 5vw, 72px) 0; overflow: hidden; }
+
+/* Gliding photo gallery (About and Home): full-width rows of photographs at their natural shape. The first photo
+   of each row lines up with the page text; the rows run off both edges with a soft fade and glide sideways in
+   opposite directions as the page scrolls (about.js). Rows can also be swiped; with reduced motion they just scroll. */
+.ab-glide { --gpad: max(20px, calc((100vw - 1240px) / 2 + 56px)); display: grid; gap: 14px; }
+.ab-glide-row { --h: clamp(130px, 16vw, 230px); display: flex; gap: 14px; overflow-x: auto; overflow-y: hidden; padding: 0 var(--gpad); scrollbar-width: none; overscroll-behavior-x: contain;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 3%, #000 97%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 3%, #000 97%, transparent 100%); }
+.ab-glide-row::-webkit-scrollbar { display: none; }
+.ab-glide-row.is-tall { --h: clamp(170px, 21vw, 300px); }
+.ab-glide-row:focus-within { scroll-behavior: smooth; }
+.ab-glide-item { flex: none; height: var(--h); aspect-ratio: var(--ar, 1); border-radius: 16px; }
+.ab-glide-item img { object-position: var(--pos, 50% 40%); }
+.ab-glide-row > .ab-glide-item:first-child { border-radius: 90px 16px 16px 16px; }
+.ab-glide-row > :last-child { border-radius: 16px 16px 90px 16px; }
+@media (max-width: 720px) {
+  .ab-glide, .ab-glide-row { gap: 10px; }
+  .ab-glide-item { border-radius: 12px; }
+  .ab-glide-row > .ab-glide-item:first-child { border-radius: 56px 12px 12px 12px; }
+  .ab-glide-row > :last-child { border-radius: 12px 12px 56px 12px; }
 }
-.ab-strip-row li { flex: 0 0 clamp(170px, 16vw, 220px); scroll-snap-align: start; }
-.ab-strip-item { aspect-ratio: 4 / 4.8; border-radius: 20px; }
 
 /* =========================================================
    13. Closing invitation
@@ -591,12 +604,12 @@
 .ab-founder-quote figcaption strong { color: var(--ab-deep); }
 .ab-founder-quote figcaption span { display: block; margin-top: 3px; font-size: 12.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ab-blue); }
 
-/* Partners: logos in brand-neutral grey until hovered */
+/* Partners: logos in their own colours */
 .ab .ab-partners { padding-bottom: clamp(48px, 6vw, 80px); }
 .ab-logos { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); align-items: center; gap: clamp(18px, 2.6vw, 36px); list-style: none; margin: 0; padding: clamp(22px, 2.6vw, 32px) 0; border-top: 1px solid var(--ab-line); border-bottom: 1px solid var(--ab-line); }
 .ab-logos li { display: flex; align-items: center; justify-content: center; height: 54px; }
-.ab-logos img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; filter: grayscale(1); opacity: .72; transition: filter .2s ease, opacity .2s ease; }
-.ab-logos li:hover img { filter: none; opacity: 1; }
+.ab-logos img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; transition: transform .2s ease; }
+.ab-logos li:hover img { transform: scale(1.05); }
 .ab-logos .ab-logo-icpac img, .ab-logos .ab-logo-icpac:hover img { filter: brightness(0); opacity: .72; }
 .ab-logos .ab-logo-fadeco, .ab-logos .ab-logo-world-food-programme { height: 64px; }
 .ab-partners-links { display: flex; flex-wrap: wrap; gap: 12px 30px; margin: 22px 0 0 !important; }

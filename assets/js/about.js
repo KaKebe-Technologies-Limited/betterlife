@@ -15,6 +15,7 @@
     initRail();
     initMap();
     initLightbox();
+    document.querySelectorAll('.ab-glide').forEach(initGlide);
   });
 
   /* ---------- Opening photographs: pause control (remembered) and pause when off screen ---------- */
@@ -57,6 +58,38 @@
       };
       if (document.readyState === 'complete') setTimeout(start, 300); else window.addEventListener('load', function () { setTimeout(start, 300); });
     }
+  }
+
+  /* ---------- Gliding photo gallery: each row moves sideways as the gallery passes through the screen, rows in
+     opposite directions. A row someone swipes, scrolls or tabs through stays where they put it. ---------- */
+  function initGlide(box) {
+    var rows = Array.prototype.slice.call(box.querySelectorAll('.ab-glide-row[data-glide]'));
+    if (!rows.length || reduceMotion) return;
+    var state = rows.map(function (row) {
+      var s = { row: row, dir: Number(row.getAttribute('data-glide')), set: -1, free: false };
+      row.addEventListener('scroll', function () { if (s.set >= 0 && Math.abs(row.scrollLeft - s.set) > 3) s.free = true; }, { passive: true });
+      row.addEventListener('focusin', function () { s.free = true; });
+      return s;
+    });
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var r = box.getBoundingClientRect(), vh = window.innerHeight;
+      if (r.bottom < -200 || r.top > vh + 200) return;
+      var p = Math.max(0, Math.min(1, (vh - r.top) / (vh + r.height)));
+      state.forEach(function (s) {
+        if (s.free) return;
+        var max = s.row.scrollWidth - s.row.clientWidth;
+        if (max <= 0) return;
+        s.set = Math.round((s.dir > 0 ? p : 1 - p) * max);
+        s.row.scrollLeft = s.set;
+      });
+    }
+    function request() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', request, { passive: true });
+    window.addEventListener('resize', request);
+    window.addEventListener('load', request);
+    update();
   }
 
   /* ---------- Reveal on scroll (one time) ---------- */
