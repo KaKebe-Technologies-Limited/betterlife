@@ -76,31 +76,24 @@
 .hm-origin h2 { margin: 0; font-size: clamp(32px, 3.8vw, 52px); }
 .hm-origin-text .ab-lead { margin-top: 0 !important; }
 .hm-origin-text .hm-links { margin-top: 22px; }
-/* The collage: 8 columns of photographs on a named grid; a row is about two thirds of a column wide,
-   so a 1 x 2 tile is a portrait and a 2 x 2 tile a landscape */
-.hm-collage { --g: 12px; --cols: 8; --gutter: clamp(20px, 5vw, 56px); position: relative; display: grid; gap: var(--g);
-  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
-  grid-auto-rows: calc((min(100vw, 1240px) - 2 * var(--gutter) - (var(--cols) - 1) * var(--g)) / var(--cols) * .66);
-  grid-template-areas:
-    "a a a a b c d d"
-    "a a a a b c d d"
-    "a a a a e e f g"
-    "a a a a e e f g"
-    "h i i k k j l m"
-    "h i i k k j l m"
-    "n n o q r r p p"
-    "n n o q r r p p"; }
-.hm-collage .ab-strokes { z-index: 0; inset: -26px -30px; width: calc(100% + 60px); height: calc(100% + 52px); }
-.hm-cl { position: relative; z-index: 1; border-radius: 14px; }
-.hm-cl img { object-position: var(--pos, 50% 40%); }
-.hm-collage > .hm-cl:first-of-type { border-radius: 140px 14px 14px 14px; }
-.hm-cl-note { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 14px; text-align: center; color: #fff; }
-.hm-cl-note.is-stamp { background: var(--ab-green); border-radius: 14px 14px 70px 14px; }
-.hm-cl-note.is-stamp span { font-size: 11px; font-weight: 700; letter-spacing: .12em; line-height: 1.35; text-transform: uppercase; opacity: .88; }
-.hm-cl-note.is-stamp strong { margin: 2px 0 4px; font-family: var(--ab-serif); font-weight: 600; font-size: clamp(30px, 3vw, 44px); line-height: 1; }
-.hm-cl-note.is-quote { background: var(--ab-blue); border-radius: 14px 70px 14px 14px; }
-.ab .hm-cl-note.is-quote p { margin: 0; max-width: 16ch; font-family: var(--ab-serif); font-style: italic; font-weight: 500; font-size: clamp(18px, 1.7vw, 24px) !important; line-height: 1.25 !important; color: #fff !important; }
-.hm-cl.has-more::after { content: attr(data-more); position: absolute; inset: 0; z-index: 1; display: none; align-items: center; justify-content: center; background: rgba(6, 22, 15, .58); color: #fff; font-family: var(--ab-serif); font-weight: 600; font-size: 26px; }
+/* The gallery: three full-width rows of photographs at their natural shape. The first photo of each row lines up
+   with the text above; the rows overflow the screen and glide sideways as the page scrolls (home.js). */
+.hm-gallery { --gpad: max(20px, calc((100vw - 1240px) / 2 + 56px)); display: grid; gap: 14px; margin-top: clamp(34px, 4.4vw, 60px); }
+.hm-grow { --h: clamp(130px, 16vw, 230px); display: flex; gap: 14px; overflow-x: auto; overflow-y: hidden; padding: 0 var(--gpad); scrollbar-width: none; overscroll-behavior-x: contain;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 3%, #000 97%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 3%, #000 97%, transparent 100%); }
+.hm-grow::-webkit-scrollbar { display: none; }
+.hm-grow.is-tall { --h: clamp(170px, 21vw, 300px); }
+.hm-gt { flex: none; height: var(--h); aspect-ratio: var(--ar, 1); border-radius: 16px; }
+.hm-gt img { object-position: var(--pos, 50% 40%); }
+.hm-grow > .hm-gt:first-child { border-radius: 90px 16px 16px 16px; }
+.hm-grow > :last-child { border-radius: 16px 16px 90px 16px; }
+.hm-gnote { flex: none; height: var(--h); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 18px 26px; border-radius: 16px; text-align: center; color: #fff; }
+.hm-gnote.is-green { aspect-ratio: 1.25; background: var(--ab-green); }
+.hm-gnote.is-green span { font-size: 11.5px; font-weight: 700; letter-spacing: .12em; line-height: 1.35; text-transform: uppercase; opacity: .88; }
+.hm-gnote.is-green strong { margin: 4px 0 6px; font-family: var(--ab-serif); font-weight: 600; font-size: clamp(30px, 3.4vw, 52px); line-height: 1; }
+.hm-gnote.is-blue { aspect-ratio: 1.45; background: var(--ab-blue); }
+.ab .hm-gnote.is-blue p { margin: 0; max-width: 16ch; font-family: var(--ab-serif); font-style: italic; font-weight: 500; font-size: clamp(17px, 1.7vw, 24px) !important; line-height: 1.25 !important; color: #fff !important; }
+.hm-grow:focus-within { scroll-behavior: smooth; }
 
 /* ---------- 4. Five areas: a swipeable row; wide screens with a mouse get panels that open ---------- */
 .ab .hm-areas { background: var(--ab-cream); }
@@ -317,9 +310,10 @@
   .hm-mosaic { max-width: 640px; }
   .hm-art { width: min(100%, 620px); margin: 0 auto; }
   .hm-origin-head { grid-template-columns: 1fr; }
-  .hm-collage { --cols: 4; grid-template-areas: "a a a a" "a a a a" "a a a a" "b c d d" "b c d d" "e e f g" "e e f g" "h i i j" "h i i j"; }
-  .hm-cl.is-extra { display: none; }
-  .hm-cl.has-more::after { display: flex; }
+  .hm-gallery, .hm-grow { gap: 10px; }
+  .hm-gt, .hm-gnote { border-radius: 12px; }
+  .hm-grow > .hm-gt:first-child { border-radius: 56px 12px 12px 12px; }
+  .hm-grow > :last-child { border-radius: 12px 12px 56px 12px; }
   .hm-map { max-width: 560px; margin: 0 auto; }
 }
 @media (max-width: 720px) {
@@ -334,9 +328,6 @@
   .hm-ribbon-track::-webkit-scrollbar { display: none; }
   .hm-ribbon-list[aria-hidden="true"] { display: none; }
   .hm-ribbon-list { padding: 18px 20px 18px 0; }
-  .hm-collage { --g: 8px; }
-  .hm-collage > .hm-cl:first-of-type { border-radius: 80px 12px 12px 12px; }
-  .hm-cl { border-radius: 12px; }
   .hm-steps.is-js li[data-i]:not(.is-on), .hm-steps.is-js .hm-steps-again { display: none; }
   .hm-film-fig { gap: 14px; padding: 14px 16px; }
   .hm-cinema { border-radius: 80px 22px 22px 22px; }

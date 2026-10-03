@@ -9,6 +9,7 @@
     initPanels();
     initLoop();
     initTileFilm();
+    initGallery();
     initMap();
   });
 
@@ -120,6 +121,40 @@
       });
     }, { rootMargin: '150px 0px' }).observe(tile);
     new MutationObserver(sync).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+  }
+
+  /* Who we are: each row of photographs glides sideways as the section passes through the screen, the rows in
+     opposite directions. A row someone swipes, scrolls or tabs through is left where they put it.
+     Not with reduced motion: the rows simply scroll. */
+  function initGallery() {
+    var rows = Array.prototype.slice.call(document.querySelectorAll('.hm-grow[data-glide]'));
+    var box = document.querySelector('.hm-gallery');
+    if (!rows.length || !box || reduceMotion) return;
+    var state = rows.map(function (row) {
+      var s = { row: row, dir: Number(row.getAttribute('data-glide')), set: -1, free: false };
+      row.addEventListener('scroll', function () { if (s.set >= 0 && Math.abs(row.scrollLeft - s.set) > 3) s.free = true; }, { passive: true });
+      row.addEventListener('focusin', function () { s.free = true; });
+      return s;
+    });
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var r = box.getBoundingClientRect(), vh = window.innerHeight;
+      if (r.bottom < -200 || r.top > vh + 200) return;
+      var p = Math.max(0, Math.min(1, (vh - r.top) / (vh + r.height)));
+      state.forEach(function (s) {
+        if (s.free) return;
+        var max = s.row.scrollWidth - s.row.clientWidth;
+        if (max <= 0) return;
+        s.set = Math.round((s.dir > 0 ? p : 1 - p) * max);
+        s.row.scrollLeft = s.set;
+      });
+    }
+    function request() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', request, { passive: true });
+    window.addEventListener('resize', request);
+    window.addEventListener('load', request);
+    update();
   }
 
   /* Where we work: pointing at a country in the list or on the map lights up both */

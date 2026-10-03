@@ -45,27 +45,37 @@ $figures = [
     ['5', 'countries'],
 ];
 
-// Who we are: the collage. Each tile is placed on a named grid area (see home.css); no captions on the page,
-// descriptions only for screen readers and the photo viewer. 'extra' tiles are left out on narrow screens.
-$story = [
-    'a' => ['assets/img/home/story-team-children.jpg', 'Two BetterLife team members laughing with a group of children outside a home', '50% 55%'],
-    'b' => ['assets/img/home/story-child.jpg', 'A young child looking back over his shoulder', '50% 30%'],
-    'c' => ['assets/img/home/yumbe-laughing.jpg', 'A woman laughing on a blue chair outside her home', '50% 35%'],
-    'd' => ['assets/img/home/yumbe-facilitator.jpg', 'A woman leading a training session at a flipchart', '60% 35%'],
-    'e' => ['assets/img/home/story-team-mat.jpg', 'The BetterLife team sitting on a mat with a women\'s group', '50% 50%'],
-    'f' => ['assets/img/home/story-mother-baby.jpg', 'A mother with her baby on her back', '50% 30%'],
-    'g' => ['assets/img/home/story-girl-door.jpg', 'A girl standing at the door of her home', '50% 40%'],
-    'h' => ['assets/img/home/story-baby.jpg', 'A baby eating a snack', '50% 35%'],
-    'i' => ['assets/img/home/story-pouring.jpg', 'A woman pouring a warm drink into a cup', '55% 40%'],
-    'j' => ['assets/img/home/story-learning.jpg', 'A participant and a BetterLife team member going over notes together', '50% 30%'],
-    'l' => ['assets/img/home/story-bucket-garden.jpg', 'Vegetables growing in buckets hung along a wall', '50% 40%', true],
-    'm' => ['assets/img/home/yumbe-listening.jpg', 'A woman standing in a field', '50% 30%', true],
-    'n' => ['assets/img/home/story-homes.jpg', 'Two homes with thatched roofs', '50% 55%', true],
-    'o' => ['assets/img/home/story-pupil.jpg', 'A young pupil in her school uniform', '50% 30%', true],
-    'q' => ['assets/img/home/story-bottle-tower.jpg', 'A tower garden built from recycled plastic bottles', '50% 45%', true],
-    'r' => ['assets/img/home/story-drip-greens.jpg', 'Leafy greens growing under a drip irrigation line', '50% 50%', true],
+// Who we are: three rows of photographs at their natural shape (people; community and learning; homes and
+// gardens). No captions on the page; descriptions for screen readers and the photo viewer.
+// Each entry: [photo, description, focus] or ['note', kind]. The first row is taller.
+$storyRows = [
+    [
+        ['assets/img/home/yumbe-laughing.jpg', 'A woman laughing on a blue chair outside her home', '50% 35%'],
+        ['assets/img/home/story-team-children.jpg', 'Two BetterLife team members laughing with a group of children outside a home', '50% 55%'],
+        ['assets/img/home/story-mother-baby.jpg', 'A mother with her baby on her back', '50% 30%'],
+        ['assets/img/home/yumbe-facilitator.jpg', 'A woman leading a training session at a flipchart', '60% 35%'],
+        ['note', 'growth'],
+    ],
+    [
+        ['assets/img/home/story-child.jpg', 'A young child looking back over his shoulder', '50% 30%'],
+        ['assets/img/home/story-team-mat.jpg', 'The BetterLife team sitting on a mat with a women\'s group', '50% 50%'],
+        ['assets/img/home/story-girl-door.jpg', 'A girl standing at the door of her home', '50% 40%'],
+        ['assets/img/home/story-pouring.jpg', 'A woman pouring a warm drink into a cup', '55% 40%'],
+        ['assets/img/home/story-baby.jpg', 'A baby eating a snack', '50% 35%'],
+        ['note', 'reach'],
+    ],
+    [
+        ['assets/img/home/story-homes.jpg', 'Two homes with thatched roofs', '50% 55%'],
+        ['assets/img/home/story-bucket-garden.jpg', 'Vegetables growing in buckets hung along a wall', '50% 40%'],
+        ['assets/img/home/story-learning.jpg', 'A participant and a BetterLife team member going over notes together', '50% 30%'],
+        ['assets/img/home/story-drip-greens.jpg', 'Leafy greens growing under a drip irrigation line', '50% 50%'],
+        ['assets/img/home/story-pupil.jpg', 'A young pupil in her school uniform', '50% 30%'],
+        ['assets/img/home/story-bottle-tower.jpg', 'A tower garden built from recycled plastic bottles', '50% 45%'],
+        ['assets/img/home/yumbe-listening.jpg', 'A woman standing in a field', '50% 30%'],
+    ],
 ];
-$storyMore = count(array_filter($story, fn($t) => !empty($t[3])));
+// Natural shape of each photograph, so no tile crops a face into an awkward box
+$shape = function (string $p): float { $s = @getimagesize(__DIR__ . '/' . $p); return $s ? round($s[0] / $s[1], 3) : 1.0; };
 
 // Five programme areas, each with a portrait not used on the Programmes overview
 $areaPhotos = [
@@ -262,24 +272,26 @@ require __DIR__ . '/includes/header.php';
           </div>
         </div>
       </div>
-      <div class="hm-collage ab-reveal" role="group" aria-label="Photographs of the people and places behind our work">
-        <svg class="ab-strokes" viewBox="0 0 1000 600" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-          <g filter="url(#lpBrush)">
-            <path class="f-green" d="<?= lp_brush_d(-40, 560, 260, 610, 60, 41) ?>"/>
-            <path class="f-blue"  d="<?= lp_brush_d(985, 140, 1045, 380, 46, 45) ?>"/>
-          </g>
-        </svg>
-        <?php foreach ($story as $area => $t): [$p, $alt, $pos] = $t; $extra = !empty($t[3]);
-          $big = $area === 'a'; $more = $area === 'j' ? ' data-more="+' . $storyMore . '"' : '';
-          echo ab_photo($p, $alt, $alt, 'story', 'hm-cl' . ($extra ? ' is-extra' : '') . ($more ? ' has-more' : ''),
-              $big ? '(max-width: 900px) 100vw, 640px' : '(max-width: 900px) 50vw, 300px',
-              'style="grid-area: ' . $area . '; --pos: ' . $pos . '"' . $more);
-          if ($area === 'j'): ?>
-            <div class="hm-cl hm-cl-note is-stamp is-extra" style="grid-area: k" aria-hidden="true"><span>From</span><strong>USD 200</strong><span>to 110,000 people reached</span></div>
-          <?php endif;
-        endforeach; ?>
-        <div class="hm-cl hm-cl-note is-quote is-extra" style="grid-area: p" aria-hidden="true"><p>From a young team in Uganda to work in five countries.</p></div>
-      </div>
+    </div>
+    <!-- Three rows run the full width; each glides sideways as the page scrolls (see home.js), and can be swiped -->
+    <div class="hm-gallery ab-reveal" role="group" aria-label="Photographs of the people and places behind our work">
+      <?php foreach ($storyRows as $r => $row): ?>
+        <div class="hm-grow<?= $r === 0 ? ' is-tall' : '' ?>" data-glide="<?= $r % 2 ? -1 : 1 ?>">
+          <?php foreach ($row as $t):
+            if ($t[0] === 'note'):
+              if ($t[1] === 'growth'): ?>
+                <div class="hm-gnote is-green" aria-hidden="true"><span>From</span><strong>USD 200</strong><span>to 110,000 people reached</span></div>
+              <?php else: ?>
+                <div class="hm-gnote is-blue" aria-hidden="true"><p>From a young team in Uganda to work in five countries.</p></div>
+              <?php endif;
+            else:
+              [$p, $alt, $pos] = $t;
+              echo ab_photo($p, $alt, $alt, 'story', 'hm-gt', $r === 0 ? '(max-width: 720px) 60vw, 520px' : '(max-width: 720px) 50vw, 400px',
+                  'style="--ar: ' . $shape($p) . '; --pos: ' . $pos . '"');
+            endif;
+          endforeach; ?>
+        </div>
+      <?php endforeach; ?>
     </div>
   </section>
 
