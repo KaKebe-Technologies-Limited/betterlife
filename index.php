@@ -98,7 +98,7 @@ $loop = [
 $products = [
     ['assets/img/product-yoghurt-real.jpg', 'BetterLife Yoghurt', 'Strawberry and vanilla', 'Bottles of BetterLife strawberry and vanilla yoghurt'],
     ['assets/img/product-honey-real.jpg', 'BetterLife Honey', 'Pure honey in jars', 'Stacked jars of BetterLife Honey'],
-    ['assets/img/product-ghee-real.jpg', 'BetterLife Organic Ghee', '100% pure cow butter', 'Jars of BetterLife Organic Ghee'],
+    ['assets/img/product-ghee-real.jpg', 'BetterLife Ghee', 'Organic, from 100% pure cow butter', 'Jars of BetterLife Organic Ghee'],
     ['assets/img/product-organic-boost.jpg', 'Organic manure', 'BetterLife Organic Boost liquid fertiliser', 'Containers of BetterLife Organic Boost organic fertiliser'],
 ];
 

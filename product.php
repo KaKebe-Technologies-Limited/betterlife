@@ -7,6 +7,17 @@ $stmt = $pdo->prepare("SELECT * FROM products WHERE slug = ? AND status = 1");
 $stmt->execute([$slug]);
 $product = $stmt->fetch();
 
+// Product addresses before the October 2026 renaming, and the two placeholder products, go to the current product
+$renamed = [
+    'pure-wild-honey' => 'betterlife-honey', 'golden-comb-honey' => 'betterlife-honey',
+    'traditional-ghee' => 'betterlife-ghee', 'cultured-butter-ghee' => 'betterlife-ghee',
+    'natural-set-yoghurt' => 'betterlife-yoghurt-vanilla', 'fruit-infused-yoghurt' => 'betterlife-yoghurt-strawberry',
+];
+if (!$product && isset($renamed[$slug])) {
+    header('Location: ' . SITE_URL . '/product.php?slug=' . $renamed[$slug], true, 301);
+    exit;
+}
+
 if (!$product) {
     http_response_code(404);
     $pageTitle = 'Product Not Found';
