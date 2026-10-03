@@ -9,6 +9,9 @@ $pageDescription = 'BetterLife International is a refugee-led organisation found
 $map = require __DIR__ . '/includes/map-paths.php';
 $areas = pp_areas();
 $film = pp_film();
+// A short tour of the Yumbe programme (BetterLife's own video, re-encoded for the web); the full film stays one click away
+$tour = ['src' => 'assets/video/yumbe-tour-720.mp4', 'title' => 'A tour of the Yumbe programme', 'length' => '2½-minute'];
+$hasTour = is_file(__DIR__ . '/' . $tour['src']);
 $voice = pp_quotes()['josephine'];
 
 // Editable in Admin → Settings; "begin again" carries the painted underline when present
@@ -70,11 +73,11 @@ $countries = [
 $uganda = $map['countries']['Uganda']['c'];
 
 // School feeding (Rukungiri): a mosaic of five tiles. Tile 2 is a short silent film from the school kitchen
-// (the washing-up photograph stands in until the film exists); tile 3 is the head teacher.
+// (the washing-up photograph stands in until the film exists).
 $schoolPhotos = [
     1 => ['assets/img/home/school-cup-up.jpg', 'A pupil drinking from a cup at school in Rukungiri', '45% 40%'],
     2 => ['assets/img/home/school-washing-cups.jpg', 'Pupils washing their cups in a basin at school', '50% 55%'],
-    3 => ['assets/img/home/head-teacher.jpg', 'The head teacher of a school BetterLife supports in Rukungiri', '50% 22%', 'The head teacher'],
+    3 => ['assets/img/home/school-yellow-cup.jpg', 'A pupil drinking from a blue cup outside the classroom', '50% 35%'],
     4 => ['assets/img/home/school-friends.jpg', 'Four pupils smiling together at school in Rukungiri', '50% 35%'],
     5 => ['assets/img/home/school-pink-cups.jpg', 'Pupils with their pink cups in class', '55% 45%'],
 ];
@@ -95,7 +98,7 @@ $loop = [
         'img' => ['assets/img/home/farm-weighing.jpg', 'A woman weighing a sack of produce on a hanging scale', '45% 45%']],
     ['short' => 'Value added, sold on', 'title' => 'Value added, sold on',
         'text' => 'The farm processes, packages and sells ghee, yoghurt, honey and organic manure, creating a market that keeps buying.',
-        'img' => ['assets/img/home/farm-mill.jpg', 'A woman feeding grain into a milling machine', '50% 40%']],
+        'img' => ['assets/img/grain-milling-machine.webp', 'Grain being fed into a milling machine', '28% 45%']],
 ];
 
 // Products from the farm, each photographed by BetterLife
@@ -239,9 +242,9 @@ require __DIR__ . '/includes/header.php';
             <path class="f-green" d="<?= lp_brush_d(-20, 470, 220, 500, 44, 45) ?>"/>
           </g>
         </svg>
-        <figure class="hm-polaroid p-1"><?= ab_img('assets/img/field-team-group-under-tree.webp', 'The BetterLife field team standing together under a tree', '', true, 'style="object-position: 50% 45%"', '(max-width: 900px) 70vw, 360px') ?><figcaption>The field team</figcaption></figure>
-        <figure class="hm-polaroid p-2"><?= ab_img('assets/img/smiles-group-under-tree-2.webp', 'A large community group celebrating together under a tree', '', true, '', '(max-width: 900px) 60vw, 320px') ?><figcaption>Together under the tree</figcaption></figure>
-        <figure class="hm-polaroid p-3"><?= ab_img('assets/img/yumbe-greenhouse-group.webp', 'Women and the BetterLife team in front of a greenhouse in Yumbe', '', true, '', '(max-width: 900px) 60vw, 300px') ?><figcaption>A greenhouse in Yumbe</figcaption></figure>
+        <figure class="hm-polaroid p-1"><?= ab_img('assets/img/home/yumbe-facilitator.jpg', 'A woman leading a training session at a flipchart in Yumbe', '', true, 'style="object-position: 60% 40%"', '(max-width: 900px) 70vw, 360px') ?><figcaption>A training session in Yumbe</figcaption></figure>
+        <figure class="hm-polaroid p-2 is-tall"><?= ab_img('assets/img/home/yumbe-listening.jpg', 'A woman standing in a field in Yumbe', '', true, 'style="object-position: 50% 30%"', '(max-width: 900px) 45vw, 240px') ?><figcaption>A participant in Yumbe</figcaption></figure>
+        <figure class="hm-polaroid p-3 is-tall"><?= ab_img('assets/img/home/yumbe-laughing.jpg', 'A woman laughing on a blue chair outside her home in Yumbe', '', true, 'style="object-position: 50% 35%"', '(max-width: 900px) 45vw, 240px') ?><figcaption>At home in Yumbe</figcaption></figure>
         <div class="hm-stamp s-year" aria-hidden="true"><span>Founded</span><strong>2021</strong></div>
         <div class="hm-stamp s-money" aria-hidden="true"><span>Started with</span><strong>USD 200</strong></div>
       </div>
@@ -377,13 +380,23 @@ require __DIR__ . '/includes/header.php';
         <p class="hm-film-fig"><strong><span class="ab-count" data-count="72">72</span>%</strong> <span>of women in the programme adopted sack or box gardening after training</span></p>
         <a href="<?= h(pp_project_url($film['project'], pp_projects()[$film['project']])) ?>" class="pg-link">Read the Yumbe story <?= icon('arrow-right', 15) ?></a>
       </div>
-      <div class="hm-cinema ab-reveal">
-        <?= ab_img('assets/img/home/yumbe-film-still.jpg', 'Two women in conversation at a training session in Yumbe', 'hm-cinema-img', true, '', '(max-width: 900px) 100vw, 720px') ?>
-        <?php if (is_file(__DIR__ . '/' . $film['src'])): ?>
-          <button type="button" class="hm-cinema-play" data-film="<?= h(pp_film_src($film)) ?>" data-film-title="<?= h($film['title']) ?>">
-            <span class="pg-film-play-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5Z"/></svg></span>
-            <span class="hm-cinema-label">Watch the film<small><?= h($film['title']) ?> &middot; <?= (int) $film['minutes'] ?> minutes, with sound</small></span>
-          </button>
+      <div class="hm-cinema-col ab-reveal">
+        <div class="hm-cinema">
+          <?= ab_img('assets/img/home/yumbe-film-still.jpg', 'Two women in conversation at a training session in Yumbe', 'hm-cinema-img', true, '', '(max-width: 900px) 100vw, 720px') ?>
+          <?php if ($hasTour): ?>
+            <button type="button" class="hm-cinema-play" data-film="<?= h(asset_url($tour['src'])) ?>?v=<?= filemtime(__DIR__ . '/' . $tour['src']) ?>" data-film-title="<?= h($tour['title']) ?>">
+              <span class="pg-film-play-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5Z"/></svg></span>
+              <span class="hm-cinema-label">Take a <?= h($tour['length']) ?> tour<small>Training sessions and a demonstration farm in Yumbe, with sound</small></span>
+            </button>
+          <?php elseif (is_file(__DIR__ . '/' . $film['src'])): ?>
+            <button type="button" class="hm-cinema-play" data-film="<?= h(pp_film_src($film)) ?>" data-film-title="<?= h($film['title']) ?>">
+              <span class="pg-film-play-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5Z"/></svg></span>
+              <span class="hm-cinema-label">Watch the film<small><?= h($film['title']) ?> &middot; <?= (int) $film['minutes'] ?> minutes, with sound</small></span>
+            </button>
+          <?php endif; ?>
+        </div>
+        <?php if ($hasTour && is_file(__DIR__ . '/' . $film['src'])): ?>
+          <p class="hm-film-more">Have longer? <button type="button" class="hm-film-alt" data-film="<?= h(pp_film_src($film)) ?>" data-film-title="<?= h($film['title']) ?>"><?= icon('arrow-right', 14) ?> Watch the full <?= (int) $film['minutes'] ?>-minute film</button>, with the women, local leaders and our team in their own words.</p>
         <?php endif; ?>
       </div>
     </div>

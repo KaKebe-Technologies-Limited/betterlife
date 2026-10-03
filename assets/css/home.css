@@ -77,16 +77,18 @@
 .hm-polaroids { position: relative; min-height: 560px; }
 .hm-polaroid { position: absolute; margin: 0; padding: 12px 12px 46px; border-radius: 6px; background: #fff; box-shadow: 0 22px 50px rgba(11, 61, 46, .16); transition: transform .5s ease, box-shadow .5s ease; }
 .hm-polaroid img { width: 100%; aspect-ratio: 4 / 3; height: auto !important; object-fit: cover; border-radius: 3px; }
+.hm-polaroid.is-tall img { aspect-ratio: 4 / 5; }
+.hm-polaroid.is-tall figcaption { font-size: 14px; white-space: nowrap; }
 .hm-polaroid figcaption { position: absolute; left: 0; right: 0; bottom: 13px; text-align: center; font-family: var(--ab-serif); font-style: italic; font-size: 16px; color: var(--ab-deep); }
-.hm-polaroid.p-1 { z-index: 1; left: 0; top: 12%; width: 58%; transform: rotate(-4deg); }
-.hm-polaroid.p-2 { z-index: 2; right: 0; top: 0; width: 50%; transform: rotate(5deg); }
-.hm-polaroid.p-3 { z-index: 3; right: 6%; bottom: 0; width: 52%; transform: rotate(-2deg); }
+.hm-polaroid.p-1 { z-index: 1; left: 0; top: 10%; width: 60%; transform: rotate(-4deg); }
+.hm-polaroid.p-2 { z-index: 2; right: 0; top: 0; width: 38%; transform: rotate(5deg); }
+.hm-polaroid.p-3 { z-index: 3; left: 30%; bottom: 0; width: 36%; transform: rotate(-3deg); }
 .hm-polaroid:hover { z-index: 4; transform: rotate(0) scale(1.03); box-shadow: 0 30px 60px rgba(11, 61, 46, .22); }
 .hm-stamp { position: absolute; z-index: 5; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 112px; height: 112px; border-radius: 50%; background: var(--ab-green); color: #fff; text-align: center; box-shadow: 0 14px 30px rgba(8, 114, 45, .3); }
 .hm-stamp span { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: .85; }
 .hm-stamp strong { font-family: var(--ab-serif); font-weight: 600; font-size: 25px; line-height: 1.1; }
 .hm-stamp.s-year { left: 6%; bottom: 6%; transform: rotate(-10deg); }
-.hm-stamp.s-money { right: -2%; top: 38%; background: var(--ab-blue); transform: rotate(8deg); box-shadow: 0 14px 30px rgba(0, 124, 173, .3); }
+.hm-stamp.s-money { right: 2%; top: auto; bottom: 10%; background: var(--ab-blue); transform: rotate(8deg); box-shadow: 0 14px 30px rgba(0, 124, 173, .3); }
 
 /* ---------- 4. Five areas: a swipeable row; wide screens with a mouse get panels that open ---------- */
 .ab .hm-areas { background: var(--ab-cream); }
@@ -147,6 +149,10 @@
 .hm-cinema-play:focus-visible { outline: 3px solid #fff; outline-offset: -8px; border-radius: inherit; }
 .hm-cinema-label { position: relative; display: flex; flex-direction: column; font-weight: 700; font-size: 19px; line-height: 1.2; text-shadow: 0 2px 12px rgba(0, 0, 0, .5); }
 .hm-cinema-label small { margin-top: 5px; font-weight: 500; font-size: 13.5px; color: rgba(255, 255, 255, .86); }
+.hm-film-more { margin: 18px 4px 0 !important; font-size: 15px !important; line-height: 1.55 !important; color: rgba(255, 255, 255, .78) !important; }
+.hm-film-alt { display: inline-flex; align-items: center; gap: 6px; padding: 0; border: 0; background: none; color: #9fd6b2; font: inherit; font-weight: 700; cursor: pointer; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.hm-film-alt:hover { color: #fff; }
+.hm-film-alt:focus-visible { outline: 3px solid #fff; outline-offset: 3px; border-radius: 4px; }
 
 /* ---------- 6. Where we work ---------- */
 .ab .hm-reach { background: radial-gradient(ellipse 80% 90% at 28% 45%, #0f4a37 0%, #062a1f 58%, #041d16 100%); color: #fff; }
@@ -313,13 +319,14 @@
   .hm-ribbon-track::-webkit-scrollbar { display: none; }
   .hm-ribbon-list[aria-hidden="true"] { display: none; }
   .hm-ribbon-list { padding: 18px 20px 18px 0; }
-  .hm-polaroids { min-height: 350px; }
-  .hm-polaroid.p-1 { width: 62%; top: 9%; }
-  .hm-polaroid.p-2 { width: 54%; }
-  .hm-polaroid.p-3 { width: 54%; right: 2%; }
+  .hm-polaroids { min-height: 400px; }
+  .hm-polaroid.p-1 { width: 64%; top: 8%; }
+  .hm-polaroid.p-2 { width: 40%; }
+  .hm-polaroid.p-3 { width: 40%; left: 26%; }
   .hm-steps.is-js li[data-i]:not(.is-on), .hm-steps.is-js .hm-steps-again { display: none; }
   .hm-polaroid { padding: 8px 8px 34px; }
-  .hm-polaroid figcaption { bottom: 9px; font-size: 13.5px; }
+  .hm-polaroid figcaption { bottom: 9px; font-size: 12.5px; }
+  .hm-polaroid.is-tall figcaption { font-size: 11px; }
   .hm-stamp { width: 78px; height: 78px; }
   .hm-stamp strong { font-size: 19px; }
   .hm-stamp span { font-size: 9px; }
