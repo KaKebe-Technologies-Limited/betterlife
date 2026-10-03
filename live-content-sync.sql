@@ -234,7 +234,7 @@ CREATE TABLE `reports` (
 
 LOCK TABLES `reports` WRITE;
 /*!40000 ALTER TABLE `reports` DISABLE KEYS */;
-INSERT INTO `reports` VALUES (1,'BetterLife International Annual Report','2023','https://assets.zyrosite.com/m5KvNaBjBKtjxV5x/betterlife-international-annual-report-20223-AoPvD3b9PLsZ7ryj.pdf',1,1,'2026-08-22 00:55:00'),(2,'BetterLife International Annual Report','2022','https://assets.zyrosite.com/m5KvNaBjBKtjxV5x/betterlife-international-annual-report-2022-YbNvbWgWWESzw1nz.pdf',2,1,'2026-08-22 00:55:00');
+INSERT INTO `reports` VALUES (1,'BetterLife International Annual Report','2025','assets/reports/betterlife-annual-report-2025.pdf',1,1,'2026-10-03 22:40:00'),(2,'BetterLife International Annual Report','2024','assets/reports/betterlife-annual-report-2024.pdf',2,1,'2026-10-03 22:40:00'),(3,'BetterLife International Annual Report','2023','assets/reports/betterlife-annual-report-2023.pdf',3,1,'2026-10-03 22:40:00'),(4,'BetterLife International Annual Report','2022','assets/reports/betterlife-annual-report-2022.pdf',4,1,'2026-10-03 22:40:00');
 /*!40000 ALTER TABLE `reports` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

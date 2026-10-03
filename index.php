@@ -35,7 +35,7 @@ $heroLabels = [
 
 // Figures (the same verified set as the About page and the Programmes evidence). Shown separately; never summed.
 $figures = [
-    ['110,000', 'people reached since 2021'],
+    ['112,430', 'people reached in 2025'],
     ['About 122', 'farms established'],
     ['310', 'households supported'],
     ['5', 'community farms established'],
@@ -229,8 +229,8 @@ require __DIR__ . '/includes/header.php';
 
         <div class="hm-stat">
           <svg class="hm-stat-brush" viewBox="0 0 130 80" aria-hidden="true"><path filter="url(#lpBrush)" d="<?= lp_brush_d(6, 48, 126, 34, 40, 21) ?>"/></svg>
-          <strong><span class="ab-count" data-count="110000">110,000</span></strong>
-          <span>people reached<br>since 2021</span>
+          <strong><span class="ab-count" data-count="112430">112,430</span></strong>
+          <span>people reached<br>in 2025</span>
         </div>
 
         <button type="button" class="hm-motion" aria-pressed="false" aria-label="Pause the film" hidden>
@@ -280,7 +280,7 @@ require __DIR__ . '/includes/header.php';
           <?php foreach ($row as $t):
             if ($t[0] === 'note'):
               if ($t[1] === 'growth'): ?>
-                <div class="hm-gnote is-green" aria-hidden="true"><span>From</span><strong>USD 200</strong><span>to 110,000 people reached</span></div>
+                <div class="hm-gnote is-green" aria-hidden="true"><span>From</span><strong>USD 200</strong><span>to 112,430 people reached in 2025</span></div>
               <?php else: ?>
                 <div class="hm-gnote is-blue" aria-hidden="true"><p>From a young team in Uganda to work in five countries.</p></div>
               <?php endif;

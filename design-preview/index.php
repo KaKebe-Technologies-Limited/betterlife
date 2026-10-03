@@ -116,8 +116,8 @@ $countryLabels = [
         <div class="lp-stat">
           <svg class="lp-stat-brush" viewBox="0 0 130 80" aria-hidden="true"><path filter="url(#lpBrush)" d="<?= lp_brush_d(6, 48, 126, 34, 40, 21) ?>"/></svg>
           <span class="lp-stat-circle" aria-hidden="true"></span>
-          <strong class="lp-stat-num">110,000</strong>
-          <span class="lp-stat-label">people reached<br>since 2021</span>
+          <strong class="lp-stat-num">112,430</strong>
+          <span class="lp-stat-label">people reached<br>in 2025</span>
         </div>
       </div>
 
@@ -185,7 +185,7 @@ $countryLabels = [
         <h2 class="lp-h2">Started in 2021<br>with USD 200 and<br><span class="lp-mark">lived experience.<svg viewBox="0 0 240 30" preserveAspectRatio="none" aria-hidden="true"><path filter="url(#lpBrush)" d="<?= lp_brush_d(4, 17, 238, 14, 22, 47, 0.02) ?>"/></svg></span></h2>
         <p class="lp-body is-strong">BetterLife was founded by a refugee-led team who grew up facing many of the challenges our communities face today.</p>
         <p class="lp-body">For a family living with displacement, unreliable rain and few ways to earn, finding the next meal can take up much of the day. So we work on what changes that: land to farm, skills to use and enterprises that bring in money.</p>
-        <p class="lp-body">From that start, our work has reached 110,000 people. We are still refugee-led, youth-led and women-led, with community members, staff, volunteers and partners carrying the work forward.</p>
+        <p class="lp-body">From that start, our work reached 112,430 people in 2025. We are still refugee-led, youth-led and women-led, with community members, staff, volunteers and partners carrying the work forward.</p>
         <div class="lp-actions lp-actions-end">
           <a href="<?= $site ?>/team.php" class="lp-textlink">Meet the team <span aria-hidden="true">&rarr;</span></a>
           <a href="<?= $site ?>/about.php" class="lp-btn lp-btn-dark">Read Our Story</a>

@@ -146,7 +146,7 @@ require __DIR__ . '/includes/header.php';
           <?php if (!$reports): ?><tr class="empty-row"><td colspan="3">No reports yet.</td></tr><?php endif; ?>
           <?php foreach ($reports as $r): ?>
             <tr>
-              <td><a href="<?= h($r['file_url']) ?>" target="_blank"><?= h($r['title']) ?></a></td>
+              <td><a href="<?= h(asset_url($r['file_url'])) ?>" target="_blank"><?= h($r['title']) ?></a></td>
               <td><?= h($r['year']) ?></td>
               <td><form method="post" style="display:inline;"><?= csrf_field() ?><input type="hidden" name="form" value="report"><input type="hidden" name="action" value="delete"><input type="hidden" name="id" value="<?= $r['id'] ?>"><button type="submit" class="btn btn-danger btn-sm" data-confirm="Remove this report?">Delete</button></form></td>
             </tr>

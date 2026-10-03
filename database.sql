@@ -358,8 +358,10 @@ CREATE TABLE reports (
 ) ENGINE=InnoDB;
 
 INSERT INTO reports (title, year, file_url, sort_order) VALUES
-('BetterLife International Annual Report', '2023', 'https://assets.zyrosite.com/m5KvNaBjBKtjxV5x/betterlife-international-annual-report-20223-AoPvD3b9PLsZ7ryj.pdf', 1),
-('BetterLife International Annual Report', '2022', 'https://assets.zyrosite.com/m5KvNaBjBKtjxV5x/betterlife-international-annual-report-2022-YbNvbWgWWESzw1nz.pdf', 2);
+('BetterLife International Annual Report', '2025', 'assets/reports/betterlife-annual-report-2025.pdf', 1),
+('BetterLife International Annual Report', '2024', 'assets/reports/betterlife-annual-report-2024.pdf', 2),
+('BetterLife International Annual Report', '2023', 'assets/reports/betterlife-annual-report-2023.pdf', 3),
+('BetterLife International Annual Report', '2022', 'assets/reports/betterlife-annual-report-2022.pdf', 4);
 
 -- ----------------------------------------------------------------------
 -- Orders & payments (BetterLife Farm checkout — Pesapal: card + mobile money)

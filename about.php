@@ -26,7 +26,7 @@ require_once __DIR__ . '/includes/media.php';
 
 // Figures (verified). Shown separately; never summed.
 $figures = [
-    ['value' => '110,000', 'count' => 110000, 'label' => 'people reached',               'prefix' => '',      'img' => 'assets/img/about/yumbe-women-celebrating.jpg',                 'alt' => 'Programme participants and BetterLife staff celebrating together under a tree in Yumbe'],
+    ['value' => '112,430', 'count' => 112430, 'label' => 'people reached in 2025',       'prefix' => '',      'img' => 'assets/img/about/yumbe-women-celebrating.jpg',                 'alt' => 'Programme participants and BetterLife staff celebrating together under a tree in Yumbe'],
     ['value' => '122',     'count' => 122,    'label' => 'farms established',            'prefix' => 'About', 'img' => 'assets/img/about/yumbe-farm-aerial.jpg',                       'alt' => 'Aerial view of farm plots and a greenhouse in Yumbe'],
     ['value' => '5',       'count' => 5,      'label' => 'community farms established',  'prefix' => '',      'img' => 'assets/img/about/rukungiri-community-field.jpg',               'alt' => 'A group of people working a field together in Rukungiri'],
     ['value' => '310',     'count' => 310,    'label' => 'households supported',         'prefix' => '',      'img' => 'assets/img/about/yumbe-shopkeeper.jpg',                        'alt' => 'A smiling woman at her market stall'],
@@ -229,7 +229,7 @@ require __DIR__ . '/includes/header.php';
           <blockquote><p>We were tired of watching communities receive short-term help while the conditions keeping them vulnerable stayed the same. BetterLife was created to work differently.</p></blockquote>
           <figcaption><strong>Denise Ayebare</strong>, Founder and Executive Director <span>Forbes Africa 30 Under 30, Class of 2026</span></figcaption>
         </figure>
-        <p>That beginning has grown into an organisation reaching 110,000 people across five African countries. The work continues through community members, staff, volunteers and partners who help shape it every day.</p>
+        <p>That beginning has grown into an organisation that reached 112,430 people in 2025, with work in five African countries. The work continues through community members, staff, volunteers and partners who help shape it every day.</p>
         <p class="ab-facts"><span><strong>2021</strong> founded in Uganda</span><span><strong>USD 200</strong> starting budget</span><span><strong>5</strong> countries today</span></p>
       </div>
     </div>
