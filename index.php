@@ -275,10 +275,10 @@ require __DIR__ . '/includes/header.php';
               $big ? '(max-width: 900px) 100vw, 640px' : '(max-width: 900px) 50vw, 300px',
               'style="grid-area: ' . $area . '; --pos: ' . $pos . '"' . $more);
           if ($area === 'j'): ?>
-            <div class="hm-cl hm-cl-note is-stamp is-extra" style="grid-area: k" aria-hidden="true"><span>Founded</span><strong>2021</strong><span>with USD 200</span></div>
+            <div class="hm-cl hm-cl-note is-stamp is-extra" style="grid-area: k" aria-hidden="true"><span>From</span><strong>USD 200</strong><span>to 110,000 people reached</span></div>
           <?php endif;
         endforeach; ?>
-        <div class="hm-cl hm-cl-note is-quote is-extra" style="grid-area: p" aria-hidden="true"><p>Started by people who had lived it.</p></div>
+        <div class="hm-cl hm-cl-note is-quote is-extra" style="grid-area: p" aria-hidden="true"><p>From a young team in Uganda to work in five countries.</p></div>
       </div>
     </div>
   </section>
