@@ -55,7 +55,7 @@ require __DIR__ . '/includes/header.php';
       <div class="fade-up">
         <span class="cat-badge"><?= h($product['category']) ?></span>
         <h2 style="margin-top:14px;"><?= h($product['name']) ?></h2>
-        <div class="price" style="font-size:26px;margin:14px 0;"><?= format_price($product['price']) ?> <small>/ <?= h($product['unit']) ?></small></div>
+        <div class="price" style="font-size:26px;margin:14px 0;"><?= format_price($product['price']) ?> <small>/ <?= h($product['unit']) ?></small><?php if ($usd = format_usd($pdo, $product['price'])): ?><span class="price-usd"><?= h($usd) ?></span><?php endif; ?></div>
         <p class="muted"><?= h($product['short_desc']) ?></p>
         <div style="margin:26px 0;"><?= nl2p($product['description']) ?></div>
         <form method="post" action="<?= SITE_URL ?>/cart-add.php" style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;">
@@ -86,7 +86,7 @@ require __DIR__ . '/includes/header.php';
           <div class="thumb"><a href="<?= SITE_URL ?>/product.php?slug=<?= h($r['slug']) ?>"><img src="<?= asset_url($r['image']) ?>" alt="<?= h($r['name']) ?>"></a><span class="badge-cat"><?= h($r['category']) ?></span></div>
           <div class="body">
             <h3><a href="<?= SITE_URL ?>/product.php?slug=<?= h($r['slug']) ?>"><?= h($r['name']) ?></a></h3>
-            <div class="price"><?= format_price($r['price']) ?> <small>/ <?= h($r['unit']) ?></small></div>
+            <div class="price"><?= format_price($r['price']) ?> <small>/ <?= h($r['unit']) ?></small><?php if ($usd = format_usd($pdo, $r['price'])): ?><span class="price-usd"><?= h($usd) ?></span><?php endif; ?></div>
           </div>
         </div>
       <?php endforeach; ?>

@@ -75,7 +75,7 @@ require __DIR__ . '/includes/header.php';
             <div class="body">
               <h3><a href="<?= SITE_URL ?>/product.php?slug=<?= h($p['slug']) ?>"><?= h($p['name']) ?></a></h3>
               <p class="muted" style="font-size:14px;"><?= h($p['short_desc']) ?></p>
-              <div class="price"><?= format_price($p['price']) ?> <small>/ <?= h($p['unit']) ?></small></div>
+              <div class="price"><?= format_price($p['price']) ?> <small>/ <?= h($p['unit']) ?></small><?php if ($usd = format_usd($pdo, $p['price'])): ?><span class="price-usd"><?= h($usd) ?></span><?php endif; ?></div>
               <div class="row">
                 <form method="post" action="<?= SITE_URL ?>/cart-add.php" style="flex:1;">
                   <input type="hidden" name="product_id" value="<?= $p['id'] ?>">

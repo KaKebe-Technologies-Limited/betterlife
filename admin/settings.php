@@ -8,7 +8,7 @@ $textFields = [
     'hero_title', 'hero_subtitle',
     'about_who_title', 'about_who_text', 'mission_text', 'vision_text',
     'farm_title', 'farm_text',
-    'address', 'phone', 'email', 'shop_email',
+    'address', 'phone', 'email', 'shop_email', 'usd_rate',
     'facebook', 'twitter', 'instagram', 'linkedin', 'youtube',
     'footer_about', 'board_quote', 'board_quote_author', 'map_embed',
 ];
@@ -211,6 +211,7 @@ $maintenanceOn = setting($pdo, 'maintenance_mode') === '1';
         <div class="form-group"><label>Phone</label><input type="text" name="phone" class="form-control" value="<?= $v('phone') ?>"></div>
         <div class="form-group"><label>General Email</label><input type="email" name="email" class="form-control" value="<?= $v('email') ?>"></div>
         <div class="form-group"><label>Farm Orders Email</label><input type="email" name="shop_email" class="form-control" value="<?= $v('shop_email') ?>"></div>
+        <div class="form-group"><label>Uganda shillings per US dollar</label><input type="number" name="usd_rate" min="0" step="1" class="form-control" value="<?= $v('usd_rate') ?>"><span class="help-text">Used to show an approximate USD price beside each UGX price in the shop. Leave empty to hide USD prices.</span></div>
         <div class="form-group"><label>Facebook URL</label><input type="text" name="facebook" class="form-control" value="<?= $v('facebook') ?>"></div>
         <div class="form-group"><label>Twitter / X URL</label><input type="text" name="twitter" class="form-control" value="<?= $v('twitter') ?>"></div>
         <div class="form-group"><label>Instagram URL</label><input type="text" name="instagram" class="form-control" value="<?= $v('instagram') ?>"></div>

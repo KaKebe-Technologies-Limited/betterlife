@@ -109,6 +109,14 @@ function format_price(?float $price): string
     return 'UGX ' . number_format($price, 0);
 }
 
+/** Approximate US dollar figure for a UGX price, from the rate in Admin → Settings (empty when no rate is set). */
+function format_usd(PDO $pdo, ?float $ugx): string
+{
+    $rate = (float) setting($pdo, 'usd_rate', '0');
+    if ($ugx === null || $rate <= 0) return '';
+    return 'about USD ' . number_format($ugx / $rate, 2);
+}
+
 function redirect(string $url): never
 {
     header('Location: ' . $url);

@@ -57,6 +57,7 @@ require __DIR__ . '/includes/header.php';
 
       <div class="cart-summary">
         <div class="cart-summary-row"><span>Subtotal</span><strong><?= format_price($subtotal) ?></strong></div>
+        <?php if ($usd = format_usd($pdo, $subtotal)): ?><p class="price-usd">That is <?= h($usd) ?>. Payment is in Uganda shillings.</p><?php endif; ?>
         <p class="muted" style="font-size:13px;">Delivery is arranged directly with our team after checkout.</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;">
           <a href="<?= SITE_URL ?>/products.php" class="btn btn-outline-dark">← Continue Shopping</a>

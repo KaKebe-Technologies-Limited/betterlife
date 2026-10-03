@@ -591,6 +591,9 @@ section { padding: 76px 0; }
 .product-card h3 { font-size: 19px; margin-bottom: 6px; }
 .product-card .price { color: var(--green-700); font-weight: 800; font-size: 17px; margin: 10px 0; }
 .product-card .price small { color: var(--ink-soft); font-weight: 500; font-size: 12px; }
+.price-usd { display: block; margin-top: 3px; font-size: 13px; font-weight: 600; color: var(--ink-soft); }
+.price .price-usd { font-size: 13px; }
+p.price-usd { margin: 6px 0 0; }
 .product-card .row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 14px; }
 
 /* Team cards */

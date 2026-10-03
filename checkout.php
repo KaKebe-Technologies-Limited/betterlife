@@ -109,6 +109,7 @@ require __DIR__ . '/includes/header.php';
         <div class="cart-summary-row" style="border-top:1px solid var(--border);padding-top:14px;margin-top:10px;">
           <span>Total</span><strong><?= format_price($subtotal) ?></strong>
         </div>
+        <?php if ($usd = format_usd($pdo, $subtotal)): ?><p class="price-usd">That is <?= h($usd) ?>. Payment is in Uganda shillings.</p><?php endif; ?>
       </div>
     </div>
   </div>
