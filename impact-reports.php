@@ -21,7 +21,7 @@ $years = [
             ['20', 'Plastic Banks, with 25 local cooperatives formed around them'],
         ],
         'mark'  => 'Green Libraries, Eco Labs and 20 Plastic Banks',
-        'photo' => ['assets/img/impact/bottle-cap-wall.jpg', 'A young woman beside a wall decorated with recycled bottle caps', '50% 40%'],
+        'photo' => ['assets/img/home/story-team-children.jpg', 'Two BetterLife team members with a group of children outside a home in Yumbe', '42% 60%'],
     ],
     '2023' => [
         'reach' => 37550,
@@ -33,7 +33,7 @@ $years = [
             ['30', 'schools holding environmental debates, with more than 2,500 students'],
         ],
         'mark'  => 'BetterLife Agro Tourism Farm founded',
-        'photo' => ['assets/img/impact/dairy-farm.jpg', 'A farm worker in overalls beside dairy cows in their shed', '55% 45%'],
+        'photo' => ['assets/img/about/yumbe-girl-running.jpg', 'A girl running along a path in Yumbe', '50% 35%'],
     ],
     '2024' => [
         'reach' => 68500,
@@ -45,7 +45,7 @@ $years = [
             ['2,300+', 'young people in climate leadership and community action'],
         ],
         'mark'  => 'Climate education in 120+ schools',
-        'photo' => ['assets/img/impact/school-garden.jpg', 'Pupils harvesting greens in a school garden', '55% 40%'],
+        'photo' => ['assets/img/programmes/yumbe-mother-baby.jpg', 'A mother laughing with her baby at a programme session in Yumbe', '42% 40%'],
     ],
     '2025' => [
         'reach' => 112430,
@@ -57,7 +57,7 @@ $years = [
             ['60+', 'youth dialogues on climate action'],
         ],
         'mark'  => '18,900 farmers on Soilla',
-        'photo' => ['assets/img/impact/greenhouse-tomatoes.jpg', 'A woman smiling among tomato plants in a greenhouse', '60% 35%'],
+        'photo' => ['assets/img/impact/staff-with-child.jpg', 'A BetterLife team member laughing with a child in her arms', '50% 42%'],
     ],
 ];
 $first = array_key_first($years); $last = array_key_last($years);
@@ -82,22 +82,22 @@ $area = $line . sprintf(' L%.1f %d L%.1f %d Z', $lastPt[0], $py1, $firstPt[0], $
 // Shown as photo bars: each result fills its own bar, out of 100 per cent. [question, result, what, context, project slug, project, photo]
 $questions = [
     ['Are people using what they learnt?', '72%', 'adopted sack or box gardening', 'Women in the programme, reported after training', 'womens-climate-resilience-yumbe', 'Women’s Climate Resilience in Yumbe',
-        ['assets/img/impact/greenhouse-seedlings.jpg', 'A young man tending rows of seedlings in a greenhouse', '38% 40%']],
+        ['assets/img/impact/seedlings-woman.jpg', 'A woman in a programme T-shirt holding seedlings ready to plant in Yumbe', '50% 35%']],
     ['Are families growing more food?', '35%', 'average reduction in household spending on vegetables', 'Reported by participating households as home production improved', 'womens-climate-resilience-yumbe', 'Women’s Climate Resilience in Yumbe',
-        ['assets/img/impact/drying-harvest.jpg', 'A woman pouring harvested beans onto a drying rack', '52% 45%']],
+        ['assets/img/woman-winnowing-grain.webp', 'A woman winnowing grain with a woven tray', '50% 38%']],
     ['Are incomes becoming more stable?', '78%', 'moved into sustainable income pathways', 'Reported across SMILES target groups', 'smiles', 'SMILES',
-        ['assets/img/impact/mushroom-stall.jpg', 'A young man showing mushroom growing bags at an exhibition stand', '50% 35%']],
+        ['assets/img/programmes/yumbe-poultry-care.jpg', 'A young man refilling a drinker in a poultry house in Yumbe', '50% 30%']],
     ['Are communities better placed to face the next shock?', '40%', 'fall in food insecurity', 'Reported across SMILES target groups', 'smiles', 'SMILES',
         ['assets/img/impact/mother-baby-yumbe.jpg', 'A mother holding her smiling baby at a programme session in Yumbe', '55% 45%']],
 ];
 
 // What change looks like, each line with a photograph
 $changes = [
-    ['Impact is a woman harvesting vegetables from a sack garden beside her home instead of buying everything at the market.', 'assets/img/impact/sack-gardens.jpg', 'Women and a BetterLife trainer among tall sack gardens planted with greens', '50% 45%'],
-    ['It is a young refugee starting a poultry business and trading with the host community.', 'assets/img/impact/poultry-drinker.jpg', 'A woman smiling as she holds up a poultry drinker in a wooden poultry house', '62% 40%'],
-    ['It is a farmer checking market information before deciding where to sell.', 'assets/img/impact/hanging-scale.jpg', 'A hanging scale weighing a sack of produce', '50% 30%'],
-    ['It is a child using a computer or opening a climate book for the first time.', 'assets/img/impact/boy-session-yumbe.jpg', 'A young boy in a green jumper at a community session in Yumbe', '42% 35%'],
-    ['It is a household cooking with biogas instead of spending hours looking for firewood.', 'assets/img/impact/kitchen-stove.jpg', 'A woman cooking at a built stove in a kitchen', '55% 50%'],
+    ['Impact is a woman harvesting vegetables from a sack garden beside her home instead of buying everything at the market.', 'assets/img/impact/maize-woman-smile.jpg', 'A woman smiling among her crops in Rukungiri', '45% 30%'],
+    ['It is a young refugee starting a poultry business and trading with the host community.', 'assets/img/impact/poultry-house.jpg', 'Chickens around feeders and drinkers in a poultry house', '50% 55%'],
+    ['It is a farmer checking market information before deciding where to sell.', 'assets/img/impact/scale-dial.jpg', 'A hanging scale weighing a sack of produce in Rukungiri', '50% 30%'],
+    ['It is a child eating a meal at school instead of learning on an empty stomach.', 'assets/img/impact/school-cup.jpg', 'A pupil holding his cup at mealtime in a classroom in Rukungiri', '50% 35%'],
+    ['It is a household cooking with biogas instead of spending hours looking for firewood.', 'assets/img/impact/biogas-mixing.jpg', 'A young man mixing slurry at the inlet of a biogas digester beside a cattle shed in Rukungiri', '50% 40%'],
 ];
 
 // Headline figures: an icon for each, and small dots for counts small enough to show one by one
@@ -168,7 +168,7 @@ require __DIR__ . '/includes/header.php';
                 <text class="im-axis" x="62" y="<?= $gy + 5 ?>" text-anchor="end"><?= $g ? ($g / 1000) . 'k' : '0' ?></text>
               <?php endforeach; ?>
               <g clip-path="url(#imArea)" class="im-area">
-                <image href="<?= h(asset_url('assets/img/impact/cabbage-field.jpg')) ?>" x="70" y="40" width="880" height="420" preserveAspectRatio="xMidYMid slice"/>
+                <image href="<?= h(asset_url('assets/img/about/rukungiri-communal-farm.jpg')) ?>" x="70" y="40" width="880" height="420" preserveAspectRatio="xMidYMid slice"/>
                 <rect x="70" y="40" width="880" height="420" fill="url(#imAreaTint)"/>
               </g>
               <path class="im-line" d="<?= $line ?>" pathLength="1"/>

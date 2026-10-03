@@ -40,7 +40,7 @@
 .ab-js .im-growth:not(.is-in) .im-pt { opacity: 0; transform: translate(-50%, -50%) scale(.5); }
 .im-pt-photo { display: block; width: clamp(52px, 7vw, 90px); aspect-ratio: 1; border-radius: 50%; overflow: hidden; border: 4px solid #fff; box-shadow: 0 0 0 2px var(--ab-green), 0 14px 26px rgba(11, 61, 46, .24); background: var(--ab-sand); }
 .im-pt-photo img { width: 100%; height: 100% !important; object-fit: cover; }
-.im-pt-label { position: absolute; left: 50%; bottom: calc(100% + 12px); width: max-content; max-width: 20ch; transform: translateX(-50%); text-align: center; }
+.im-pt-label { position: absolute; left: 50%; bottom: calc(100% + 8px); width: max-content; max-width: 20ch; transform: translateX(-50%); text-align: center; text-shadow: 0 0 3px #fff, 0 0 6px #fff, 0 0 10px #fff; }
 .im-pt-label strong { display: block; font-family: var(--ab-serif); font-weight: 600; font-size: clamp(20px, 2.2vw, 31px); line-height: 1; color: var(--ab-deep); font-variant-numeric: lining-nums; }
 .im-pt-label > span { display: block; margin-top: 6px; font-size: 12.5px; font-weight: 500; line-height: 1.4; color: var(--ab-soft); }
 .im-pt.is-last .im-pt-label strong { font-size: clamp(26px, 2.9vw, 42px); color: var(--ab-green); }
