@@ -17,7 +17,12 @@ $partners = [
     ['hbcu-green-fund.png', 'HBCU Green Fund', '', ''],
 ];
 
-$org = $pdo->query("SELECT subtitle, body FROM content_items WHERE page = 'programs' AND section_key = 'our-projects' AND title = 'Dovetail Impact Foundation' AND status = 1 LIMIT 1")->fetch();
+try {
+    $org = $pdo->query("SELECT subtitle, body FROM content_items WHERE page = 'programs' AND section_key = 'our-projects' AND title = 'Dovetail Impact Foundation' AND status = 1 LIMIT 1")->fetch();
+} catch (PDOException $e) {
+    error_log('partners: ' . $e->getMessage());
+    $org = false;
+}
 $orgParas = $org ? array_values(array_filter(array_map('trim', preg_split('/\R\s*\R/u', (string) $org['body'])))) : [];
 
 $pageStyles  = ['assets/css/about.css', 'assets/css/programmes.css'];

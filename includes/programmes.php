@@ -408,9 +408,14 @@ function pp_paragraphs(PDO $pdo, array $blocks): array
     $out = [];
     foreach ($blocks as $b) {
         [$section, $title] = $b; $from = $b[2] ?? 0;
-        $st = $pdo->prepare("SELECT body FROM content_items WHERE page = 'programs' AND section_key = ? AND title = ? AND status = 1 ORDER BY sort_order LIMIT 1");
-        $st->execute([$section, $title]);
-        $body = (string) $st->fetchColumn();
+        try {
+            $st = $pdo->prepare("SELECT body FROM content_items WHERE page = 'programs' AND section_key = ? AND title = ? AND status = 1 ORDER BY sort_order LIMIT 1");
+            $st->execute([$section, $title]);
+            $body = (string) $st->fetchColumn();
+        } catch (PDOException $e) {
+            error_log('pp_paragraphs: ' . $e->getMessage());
+            $body = '';
+        }
         $paras = array_values(array_filter(array_map('trim', preg_split('/\R\s*\R/u', $body))));
         $out = array_merge($out, array_slice($paras, $from));
     }

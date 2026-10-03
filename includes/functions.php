@@ -29,9 +29,15 @@ function setting(PDO $pdo, string $key, string $default = ''): string
  * ------------------------------------------------------------------- */
 function content_items(PDO $pdo, string $page, string $sectionKey): array
 {
-    $stmt = $pdo->prepare("SELECT * FROM content_items WHERE page = ? AND section_key = ? AND status = 1 ORDER BY sort_order, id");
-    $stmt->execute([$page, $sectionKey]);
-    return $stmt->fetchAll();
+    // A missing or outdated content_items table (e.g. a live database not yet synced) must not blank the page
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM content_items WHERE page = ? AND section_key = ? AND status = 1 ORDER BY sort_order, id");
+        $stmt->execute([$page, $sectionKey]);
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        error_log('content_items(' . $page . '/' . $sectionKey . '): ' . $e->getMessage());
+        return [];
+    }
 }
 
 /* ---------------------------------------------------------------------
