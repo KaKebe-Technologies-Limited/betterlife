@@ -109,7 +109,7 @@ require __DIR__ . '/includes/header.php';
   <div class="container">
     <div class="split">
       <div class="fade-up img-frame">
-        <img src="<?= asset_url('assets/img/hero-farm-1.jpg') ?>" alt="Visitors touring BetterLife Agro Tourism Farm">
+        <img src="<?= asset_url('assets/img/farm/rukungiri-farm-sign.jpg') ?>" alt="The roadside sign for BetterLife Agro-Tourism Farm and BetterLife International Organisation in Rukungiri" loading="lazy">
       </div>
       <div class="fade-up">
         <span class="eyebrow">Visit the Farm</span>

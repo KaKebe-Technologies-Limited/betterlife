@@ -302,7 +302,12 @@
 .ab-milestone-card { flex: 1; padding: 18px 20px 20px; border-radius: var(--ab-radius); background: #fff; border: 1px solid var(--ab-line); box-shadow: 0 14px 34px rgba(11, 61, 46, .06); }
 .ab-milestone-card p { margin: 0; font-size: 15.5px; line-height: 1.62; }
 .ab-milestone-more { margin-top: 10px !important; }
-.ab-milestone-photo { aspect-ratio: 16 / 10; border-radius: 14px; margin-bottom: 16px; }
+.ab-milestone-media { position: relative; margin-bottom: 16px; }
+.ab-milestone-media.has-inset { margin-bottom: 30px; }
+.ab-milestone-photo { aspect-ratio: var(--ar, 16 / 10); border-radius: 14px; }
+/* A second photograph from the same year, set into the corner of the first like a print */
+.ab-milestone-media .ab-milestone-inset { position: absolute; z-index: 1; right: -8px; bottom: -18px; width: 48%; aspect-ratio: 4 / 3; border-radius: 12px; border: 4px solid #fff; box-shadow: 0 12px 26px rgba(11, 61, 46, .22); transform: rotate(3deg); transition: transform .3s ease; }
+.ab-milestone-media .ab-milestone-inset:hover, .ab-milestone-media .ab-milestone-inset:focus-visible { transform: rotate(0deg) scale(1.04); }
 /* Years without a photograph yet: a brand-colour card with the year's sentence set large */
 .ab-milestone.is-text .ab-milestone-card { background: var(--ab-deep); border-color: transparent; display: flex; flex-direction: column; justify-content: flex-end; min-height: 260px; }
 .ab-milestone.is-text:nth-child(even) .ab-milestone-card { background: #03384d; }

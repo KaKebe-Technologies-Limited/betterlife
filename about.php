@@ -83,11 +83,17 @@ $countryMeta = [
         'photo' => null],
 ];
 
+// Each year: a photograph, and optionally a second one set into its corner. [photo, description, caption, keep natural shape]
 $journeyPhotos = [
-    '2023' => ['assets/img/soilla-app-field-demo.webp', 'The Soilla app open on a phone in a field', 'Soilla in use in the field'],
-    '2024' => ['assets/img/solar-panel-installation-2.webp', 'A solar panel installed above a raised water tank', 'Clean energy installation'],
-    '2025' => ['assets/img/about/yumbe-2025-women.jpg', 'Women laughing together at a programme session', 'Women in the Foundation S-supported programme in Yumbe, 2025'],
-    '2026' => ['assets/img/about/rukungiri-communal-farm.jpg', 'A wide maize field below forested hills', 'Our 20-acre communal farm in Rukungiri, 2026'],
+    '2021' => [
+        ['assets/img/about/journey-2021-medicinal-garden.jpg', 'Pupils holding their lunch boxes with our team beside a sign that reads Welcome to Medicinal Garden', 'With pupils at a school medicinal garden, 2021'],
+        ['assets/img/about/journey-2021-tree-posters.jpg', 'Pupils and our team holding up posters that read Plant and Grow a Tree', 'Tree-planting posters with pupils, 2021'],
+    ],
+    '2022' => [['assets/img/about/journey-2022-nature-hub.jpg', 'Poster for the NATURE for Life Hub under A Better Life Uganda, showing two young women with their arms folded', 'The NATURE for Life Hub, December 2022', true]],
+    '2023' => [['assets/img/soilla-app-field-demo.webp', 'The Soilla app open on a phone in a field', 'Soilla in use in the field']],
+    '2024' => [['assets/img/solar-panel-installation-2.webp', 'A solar panel installed above a raised water tank', 'Clean energy installation']],
+    '2025' => [['assets/img/about/yumbe-2025-women.jpg', 'Women laughing together at a programme session', 'Women in the Foundation S-supported programme in Yumbe, 2025']],
+    '2026' => [['assets/img/about/rukungiri-communal-farm.jpg', 'A wide maize field below forested hills', 'Our 20-acre communal farm in Rukungiri, 2026']],
 ];
 
 // Photographs from our work: two rows that glide in opposite directions (see the strip below)
@@ -98,6 +104,7 @@ $stripRows = [
         ['assets/img/about/rukungiri-poultry.jpg', 'A woman feeding chickens in a poultry house in Rukungiri'],
         ['assets/img/about/yumbe-poultry-feeders.jpg', 'Programme participants celebrating with new poultry feeders in Yumbe'],
         ['assets/img/about/yumbe-girl-running.jpg', 'A girl running along a path'],
+        ['assets/img/about/yumbe-children-game.jpg', 'Children playing a game outside their homes in Yumbe'],
         ['assets/img/about/rukungiri-classroom.jpg', 'Pupils at their desks in a classroom in Rukungiri'],
     ],
     [
@@ -511,11 +518,16 @@ require __DIR__ . '/includes/header.php';
     </div>
     <!-- Years run left to right; the rail scrolls sideways (swipe, trackpad, arrow buttons or keyboard) -->
     <ol class="ab-timeline" tabindex="0" aria-label="<?= h($journey ? 'Our journey, ' . $journey[0]['title'] . ' to ' . $journey[count($journey) - 1]['title'] : 'Our journey') ?>">
-      <?php foreach ($journey as $i => $j): [$firstLine, $rest] = ab_split($j['body']); $ph = $journeyPhotos[$j['title']] ?? null; ?>
+      <?php foreach ($journey as $i => $j): [$firstLine, $rest] = ab_split($j['body']); $ph = $journeyPhotos[$j['title']] ?? []; ?>
         <li class="ab-milestone<?= $ph ? '' : ' is-text' ?>">
           <span class="ab-year"><?= h($j['title']) ?></span>
           <div class="ab-milestone-card">
-            <?php if ($ph): ?><?= ab_photo($ph[0], $ph[1], $ph[2], 'journey', 'ab-milestone-photo', '(max-width: 720px) 80vw, 360px') ?><?php endif; ?>
+            <?php if ($ph): ?>
+              <div class="ab-milestone-media<?= isset($ph[1]) ? ' has-inset' : '' ?>">
+                <?= ab_photo($ph[0][0], $ph[0][1], $ph[0][2], 'journey', 'ab-milestone-photo', '(max-width: 720px) 80vw, 360px', empty($ph[0][3]) ? '' : 'style="--ar: ' . $shape($ph[0][0]) . '"') ?>
+                <?php if (isset($ph[1])): ?><?= ab_photo($ph[1][0], $ph[1][1], $ph[1][2], 'journey', 'ab-milestone-inset', '(max-width: 720px) 40vw, 180px') ?><?php endif; ?>
+              </div>
+            <?php endif; ?>
             <p><?= h($firstLine) ?></p>
             <?php if ($rest): ?>
               <p class="ab-milestone-more" id="abMs<?= $i ?>"><?= h($rest) ?></p>
