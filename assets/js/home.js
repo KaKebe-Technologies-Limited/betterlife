@@ -8,6 +8,7 @@
     initHeroFilm();
     initPanels();
     initLoop();
+    initTileFilm();
     initMap();
   });
 
@@ -77,18 +78,48 @@
       nodes.forEach(function (n, k) { n.classList.toggle('is-on', k === i); });
       steps.forEach(function (s, k) { s.classList.toggle('is-on', k === i); });
     }
+    var chosen = false;
+    document.querySelector('.hm-steps').classList.add('is-js');
     [nodes, steps].forEach(function (list) {
       list.forEach(function (el, k) {
         el.addEventListener('mouseenter', function () { hold = true; show(k); });
-        el.addEventListener('mouseleave', function () { hold = false; });
+        el.addEventListener('mouseleave', function () { hold = chosen; });
       });
     });
+    // Tapping or pressing a photo shows its step and stops the automatic tour
+    nodes.forEach(function (n, k) { n.addEventListener('click', function () { chosen = hold = true; show(k); }); });
     if (reduceMotion || !('IntersectionObserver' in window)) return;
     new IntersectionObserver(function (entries) { entries.forEach(function (en) { visible = en.isIntersecting; }); }, { threshold: 0.4 }).observe(loop);
     setInterval(function () {
       if (hold || !visible || document.documentElement.classList.contains('ab-motion-paused')) return;
       show((current + 1) % nodes.length);
     }, 3200);
+  }
+
+  /* School kitchen: a short silent film in one mosaic tile, loaded when it comes near the screen
+     (wider screens only, never with reduced motion or data saving); pauses off screen and with the page's pause */
+  function initTileFilm() {
+    var tile = document.querySelector('[data-tile-film]');
+    var video = tile && tile.querySelector('video');
+    if (!video || !('IntersectionObserver' in window)) return;
+    var saveData = navigator.connection && navigator.connection.saveData;
+    if (reduceMotion || saveData || !window.matchMedia('(min-width: 720px)').matches) return;
+    var visible = false;
+    function sync() {
+      if (!video.getAttribute('src')) return;
+      if (!visible || document.documentElement.classList.contains('ab-motion-paused')) video.pause(); else video.play().catch(function () {});
+    }
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        visible = en.isIntersecting;
+        if (visible && !video.getAttribute('src')) {
+          video.addEventListener('playing', function () { tile.classList.add('has-video'); }, { once: true });
+          video.src = video.getAttribute('data-src');
+        }
+        sync();
+      });
+    }, { rootMargin: '150px 0px' }).observe(tile);
+    new MutationObserver(sync).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
   }
 
   /* Where we work: pointing at a country in the list or on the map lights up both */

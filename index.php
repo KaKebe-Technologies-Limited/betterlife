@@ -69,14 +69,18 @@ $countries = [
 ];
 $uganda = $map['countries']['Uganda']['c'];
 
-// School feeding (Rukungiri): five photographs in a mosaic, first one tall
+// School feeding (Rukungiri): a mosaic of five tiles. Tile 2 is a short silent film from the school kitchen
+// (the washing-up photograph stands in until the film exists); tile 3 is the head teacher.
 $schoolPhotos = [
-    ['assets/img/home/school-cup-up.jpg', 'A pupil drinking from a cup at school in Rukungiri', '45% 40%'],
-    ['assets/img/home/school-friends.jpg', 'Four pupils smiling together at school in Rukungiri', '50% 35%'],
-    ['assets/img/home/school-pink-cups.jpg', 'Pupils with their pink cups in class', '55% 45%'],
-    ['assets/img/home/school-washing-cups.jpg', 'Pupils washing their cups in a basin at school', '50% 55%'],
-    ['assets/img/home/school-yellow-cup.jpg', 'A pupil drinking from a blue cup outside the classroom', '50% 35%'],
+    1 => ['assets/img/home/school-cup-up.jpg', 'A pupil drinking from a cup at school in Rukungiri', '45% 40%'],
+    2 => ['assets/img/home/school-washing-cups.jpg', 'Pupils washing their cups in a basin at school', '50% 55%'],
+    3 => ['assets/img/home/head-teacher.jpg', 'The head teacher of a school BetterLife supports in Rukungiri', '50% 22%', 'The head teacher'],
+    4 => ['assets/img/home/school-friends.jpg', 'Four pupils smiling together at school in Rukungiri', '50% 35%'],
+    5 => ['assets/img/home/school-pink-cups.jpg', 'Pupils with their pink cups in class', '55% 45%'],
 ];
+$schoolFilm = ['src' => 'assets/video/school-kitchen.mp4', 'poster' => 'assets/img/home/school-kitchen.jpg',
+    'alt' => 'Cooks and pupils preparing and serving a meal in a school kitchen in Rukungiri', 'label' => 'In the school kitchen'];
+$hasSchoolFilm = is_file(__DIR__ . '/' . $schoolFilm['src']) && is_file(__DIR__ . '/' . $schoolFilm['poster']);
 
 // The farm model as a loop (supplied by BetterLife; see also farm.php)
 $loop = [
@@ -291,9 +295,16 @@ require __DIR__ . '/includes/header.php';
         </div>
       </div>
       <div class="hm-mosaic ab-reveal" aria-label="Photographs of school feeding in Rukungiri">
-        <?php foreach ($schoolPhotos as $i => [$p, $alt, $pos]): ?>
-          <?= ab_photo($p, $alt, $alt, 'school', 'hm-tile t-' . ($i + 1), $i === 0 ? '(max-width: 900px) 50vw, 300px' : '(max-width: 900px) 50vw, 260px', 'style="--pos: ' . h($pos) . '"') ?>
-        <?php endforeach; ?>
+        <?php foreach ($schoolPhotos as $t => $ph): if ($t === 2 && $hasSchoolFilm): ?>
+          <div class="hm-tile t-2 hm-tile-film" data-tile-film>
+            <?= ab_img($schoolFilm['poster'], $schoolFilm['alt'], '', true, '', '(max-width: 900px) 100vw, 440px') ?>
+            <!-- Silent loop: a meal stirred in the pot, served, the cups, the washing-up. Loads when near the screen on wider screens only. -->
+            <video muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-src="<?= h(asset_url($schoolFilm['src'])) ?>?v=<?= filemtime(__DIR__ . '/' . $schoolFilm['src']) ?>"></video>
+            <span class="hm-tile-label" aria-hidden="true"><i></i><?= h($schoolFilm['label']) ?></span>
+          </div>
+        <?php else: [$p, $alt, $pos] = $ph; $label = $ph[3] ?? ''; ?>
+          <?= ab_photo($p, $alt, $alt, 'school', 'hm-tile t-' . $t, $t === 1 ? '(max-width: 900px) 50vw, 300px' : '(max-width: 900px) 50vw, 260px', 'style="--pos: ' . h($pos) . '"' . ($label ? ' data-label="' . h($label) . '"' : '')) ?>
+        <?php endif; endforeach; ?>
       </div>
     </div>
   </section>
@@ -320,10 +331,10 @@ require __DIR__ . '/includes/header.php';
           </svg>
           <div class="hm-loop-core"><span aria-hidden="true"><?= icon('leaf', 22) ?></span><strong>The farm model</strong><small>Every season builds on the last</small></div>
           <?php foreach ($loop as $i => $s): ?>
-            <figure class="hm-node n-<?= $i + 1 ?><?= $i === 0 ? ' is-on' : '' ?>" data-i="<?= $i ?>">
-              <span class="hm-node-img"><?= ab_img($s['img'][0], $s['img'][1], '', true, 'style="object-position: ' . h($s['img'][2]) . '"', '(max-width: 720px) 34vw, 200px') ?></span>
-              <figcaption><b><?= $i + 1 ?></b><span><?= h($s['short']) ?></span></figcaption>
-            </figure>
+            <button type="button" class="hm-node n-<?= $i + 1 ?><?= $i === 0 ? ' is-on' : '' ?>" data-i="<?= $i ?>" aria-label="Step <?= $i + 1 ?>: <?= h($s['title']) ?>">
+              <span class="hm-node-img"><?= ab_img($s['img'][0], '', '', true, 'style="object-position: ' . h($s['img'][2]) . '"', '(max-width: 720px) 34vw, 200px') ?></span>
+              <span class="hm-node-cap" aria-hidden="true"><b><?= $i + 1 ?></b><span><?= h($s['short']) ?></span></span>
+            </button>
           <?php endforeach; ?>
         </div>
         <ol class="hm-steps ab-reveal">
