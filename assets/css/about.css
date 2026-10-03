@@ -443,9 +443,16 @@
   .ab-guides-grid { grid-template-columns: 1fr 1fr; column-gap: 18px; }
   .ab-guide h4 { font-size: 17px; }
   .ab-guide p { font-size: 14.5px; }
-  .ab-tool { grid-template-columns: 1fr; padding: 14px 14px 22px; }
-  .ab-tool-photo { aspect-ratio: 16 / 10; border-radius: 20px 90px 20px 90px; }
-  .ab-tool-body { padding: 0 6px; }
+  .ab-tool { grid-template-columns: 92px minmax(0, 1fr); align-items: start; gap: 16px; padding: 14px 16px 18px 14px; border-radius: 22px; }
+  .ab-tool-photo { aspect-ratio: 1 / 1.18; border-radius: 999px 999px 16px 16px; }
+  .ab-tool-body { padding: 0; }
+  .ab-tool h3 { margin: 8px 0 6px; font-size: 22px; }
+  .ab-tool p { font-size: 14.5px; }
+  .ab-tool .ab-link { display: inline; }
+  .ab-tool .ab-link svg { display: inline; vertical-align: -2px; margin-left: 4px; }
+  .ab-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+  .ab-facts span { flex-direction: column; align-items: center; gap: 2px; padding: 12px 6px; border-radius: 16px; text-align: center; font-size: 12px; line-height: 1.3; }
+  .ab-facts strong { font-size: 20px; line-height: 1.1; }
   .ab-how-body { padding-left: 4px; }
   /* Journey rail: one card and a bit of the next */
   .ab-milestone { flex-basis: 80vw; }
