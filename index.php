@@ -97,11 +97,12 @@ $uganda = $map['countries']['Uganda']['c'];
 // School feeding (Rukungiri): a mosaic of five tiles. Tile 2 is a short silent film from the school kitchen
 // (the washing-up photograph stands in until the film exists).
 $schoolPhotos = [
-    1 => ['assets/img/home/school-cup-up.jpg', 'A pupil drinking from a cup at school in Rukungiri', '45% 40%'],
+    // Different schools and uniforms: green, many colours at an outdoor session, everyday clothes, red
+    1 => ['assets/img/school-child-drinking-water.webp', 'A pupil in a green shirt drinking from a blue cup in class', '50% 30%'],
     2 => ['assets/img/home/school-washing-cups.jpg', 'Pupils washing their cups in a basin at school', '50% 55%'],
-    3 => ['assets/img/home/school-yellow-cup.jpg', 'A pupil drinking from a blue cup outside the classroom', '50% 35%'],
-    4 => ['assets/img/home/school-friends.jpg', 'Four pupils smiling together at school in Rukungiri', '50% 35%'],
-    5 => ['assets/img/home/school-pink-cups.jpg', 'Pupils with their pink cups in class', '55% 45%'],
+    3 => ['assets/img/betterlifeint-source/programs/program-photo-8.jpg', 'Pupils in many different school uniforms at an outdoor learning session', '24% 55%'],
+    4 => ['assets/img/home/school-yellow-cup.jpg', 'A pupil drinking from a blue cup outside the classroom', '50% 30%'],
+    5 => ['assets/img/betterlifeint-source/projects/project-climate-education-alt.jpg', 'Pupils in red uniforms at a climate education session', '68% 40%'],
 ];
 $schoolFilm = ['src' => 'assets/video/school-kitchen.mp4', 'poster' => 'assets/img/home/school-kitchen.jpg',
     'alt' => 'Cooks and pupils preparing and serving a meal in a school kitchen in Rukungiri', 'label' => 'In the school kitchen'];
@@ -321,7 +322,7 @@ require __DIR__ . '/includes/header.php';
         <ul class="hm-why">
           <li><span class="hm-why-ico" aria-hidden="true"><?= icon('sun', 18) ?></span><span><b>Energy to learn.</b> Hungry children struggle to concentrate. A meal at school helps them stay focused through the day.</span></li>
           <li><span class="hm-why-ico" aria-hidden="true"><?= icon('heart', 18) ?></span><span><b>Less pressure at home.</b> When a harvest falls short, a school meal takes some of the weight off families.</span></li>
-          <li><span class="hm-why-ico" aria-hidden="true"><?= icon('book', 18) ?></span><span><b>More than a meal.</b> The same schools are where our climate clubs, Green Libraries and Eco Labs reach young people.</span></li>
+          <li><span class="hm-why-ico" aria-hidden="true"><?= icon('book', 18) ?></span><span><b>More than a meal.</b> Our work in schools also includes climate clubs, Green Libraries and Eco Labs.</span></li>
         </ul>
         <div class="hm-school-foot">
           <p class="hm-school-fig"><strong>5</strong><span>schools supported<br>with meals</span></p>
@@ -514,7 +515,7 @@ require __DIR__ . '/includes/header.php';
 
   <!-- 11. Closing invitation -->
   <section class="hm-close" aria-labelledby="hmCloseTitle">
-    <div class="hm-close-bg"><?= ab_img('assets/img/smiles-group-under-tree-1.webp', '', '', true, 'style="object-position: 50% 55%"', '100vw') ?></div>
+    <div class="hm-close-bg"><?= ab_img('assets/img/home/close-maize.jpg', '', '', true, 'style="object-position: 62% 40%"', '100vw') ?></div>
     <div class="container">
       <div class="hm-close-inner ab-reveal">
         <span class="ab-eyebrow">Get involved</span>
