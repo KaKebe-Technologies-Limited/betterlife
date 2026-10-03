@@ -81,8 +81,8 @@ $schoolPhotos = [
 // The farm model as a loop (supplied by BetterLife; see also farm.php)
 $loop = [
     ['short' => 'Seedlings and manure', 'title' => 'Seedlings and organic manure',
-        'text' => 'Refugee, displaced and vulnerable host-community families receive seedlings, organic manure and practical training to start producing at home.',
-        'img' => ['assets/img/programmes/yumbe-seedling-trays.jpg', 'Seedling trays in a nursery', '50% 50%']],
+        'text' => 'Refugee, displaced and vulnerable host-community families receive seedlings for vegetables, maize and other crops, organic manure and practical training to start producing at home.',
+        'img' => ['assets/img/programmes/yumbe-seedling-trays.jpg', 'Seedlings growing in nursery trays', '50% 50%']],
     ['short' => 'A harvest at home', 'title' => 'A harvest at home',
         'text' => 'Families grow food to eat first. What the household does not need becomes surplus it can sell.',
         'img' => ['assets/img/home/harvest-tomatoes.jpg', 'A woven basket full of ripe tomatoes', '50% 62%']],
@@ -96,9 +96,9 @@ $loop = [
 
 // Products from the farm, each photographed by BetterLife
 $products = [
-    ['assets/img/home/product-yoghurt.jpg', 'BetterLife Yoghurt', 'Strawberry and vanilla', 'Bottles of BetterLife strawberry and vanilla yoghurt'],
-    ['assets/img/home/product-honey.jpg', 'BetterLife Honey', 'Pure honey in jars', 'Stacked jars of BetterLife Honey'],
-    ['assets/img/home/product-ghee.jpg', 'BetterLife Organic Ghee', '100% pure cow butter', 'Jars of BetterLife Organic Ghee'],
+    ['assets/img/product-yoghurt-real.jpg', 'BetterLife Yoghurt', 'Strawberry and vanilla', 'Bottles of BetterLife strawberry and vanilla yoghurt'],
+    ['assets/img/product-honey-real.jpg', 'BetterLife Honey', 'Pure honey in jars', 'Stacked jars of BetterLife Honey'],
+    ['assets/img/product-ghee-real.jpg', 'BetterLife Organic Ghee', '100% pure cow butter', 'Jars of BetterLife Organic Ghee'],
     ['assets/img/product-organic-boost.jpg', 'Organic manure', 'BetterLife Organic Boost liquid fertiliser', 'Containers of BetterLife Organic Boost organic fertiliser'],
 ];
 
