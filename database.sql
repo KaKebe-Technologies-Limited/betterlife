@@ -105,8 +105,8 @@ CREATE TABLE stats (
 
 INSERT INTO stats (label, value, sort_order) VALUES
 ('People reached in 2025', '112,430', 1),
-('Farmers supported', '18,900', 2),
-('Refugees and host-community members reached', '41,200', 3),
+('Farmers supported in 2025', '18,900', 2),
+('Refugees and host-community members reached in 2025', '41,200', 3),
 ('Students engaged in climate education', '4,580+', 4),
 ('Green Libraries and Eco Labs', '20+', 5),
 ('Household biogas systems', '48+', 6),

@@ -79,7 +79,7 @@ CREATE TABLE `stats` (
 
 LOCK TABLES `stats` WRITE;
 /*!40000 ALTER TABLE `stats` DISABLE KEYS */;
-INSERT INTO `stats` VALUES (1,'People reached in 2025','112,430',NULL,1,1),(2,'Farmers supported','18,900',NULL,2,1),(3,'Refugees and host-community members reached','41,200',NULL,3,1),(4,'Students engaged in climate education','4,580+',NULL,4,1),(5,'Green Libraries and Eco Labs','20+',NULL,5,1),(6,'Household biogas systems','48+',NULL,6,1),(7,'Community boreholes','65',NULL,7,1),(8,'Tree seedlings raised','50,000+',NULL,8,1);
+INSERT INTO `stats` VALUES (1,'People reached in 2025','112,430',NULL,1,1),(2,'Farmers supported in 2025','18,900',NULL,2,1),(3,'Refugees and host-community members reached in 2025','41,200',NULL,3,1),(4,'Students engaged in climate education','4,580+',NULL,4,1),(5,'Green Libraries and Eco Labs','20+',NULL,5,1),(6,'Household biogas systems','48+',NULL,6,1),(7,'Community boreholes','65',NULL,7,1),(8,'Tree seedlings raised','50,000+',NULL,8,1);
 /*!40000 ALTER TABLE `stats` ENABLE KEYS */;
 UNLOCK TABLES;
 DROP TABLE IF EXISTS `programs`;

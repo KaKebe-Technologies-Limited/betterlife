@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
 require_once __DIR__ . '/includes/media.php';
+require_once __DIR__ . '/includes/programmes.php';
 $pageTitle = 'Impact & Reports';
 $activePage = 'impact';
 $pageDescription = 'What changed after the training ended: BetterLife’s reach year by year, the results behind it and our annual reports from 2022 to 2025.';
@@ -51,9 +52,9 @@ $years = [
         'reach' => 112430,
         'line'  => 'The year our work moved from programme expansion to regional scale, with women, young people and displaced families at the centre.',
         'notes' => [
-            ['18,900', 'farmers using the Soilla platform, with more than 420,000 tailored advisory messages sent'],
+            ['420,000+', 'tailored advisory messages sent to farmers through Soilla'],
             ['37%', 'higher crop yields and 28% lower input costs among farmers using Soilla'],
-            ['41,200', 'refugees and host-community members reached'],
+            ['3.6 million+', 'data points processed by the Soilla platform'],
             ['60+', 'youth dialogues on climate action'],
         ],
         'mark'  => '18,900 farmers on Soilla',
@@ -81,9 +82,9 @@ $area = $line . sprintf(' L%.1f %d L%.1f %d Z', $lastPt[0], $py1, $firstPt[0], $
 // Four things we track after training, each answered with a documented project result (see pp_projects()).
 // Shown as photo bars: each result fills its own bar, out of 100 per cent. [question, result, what, context, project slug, project, photo]
 $questions = [
-    ['Are people using what they learnt?', '72%', 'adopted sack or box gardening', 'Women in the programme, reported after training', 'womens-climate-resilience-yumbe', 'Women’s Climate Resilience in Yumbe',
+    ['Are people using what they learnt?', '72%', 'adopted sack or box gardening', 'Among 82 households tracked in October 2025, from home visits and the women’s own adoption scorecards', 'womens-climate-resilience-yumbe', 'Women’s Climate Resilience in Yumbe',
         ['assets/img/impact/seedlings-woman.jpg', 'A woman in a programme T-shirt holding seedlings ready to plant in Yumbe', '50% 35%']],
-    ['Are families growing more food?', '35%', 'average reduction in household spending on vegetables', 'Reported by participating households as home production improved', 'womens-climate-resilience-yumbe', 'Women’s Climate Resilience in Yumbe',
+    ['Are families growing more food?', '35%', 'less spent on vegetables by households growing their own', 'An approximate figure, from the active gardening households among the 82 tracked in October 2025, as they reported it', 'womens-climate-resilience-yumbe', 'Women’s Climate Resilience in Yumbe',
         ['assets/img/impact/cabbages-mulched.jpg', 'Cabbages growing under straw mulch in Yumbe', '45% 55%']],
     ['Are incomes becoming more stable?', '78%', 'moved into sustainable income pathways', 'Reported across SMILES target groups', 'smiles', 'SMILES',
         ['assets/img/programmes/yumbe-poultry-care.jpg', 'A young man refilling a drinker in a poultry house in Yumbe', '50% 30%']],
@@ -222,7 +223,13 @@ require __DIR__ . '/includes/header.php';
           </li>
         <?php endforeach; ?>
       </ol>
-      <p class="im-qb-note">Each bar fills to its own result, out of 100 per cent.</p>
+      <p class="im-qb-note">Each bar fills to its own result, out of 100 per cent. The Yumbe figures come from monitoring 82 households in October 2025 and still need to be confirmed by the project’s endline survey. The SMILES figures are as the programme reported them.</p>
+      <?php $voice = pp_quotes()['grace'] ?? null; if ($voice): ?>
+        <figure class="im-voice ab-reveal">
+          <blockquote><p><?= h(preg_replace('/^“|”$/u', '', $voice['q'])) ?></p></blockquote>
+          <figcaption><strong><?= h($voice['name']) ?></strong>, <?= h($voice['role']) ?></figcaption>
+        </figure>
+      <?php endif; ?>
     </div>
   </section>
 
