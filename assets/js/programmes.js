@@ -41,7 +41,7 @@
     var buttons = document.querySelectorAll('[data-film]');
     if (!dlg || !buttons.length || typeof dlg.showModal !== 'function') return;
     var video = dlg.querySelector('video'), close = dlg.querySelector('.pg-film-close'), opener = null;
-    var heroFilm = document.querySelector('.pg-hero-video'), heroWasPlaying = false;
+    var heroFilm = document.querySelector('.pg-hero-video, .hm-window-video'), heroWasPlaying = false;
     buttons.forEach(function (b) {
       b.addEventListener('click', function () {
         opener = b;

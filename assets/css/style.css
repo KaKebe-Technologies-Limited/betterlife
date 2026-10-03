@@ -293,27 +293,6 @@ section { padding: 76px 0; }
 }
 @media (max-width: 400px) { .brand img { height: 38px; } }
 
-/* ---------- Homepage page shell: warm brush-stroke background behind a
-   single large rounded white card holding the whole page ---------- */
-body.home {
-  background-color: var(--hero-bg);
-  background-image:
-    radial-gradient(ellipse 620px 420px at -8% -6%, rgba(242,107,33,.55), transparent 60%),
-    radial-gradient(ellipse 420px 320px at 6% 30%, rgba(124,179,66,.35), transparent 65%),
-    radial-gradient(ellipse 520px 380px at 104% 8%, rgba(242,107,33,.4), transparent 60%);
-  background-repeat: no-repeat;
-}
-.home-shell {
-  position: relative; z-index: 1; background: #fff;
-  /* clip (not hidden) rounds the corners without creating a scroll
-     container, so the sticky menu bar still sticks on the homepage. */
-  border-radius: 34px; overflow: hidden; overflow: clip; box-shadow: 0 30px 70px rgba(26,26,26,.14);
-  margin: 22px auto; max-width: 1400px;
-}
-@media (max-width: 640px) {
-  .home-shell { margin: 12px; border-radius: 20px; }
-}
-
 /* ---------- Hero (split layout: copy left, Africa photo artwork right) ---------- */
 .feature-pills { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 28px; justify-content: center; }
 .pill {

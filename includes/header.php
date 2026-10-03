@@ -79,7 +79,6 @@ foreach ($pageStyles ?? [] as $css): ?>
 <?php endif; ?>
 </head>
 <body class="<?= h($activePage) ?>">
-<?php if ($activePage === 'home'): ?><div class="home-shell"><?php endif; ?>
 
 <?php
 $phone     = setting($pdo, 'phone');
