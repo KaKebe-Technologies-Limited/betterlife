@@ -52,6 +52,10 @@ $strip = [
     ['assets/img/programmes/yumbe-trellis-rows.jpg', 'Trellised vegetables in Yumbe'],
 ];
 
+// The strip in two rows that glide in opposite directions; each photograph at its natural shape
+$stripRows = [array_slice($strip, 0, 6), array_slice($strip, 6)];
+$shape = function (string $p): float { $s = @getimagesize(__DIR__ . '/' . $p); return $s ? round($s[0] / $s[1], 3) : 1.0; };
+
 // Participants in their own words (see pp_quotes()): three voices from community and savings groups, one per language
 $voices = ['amina', 'esther', 'fatima'];
 
@@ -231,23 +235,23 @@ require __DIR__ . '/includes/header.php';
 
   <?= pp_quotes_section($voices) ?>
 
-  <!-- 6. Community photo strip -->
-  <section class="pg-strip" aria-labelledby="pgStripTitle" data-strip>
+  <!-- 6. Around the programmes: two rows of photographs that glide in opposite directions as the page scrolls (about.js) -->
+  <section class="pg-strip pg-glide" aria-labelledby="pgStripTitle">
     <div class="container pg-strip-head ab-reveal">
       <div>
         <span class="ab-eyebrow">Around the programmes</span>
         <h2 id="pgStripTitle">Ponds, classrooms, circles and seedlings</h2>
       </div>
-      <div class="pg-strip-nav" hidden>
-        <button type="button" class="pg-round" data-dir="-1" aria-controls="pgStripRow" aria-label="Previous photographs"><?= icon('arrow-right', 18) ?></button>
-        <button type="button" class="pg-round" data-dir="1" aria-controls="pgStripRow" aria-label="Next photographs"><?= icon('arrow-right', 18) ?></button>
-      </div>
     </div>
-    <ul class="pg-strip-row" id="pgStripRow" tabindex="0" aria-label="Photographs from our programmes. Select one to see it larger.">
-      <?php foreach ($strip as [$p, $cap]): ?>
-        <li><?= ab_photo($p, $cap, $cap, 'strip', 'pg-strip-item', '(max-width: 720px) 200px, 280px') ?></li>
+    <div class="ab-glide ab-reveal" role="group" aria-label="Photographs from our programmes. Select one to see it larger.">
+      <?php foreach ($stripRows as $r => $row): ?>
+        <div class="ab-glide-row<?= $r === 0 ? ' is-tall' : '' ?>" data-glide="<?= $r % 2 ? -1 : 1 ?>">
+          <?php foreach ($row as [$p, $cap]): ?>
+            <?= ab_photo($p, $cap, $cap, 'strip', 'ab-glide-item', $r === 0 ? '(max-width: 720px) 60vw, 460px' : '(max-width: 720px) 50vw, 400px', 'style="--ar: ' . $shape($p) . '"') ?>
+          <?php endforeach; ?>
+        </div>
       <?php endforeach; ?>
-    </ul>
+    </div>
   </section>
 
   <!-- 7. Closing invitation -->
