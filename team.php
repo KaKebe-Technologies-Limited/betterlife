@@ -2,7 +2,7 @@
 require_once __DIR__ . '/includes/functions.php';
 $pageTitle = 'Our Team';
 $activePage = 'team';
-$pageDescription = 'Meet the leadership, country teams and board of directors behind BetterLife International — a youth-led organisation working across five African countries.';
+$pageDescription = 'Meet the leadership, country teams and board of directors behind BetterLife International, a youth-led organisation working across five African countries.';
 
 $all = $pdo->query("SELECT * FROM team_members WHERE status = 1 ORDER BY sort_order")->fetchAll();
 $leadership = array_filter($all, fn($m) => $m['category'] === 'leadership');
@@ -56,7 +56,7 @@ require __DIR__ . '/includes/header.php';
 <section>
   <div class="container">
     <div class="section-head center fade-up">
-      <span class="eyebrow" style="justify-content:center;">Executive Leadership</span>
+      <span class="eyebrow" style="justify-content:center;">Who leads</span>
       <h2>Executive Leadership</h2>
     </div>
     <div class="grid grid-3">
@@ -65,7 +65,7 @@ require __DIR__ . '/includes/header.php';
           <div class="avatar"><img src="<?= avatar_src($m) ?>" alt="<?= h($m['name']) ?>"></div>
           <h4><?= h($m['name']) ?></h4>
           <div class="role"><?= h($m['role']) ?></div>
-          <?php if ($m['bio']): ?><p class="muted" style="font-size:13px;"><?= h(excerpt($m['bio'], 90)) ?></p><?php endif; ?>
+          <?php if ($m['bio']): ?><p class="muted team-excerpt"><?= h(excerpt($m['bio'], 90)) ?></p><?php endif; ?>
           <span class="read-bio-link"><?= icon('file-text', 14) ?> Read full bio</span>
         </div>
       <?php endforeach; ?>
@@ -78,7 +78,7 @@ require __DIR__ . '/includes/header.php';
 <section class="section-cream">
   <div class="container">
     <div class="section-head center fade-up">
-      <span class="eyebrow" style="justify-content:center;">Country and Programme Teams</span>
+      <span class="eyebrow" style="justify-content:center;">On the ground</span>
       <h2>Country and Programme Teams</h2>
     </div>
     <div class="grid grid-4">
@@ -99,7 +99,7 @@ require __DIR__ . '/includes/header.php';
 <section id="board">
   <div class="container">
     <div class="section-head center fade-up">
-      <span class="eyebrow" style="justify-content:center;">Board of Directors</span>
+      <span class="eyebrow" style="justify-content:center;">Oversight</span>
       <h2>Board of Directors</h2>
     </div>
     <div class="grid grid-2">
@@ -123,7 +123,7 @@ require __DIR__ . '/includes/header.php';
 <section class="section-cream">
   <div class="container">
     <div class="section-head center fade-up">
-      <span class="eyebrow" style="justify-content:center;">Volunteers and Community Champions</span>
+      <span class="eyebrow" style="justify-content:center;">In the community</span>
       <h2>Volunteers and Community Champions</h2>
     </div>
     <div class="grid grid-4">

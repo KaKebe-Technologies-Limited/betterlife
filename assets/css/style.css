@@ -931,3 +931,108 @@ textarea.form-control { resize: vertical; min-height: 130px; }
 .pagination a, .pagination span { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 10px; border: 1.5px solid var(--border); font-weight: 700; font-size: 14px; }
 .pagination a:hover { background: var(--green-600); color: #fff; border-color: var(--green-600); }
 .pagination .current { background: var(--green-900); color: #fff; border-color: var(--green-900); }
+
+/* =========================================================
+   One design across the site. The redesigned pages (About, Programmes, Impact, Home) live inside
+   <main class="ab">; the older pages (Farm, Shop, Product, Cart, Checkout, Team, Contact, Stories) put their
+   sections straight on <body>. These rules give the older pages the same language as the redesigned
+   ones: cream openings, serif headings, the same section labels, shaped photographs, matching buttons
+   and cards. Mobile first, so phones get the same look rather than a reduced one.
+   ========================================================= */
+:root { --brand-green: #08722d; --brand-green-dark: #065f25; --brand-blue: #007cad; --brand-deep: #0b3d2e; --brand-line: #e3e0d6; --brand-radius: 22px; }
+
+/* Opening: cream with soft tints and a large serif heading (as on Impact and reports) */
+.page-header {
+  padding: clamp(36px, 5.4vw, 76px) 0 clamp(38px, 5vw, 70px); color: var(--brand-deep);
+  background: radial-gradient(900px 480px at 100% 0%, rgba(0, 124, 173, .10), transparent 62%), radial-gradient(760px 480px at 0% 100%, rgba(8, 114, 45, .10), transparent 60%), var(--cream);
+  border-bottom: 1px solid var(--brand-line);
+}
+.page-header h1 { font-family: var(--font-serif); font-weight: 600; font-size: clamp(34px, 5vw, 64px); line-height: 1.05; letter-spacing: -.02em; color: var(--brand-deep); max-width: 18ch; margin: 0 0 16px; }
+.page-header p { margin: 0; max-width: 56ch !important; font-family: var(--font-serif); font-style: italic; font-size: clamp(18px, 1.8vw, 22px); line-height: 1.45; color: var(--ink-soft) !important; }
+.page-header .crumb { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 0; margin-bottom: clamp(18px, 2.6vw, 28px); font-size: 13.5px; color: var(--ink-soft); }
+.page-header .crumb a { display: inline-flex; align-items: center; min-height: 32px; color: var(--brand-green); font-weight: 600; }
+.page-header .crumb span { opacity: .55; margin: 0 8px; }
+
+/* Headings and section labels */
+body > section h1, body > section h2, body > section h3 { font-family: var(--font-serif); font-weight: 600; letter-spacing: -.01em; color: var(--brand-deep); }
+body > section h2 { font-size: clamp(28px, 3.3vw, 44px); line-height: 1.1; }
+body > section .section-head h2 { font-size: clamp(28px, 3.3vw, 44px); }
+body > section h3 { line-height: 1.25; }
+body > section .eyebrow { gap: 10px; font-size: 12.5px; letter-spacing: .14em; color: var(--brand-green); }
+body > section .eyebrow::before { width: 26px; background: var(--brand-blue); }
+body > section p.muted, body > section .prose-narrow p { font-size: 16.5px; line-height: 1.72; }
+.section-head { margin-bottom: clamp(28px, 4vw, 48px); }
+.section-head p { font-size: 16.5px; line-height: 1.65; color: var(--ink-soft); }
+
+/* Photographs: shaped like the rest of the site instead of padded frames */
+.split .img-frame { padding: 0; background: none; box-shadow: 0 30px 60px rgba(11, 61, 46, .14); border-radius: 120px 22px 120px 22px; max-width: 480px; }
+.split .img-frame img { border-radius: 0; }
+.split .img-frame::before { display: none; }
+.split > .img-frame:nth-child(odd) { border-radius: 22px 120px 22px 120px; }
+.media-band figure { border-radius: 120px 22px 120px 22px; }
+
+/* Buttons and cards in the brand green, with the site's rounder corners */
+.btn-primary { background: var(--brand-green); box-shadow: 0 10px 24px rgba(8, 114, 45, .22); }
+.btn-primary:hover { background: var(--brand-green-dark); }
+.btn-outline-dark { border-color: var(--brand-green); color: var(--brand-green); }
+.btn-outline-dark:hover { background: var(--brand-green); }
+.card { border-radius: var(--brand-radius); border-color: var(--brand-line); box-shadow: 0 14px 34px rgba(11, 61, 46, .07); }
+.card:hover { transform: translateY(-4px); box-shadow: 0 22px 44px rgba(11, 61, 46, .12); }
+.cta-banner { border-radius: var(--brand-radius); background: radial-gradient(700px 400px at 100% 0%, rgba(0, 124, 173, .35), transparent 62%), var(--brand-deep); }
+.cta-banner h3 { font-family: var(--font-serif); font-weight: 600; font-size: clamp(24px, 2.6vw, 32px); }
+.section-dark { background: radial-gradient(800px 460px at 100% 0%, rgba(0, 124, 173, .3), transparent 62%), var(--brand-deep); }
+.team-card .avatar { border-color: #e6f3ec; }
+.team-card .role, .board-card .role { color: var(--brand-blue); }
+.post-card .cat-badge, .product-card .badge-cat { background: var(--brand-blue); color: #fff; }
+.pill-tabs a.active, .pill-tabs a:hover { background: var(--brand-green); border-color: var(--brand-green); }
+.detail-block h4 { font-family: var(--font-serif); font-weight: 600; font-size: 19px; color: var(--brand-deep); }
+.form-control:focus { border-color: var(--brand-green); box-shadow: 0 0 0 3px rgba(8, 114, 45, .12); }
+
+/* Every page: tap targets at least about 40px high, and no text under 12px */
+.cart-link { padding: 10px; margin: -10px; }
+.footer-links li { margin-bottom: 4px; }
+.footer-links a { display: inline-flex; align-items: center; min-height: 36px; }
+.footer-bottom a { display: inline-flex; align-items: center; min-height: 36px; }
+.ab-link, .pg-link, .readmore, .read-bio-link, .im-source-link { min-height: 40px; }
+.pg-crumb-trail a, .ab-crumb a { display: inline-flex; align-items: center; min-height: 36px; }
+.product-card .badge-cat, .product-card .badge-featured, .post-card .cat-badge { font-size: 12px; }
+.impact-photo .cap { font-size: 12.5px; }
+.sidebar-post .d { font-size: 12.5px; }
+.stat-item span { font-size: 12.5px; }
+
+@media (max-width: 720px) {
+  .page-header h1 { max-width: none; }
+  .split { gap: 30px; }
+  .split .img-frame, .split > .img-frame:nth-child(odd) { border-radius: 80px 18px 80px 18px; max-width: none; }
+  .split .img-frame img { aspect-ratio: 4 / 3.4; }
+  .media-band figure { border-radius: 70px 16px 70px 16px; }
+  .cta-banner { padding: 34px 24px; }
+  .contact-card { padding: 28px 22px; }
+  body > section .card[style*="padding:44px"] { padding: 30px 22px !important; }
+}
+
+/* Team: two compact cards per row on phones (the full bio opens on tap) */
+.team-excerpt { font-size: 13.5px; }
+@media (max-width: 640px) {
+  body > section .grid.grid-3:has(.team-card), body > section .grid.grid-4:has(.team-card) { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .team-card { padding: 20px 12px 16px; border-radius: 18px; }
+  .team-card .avatar { width: 84px; height: 84px; margin-bottom: 12px; border-width: 3px; }
+  .team-card h4 { font-size: 15px; line-height: 1.25; }
+  .team-card .role { font-size: 12.5px; line-height: 1.35; margin-bottom: 6px; }
+  .team-card .team-excerpt { display: none; }
+  .team-card .read-bio-link { min-height: 32px; margin-top: 4px; font-size: 12.5px; }
+  .board-card { gap: 14px; padding: 18px; }
+  .board-card .avatar { width: 68px; height: 68px; border-radius: 14px; }
+  .board-card p { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+}
+
+/* Contact: on phones the message form comes first, the offices after it */
+@media (max-width: 900px) {
+  .contact .split > .contact-card { order: -1; }
+  .contact-social a, .footer-social a { width: 42px; height: 42px; }
+}
+/* Even spacing between form fields when two sit side by side */
+form .grid > .form-group { margin-bottom: 0; }
+form > .grid { margin-bottom: 18px; }
+.post-card .readmore { display: inline-flex; align-items: center; min-height: 40px; }
+.ab-crumb, .pg-crumb-trail, .im-crumb { align-items: center; }

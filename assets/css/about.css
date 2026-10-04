@@ -94,7 +94,7 @@
 .ab-motion-paused .ab-motion-toggle .i-play { display: block; }
 .ab-crumb { display: flex; gap: 8px; font-size: 13.5px; color: rgba(255,255,255,.75); margin-bottom: 22px; }
 .ab-crumb a { color: #fff; font-weight: 600; }
-.ab-kicker { margin: 0 0 14px; font: 700 12.5px/1 var(--font-body) !important; letter-spacing: .16em; text-transform: uppercase; color: #bfe3cc !important; }
+.ab-kicker { margin: 0 0 14px; font: 700 12.5px/1.7 var(--font-body) !important; letter-spacing: .16em; text-transform: uppercase; color: #bfe3cc !important; }
 .ab-kicker i { font-style: normal; margin: 0 .35em; color: rgba(255,255,255,.5); }
 .ab-kicker span { white-space: nowrap; }
 .ab-hero h1 { font-family: var(--ab-serif); font-weight: 600; font-size: clamp(42px, 6.4vw, 86px); line-height: 1.02; letter-spacing: -.02em; color: #fff; max-width: 13ch; margin: 0 0 22px; }
@@ -638,3 +638,23 @@
 .ab-hero.has-video .ab-hero-video { opacity: 1; }
 .ab-hero.has-video .ab-hero-img { animation-play-state: paused; }
 @media (prefers-reduced-motion: reduce) { .ab-hero-video { display: none; } }
+
+/* Phones show the same signature pieces as larger screens */
+@media (max-width: 900px) {
+  /* The Africa emblem sits in the photograph above the headline */
+  .ab-hero-inner { padding-top: 172px; }
+  .ab-hero-africa { display: block; position: absolute; z-index: 1; top: 18px; right: clamp(20px, 5vw, 56px); width: clamp(100px, 26vw, 170px); margin: 0; }
+}
+@media (max-width: 720px) {
+  /* The Food diagram keeps its circle: a slightly tighter ring so every connection fits the screen */
+  .ab-web-stage { aspect-ratio: 1; max-width: 440px; margin: 0 auto; }
+  .ab-web-lines { display: block; transform: scale(.82); }
+  .ab-web-core { display: flex; width: 26%; box-shadow: 0 0 0 7px rgba(8, 114, 45, .12), 0 12px 26px rgba(8, 114, 45, .26); }
+  .ab-web-core span { font-size: 19px; }
+  .ab-web-nodes { display: block; }
+  .ab-web-node { position: absolute; left: calc(50% + (var(--x) - 50%) * .82); top: calc(50% + (var(--y) - 50%) * .82); transform: translate(-50%, -50%) !important; padding: 10px 12px; font-size: 13px; }
+  .ab-web-hint { text-align: center; margin: 0 auto 4px !important; }
+}
+/* Comfortable tap targets */
+.ab-who-toggle { min-height: 40px; }
+.ab-map-reset { min-height: 40px; }

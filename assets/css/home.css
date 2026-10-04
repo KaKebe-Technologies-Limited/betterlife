@@ -360,3 +360,12 @@
   .hm-ribbon-list { flex-wrap: wrap; justify-content: center; row-gap: 10px; }
   .hm-panel, .hm-panel-img, .hm-panel-body, .hm-panel-tab, .hm-product, .hm-product-img img, .hm-node-img, .hm-cinema-img, .hm-window-video { transition: none; }
 }
+
+/* Phones keep the year's reach on the map, as on larger screens */
+@media (max-width: 720px) {
+  .hm-stat { display: flex; left: 0; bottom: 2%; padding: 10px 14px 9px 13px; }
+  .hm-stat::before { border-radius: 14px; }
+  .hm-stat-brush { left: -14px; top: -14px; width: 70px; height: 44px; }
+  .hm-stat strong { font-size: 26px; }
+  .hm-stat > span:last-child { margin-top: 4px; font-size: 12px; }
+}

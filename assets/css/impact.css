@@ -259,3 +259,13 @@
   .ab-js .im-fig:not(.is-in) .im-dots i { transform: none; }
   .ab-js .im-panel.is-active { animation: none; }
 }
+
+/* Phones keep each year's figure on the curve (the notes stay in the key below it) */
+@media (max-width: 720px) {
+  .im-plot-box { margin-top: 48px; }
+  .im-pt-label { display: block; bottom: calc(100% + 5px); }
+  .im-pt-label > span { display: none; }
+  .im-pt-label strong { font-size: 14px; }
+  .im-pt.is-last .im-pt-label strong { font-size: 17px; }
+}
+.im-crumb a { display: inline-flex; align-items: center; min-height: 36px; }

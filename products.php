@@ -52,7 +52,7 @@ require __DIR__ . '/includes/header.php';
 
     <div class="section-head center fade-up">
       <span class="eyebrow" style="justify-content:center;">Our Products</span>
-      <h2>Pure Honey, Ghee &amp; Vanilla Yoghurt — Made with Care</h2>
+      <h2>Honey, ghee, yoghurt and organic manure, made with care</h2>
       <p class="muted">Every purchase supports beekeeping, dairy farming and livelihoods training in the communities we serve.</p>
     </div>
 

@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && filter_var($email, FILTER_VALIDATE_
         $stmt->execute([$email]);
         flash_set('success', 'You are subscribed! Thanks for joining our mailing list.');
     } catch (PDOException $e) {
-        flash_set('success', 'You are already subscribed — thank you!');
+        flash_set('success', 'You are already subscribed. Thank you!');
     }
 } else {
     flash_set('error', 'Please enter a valid email address.');
