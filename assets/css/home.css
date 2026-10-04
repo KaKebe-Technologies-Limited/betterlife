@@ -14,8 +14,8 @@
 .hm-kicker { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 20px !important; padding: 8px 16px 8px 12px; border-radius: 999px; background: #fff; border: 1px solid var(--ab-line); box-shadow: 0 6px 18px rgba(11, 61, 46, .06); font-size: 13.5px !important; line-height: 1.3 !important; font-weight: 700; color: var(--ab-deep) !important; }
 .hm-kicker-dot { flex: 0 0 auto; width: 9px; height: 9px; border-radius: 50%; background: var(--ab-green); box-shadow: 0 0 0 4px rgba(8, 114, 45, .16); animation: hmBlink 2.4s ease-in-out infinite; }
 @keyframes hmBlink { 50% { box-shadow: 0 0 0 7px rgba(8, 114, 45, .05); } }
-.hm-hero h1 { margin: 0; font-family: var(--ab-serif); font-weight: 600; font-size: clamp(38px, 4.6vw, 64px); line-height: 1.04; letter-spacing: -.022em; color: var(--ab-deep); }
-.hm-lead { max-width: 560px; margin: 20px 0 28px !important; font-size: clamp(17px, 1.3vw, 19px) !important; line-height: 1.62 !important; color: var(--ab-ink) !important; }
+.hm-hero h1 { margin: 0; font-family: var(--ab-serif); font-weight: 500; font-size: var(--fs-display); line-height: 1.04; letter-spacing: -.022em; color: var(--ab-deep); }
+.hm-lead { max-width: 560px; margin: 20px 0 28px !important; font-size: clamp(16px, 1.25vw, 18px) !important; line-height: 1.62 !important; color: var(--ab-ink) !important; }
 .hm-btn-line { display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border-radius: 999px; border: 1.5px solid var(--ab-deep); color: var(--ab-deep); font-weight: 700; font-size: 15px; line-height: 1; transition: background .2s ease, color .2s ease; }
 .hm-btn-line:hover { background: var(--ab-deep); color: #fff; }
 .hm-led { display: flex; flex-wrap: wrap; gap: 10px 24px; margin: 28px 0 0; padding: 0; list-style: none; font-size: 12.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ab-soft); }
@@ -73,7 +73,7 @@
 /* ---------- 3. Who we are ---------- */
 .ab .hm-origin { background: #fff; }
 .hm-origin-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px clamp(36px, 6vw, 96px); align-items: end; margin-bottom: clamp(30px, 4vw, 52px); }
-.hm-origin h2 { margin: 0; font-size: clamp(32px, 3.8vw, 52px); }
+.hm-origin h2 { margin: 0; font-size: var(--fs-h2-feature); }
 .hm-origin-text .ab-lead { margin-top: 0 !important; }
 .hm-origin-text .hm-links { margin-top: 22px; }
 /* The gallery rows come from about.css (.ab-glide); here only its spacing and the two text tiles */
@@ -97,7 +97,7 @@
 .hm-panel-tab { display: none; }
 .hm-panel-body { padding: 22px 22px 24px; }
 .hm-panel-ico { display: inline-flex; width: 38px; height: 38px; align-items: center; justify-content: center; border-radius: 50%; background: rgba(255, 255, 255, .16); border: 1px solid rgba(255, 255, 255, .32); color: #fff; }
-.ab .hm-panel-body h3 { margin: 12px 0 10px; font-family: var(--ab-serif); font-weight: 600; font-size: clamp(22px, 2.1vw, 28px); line-height: 1.15; color: #fff; }
+.ab .hm-panel-body h3 { margin: 12px 0 10px; font-family: var(--ab-serif); font-weight: 600; font-size: clamp(20px, 1.8vw, 24px); line-height: 1.15; color: #fff; }
 .hm-panel-body h3 a { color: #fff; }
 .hm-panel-body h3 a::after { content: ''; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
 .hm-panel-body h3 a:focus-visible { outline: none; }
@@ -184,7 +184,7 @@
 .hm-voice-fig { position: relative; max-width: 900px; margin: 0 auto; text-align: center; }
 .hm-voice-mark { display: block; height: 66px; font-family: var(--ab-serif); font-size: 150px; line-height: 1; color: var(--ab-green); }
 .hm-voice blockquote { margin: 0; }
-.hm-voice blockquote p { margin: 0 !important; font-family: var(--ab-serif); font-weight: 500; font-size: clamp(24px, 2.7vw, 36px) !important; line-height: 1.36 !important; color: var(--ab-deep) !important; }
+.hm-voice blockquote p { margin: 0 !important; font-family: var(--ab-serif); font-weight: 500; font-size: var(--fs-quote) !important; line-height: 1.36 !important; color: var(--ab-deep) !important; }
 .hm-voice-en { max-width: 680px; margin: 18px auto 0 !important; font-style: italic; font-size: 17px !important; color: var(--ab-soft) !important; }
 .hm-voice figcaption { display: flex; flex-direction: column; align-items: center; gap: 3px; margin-top: 26px; }
 .hm-voice figcaption b { font-size: 16px; color: var(--ab-deep); }
@@ -255,7 +255,7 @@
 .hm-steps p { margin: 0 !important; font-size: 15px !important; line-height: 1.55 !important; }
 .hm-steps .hm-steps-again { display: flex; align-items: center; gap: 8px; padding: 6px 18px; font-family: var(--ab-serif); font-style: italic; font-size: 16px; color: var(--ab-green); }
 .hm-shelf-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 10px 24px; margin: clamp(48px, 6vw, 80px) 0 22px; padding-top: 30px; border-top: 1px solid #ddd8cb; }
-.ab .hm-shelf-head h3 { margin: 0; font-family: var(--ab-serif); font-weight: 600; font-size: clamp(22px, 2.2vw, 28px); }
+.ab .hm-shelf-head h3 { margin: 0; font-family: var(--ab-serif); font-weight: 600; font-size: clamp(20px, 1.8vw, 24px); }
 .hm-shelf { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 2vw, 24px); margin: 0; padding: 0; list-style: none; }
 .hm-product { position: relative; border-radius: 22px; overflow: hidden; background: #fff; border: 1px solid var(--ab-line); transition: transform .3s ease, box-shadow .3s ease; }
 .hm-product:hover, .hm-product:focus-within { transform: translateY(-4px); box-shadow: 0 22px 46px rgba(11, 61, 46, .12); }
@@ -288,7 +288,7 @@
 .hm-close-bg img { width: 100%; height: 100% !important; max-width: none; object-fit: cover; }
 .hm-close-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(6, 22, 15, .92) 0%, rgba(6, 22, 15, .66) 48%, rgba(6, 22, 15, .2) 100%); }
 .hm-close-inner { max-width: 640px; }
-.ab .hm-close h2 { font-size: clamp(34px, 4.2vw, 58px); line-height: 1.06; }
+.ab .hm-close h2 { font-size: var(--fs-h2-feature); line-height: 1.08; }
 .hm-close p { margin: 18px 0 30px !important; font-size: 18px !important; color: rgba(255, 255, 255, .86) !important; }
 
 /* ---------- Responsive ---------- */
@@ -306,7 +306,7 @@
   .hm-map { max-width: 560px; margin: 0 auto; }
 }
 @media (max-width: 720px) {
-  .hm-hero h1 { font-size: clamp(34px, 9vw, 44px); }
+  .hm-hero h1 { font-size: var(--fs-display); }
   .hm-lead { margin: 18px 0 24px !important; }
   .hm-led { margin-top: 24px; }
   .hm-labels text, .hm-lead-line { display: none; }
