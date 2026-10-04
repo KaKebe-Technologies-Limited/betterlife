@@ -100,10 +100,12 @@ require __DIR__ . '/includes/header.php';
           <?php if ($board): ?><a href="#board">Board</a><?php endif; ?>
         </nav>
       </div>
+      <!-- Three photographs of the team together in the field -->
       <figure class="tm-hero-photo">
-        <?= ab_img('assets/img/team/field-uniform.jpg', 'A BetterLife team member in the organisation’s green uniform, standing in a maize field in Rukungiri', 'tm-hero-main', false, '', '(max-width: 900px) 90vw, 480px') ?>
-        <?= ab_img('assets/img/team/field-stream.jpg', 'The same team member crouching at a stream', 'tm-hero-inset', true, '', '(max-width: 900px) 40vw, 220px') ?>
-        <figcaption>In the field in Rukungiri, Uganda</figcaption>
+        <?= ab_img('assets/img/team/team-waving.jpg', 'Eight BetterLife team members in programme vests, smiling and waving in a garden', 'tm-hero-main', false, '', '(max-width: 900px) 92vw, 560px') ?>
+        <?= ab_img('assets/img/team/team-laughing.jpg', 'Four BetterLife team members laughing with their arms around each other', 'tm-hero-a', true, '', '(max-width: 900px) 52vw, 320px') ?>
+        <?= ab_img('assets/img/team/edwin-welcome.jpg', 'Edwin Namakanga, our Outreach Coordinator, greeting with open arms beside thatched homes', 'tm-hero-b', true, '', '(max-width: 900px) 34vw, 200px') ?>
+        <figcaption>The BetterLife team in the field</figcaption>
       </figure>
     </div>
   </section>
