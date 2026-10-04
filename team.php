@@ -55,6 +55,10 @@ $map = require __DIR__ . '/includes/map-paths.php';
 $mapKeys = ['Uganda' => 'Uganda', 'South Sudan' => 'South Sudan', 'Tanzania' => 'Tanzania', 'Ghana' => 'Ghana', 'DR Congo' => 'Democratic Republic of the Congo', 'Democratic Republic of Congo' => 'Democratic Republic of the Congo'];
 $pinAt = ['Ghana' => [96, 452, 'right'], 'Democratic Republic of the Congo' => [232, 566, 'left'], 'South Sudan' => [612, 214, 'right'], 'Uganda' => [640, 334, 'right'], 'Tanzania' => [612, 474, 'right']];
 $vb = [20, 45, 790, 640];
+// On narrower screens the map is framed on Africa alone and the managers sit on it as portraits, close to their countries
+$pinAtNarrow = ['Ghana' => [118, 214], 'Democratic Republic of the Congo' => [238, 528], 'South Sudan' => [432, 168], 'Uganda' => [540, 292], 'Tanzania' => [528, 500]];
+$vbNarrow = [30, 43, 572, 640];
+$pctNarrow = fn(float $x, float $y): string => 'left: ' . round(($x - $vbNarrow[0]) / $vbNarrow[2] * 100, 2) . '%; top: ' . round(($y - $vbNarrow[1]) / $vbNarrow[3] * 100, 2) . '%';
 $pct = fn(float $x, float $y): string => 'left: ' . round(($x - $vb[0]) / $vb[2] * 100, 2) . '%; top: ' . round(($y - $vb[1]) / $vb[3] * 100, 2) . '%';
 $pins = [['key' => 'Uganda', 'member' => null]];
 foreach ($managers as $m) {
@@ -147,6 +151,7 @@ require __DIR__ . '/includes/header.php';
         <p class="ab-head-sub">Country managers lead programmes, partnerships and community relationships in their countries, so solutions are shaped by the people closest to the challenges.</p>
       </div>
       <div class="tm-map ab-reveal">
+        <div class="tm-map-art">
         <svg class="tm-map-svg" viewBox="<?= implode(' ', $vb) ?>" aria-hidden="true" focusable="false">
           <path class="tm-land" d="<?= $map['africa'] ?>"/>
           <?php foreach ($pins as $p): ?>
@@ -158,7 +163,23 @@ require __DIR__ . '/includes/header.php';
               <circle cx="<?= $cx ?>" cy="<?= $cy ?>" r="4.5"/>
             </g>
           <?php endforeach; ?>
+          <?php foreach ($pins as $p): [$cx, $cy] = $map['countries'][$p['key']]['c']; [$ax, $ay] = $pinAtNarrow[$p['key']]; ?>
+            <g class="tm-leader is-narrow" data-key="<?= h($p['key']) ?>">
+              <path d="M<?= $cx ?>,<?= $cy ?> L<?= $ax ?>,<?= $ay ?>"/>
+              <circle cx="<?= $cx ?>" cy="<?= $cy ?>" r="5"/>
+            </g>
+          <?php endforeach; ?>
         </svg>
+        <!-- Narrower screens: the same people as portraits on the map (the full cards are listed beneath it) -->
+        <div class="tm-map-faces" aria-hidden="true">
+          <?php foreach ($pins as $p): [$ax, $ay] = $pinAtNarrow[$p['key']]; $m = $p['member']; ?>
+            <span class="tm-mface<?= $m ? '' : ' is-home' ?>" data-key="<?= h($p['key']) ?>" style="<?= $pctNarrow($ax, $ay) ?>">
+              <span class="tm-mface-img"><?= $m ? $face($m, '64px') : '<span class="tm-pin-mark">' . icon('leaf', 20) . '</span>' ?></span>
+              <span class="tm-mface-label"><?= h($m ? $countryOf($m) : 'Uganda') ?></span>
+            </span>
+          <?php endforeach; ?>
+        </div>
+        </div>
         <ul class="tm-pins" aria-label="Country managers">
           <?php foreach ($pins as $p): [$ax, $ay, $side] = $pinAt[$p['key']]; $m = $p['member']; ?>
             <li class="tm-pin is-<?= $side ?><?= $m ? '' : ' is-home' ?>" data-key="<?= h($p['key']) ?>" style="<?= $pct($ax, $ay) ?>">
