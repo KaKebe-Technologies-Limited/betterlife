@@ -602,53 +602,6 @@ section { padding: 76px 0; }
 p.price-usd { margin: 6px 0 0; }
 .product-card .row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 14px; }
 
-/* Team cards */
-.team-card { text-align: center; padding: 30px 20px; }
-.team-card .avatar { width: 120px; height: 120px; border-radius: 50%; overflow: hidden; margin: 0 auto 18px; border: 4px solid var(--green-100); }
-.team-card .avatar img { width: 100%; height: 100%; object-fit: cover; }
-.team-card h4 { margin-bottom: 4px; font-size: 17px; }
-.team-card .role { color: var(--blue-600); font-weight: 600; font-size: 13px; margin-bottom: 12px; }
-.team-card .social { display: flex; justify-content: center; gap: 10px; }
-.team-card .social a { width: 32px; height: 32px; border-radius: 50%; background: var(--green-100); color: var(--green-700); display: flex; align-items: center; justify-content: center; transition: .2s; }
-.team-card .social a:hover { background: var(--green-600); color: #fff; }
-
-.board-card { display: flex; gap: 20px; padding: 24px; align-items: flex-start; }
-.board-card .avatar { width: 90px; height: 90px; border-radius: 16px; overflow: hidden; flex-shrink: 0; }
-.board-card .avatar img { width: 100%; height: 100%; object-fit: cover; }
-.board-card h4 { margin-bottom: 2px; }
-.board-card .role { color: var(--blue-600); font-weight: 600; font-size: 13px; margin-bottom: 10px; display: block; }
-.board-card p { font-size: 14px; color: var(--ink-soft); margin: 0 0 10px; }
-
-/* Clickable team/board cards -> bio modal */
-.js-open-bio { cursor: pointer; transition: transform .2s ease, box-shadow .2s ease; }
-.js-open-bio:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
-.js-open-bio:focus-visible { outline: 2px solid var(--blue-500); outline-offset: 3px; }
-.read-bio-link {
-  display: inline-flex; align-items: center; gap: 6px; margin-top: 10px;
-  font-size: 12.5px; font-weight: 700; color: var(--green-700);
-}
-.board-card .read-bio-link { margin-top: 2px; }
-
-.member-modal { position: fixed; inset: 0; z-index: 500; display: none; align-items: center; justify-content: center; padding: 24px; }
-.member-modal.open { display: flex; }
-.member-modal-backdrop { position: absolute; inset: 0; background: rgba(11, 36, 29, .55); backdrop-filter: blur(2px); }
-.member-modal-card {
-  position: relative; background: #fff; border-radius: var(--radius-lg); padding: 40px;
-  max-width: 520px; width: 100%; max-height: 85vh; overflow-y: auto; text-align: center;
-  box-shadow: var(--shadow-lg); animation: memberModalIn .25s ease;
-}
-@keyframes memberModalIn { from { opacity: 0; transform: translateY(14px) scale(.98); } to { opacity: 1; transform: none; } }
-.member-modal-close {
-  position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%;
-  background: var(--cream); border: none; color: var(--ink); display: flex; align-items: center; justify-content: center; cursor: pointer;
-}
-.member-modal-close:hover { background: var(--green-100); color: var(--green-800); }
-.member-modal-card img { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; margin: 0 auto 16px; border: 4px solid var(--green-100); }
-.member-modal-card h3 { margin-bottom: 4px; }
-.member-modal-card .role { display: block; color: var(--blue-600); font-weight: 700; font-size: 13.5px; margin-bottom: 18px; }
-.member-modal-card p { font-size: 14.5px; color: var(--ink-soft); text-align: left; margin: 0; }
-@media (max-width: 560px) { .member-modal-card { padding: 30px 22px; } }
-
 .pill-tabs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 40px; }
 .pill-tabs a { padding: 10px 22px; border-radius: 999px; border: 2px solid var(--border); font-weight: 700; font-size: 14px; color: var(--ink-soft); }
 .pill-tabs a.active, .pill-tabs a:hover { background: var(--green-600); border-color: var(--green-600); color: #fff; }
@@ -988,8 +941,6 @@ body > section p.muted, body > section .prose-narrow p { font-size: 16px; line-h
 .cta-banner { border-radius: var(--brand-radius); background: radial-gradient(700px 400px at 100% 0%, rgba(0, 124, 173, .35), transparent 62%), var(--brand-deep); }
 .cta-banner h3 { font-family: var(--font-serif); font-weight: 500; font-size: clamp(22px, 2.2vw, 28px); }
 .section-dark { background: radial-gradient(800px 460px at 100% 0%, rgba(0, 124, 173, .3), transparent 62%), var(--brand-deep); }
-.team-card .avatar { border-color: #e6f3ec; }
-.team-card .role, .board-card .role { color: var(--brand-blue); }
 .post-card .cat-badge, .product-card .badge-cat { background: var(--brand-blue); color: #fff; }
 .pill-tabs a.active, .pill-tabs a:hover { background: var(--brand-green); border-color: var(--brand-green); }
 .detail-block h4 { font-family: var(--font-serif); font-weight: 600; font-size: 19px; color: var(--brand-deep); }
@@ -1000,7 +951,7 @@ body > section p.muted, body > section .prose-narrow p { font-size: 16px; line-h
 .footer-links li { margin-bottom: 4px; }
 .footer-links a { display: inline-flex; align-items: center; min-height: 36px; }
 .footer-bottom a { display: inline-flex; align-items: center; min-height: 36px; }
-.ab-link, .pg-link, .readmore, .read-bio-link, .im-source-link { min-height: 40px; }
+.ab-link, .pg-link, .readmore, .im-source-link { min-height: 40px; }
 .pg-crumb-trail a, .ab-crumb a { display: inline-flex; align-items: center; min-height: 36px; }
 .product-card .badge-cat, .product-card .badge-featured, .post-card .cat-badge { font-size: 12px; }
 .impact-photo .cap { font-size: 12.5px; }
@@ -1016,21 +967,6 @@ body > section p.muted, body > section .prose-narrow p { font-size: 16px; line-h
   .cta-banner { padding: 34px 24px; }
   .contact-card { padding: 28px 22px; }
   body > section .card[style*="padding:44px"] { padding: 30px 22px !important; }
-}
-
-/* Team: two compact cards per row on phones (the full bio opens on tap) */
-.team-excerpt { font-size: 13.5px; }
-@media (max-width: 640px) {
-  body > section .grid.grid-3:has(.team-card), body > section .grid.grid-4:has(.team-card) { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-  .team-card { padding: 20px 12px 16px; border-radius: 18px; }
-  .team-card .avatar { width: 84px; height: 84px; margin-bottom: 12px; border-width: 3px; }
-  .team-card h4 { font-size: 15px; line-height: 1.25; }
-  .team-card .role { font-size: 12.5px; line-height: 1.35; margin-bottom: 6px; }
-  .team-card .team-excerpt { display: none; }
-  .team-card .read-bio-link { min-height: 32px; margin-top: 4px; font-size: 12.5px; }
-  .board-card { gap: 14px; padding: 18px; }
-  .board-card .avatar { width: 68px; height: 68px; border-radius: 14px; }
-  .board-card p { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 }
 
 /* Contact: on phones the message form comes first, the offices after it */
