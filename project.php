@@ -127,7 +127,7 @@ require __DIR__ . '/includes/header.php';
 
   <!-- The film from this project -->
   <?php $film = pp_film(); if ($film['project'] === $slug && is_file(__DIR__ . '/' . $film['src'])): ?>
-    <section class="pg-section-cream" aria-labelledby="pgFilmTitle">
+    <section class="pg-section-cream" id="film" aria-labelledby="pgFilmTitle">
       <div class="container">
         <div class="ab-head ab-reveal">
           <span class="ab-eyebrow">Watch the film</span>
