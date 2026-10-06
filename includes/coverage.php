@@ -114,9 +114,5 @@ return [
             'https://www.ayebaredenise.com/', 'ayebaredenise.com'],
     ],
 
-    // BetterLife's own accounts (as found in search results)
-    'social' => [
-        ['x-twitter', 'X', '@BetterLife_Int', 'https://x.com/BetterLife_Int'],
-        ['instagram', 'Instagram', '@betterlife_int', 'https://www.instagram.com/betterlife_int/'],
-    ],
+    // BetterLife's own social accounts live in Admin -> Site Settings (see social_links() in includes/functions.php)
 ];

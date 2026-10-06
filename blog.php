@@ -299,7 +299,7 @@ require __DIR__ . '/includes/header.php';
         <h2 id="stFollowTitle">New stories, straight to you</h2>
         <p>Follow BetterLife International for news from the field, or have new stories sent to your inbox.</p>
         <div class="st-social">
-          <?php foreach ($coverage['social'] as [$ico, $network, $handle, $url]): ?>
+          <?php foreach (social_links($pdo) as [$ico, $network, $handle, $url]): ?>
             <a href="<?= h($url) ?>" target="_blank" rel="noopener"><?= icon($ico, 20) ?><span><small><?= h($network) ?></small><?= h($handle) ?></span><?= $newTab ?></a>
           <?php endforeach; ?>
         </div>

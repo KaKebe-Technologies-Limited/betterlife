@@ -25,7 +25,6 @@ $prompt = $chosen ? $topics[$chosen][3] : 'Tell us a little about what you have 
 
 $email = setting($pdo, 'email');
 $phone = setting($pdo, 'phone');
-$coverage = require __DIR__ . '/includes/coverage.php';
 
 // Where we are: offices placed on the map with the same projection as the site's other maps (includes/map-paths.php)
 $map = require __DIR__ . '/includes/map-paths.php';
@@ -265,7 +264,7 @@ require __DIR__ . '/includes/header.php';
       </ul>
       <div class="ct-social ab-reveal">
         <span>Follow BetterLife</span>
-        <?php foreach ($coverage['social'] as [$ico, $network, $handle, $url]): ?>
+        <?php foreach (social_links($pdo) as [$ico, $network, $handle, $url]): ?>
           <a href="<?= h($url) ?>" target="_blank" rel="noopener"><?= icon($ico, 18) ?> <?= h($handle) ?><?= $newTab ?></a>
         <?php endforeach; ?>
       </div>

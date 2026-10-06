@@ -22,6 +22,23 @@ function setting(PDO $pdo, string $key, string $default = ''): string
     return $all[$key] ?? $default;
 }
 
+/** BetterLife's social accounts from Site Settings, in the order they are shown: [icon, network, handle, link]. */
+function social_links(PDO $pdo): array
+{
+    $networks = ['twitter' => ['x-twitter', 'X'], 'instagram' => ['instagram', 'Instagram'], 'linkedin' => ['linkedin', 'LinkedIn'],
+                 'youtube' => ['youtube', 'YouTube'], 'facebook' => ['facebook', 'Facebook']];
+    $out = [];
+    foreach ($networks as $key => [$icon, $network]) {
+        $url = trim(setting($pdo, $key));
+        if ($url === '') continue;
+        $last = basename(rtrim((string) parse_url($url, PHP_URL_PATH), '/'));
+        // Handles read as @name; company pages read as the organisation's name
+        $handle = in_array($key, ['linkedin', 'facebook'], true) || $last === '' ? 'BetterLife International' : ($last[0] === '@' ? $last : '@' . $last);
+        $out[] = [$icon, $network, $handle, $url];
+    }
+    return $out;
+}
+
 /* ---------------------------------------------------------------------
  * Content items — admin-editable repeatable content blocks (lists of
  * cards, timeline rows, photo strips, workblocks, etc.) grouped by a

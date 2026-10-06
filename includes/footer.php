@@ -12,10 +12,7 @@ $footerPrograms = $pdo->query("SELECT title, slug FROM programs WHERE status = 1
         </div>
         <p style="font-size:14px;"><?= h(setting($pdo, 'footer_about')) ?></p>
         <div class="footer-social">
-          <?php if ($fb = setting($pdo, 'facebook')): ?><a href="<?= h($fb) ?>" target="_blank" rel="noopener" aria-label="Facebook"><?= icon('facebook', 16) ?></a><?php endif; ?>
-          <?php if ($tw = setting($pdo, 'twitter')): ?><a href="<?= h($tw) ?>" target="_blank" rel="noopener" aria-label="Twitter / X"><?= icon('x-twitter', 16) ?></a><?php endif; ?>
-          <?php if ($ig = setting($pdo, 'instagram')): ?><a href="<?= h($ig) ?>" target="_blank" rel="noopener" aria-label="Instagram"><?= icon('instagram', 16) ?></a><?php endif; ?>
-          <?php if ($yt = setting($pdo, 'youtube')): ?><a href="<?= h($yt) ?>" target="_blank" rel="noopener" aria-label="YouTube"><?= icon('youtube', 16) ?></a><?php endif; ?>
+          <?php foreach (social_links($pdo) as [$sIcon, $sNetwork, $sHandle, $sUrl]): ?><a href="<?= h($sUrl) ?>" target="_blank" rel="noopener" aria-label="BetterLife on <?= h($sNetwork) ?> (opens in a new tab)"><?= icon($sIcon, 16) ?></a><?php endforeach; ?>
         </div>
       </div>
 
