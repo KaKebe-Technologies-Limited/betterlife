@@ -286,7 +286,7 @@ function pp_projects(): array
             'who'      => 'Refugees and host-community members',
             'summary'  => 'RISE brings refugees and host-community members into the same training groups and local economy. Participants learn practical trades, then receive mentorship, business support, market connections and access to small loans, building relationships as they train, save and trade together.',
             'image'    => ['assets/img/programmes/yumbe-poultry-care.jpg', 'A young man refilling a drinker in a poultry house in Yumbe, Uganda', '45% 8%'],
-            'hero'     => ['assets/img/betterlifeint-source/projects/project-smiles-alt.jpg', 'Participants holding rolled mats at a RISE activity', '50% 35%'],
+            'hero'     => ['assets/img/programmes/rise-group-on-mat.jpg', 'BetterLife team members sitting together on a mat with women from the community, under a tree', '50% 72%'],
             'blocks'   => [['green-skills-livelihoods', 'RISE']],
             'results'  => [
                 ['78%', 'Moved into sustainable income pathways', 'Reported across RISE target groups'],
