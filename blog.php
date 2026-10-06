@@ -53,11 +53,12 @@ $press = $coverage['press'];
 $pressByYear = [];
 foreach ($press as $item) $pressByYear[substr($item[0], 0, 4)][] = $item;
 $outlets = array_values(array_unique(array_map(fn($i) => $i[1], $press)));
-// The opening's clippings: an international, a national and a local title
+// The opening's clippings come from further down the wall, so they add to what shows below rather than
+// repeat it: COP29 in Baku, water in Eastern Uganda, clean energy in Western Uganda
 $clipUrls = [
-    'https://african.business/2026/08/trade-investment/africas-young-disruptors-part-two',
-    'https://www.newvision.co.ug/category/agriculture/forbes-honours-21-year-old-ugandan-for-climat-NV_235908_062026',
-    'https://factsmediauganda.com/2025/04/14/betterlife-international-at-five-years-transforming-90000-lives-across-east-africa/',
+    'https://en.trend.az/business/green-economy/3967863.html',
+    'https://langonewsnetwork.com/2025/01/10/water-life-and-dignity-how-betterlifes-borehole-programme-transformed-eastern-uganda/',
+    'https://factsmediauganda.com/2023/09/05/48-biogas-plants-one-vision-how-betterlife-is-bringing-clean-energy-to-western-uganda/',
 ];
 $clips = array_values(array_filter(array_map(fn($u) => current(array_filter($press, fn($p) => $p[3] === $u)) ?: null, $clipUrls)));
 // Counts for the news section: every article, including those that ran in a second outlet
