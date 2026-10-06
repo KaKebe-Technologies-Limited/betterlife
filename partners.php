@@ -13,7 +13,7 @@ $partners = [
     ['world-food-programme.svg', 'World Food Programme', 'Our engagement has contributed to work around farmer information, verification and the responsible use of agricultural and climate data.', 'project.php?slug=soilla'],
     ['fadeco.png', 'FADECO', 'Our partner in Tanzania, reaching young people and communities through schools, community radio and practical training.', 'project.php?slug=tanzania-climate-education'],
     ['icpac.svg', 'ICPAC, IGAD Climate Prediction and Applications Centre', 'Its innovation ecosystem has supported our youth climate-innovation work.', 'project.php?slug=climate-innovation-hackathons'],
-    ['moonshot.svg', 'Moonshot', 'Supports the BetterLife Pre-COP Climate Academy for young people from Uganda and across Africa.', 'project.php?slug=pre-cop-climate-academy'],
+    ['moonshot.svg', 'Moonshot', 'Supports the BetterLife Climate Leadership Academy for young people from Uganda and across Africa.', 'project.php?slug=climate-leadership-academy'],
     ['hbcu-green-fund.png', 'HBCU Green Fund', '', ''],
 ];
 

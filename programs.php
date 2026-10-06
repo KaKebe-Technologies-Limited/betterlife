@@ -18,7 +18,7 @@ foreach ($areas as $slug => $a) {
 $evidence = [
     ['72%', 'Adopted sack or box gardening', 'Women in the programme, reported after training', 'womens-climate-resilience-yumbe',
         ['assets/img/programmes/yumbe-participant-smile.jpg', 'A smiling participant in the Yumbe programme', '50% 22%']],
-    ['78%', 'Moved into sustainable income pathways', 'Refugee and host-community participants, reported across target groups', 'smiles',
+    ['78%', 'Moved into sustainable income pathways', 'Refugee and host-community participants, reported across target groups', 'rise',
         ['assets/img/programmes/yumbe-stall-woman.jpg', 'A woman at her stall beside a brick shop', '72% 50%']],
     ['4,500+', 'Students engaged through school climate education', 'Learners at partner schools, across BetterLife’s school work', 'green-libraries-eco-labs',
         ['assets/img/betterlifeint-source/programs/program-photo-8.jpg', 'Pupils gathered outdoors for a school session', '50% 45%']],
@@ -60,7 +60,7 @@ $shape = function (string $p): float { $s = @getimagesize(__DIR__ . '/' . $p); r
 $voices = ['amina', 'esther', 'fatima'];
 
 $feature = 'womens-climate-resilience-yumbe';
-$side = ['smiles', 'betterlife-spring'];
+$side = ['rise', 'betterlife-spring'];
 
 $heroImg = 'assets/img/about/rukungiri-farmer-maize.jpg';
 $heroV = ab_variants($heroImg);

@@ -6,6 +6,9 @@ $activePage = 'programs';
 $areas = pp_areas();
 $projects = pp_projects();
 $slug = (string) ($_GET['slug'] ?? '');
+// Renamed projects: their old addresses move to the new ones
+$renamed = ['smiles' => 'rise', 'pre-cop-climate-academy' => 'climate-leadership-academy'];
+if (isset($renamed[$slug])) { header('Location: ' . SITE_URL . '/project.php?slug=' . $renamed[$slug], true, 301); exit; }
 $p = $projects[$slug] ?? null;
 
 // Projects with an established page of their own (the farm) go there

@@ -42,7 +42,7 @@ $years = [
         'notes' => [
             ['120+', 'schools reached with climate education'],
             ['9,600+', 'farmers and young people trained at climate-smart demonstration farms'],
-            ['5,400+', 'young people and women in SMILES skills training and mentoring'],
+            ['5,400+', 'young people and women in RISE skills training and mentoring'],
             ['2,300+', 'young people in climate leadership and community action'],
         ],
         'mark'  => '9,600+ farmers trained at demonstration farms',
@@ -86,9 +86,9 @@ $questions = [
         ['assets/img/impact/seedlings-woman.jpg', 'A woman in a programme T-shirt holding seedlings ready to plant in Yumbe', '50% 35%']],
     ['Are families growing more food?', '35%', 'less spent on vegetables by households growing their own', 'An approximate figure, from the active gardening households among the 82 tracked in October 2025, as they reported it', 'womens-climate-resilience-yumbe', 'Women’s Climate Resilience in Yumbe',
         ['assets/img/impact/cabbages-mulched.jpg', 'Cabbages growing under straw mulch in Yumbe', '45% 55%']],
-    ['Are incomes becoming more stable?', '78%', 'moved into sustainable income pathways', 'Reported across SMILES target groups', 'smiles', 'SMILES',
+    ['Are incomes becoming more stable?', '78%', 'moved into sustainable income pathways', 'Reported across RISE target groups', 'rise', 'RISE',
         ['assets/img/programmes/yumbe-poultry-care.jpg', 'A young man refilling a drinker in a poultry house in Yumbe', '50% 30%']],
-    ['Are communities better placed to face the next shock?', '40%', 'fall in food insecurity', 'Reported across SMILES target groups', 'smiles', 'SMILES',
+    ['Are communities better placed to face the next shock?', '40%', 'fall in food insecurity', 'Reported across RISE target groups', 'rise', 'RISE',
         ['assets/img/programmes/yumbe-mother-baby.jpg', 'A mother laughing with her baby at a programme session in Yumbe', '48% 30%']],
 ];
 
@@ -223,7 +223,7 @@ require __DIR__ . '/includes/header.php';
           </li>
         <?php endforeach; ?>
       </ol>
-      <p class="im-qb-note">Each bar fills to its own result, out of 100 per cent. The Yumbe figures come from monitoring 82 households in October 2025 and still need to be confirmed by the project’s endline survey. The SMILES figures are as the programme reported them.</p>
+      <p class="im-qb-note">Each bar fills to its own result, out of 100 per cent. The Yumbe figures come from monitoring 82 households in October 2025 and still need to be confirmed by the project’s endline survey. The RISE figures are as the programme reported them.</p>
       <?php $voice = pp_quotes()['grace'] ?? null; if ($voice): ?>
         <figure class="im-voice ab-reveal">
           <blockquote><p><?= h(preg_replace('/^“|”$/u', '', $voice['q'])) ?></p></blockquote>
