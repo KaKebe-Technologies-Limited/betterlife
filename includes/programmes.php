@@ -414,7 +414,7 @@ function pp_projects(): array
             'location' => 'Uganda', 'country' => 'Uganda',
             'who'      => 'Schools, learners, refugee communities and households',
             'summary'  => 'We work on clean cooking in schools and refugee communities, including biogas, and on waste separation, plastic banks, recycling and reuse. More than 48 household biogas systems turn organic waste into cleaner cooking energy, and four school plastic banks help keep plastics out of the environment.',
-            'image'    => ['assets/img/betterlifeint-source/projects/project-renewable-pathways-alt.jpg', 'A man adding a bottle to a plastic bank', '50% 25%'],
+            'image'    => ['assets/img/programmes/renewable-cooking-stoves.jpg', 'BetterLife team members with students at clean cooking stoves during a school cook-off', '40% 40%'],
             'hero'     => ['assets/img/programmes/clean-cooking-cookoff.jpg', 'BetterLife team members with students at a clean cooking cook-off', '50% 40%'],
             // Clean cooking and biogas first, then the waste work
             'blocks'   => [['clean-energy-water-restoration', 'Clean Cooking and Biogas'], ['clean-energy-water-restoration', 'BetterLife Renewable Pathways']],
@@ -423,6 +423,8 @@ function pp_projects(): array
                 ['4', 'School plastic banks', 'Supported through Renewable Pathways'],
             ],
             'gallery'  => [
+                ['assets/img/programmes/renewable-cooking-demo.jpg', 'A BetterLife team member at a cooking demonstration with students in “Clean Cooking Capacity Building for Schools” aprons'],
+                ['assets/img/programmes/renewable-water-turbine.jpg', 'A small water turbine, wired up and turning in the flow from a spring'],
                 ['assets/img/betterlifeint-source/projects/project-renewable-pathways-alt.jpg', 'Adding a bottle to a plastic bank'],
             ],
             'related'  => [['project.php?slug=green-libraries-eco-labs', 'School climate clubs and Eco Labs']],
