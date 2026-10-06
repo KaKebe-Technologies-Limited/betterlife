@@ -82,6 +82,9 @@ $countryKeys = array_values(array_unique(array_filter(array_column($pins, 'key')
 $community = [];
 for ($i = 1; $i <= 8; $i++) $community[] = 'assets/img/about/yumbe-portrait-' . $i . '.jpg';
 
+// Cards per row on wide screens: one row for up to six people, otherwise two even rows (seven reads as four and three)
+$cols = fn(int $n): int => $n <= 6 ? max(3, $n) : (int) ceil($n / 2);
+
 $teamCount = count($leadership) + count($managers) + count($programme);
 $countryCount = count($countryKeys);
 
@@ -228,7 +231,7 @@ require __DIR__ . '/includes/header.php';
         </div>
         <p class="ab-head-sub">The people who coordinate the work, track what changes, keep the organisation running and carry community voices to a wider audience.</p>
       </div>
-      <ul class="tm-grid" style="--cols: <?= min(6, max(3, count($programme))) ?>">
+      <ul class="tm-grid" style="--cols: <?= $cols(count($programme)) ?>">
         <?php foreach ($programme as $i => $m): ?>
           <li class="tm-card ab-reveal" style="--i: <?= $i ?>">
             <div class="tm-card-photo"><?= $face($m, '(max-width: 720px) 45vw, 240px') ?></div>
@@ -288,7 +291,7 @@ require __DIR__ . '/includes/header.php';
         <span class="ab-eyebrow">In the community</span>
         <h2 id="tmVolTitle">Volunteers and community champions</h2>
       </div>
-      <ul class="tm-grid" style="--cols: <?= min(6, max(3, count($volunteers))) ?>">
+      <ul class="tm-grid" style="--cols: <?= $cols(count($volunteers)) ?>">
         <?php foreach ($volunteers as $i => $m): ?>
           <li class="tm-card ab-reveal" style="--i: <?= $i ?>">
             <div class="tm-card-photo"><?= $face($m, '(max-width: 720px) 45vw, 240px') ?></div>
@@ -331,7 +334,7 @@ require __DIR__ . '/includes/header.php';
     <div class="tm-dialog-body">
       <span class="tm-role" id="tmDialogRole"></span>
       <h2 id="tmDialogName"></h2>
-      <p id="tmDialogBio"></p>
+      <div id="tmDialogBio" class="tm-dialog-bio"></div>
       <div class="tm-dialog-nav">
         <button type="button" data-step="-1"><?= icon('arrow-right', 15) ?> <span>Previous</span></button>
         <span class="tm-dialog-count" aria-live="polite"></span>

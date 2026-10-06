@@ -35,7 +35,13 @@
       }
       role.textContent = b.role;
       name.textContent = b.name;
-      bio.textContent = b.bio;
+      // One paragraph per blank-line break in the bio
+      bio.innerHTML = '';
+      b.bio.split(/\n\s*\n/).forEach(function (text) {
+        var para = document.createElement('p');
+        para.textContent = text.trim();
+        bio.appendChild(para);
+      });
       count.textContent = (index + 1) + ' of ' + bios.length;
       dialog.querySelector('.tm-dialog-body').scrollTop = 0;
     }
