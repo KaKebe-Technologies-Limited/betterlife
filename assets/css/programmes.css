@@ -237,6 +237,10 @@
 .pg-gallery li:first-child .ab-lb { border-radius: 28px 120px 28px 28px; }
 .pg-gallery.is-two { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: clamp(220px, 26vw, 360px); }
 .pg-gallery.is-two li:first-child { grid-row: auto; grid-column: auto; }
+/* A single photograph: one wide frame */
+.pg-gallery.is-one { grid-template-columns: minmax(0, 1fr); grid-auto-rows: auto; max-width: 900px; margin: 0 auto; }
+.pg-gallery.is-one li:first-child { grid-row: auto; grid-column: auto; }
+.pg-gallery.is-one .ab-lb { height: auto; aspect-ratio: 3 / 2; }
 /* Photo credit under a gallery (partners' photographs) */
 .ab .pg-credit { margin: 12px 0 0; font-size: 13px; color: var(--ab-soft); }
 .pg-story { max-width: 720px; }

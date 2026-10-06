@@ -327,7 +327,11 @@ function pp_projects(): array
                 ['~400', 'Young people the centre has space to serve', 'Capacity at opening'],
                 ['20', 'Young people trained to manage the hub', 'Before the launch, December 2023'],
             ],
-            'gallery'  => [],
+            'image'    => ['assets/img/programmes/apala-photo-frame.jpg', 'Two young people smiling through an Apala One Stop Youth Centre photo frame', '50% 45%'],
+            'hero'     => ['assets/img/programmes/apala-ribbon-cutting.jpg', 'Cutting the ribbon at the launch of the Apala One Stop Youth Centre in Alebtong', '50% 35%'],
+            'gallery'  => [
+                ['assets/img/programmes/apala-photo-frame.jpg', 'At the Apala launch: a photo frame reading Innovate, Educate, Elevate, with the partners’ logos'],
+            ],
         ],
         'tanzania-climate-education' => [
             'title'    => 'Climate Education and Youth Enterprise in Tanzania',

@@ -132,7 +132,7 @@ require __DIR__ . '/includes/header.php';
           <span class="ab-eyebrow">In pictures</span>
           <h2 id="pgGalleryTitle">From the project</h2>
         </div>
-        <ul class="pg-gallery ab-reveal<?= count($gallery) <= 2 ? ' is-two' : '' ?>">
+        <ul class="pg-gallery ab-reveal<?= count($gallery) === 1 ? ' is-one' : (count($gallery) === 2 ? ' is-two' : '') ?>">
           <?php foreach ($gallery as $i => [$gp, $cap]): ?>
             <li><?= ab_photo($gp, $cap, $cap, 'project', '', $i === 0 && count($gallery) > 2 ? '(max-width: 720px) 100vw, 800px' : '(max-width: 720px) 50vw, 600px') ?></li>
           <?php endforeach; ?>
