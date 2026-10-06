@@ -277,6 +277,7 @@ function pp_projects(): array
             'who'      => 'Farmers learning on a working farm and supplying produce',
             'summary'  => 'BetterLife’s working demonstration farm and market link. Farmers learn through solar-powered irrigation, greenhouse farming, beekeeping, dairy and livestock, then have a route to supply produce through BetterLife Agro Tourism Farm Ltd.',
             'image'    => ['assets/img/betterlifeint-source/projects/project-agro-tourism-alt.jpeg', 'A farmer walking through a banana plantation at BetterLife Agro Tourism Farm', '60% 45%'],
+            'directory_photo' => ['assets/img/farm/maize-two-women.jpg', 'Two women laughing in a maize field at BetterLife Agro Tourism Farm', '50% 40%'],   // on the Projects page only
             'href'     => 'farm.php',
         ],
         'rise' => [

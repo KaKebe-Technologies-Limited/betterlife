@@ -51,7 +51,7 @@ $groups = array_filter($groups);
 $card = function (string $ps, array $p) use ($areas, $film, $matches, $area, $country): string {
     $feature = $film['project'] === $ps && is_file(__DIR__ . '/' . $film['src']);
     $url = pp_project_url($ps, $p);
-    $pic = $p['image'] ?? null;
+    $pic = $p['directory_photo'] ?? $p['image'] ?? null;
     $results = $p['results'] ?? [];
     if (isset($p['proof'], $results[$p['proof']])) $results = array_merge([$results[$p['proof']]], array_diff_key($results, [$p['proof'] => 1]));   // its chosen result first
     ob_start(); ?>
