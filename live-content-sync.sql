@@ -1,4 +1,4 @@
--- BetterLife International: live content sync, generated 2026-10-06 12:23 by tools/make_live_sync.php
+-- BetterLife International: live content sync, generated 2026-10-06 12:45 by tools/make_live_sync.php
 -- Replaces the site's content tables and updates site settings. Never touches orders, messages, subscribers,
 -- admin accounts, passwords or payment keys.
 
@@ -240,7 +240,7 @@ INSERT INTO `reports` (`id`, `title`, `year`, `file_url`, `sort_order`, `status`
 ('3', 'BetterLife International Annual Report', '2023', 'assets/reports/betterlife-annual-report-2023.pdf', '3', '1', '2026-10-03 22:40:00'),
 ('4', 'BetterLife International Annual Report', '2022', 'assets/reports/betterlife-annual-report-2022.pdf', '4', '1', '2026-10-03 22:40:00');
 
--- content_items (66 rows)
+-- content_items (67 rows)
 DROP TABLE IF EXISTS `content_items`;
 CREATE TABLE `content_items` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -259,7 +259,7 @@ CREATE TABLE `content_items` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   KEY `idx_page_section` (`page`,`section_key`,`sort_order`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 INSERT INTO `content_items` (`id`, `page`, `section_key`, `title`, `subtitle`, `body`, `image`, `cta_label`, `cta_href`, `extra`, `sort_order`, `status`, `created_at`, `updated_at`) VALUES
 ('1', 'about', 'how_we_work', 'We Start by Listening', '', 'We work through women’s groups, farmer groups, refugee and host-community structures, schools, community organisations and local facilitators. These groups help us understand what is changing, what has already been tried and what people can realistically sustain.', NULL, NULL, NULL, NULL, '0', '1', '2026-08-31 16:53:16', '2026-08-31 16:53:16'),
 ('2', 'about', 'how_we_work', 'People Learn by Seeing and Doing', '', 'A technique explained in a workshop can remain abstract. A garden that is producing through a dry spell is harder to dismiss. We use demonstration sites, local-language facilitation, peer learning and community champions so that people can see, question and test new practices.', NULL, NULL, NULL, NULL, '10', '1', '2026-08-31 16:53:16', '2026-08-31 16:53:16'),
@@ -328,7 +328,8 @@ INSERT INTO `content_items` (`id`, `page`, `section_key`, `title`, `subtitle`, `
 ('64', 'home', 'hero_gallery', 'A school climate club in session', NULL, NULL, 'assets/img/classroom-climate-club.webp', NULL, NULL, NULL, '60', '1', '2026-09-28 15:34:30', '2026-09-28 15:34:30'),
 ('65', 'home', 'hero_gallery', 'A market stall run by a BetterLife entrepreneur', NULL, NULL, 'assets/img/market-stall-vendor.webp', NULL, NULL, NULL, '70', '1', '2026-09-28 15:34:30', '2026-09-28 15:34:30'),
 ('66', 'home', 'hero_gallery', 'Two generations working the same field', NULL, NULL, 'assets/img/farmers-planting-together.webp', NULL, NULL, NULL, '80', '1', '2026-09-28 15:34:30', '2026-09-28 15:34:30'),
-('67', 'home', 'hero_gallery', 'The BetterLife field team on assignment', NULL, NULL, 'assets/img/field-team-group-under-tree.webp', NULL, NULL, NULL, '90', '1', '2026-09-28 15:34:30', '2026-09-28 15:34:30');
+('67', 'home', 'hero_gallery', 'The BetterLife field team on assignment', NULL, NULL, 'assets/img/field-team-group-under-tree.webp', NULL, NULL, NULL, '90', '1', '2026-09-28 15:34:30', '2026-09-28 15:34:30'),
+('68', 'programs', 'climate-education-youth-leadership', 'Opening the Way for the Next Generation', NULL, 'When BetterLife International’s founder, Denise Ayebare, won the Moonshot Borderless Award, she wanted to turn that recognition into an opportunity for other young people.\n\nHaving begun her own leadership journey as a teenager and founded BetterLife at nineteen, Denise understood how much young people can achieve when someone takes their ideas seriously. She also recognised the barriers facing emerging climate leaders: limited access to mentorship, learning opportunities and the spaces where decisions about their future are made.\n\nShe wanted to extend her leadership by helping others develop theirs. That ambition helped shape the vision for the BetterLife Climate Leadership Academy: a place where young people could deepen their understanding of climate change, develop their ideas and build the confidence to lead.\n\nThe vision connects climate knowledge with the realities young people see around them, from failed harvests and food insecurity to displacement and limited livelihood opportunities. It makes room for young leaders whose experience begins in a farming community, a refugee settlement, a school or a neighbourhood, and whose ideas deserve the opportunity to grow.\n\nFor Denise, the next chapter of leadership is about opening that opportunity to others. Through the Academy, she wants to nurture a generation of young climate leaders equipped to organise, influence decisions and develop solutions alongside their communities.', NULL, NULL, NULL, NULL, '35', '1', '2026-10-06 12:41:53', '2026-10-06 12:41:53');
 
 -- Site settings (content only)
 INSERT INTO `settings` (`setting_key`, `setting_value`) VALUES ('about_image', 'assets/img/about-real-1.jpg') ON DUPLICATE KEY UPDATE `setting_value` = VALUES(`setting_value`);

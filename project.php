@@ -87,6 +87,44 @@ require __DIR__ . '/includes/header.php';
     </div>
   </section>
 
+  <!-- How the project began, where there is a story to tell -->
+  <?php $o = $p['origin'] ?? null; $originParas = $o ? pp_paragraphs($pdo, [$o['block']]) : []; ?>
+  <?php if ($originParas): $last = count($originParas) - 1; ?>
+    <section class="pg-section-cream pg-origin" aria-labelledby="pgOriginTitle">
+      <div class="container pg-origin-grid">
+        <figure class="pg-origin-portrait ab-reveal">
+          <svg class="ab-strokes" viewBox="0 0 400 480" preserveAspectRatio="none" aria-hidden="true" focusable="false"><g filter="url(#lpBrush)"><path class="f-green" d="<?= lp_brush_d(-40, 310, 160, 286, 46, 91) ?>"/><path class="f-blue" d="<?= lp_brush_d(190, 34, 372, 12, 34, 93) ?>"/></g></svg>
+          <div class="pg-origin-photo"><?= ab_img($o['photo'][0], $o['photo'][1], '', true, '', '(max-width: 900px) 72vw, 400px') ?></div>
+          <p class="pg-origin-award"><span>Winner</span><strong><?= h($o['award']) ?></strong></p>
+          <figcaption><strong><?= h($o['name']) ?></strong> <?= h($o['role']) ?></figcaption>
+        </figure>
+        <div class="pg-origin-copy ab-reveal">
+          <span class="ab-eyebrow">Where the academy began</span>
+          <?php $ot = h($o['block'][1]); $om = h($o['mark'] ?? ''); ?>
+          <h2 id="pgOriginTitle"><?= $om !== '' && str_ends_with($ot, $om)
+              ? substr($ot, 0, -strlen($om)) . '<span class="ab-mark">' . $om . '<svg viewBox="0 0 240 30" preserveAspectRatio="none" aria-hidden="true"><path filter="url(#lpBrush)" d="' . lp_brush_d(4, 17, 238, 14, 22, 95, 0.02) . '"/></svg></span>'
+              : $ot ?></h2>
+          <?php foreach ($originParas as $i => $para): ?>
+            <p<?= $i === 0 ? ' class="ab-lead"' : ($i === $last && $last > 1 ? ' class="ab-pull"' : '') ?>><?= h($para) ?></p>
+          <?php endforeach; ?>
+        </div>
+      </div>
+      <?php if (!empty($o['path'])): $steps = count($o['path']); ?>
+        <div class="container">
+          <p class="pg-origin-path-label" id="pgOriginPath">From one leader to many</p>
+          <ol class="pg-origin-path ab-reveal" aria-labelledby="pgOriginPath" style="--steps: <?= $steps ?>">
+            <?php foreach ($o['path'] as $i => $step): ?>
+              <li<?= $i === $steps - 1 ? ' class="is-many"' : '' ?>>
+                <span class="pg-origin-node" aria-hidden="true"><?= $i === $steps - 1 ? str_repeat('<i></i>', 7) : '' ?></span>
+                <span class="pg-origin-step"><?= h($step) ?></span>
+              </li>
+            <?php endforeach; ?>
+          </ol>
+        </div>
+      <?php endif; ?>
+    </section>
+  <?php endif; ?>
+
   <!-- The film from this project -->
   <?php $film = pp_film(); if ($film['project'] === $slug && is_file(__DIR__ . '/' . $film['src'])): ?>
     <section class="pg-section-cream" aria-labelledby="pgFilmTitle">

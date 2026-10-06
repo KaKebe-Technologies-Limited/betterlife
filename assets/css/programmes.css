@@ -243,6 +243,66 @@
 .pg-gallery.is-one .ab-lb { height: auto; aspect-ratio: 3 / 2; }
 /* Photo credit under a gallery (partners' photographs) */
 .ab .pg-credit { margin: 12px 0 0; font-size: 13px; color: var(--ab-soft); }
+/* How a project began: portrait, story, and a path from one leader to many */
+.pg-origin-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
+.pg-origin-portrait { position: sticky; top: 110px; width: 100%; max-width: 400px; margin: 0; justify-self: center; }
+@media (max-height: 640px) { .pg-origin-portrait { position: relative; top: auto; } }
+.pg-origin-portrait .ab-strokes { inset: -6% -10%; width: 120%; height: 112%; }
+.pg-origin-photo { position: relative; z-index: 1; aspect-ratio: 4 / 5; border-radius: 999px 999px 28px 28px; overflow: hidden; background: var(--ab-sand); box-shadow: 0 24px 50px rgba(11, 61, 46, .18); }
+.pg-origin-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.ab .pg-origin-award { position: absolute; z-index: 2; right: -22px; bottom: 96px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; width: 138px; aspect-ratio: 1; margin: 0; padding: 14px; border-radius: 50%; background: var(--ab-green); color: #fff; text-align: center; box-shadow: 0 0 0 8px rgba(8, 114, 45, .14), 0 14px 30px rgba(11, 61, 46, .26); transform: rotate(-6deg); }
+.pg-origin-award span { font: 700 10.5px/1 var(--font-body); letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
+.pg-origin-award strong { font-family: var(--ab-serif); font-weight: 600; font-size: 16px; line-height: 1.15; }
+.pg-origin-portrait figcaption { position: relative; z-index: 1; margin-top: 18px; font-size: 14px; line-height: 1.5; color: var(--ab-soft); }
+.pg-origin-portrait figcaption strong { display: block; font-family: var(--ab-serif); font-weight: 600; font-size: 21px; color: var(--ab-deep); }
+.pg-origin-copy h2 { margin-bottom: 24px; }
+.pg-origin-copy p { color: var(--ab-ink); }
+.ab .pg-origin-path-label { margin: clamp(56px, 7vw, 88px) 0 22px; text-align: center; font: 700 12.5px/1 var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: var(--ab-green); }
+.pg-origin-path { display: grid; grid-template-columns: repeat(var(--steps), minmax(0, 1fr)); list-style: none; margin: 0; padding: 0; }
+.pg-origin-path li { position: relative; display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 0 8px; text-align: center; }
+.pg-origin-path li:not(:last-child)::after { content: ''; position: absolute; top: 27px; left: calc(50% + 20px); width: calc(100% - 40px); height: 2px; border-radius: 2px; background: linear-gradient(90deg, var(--ab-green), var(--ab-blue)); transform-origin: left; }
+.pg-origin-node { position: relative; display: grid; place-items: center; width: 56px; height: 56px; flex-shrink: 0; }
+.pg-origin-node::before { content: ''; width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 3px solid var(--ab-green); }
+.pg-origin-path li:nth-child(3) .pg-origin-node::before { width: 24px; height: 24px; background: var(--ab-green); box-shadow: 0 0 0 6px rgba(8, 114, 45, .16); }
+.pg-origin-step { max-width: 17ch; font-weight: 700; font-size: 15px; line-height: 1.35; color: var(--ab-deep); }
+/* The last step: one becomes many */
+.pg-origin-path .is-many .pg-origin-node::before { content: none; }
+.pg-origin-path .is-many i { position: absolute; left: 50%; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--ab-blue); }
+.pg-origin-path .is-many i:nth-child(odd) { background: var(--ab-green); }
+.pg-origin-path .is-many i:nth-child(2) { transform: rotate(0deg) translateX(20px); }
+.pg-origin-path .is-many i:nth-child(3) { transform: rotate(60deg) translateX(20px); }
+.pg-origin-path .is-many i:nth-child(4) { transform: rotate(120deg) translateX(20px); }
+.pg-origin-path .is-many i:nth-child(5) { transform: rotate(180deg) translateX(20px); }
+.pg-origin-path .is-many i:nth-child(6) { transform: rotate(240deg) translateX(20px); }
+.pg-origin-path .is-many i:nth-child(7) { transform: rotate(300deg) translateX(20px); }
+.pg-origin-path .is-many .pg-origin-step { color: var(--ab-blue); }
+/* The path draws itself in as it comes into view */
+.ab-js .pg-origin-path.ab-reveal li:not(:last-child)::after { transform: scaleX(0); transition: transform .5s ease; }
+.ab-js .pg-origin-path.ab-reveal.is-in li:not(:last-child)::after { transform: scaleX(1); }
+.ab-js .pg-origin-path.ab-reveal li:nth-child(2)::after { transition-delay: .35s; }
+.ab-js .pg-origin-path.ab-reveal li:nth-child(3)::after { transition-delay: .7s; }
+.ab-js .pg-origin-path.ab-reveal li:nth-child(4)::after { transition-delay: 1.05s; }
+.ab-js .pg-origin-path.ab-reveal .is-many i { opacity: 0; transition: opacity .4s ease 1.5s; }
+.ab-js .pg-origin-path.ab-reveal.is-in .is-many i { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .ab-js .pg-origin-path.ab-reveal li::after, .ab-js .pg-origin-path.ab-reveal .is-many i { transition: none; }
+}
+@media (max-width: 900px) {
+  .pg-origin-grid { grid-template-columns: 1fr; }
+  .pg-origin-portrait { position: relative; top: auto; max-width: 340px; }
+}
+@media (max-width: 720px) {
+  .ab .pg-origin-award { right: -8px; bottom: 84px; width: 116px; }
+  .pg-origin-award strong { font-size: 14px; }
+  /* The path runs down the page on phones */
+  .ab .pg-origin-path-label { text-align: left; }
+  .pg-origin-path { grid-template-columns: 1fr; row-gap: 6px; }
+  .pg-origin-path li { flex-direction: row; gap: 14px; padding: 0; text-align: left; }
+  .pg-origin-path li:not(:last-child)::after { top: calc(50% + 14px); left: 27px; width: 2px; height: calc(100% + 6px - 28px); background: linear-gradient(180deg, var(--ab-green), var(--ab-blue)); transform-origin: top; }
+  .ab-js .pg-origin-path.ab-reveal li:not(:last-child)::after { transform: scaleY(0); }
+  .ab-js .pg-origin-path.ab-reveal.is-in li:not(:last-child)::after { transform: scaleY(1); }
+  .pg-origin-step { max-width: none; }
+}
 .pg-story { max-width: 720px; }
 .pg-story p { font-size: 17.5px; line-height: 1.75; color: var(--ab-ink); }
 .pg-story > p:first-of-type { font-family: var(--ab-serif); font-size: clamp(21px, 2vw, 26px) !important; line-height: 1.4 !important; color: var(--ab-deep); }

@@ -367,6 +367,16 @@ function pp_projects(): array
             'who'      => 'Young people from Uganda and across Africa',
             'summary'  => 'A virtual academy, supported by Moonshot, that helps young Africans understand climate negotiations, from adaptation and climate finance to loss and damage, and connect them to what is happening in their own communities.',
             'blocks'   => [['climate-education-youth-leadership', 'BetterLife Climate Leadership Academy']],
+            // How the academy began: Denise's story, kept in the page content under its own title
+            'origin'   => [
+                'block' => ['climate-education-youth-leadership', 'Opening the Way for the Next Generation'],
+                'mark'  => 'Next Generation',
+                'photo' => ['assets/img/team/denise-ayebare.jpg', 'Denise Ayebare, smiling, in a BetterLife vest'],
+                'name'  => 'Denise Ayebare',
+                'role'  => 'Founder and Executive Director, BetterLife International',
+                'award' => 'Moonshot Borderless Award',
+                'path'  => ['Began leading as a teenager', 'Founded BetterLife at nineteen', 'Won the Moonshot Borderless Award', 'Helped shape the vision for the Academy', 'A generation of young climate leaders'],
+            ],
             'results'  => [],
             'image'    => ['assets/img/programmes/academy-banner-session.jpg', 'BetterLife’s vision and mission banner beside a virtual session at LCOY 2026', '40% 50%'],
             'hero'     => ['assets/img/programmes/academy-virtual-session.jpg', 'Flood footage on screen during a virtual session at the Local Conference of Youth and Children on Climate Change (LCOY) 2026', '50% 45%'],
