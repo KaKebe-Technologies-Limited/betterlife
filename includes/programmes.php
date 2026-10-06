@@ -368,7 +368,11 @@ function pp_projects(): array
             'summary'  => 'A virtual academy, supported by Moonshot, that helps young Africans understand climate negotiations, from adaptation and climate finance to loss and damage, and connect them to what is happening in their own communities.',
             'blocks'   => [['climate-education-youth-leadership', 'BetterLife Climate Leadership Academy']],
             'results'  => [],
-            'gallery'  => [],
+            'image'    => ['assets/img/programmes/academy-banner-session.jpg', 'BetterLife’s vision and mission banner beside a virtual session at LCOY 2026', '40% 50%'],
+            'hero'     => ['assets/img/programmes/academy-virtual-session.jpg', 'Flood footage on screen during a virtual session at the Local Conference of Youth and Children on Climate Change (LCOY) 2026', '50% 45%'],
+            'gallery'  => [
+                ['assets/img/programmes/academy-banner-session.jpg', 'BetterLife’s vision and mission beside a virtual session at the Local Conference of Youth and Children on Climate Change (LCOY) 2026'],
+            ],
         ],
         'climate-innovation-hackathons' => [
             'title'    => 'Climate Innovation Hackathons and Tech Camp',
