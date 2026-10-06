@@ -224,7 +224,7 @@ require __DIR__ . '/includes/header.php';
         </div>
         <p class="ab-head-sub">The people who coordinate the work, track what changes, keep the organisation running and carry community voices to a wider audience.</p>
       </div>
-      <ul class="tm-grid">
+      <ul class="tm-grid" style="--cols: <?= min(6, max(3, count($programme))) ?>">
         <?php foreach ($programme as $i => $m): ?>
           <li class="tm-card ab-reveal" style="--i: <?= $i ?>">
             <div class="tm-card-photo"><?= $face($m, '(max-width: 720px) 45vw, 240px') ?></div>
@@ -284,7 +284,7 @@ require __DIR__ . '/includes/header.php';
         <span class="ab-eyebrow">In the community</span>
         <h2 id="tmVolTitle">Volunteers and community champions</h2>
       </div>
-      <ul class="tm-grid">
+      <ul class="tm-grid" style="--cols: <?= min(6, max(3, count($volunteers))) ?>">
         <?php foreach ($volunteers as $i => $m): ?>
           <li class="tm-card ab-reveal" style="--i: <?= $i ?>">
             <div class="tm-card-photo"><?= $face($m, '(max-width: 720px) 45vw, 240px') ?></div>

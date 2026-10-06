@@ -101,7 +101,8 @@
 
 /* ---------- 4. Programme team ---------- */
 .ab .tm-people { background: var(--ab-cream); }
-.tm-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); gap: clamp(22px, 2.6vw, 32px) clamp(16px, 2vw, 26px); }
+/* One row for up to six people on wide screens (the count comes from the page), three across on tablets */
+.tm-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--cols, 5), minmax(0, 1fr)); gap: clamp(22px, 2.6vw, 32px) clamp(16px, 2vw, 26px); }
 .tm-card { text-align: center; transition-delay: calc(var(--i) * 80ms); }
 .tm-card-photo { aspect-ratio: 4 / 5; margin-bottom: 16px; overflow: hidden; border-radius: 999px 999px 22px 22px; background: var(--ab-sand); box-shadow: 0 18px 36px rgba(11, 61, 46, .1); transition: transform .3s ease, box-shadow .3s ease; }
 .tm-card:hover .tm-card-photo { transform: translateY(-4px); box-shadow: 0 26px 48px rgba(11, 61, 46, .16); }
@@ -172,6 +173,7 @@
 
 /* ---------- Narrower screens ---------- */
 @media (max-width: 1100px) {
+  .tm-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .tm-lead-grid { grid-template-columns: 1fr 1fr; }
   .tm-lead-card.is-first { grid-column: 1 / -1; grid-row: auto; grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr); }
 }
