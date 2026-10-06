@@ -151,6 +151,7 @@ require __DIR__ . '/includes/header.php';
         <p class="ab-head-sub">Country managers lead programmes, partnerships and community relationships in their countries, so solutions are shaped by the people closest to the challenges.</p>
       </div>
       <div class="tm-map ab-reveal">
+        <p class="tm-map-hint" aria-hidden="true">Tap a portrait to read their bio</p>
         <div class="tm-map-art">
         <svg class="tm-map-svg" viewBox="<?= implode(' ', $vb) ?>" aria-hidden="true" focusable="false">
           <path class="tm-land" d="<?= $map['africa'] ?>"/>
@@ -173,7 +174,7 @@ require __DIR__ . '/includes/header.php';
         <!-- Narrower screens: the same people as portraits on the map (the full cards are listed beneath it) -->
         <div class="tm-map-faces" aria-hidden="true">
           <?php foreach ($pins as $p): [$ax, $ay] = $pinAtNarrow[$p['key']]; $m = $p['member']; ?>
-            <span class="tm-mface<?= $m ? '' : ' is-home' ?>" data-key="<?= h($p['key']) ?>" style="<?= $pctNarrow($ax, $ay) ?>">
+            <span class="tm-mface<?= $m ? '' : ' is-home' ?>" data-key="<?= h($p['key']) ?>"<?= $m && isset($canOpen[(int) $m['id']]) ? ' data-member="' . (int) $m['id'] . '"' : '' ?> style="<?= $pctNarrow($ax, $ay) ?>">
               <span class="tm-mface-img"><?= $m ? $face($m, '64px') : '<span class="tm-pin-mark">' . icon('leaf', 20) . '</span>' ?></span>
               <span class="tm-mface-label"><?= h($m ? $countryOf($m) : 'Uganda') ?></span>
             </span>
@@ -184,7 +185,7 @@ require __DIR__ . '/includes/header.php';
           <?php foreach ($pins as $p): [$ax, $ay, $side] = $pinAt[$p['key']]; $m = $p['member']; ?>
             <li class="tm-pin is-<?= $side ?><?= $m ? '' : ' is-home' ?>" data-key="<?= h($p['key']) ?>" style="<?= $pct($ax, $ay) ?>">
               <?php if ($m): ?>
-                <span class="tm-pin-face"><?= $face($m, '80px') ?></span>
+                <span class="tm-pin-face"<?= $m && isset($canOpen[(int) $m['id']]) ? ' data-member="' . (int) $m['id'] . '"' : '' ?>><?= $face($m, '96px') ?></span>
                 <span class="tm-pin-text">
                   <strong><?= h($m['name']) ?></strong>
                   <small><?= h($countryOf($m)) ?></small>

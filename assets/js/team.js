@@ -41,7 +41,8 @@
     }
 
     document.addEventListener('click', function (e) {
-      var btn = e.target.closest('.tm-more[data-member]');
+      // A "Read bio" button, or a portrait on the map
+      var btn = e.target.closest('[data-member]');
       if (!btn) return;
       var id = Number(btn.getAttribute('data-member'));
       for (var i = 0; i < bios.length; i++) if (bios[i].id === id) { show(i); break; }

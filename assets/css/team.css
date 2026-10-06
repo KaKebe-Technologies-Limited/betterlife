@@ -71,6 +71,8 @@
 .tm-mface-img { display: block; width: var(--fs); height: var(--fs); overflow: hidden; border-radius: 50%; border: 2.5px solid #fff; background: var(--ab-sand); box-shadow: 0 8px 18px rgba(0, 0, 0, .35); transition: transform .25s ease, border-color .25s ease; }
 .tm-mface-label { padding: 3px 8px; border-radius: 999px; background: rgba(6, 22, 15, .75); color: #fff; font-size: 11px; font-weight: 700; line-height: 1.3; white-space: nowrap; }
 .tm-mface.is-on .tm-mface-img { transform: scale(1.08); border-color: #9fd6b2; }
+.tm-mface[data-member] .tm-mface-img { animation: tmTap 2.6s ease-out infinite; }
+@keyframes tmTap { 0% { box-shadow: 0 8px 18px rgba(0, 0, 0, .35), 0 0 0 0 rgba(159, 214, 178, .7); } 70%, 100% { box-shadow: 0 8px 18px rgba(0, 0, 0, .35), 0 0 0 12px rgba(159, 214, 178, 0); } }
 .tm-land { fill: rgba(255, 255, 255, .07); stroke: rgba(255, 255, 255, .22); stroke-width: .8; stroke-linejoin: round; }
 .tm-country { fill: rgba(159, 214, 178, .4); stroke: rgba(255, 255, 255, .55); stroke-width: .8; stroke-linejoin: round; transition: fill .25s ease; }
 .tm-country.is-on { fill: #9fd6b2; }
@@ -78,14 +80,19 @@
 .tm-leader circle { fill: #fff; stroke: var(--ab-green); stroke-width: 2.4; }
 .tm-leader.is-on path { opacity: 1; stroke: #fff; }
 .tm-pins { list-style: none; margin: 0; padding: 0; }
-.tm-pin { position: absolute; display: flex; align-items: center; gap: 12px; transform: translate(-34px, -50%); }
-.tm-pin.is-left { flex-direction: row-reverse; text-align: right; transform: translate(calc(-100% + 34px), -50%); }
-.tm-pin-face { flex: 0 0 auto; width: 68px; height: 68px; overflow: hidden; border-radius: 50%; border: 3px solid #fff; background: var(--ab-sand); box-shadow: 0 10px 24px rgba(0, 0, 0, .35); transition: transform .25s ease; }
+.tm-pin { position: absolute; display: flex; align-items: center; gap: 12px; transform: translate(-39px, -50%); }
+.tm-pin.is-left { flex-direction: row-reverse; text-align: right; transform: translate(calc(-100% + 39px), -50%); }
+.tm-pin-face { flex: 0 0 auto; width: 78px; height: 78px; overflow: hidden; border-radius: 50%; border: 3px solid #fff; background: var(--ab-sand); box-shadow: 0 10px 24px rgba(0, 0, 0, .35); transition: transform .25s ease; }
 .tm-pin.is-on .tm-pin-face { transform: scale(1.08); }
 .tm-pin-mark { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; background: var(--ab-green); color: #fff; }
 .tm-pin-text strong { display: block; font-family: var(--ab-serif); font-weight: 600; font-size: 17px; line-height: 1.2; color: #fff; white-space: nowrap; }
 .tm-pin-text small { display: block; margin-top: 3px; font-size: 11.5px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #9fd6b2; }
-.tm-pin .tm-more { margin-top: 2px; min-height: 28px; font-size: 13px; color: rgba(255, 255, 255, .9); }
+/* Read bio: a clear button on each pin; the portrait opens the bio too */
+.tm-pin .tm-more { margin-top: 7px; padding: 0 12px; min-height: 30px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .35); background: rgba(255, 255, 255, .1); font-size: 12.5px; color: #fff; transition: background .2s ease, color .2s ease, border-color .2s ease; }
+.tm-pin .tm-more:hover, .tm-pin .tm-more:focus-visible { background: #9fd6b2; border-color: #9fd6b2; color: var(--ab-deep); }
+.tm-pin-face[data-member], .tm-mface[data-member] { cursor: pointer; }
+.tm-pin-face[data-member]:hover { transform: scale(1.06); }
+.tm-map-hint { display: none; }
 .tm-pin.is-left .tm-more { flex-direction: row; }
 
 /* ---------- 4. Programme team ---------- */
@@ -154,6 +161,7 @@
   .tm-leader:not(.is-narrow) { display: none; }
   .tm-leader.is-narrow { display: inline; }
   .tm-map-faces { display: block; }
+  .tm-map-hint { display: block; margin: 0 0 12px; text-align: center; font-size: 13px; font-weight: 600; color: rgba(255, 255, 255, .78); }
   .tm-pins { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 22px; }
   .tm-pin, .tm-pin.is-left { position: static; flex-direction: row; text-align: left; transform: none; padding: 12px; border-radius: 18px; background: rgba(255, 255, 255, .07); border: 1px solid rgba(255, 255, 255, .12); }
   .tm-pin-face { width: 56px; height: 56px; border-width: 2px; }
@@ -198,4 +206,5 @@
 @media (prefers-reduced-motion: reduce) {
   .tm-dialog[open] { animation: none; }
   .tm-card-photo, .tm-pin-face, .tm-more svg { transition: none; }
+  .tm-mface[data-member] .tm-mface-img { animation: none; }
 }
