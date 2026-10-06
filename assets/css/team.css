@@ -79,6 +79,10 @@
 .tm-leader path { fill: none; stroke: #9fd6b2; stroke-width: 1.3; stroke-dasharray: 3 4; opacity: .75; transition: opacity .25s ease; }
 .tm-leader circle { fill: #fff; stroke: var(--ab-green); stroke-width: 2.4; }
 .tm-leader.is-on path { opacity: 1; stroke: #fff; }
+.tm-leader.is-regional path { stroke: #7cc4e4; stroke-dasharray: 2 5; opacity: .5; }
+.tm-leader.is-regional.is-on path { stroke: #fff; opacity: .95; }
+.tm-pin.is-regional .tm-pin-face, .tm-mface.is-regional .tm-mface-img { border-color: #7cc4e4; }
+.tm-pin.is-regional .tm-pin-text small { color: #7cc4e4; }
 .tm-pins { list-style: none; margin: 0; padding: 0; }
 .tm-pin { position: absolute; display: flex; align-items: center; gap: 12px; transform: translate(-39px, -50%); }
 .tm-pin.is-left { flex-direction: row-reverse; text-align: right; transform: translate(calc(-100% + 39px), -50%); }
@@ -105,16 +109,33 @@
 .tm-card .tm-role { margin-top: 7px; font-size: 11.5px; letter-spacing: .07em; }
 .tm-card .tm-more { margin-top: 8px; }
 
-/* ---------- 5. Board: a single roll ---------- */
-.ab .tm-board { background: #fff; }
-.tm-roll { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ab-line); }
-.tm-roll-row { display: grid; grid-template-columns: 88px minmax(0, 250px) minmax(0, 1fr) 120px; gap: 16px clamp(20px, 3vw, 40px); align-items: center; padding: 22px 0; border-bottom: 1px solid var(--ab-line); transition-delay: calc(var(--i) * 70ms); }
-.tm-roll-face { width: 88px; height: 88px; overflow: hidden; border-radius: 50%; background: var(--ab-sand); box-shadow: 0 0 0 4px var(--ab-cream); }
-.ab .tm-roll-name h3 { margin: 0 0 6px; font-family: var(--ab-serif); font-weight: 600; font-size: 21px; line-height: 1.2; color: var(--ab-deep); }
-.ab .tm-roll-bio { margin: 0; font-size: 15px; line-height: 1.6; color: var(--ab-soft); }
-.tm-roll-bio { grid-column: 3; }
-.tm-roll-more { grid-column: 4; justify-self: end; }
-.tm-roll-more .tm-more { margin: 0; white-space: nowrap; }
+/* ---------- 5. Board: seated around a table ---------- */
+.ab .tm-board { overflow: hidden; background: #fff; }
+.tm-council { position: relative; width: min(100%, 1000px); margin: 0 auto; aspect-ratio: 2 / 1.1; }
+/* The table: a half-disc at the foot of the stage, with a dashed inner edge and a soft floor line */
+.tm-council-table { position: absolute; left: 21%; right: 21%; bottom: 0; aspect-ratio: 2 / 1; border-radius: 9999px 9999px 0 0; background: radial-gradient(circle at 50% 100%, #17694d, var(--ab-deep) 72%); box-shadow: 0 30px 60px rgba(11, 61, 46, .18); }
+.tm-council-table::before { content: ''; position: absolute; inset: 7% 7% 0; border: 1px dashed rgba(159, 214, 178, .4); border-bottom: 0; border-radius: inherit; }
+.tm-council::after { content: ''; position: absolute; left: 6%; right: 6%; bottom: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--ab-line), transparent); }
+.tm-seats { position: absolute; inset: 0; }
+.tm-seat { --fs: clamp(78px, 10vw, 116px); position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, calc(var(--fs) / -2)); display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 0; border: 0; background: none; font: inherit; color: var(--ab-soft); cursor: pointer; }
+.tm-seat-face { display: block; width: var(--fs); height: var(--fs); overflow: hidden; border-radius: 50%; border: 4px solid #fff; background: var(--ab-sand); box-shadow: 0 14px 30px rgba(11, 61, 46, .16); filter: saturate(.7); transition: transform .3s ease, box-shadow .3s ease, filter .3s ease, border-color .3s ease; }
+.tm-seat-name { font-size: 13.5px; font-weight: 700; line-height: 1.2; white-space: nowrap; transition: color .3s ease; }
+.tm-seat:hover .tm-seat-face { filter: none; transform: scale(1.05); }
+.tm-seat[aria-selected="true"] .tm-seat-face { filter: none; transform: scale(1.12); border-color: var(--ab-green); box-shadow: 0 0 0 6px rgba(8, 114, 45, .16), 0 18px 36px rgba(11, 61, 46, .24); }
+.tm-seat[aria-selected="true"] .tm-seat-name { color: var(--ab-deep); }
+.tm-seat:focus-visible { outline: none; }
+.tm-seat:focus-visible .tm-seat-face { outline: 3px solid var(--ab-blue); outline-offset: 3px; }
+/* What the chosen member says, written on the table */
+.tm-seat-panels { position: absolute; left: 27%; right: 27%; bottom: 5%; height: 40%; display: grid; align-items: end; text-align: center; }
+.tm-seat-panel { outline: none; }
+.ab-js .tm-seat-panel { grid-area: 1 / 1; }
+.ab-js .tm-seat-panel:not(.is-active) { visibility: hidden; }
+.ab-js .tm-seat-panel.is-active { animation: tmPanel .5s ease; }
+@keyframes tmPanel { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.tm-seat-panel .tm-role { color: #9fd6b2; }
+.ab .tm-seat-panel h3 { margin: 6px 0 8px; font-family: var(--ab-serif); font-weight: 500; font-size: clamp(24px, 2.4vw, 32px); line-height: 1.15; color: #fff; }
+.ab .tm-seat-panel p { max-width: 46ch; margin: 0 auto; font-size: 14.5px; line-height: 1.6; color: rgba(255, 255, 255, .86); }
+.tm-seat-panel .tm-more { margin-top: 8px; color: #9fd6b2; }
 
 /* ---------- 6. Who the work is for ---------- */
 .ab .tm-close { overflow: hidden; padding: clamp(64px, 8vw, 112px) 0; background: var(--ab-cream); }
@@ -172,10 +193,13 @@
   .tm-hero-photo { max-width: 460px; margin: 8px auto 0; }
   .tm-hero-a { left: -3%; }
   .tm-hero-b { right: -2%; }
-  .tm-roll-row { grid-template-columns: 72px minmax(0, 1fr); align-items: start; }
-  .tm-roll-face { width: 72px; height: 72px; }
-  .tm-roll-bio, .tm-roll-more { grid-column: 2; }
-  .tm-roll-more { justify-self: start; margin-top: -8px; }
+  /* The board: seats on an arc above a card that carries what they say */
+  .tm-council { width: 100%; aspect-ratio: auto; }
+  .tm-council::after, .tm-council-table { display: none; }
+  .tm-seats { position: relative; inset: auto; aspect-ratio: 2 / 1.1; }
+  .tm-seat { --fs: clamp(52px, 12vw, 84px); }
+  .tm-seat-name { display: none; }
+  .tm-seat-panels { position: relative; left: auto; right: auto; bottom: auto; height: auto; margin-top: 10px; padding: 34px 22px 26px; border-radius: 160px 160px 24px 24px / 70px 70px 24px 24px; background: radial-gradient(circle at 50% 0%, #17694d, var(--ab-deep) 75%); }
   .tm-dialog-card { grid-template-columns: 1fr; overflow-y: auto; }
   .tm-dialog-photo { min-height: 0; aspect-ratio: 16 / 10; }
   .tm-dialog-body { overflow: visible; }
@@ -207,4 +231,6 @@
   .tm-dialog[open] { animation: none; }
   .tm-card-photo, .tm-pin-face, .tm-more svg { transition: none; }
   .tm-mface[data-member] .tm-mface-img { animation: none; }
+  .ab-js .tm-seat-panel.is-active { animation: none; }
+  .tm-seat-face { transition: none; }
 }

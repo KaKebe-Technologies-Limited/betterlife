@@ -1,7 +1,7 @@
 /* Our Team.
    1. Reading panel: "Read bio" opens the person's full bio in a dialog; Previous and Next (or the arrow keys) move
       through everyone with a bio, in page order.
-   2. Country map: pointing at a country manager lights up their country and its line. On narrow screens the map is
+   2. Country map: pointing at a country manager lights up their country and its line (the Regional Director, all five). On narrow screens the map is
       framed on Africa alone, with the cards listed beneath it. */
 (function () {
   'use strict';
@@ -70,9 +70,11 @@
     frame();
     if (narrow.addEventListener) narrow.addEventListener('change', frame); else narrow.addListener(frame);
 
+    // The Regional Director lights up every country; anyone else, their own
     function light(key) {
       map.querySelectorAll('[data-key]').forEach(function (el) {
-        el.classList.toggle('is-on', !!key && el.getAttribute('data-key') === key);
+        var own = el.getAttribute('data-key') === key;
+        el.classList.toggle('is-on', !!key && (own || (key === 'regional' && el.classList.contains('tm-country'))));
       });
     }
     map.querySelectorAll('.tm-pin').forEach(function (pin) {
@@ -84,8 +86,35 @@
     });
   }
 
+  // 3. The board around the table: the seats are tabs (initTabs in about.js); while the table is on screen they turn on
+  //    their own until someone chooses a seat. Never turns with reduced motion.
+  function initCouncil() {
+    var list = document.querySelector('.tm-seats');
+    if (!list) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || !('IntersectionObserver' in window)) return;
+    var keys = Array.prototype.slice.call(list.querySelectorAll('[role="tab"]')).map(function (t) { return t.getAttribute('data-key'); });
+    var current = keys[0], stopped = false, visible = false, timer = null;
+    list.addEventListener('ab:select', function (e) { current = e.detail.key; });
+    function stop() { stopped = true; clearInterval(timer); }
+    var council = list.closest('.tm-council');
+    ['pointerdown', 'keydown'].forEach(function (ev) { council.addEventListener(ev, stop); });
+    function tick() {
+      if (stopped || !visible || !list.abSelect || document.hidden) return;
+      list.abSelect(keys[(keys.indexOf(current) + 1) % keys.length]);
+    }
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        visible = en.isIntersecting;
+        clearInterval(timer);
+        if (visible && !stopped) timer = setInterval(tick, 5200);
+      });
+    }, { threshold: 0.4 }).observe(council);
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     initBios();
     initMap();
+    initCouncil();
   });
 })();

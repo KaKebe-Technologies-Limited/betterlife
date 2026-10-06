@@ -50,28 +50,40 @@ $more = fn(array $m, string $label = 'Read bio') => isset($canOpen[(int) $m['id'
     ? '<button type="button" class="tm-more" data-member="' . (int) $m['id'] . '" aria-haspopup="dialog" aria-label="' . h($label . ': ' . $m['name']) . '">' . h($label) . ' ' . icon('arrow-right', 15) . '</button>'
     : '';
 
-// Country teams on the map: where each country sits, and where its card is pinned (map units, see includes/map-paths.php)
+// Country teams on the map: where each country sits, and where each card is pinned (map units, see includes/map-paths.php).
+// The Regional Director is pinned too, linked to every country; Uganda, where BetterLife began, is marked last.
 $map = require __DIR__ . '/includes/map-paths.php';
 $mapKeys = ['Uganda' => 'Uganda', 'South Sudan' => 'South Sudan', 'Tanzania' => 'Tanzania', 'Ghana' => 'Ghana', 'DR Congo' => 'Democratic Republic of the Congo', 'Democratic Republic of Congo' => 'Democratic Republic of the Congo'];
-$pinAt = ['Ghana' => [96, 452, 'right'], 'Democratic Republic of the Congo' => [232, 566, 'left'], 'South Sudan' => [612, 214, 'right'], 'Uganda' => [640, 334, 'right'], 'Tanzania' => [612, 474, 'right']];
 $vb = [20, 45, 790, 640];
-// On narrower screens the map is framed on Africa alone and the managers sit on it as portraits, close to their countries
-$pinAtNarrow = ['Ghana' => [118, 214], 'Democratic Republic of the Congo' => [238, 528], 'South Sudan' => [432, 168], 'Uganda' => [540, 292], 'Tanzania' => [528, 500]];
+// On narrower screens the map is framed on Africa alone and the people sit on it as portraits, close to their countries
 $vbNarrow = [30, 43, 572, 640];
-$pctNarrow = fn(float $x, float $y): string => 'left: ' . round(($x - $vbNarrow[0]) / $vbNarrow[2] * 100, 2) . '%; top: ' . round(($y - $vbNarrow[1]) / $vbNarrow[3] * 100, 2) . '%';
 $pct = fn(float $x, float $y): string => 'left: ' . round(($x - $vb[0]) / $vb[2] * 100, 2) . '%; top: ' . round(($y - $vb[1]) / $vb[3] * 100, 2) . '%';
-$pins = [['key' => 'Uganda', 'member' => null]];
+$pctNarrow = fn(float $x, float $y): string => 'left: ' . round(($x - $vbNarrow[0]) / $vbNarrow[2] * 100, 2) . '%; top: ' . round(($y - $vbNarrow[1]) / $vbNarrow[3] * 100, 2) . '%';
+// [wide: x, y, side the text sits], [narrow: x, y]
+$pinPlaces = [
+    'regional'                         => [[612, 104, 'right'], [548, 104]],
+    'Ghana'                            => [[96, 452, 'right'], [118, 214]],
+    'Democratic Republic of the Congo' => [[232, 566, 'left'], [238, 528]],
+    'South Sudan'                      => [[612, 214, 'right'], [432, 168]],
+    'Uganda'                           => [[640, 334, 'right'], [540, 292]],
+    'Tanzania'                         => [[612, 474, 'right'], [528, 500]],
+];
+$regional = array_values(array_filter($leadership, fn($m) => preg_match('/^Regional\b/i', $m['role'])));
+$pins = [];
+foreach ($regional as $m) $pins[] = ['key' => 'regional', 'member' => $m, 'label' => $m['role'], 'short' => 'Regional'];
 foreach ($managers as $m) {
     $key = $mapKeys[$countryOf($m)] ?? null;
-    if ($key && isset($map['countries'][$key])) $pins[] = ['key' => $key, 'member' => $m];
+    if ($key && isset($map['countries'][$key])) $pins[] = ['key' => $key, 'member' => $m, 'label' => $countryOf($m), 'short' => $countryOf($m)];
 }
+$pins[] = ['key' => 'Uganda', 'member' => null, 'label' => 'Where BetterLife began', 'short' => 'Uganda'];
+$countryKeys = array_values(array_unique(array_filter(array_column($pins, 'key'), fn($k) => $k !== 'regional')));
 
 // Who the work is for: participants photographed in Yumbe (consent confirmed)
 $community = [];
 for ($i = 1; $i <= 8; $i++) $community[] = 'assets/img/about/yumbe-portrait-' . $i . '.jpg';
 
 $teamCount = count($leadership) + count($managers) + count($programme);
-$countryCount = count(array_unique(array_column($pins, 'key')));
+$countryCount = count($countryKeys);
 
 $pageStyles  = ['assets/css/about.css', 'assets/css/programmes.css', 'assets/css/team.css'];
 $pageScripts = ['assets/js/about.js', 'assets/js/team.js'];
@@ -140,7 +152,7 @@ require __DIR__ . '/includes/header.php';
   <?php endif; ?>
 
   <?php if ($managers): ?>
-  <!-- 3. Country teams: each country manager pinned to the country they lead -->
+  <!-- 3. Country teams: the Regional Director, linked to every country, and each country manager pinned to their country -->
   <section class="tm-where" id="countries" aria-labelledby="tmWhereTitle">
     <div class="container">
       <div class="ab-head ab-head-split ab-reveal">
@@ -148,52 +160,50 @@ require __DIR__ . '/includes/header.php';
           <span class="ab-eyebrow">Country teams</span>
           <h2 id="tmWhereTitle">Led locally, in <?= $countryCount === 5 ? 'five' : $countryCount ?> countries</h2>
         </div>
-        <p class="ab-head-sub">Country managers lead programmes, partnerships and community relationships in their countries, so solutions are shaped by the people closest to the challenges.</p>
+        <p class="ab-head-sub">Our Regional Director works across all five countries, and country managers lead programmes, partnerships and community relationships in their own, so solutions are shaped by the people closest to the challenges.</p>
       </div>
       <div class="tm-map ab-reveal">
         <p class="tm-map-hint" aria-hidden="true">Tap a portrait to read their bio</p>
         <div class="tm-map-art">
         <svg class="tm-map-svg" viewBox="<?= implode(' ', $vb) ?>" aria-hidden="true" focusable="false">
           <path class="tm-land" d="<?= $map['africa'] ?>"/>
-          <?php foreach ($pins as $p): ?>
-            <path class="tm-country" d="<?= $map['countries'][$p['key']]['d'] ?>" data-key="<?= h($p['key']) ?>"/>
+          <?php foreach ($countryKeys as $key): ?>
+            <path class="tm-country" d="<?= $map['countries'][$key]['d'] ?>" data-key="<?= h($key) ?>"/>
           <?php endforeach; ?>
-          <?php foreach ($pins as $p): [$cx, $cy] = $map['countries'][$p['key']]['c']; [$ax, $ay] = $pinAt[$p['key']]; ?>
-            <g class="tm-leader" data-key="<?= h($p['key']) ?>">
-              <path d="M<?= $cx ?>,<?= $cy ?> L<?= $ax ?>,<?= $ay ?>"/>
-              <circle cx="<?= $cx ?>" cy="<?= $cy ?>" r="4.5"/>
-            </g>
-          <?php endforeach; ?>
-          <?php foreach ($pins as $p): [$cx, $cy] = $map['countries'][$p['key']]['c']; [$ax, $ay] = $pinAtNarrow[$p['key']]; ?>
-            <g class="tm-leader is-narrow" data-key="<?= h($p['key']) ?>">
-              <path d="M<?= $cx ?>,<?= $cy ?> L<?= $ax ?>,<?= $ay ?>"/>
-              <circle cx="<?= $cx ?>" cy="<?= $cy ?>" r="5"/>
-            </g>
+          <?php foreach ([0, 1] as $at): ?>
+            <?php foreach ($pins as $p): [$ax, $ay] = $pinPlaces[$p['key']][$at]; ?>
+              <g class="tm-leader<?= $p['key'] === 'regional' ? ' is-regional' : '' ?><?= $at ? ' is-narrow' : '' ?>" data-key="<?= h($p['key']) ?>">
+                <?php foreach ($p['key'] === 'regional' ? $countryKeys : [$p['key']] as $key): [$cx, $cy] = $map['countries'][$key]['c']; ?>
+                  <path d="M<?= $cx ?>,<?= $cy ?> L<?= $ax ?>,<?= $ay ?>"/>
+                  <?php if ($p['key'] !== 'regional'): ?><circle cx="<?= $cx ?>" cy="<?= $cy ?>" r="<?= $at ? 5 : 4.5 ?>"/><?php endif; ?>
+                <?php endforeach; ?>
+              </g>
+            <?php endforeach; ?>
           <?php endforeach; ?>
         </svg>
         <!-- Narrower screens: the same people as portraits on the map (the full cards are listed beneath it) -->
         <div class="tm-map-faces" aria-hidden="true">
-          <?php foreach ($pins as $p): [$ax, $ay] = $pinAtNarrow[$p['key']]; $m = $p['member']; ?>
-            <span class="tm-mface<?= $m ? '' : ' is-home' ?>" data-key="<?= h($p['key']) ?>"<?= $m && isset($canOpen[(int) $m['id']]) ? ' data-member="' . (int) $m['id'] . '"' : '' ?> style="<?= $pctNarrow($ax, $ay) ?>">
+          <?php foreach ($pins as $p): [$ax, $ay] = $pinPlaces[$p['key']][1]; $m = $p['member']; ?>
+            <span class="tm-mface<?= $m ? '' : ' is-home' ?><?= $p['key'] === 'regional' ? ' is-regional' : '' ?>" data-key="<?= h($p['key']) ?>"<?= $m && isset($canOpen[(int) $m['id']]) ? ' data-member="' . (int) $m['id'] . '"' : '' ?> style="<?= $pctNarrow($ax, $ay) ?>">
               <span class="tm-mface-img"><?= $m ? $face($m, '64px') : '<span class="tm-pin-mark">' . icon('leaf', 20) . '</span>' ?></span>
-              <span class="tm-mface-label"><?= h($m ? $countryOf($m) : 'Uganda') ?></span>
+              <span class="tm-mface-label"><?= h($p['short']) ?></span>
             </span>
           <?php endforeach; ?>
         </div>
         </div>
-        <ul class="tm-pins" aria-label="Country managers">
-          <?php foreach ($pins as $p): [$ax, $ay, $side] = $pinAt[$p['key']]; $m = $p['member']; ?>
-            <li class="tm-pin is-<?= $side ?><?= $m ? '' : ' is-home' ?>" data-key="<?= h($p['key']) ?>" style="<?= $pct($ax, $ay) ?>">
+        <ul class="tm-pins" aria-label="Country teams">
+          <?php foreach ($pins as $p): [$ax, $ay, $side] = $pinPlaces[$p['key']][0]; $m = $p['member']; ?>
+            <li class="tm-pin is-<?= $side ?><?= $m ? '' : ' is-home' ?><?= $p['key'] === 'regional' ? ' is-regional' : '' ?>" data-key="<?= h($p['key']) ?>" style="<?= $pct($ax, $ay) ?>">
               <?php if ($m): ?>
-                <span class="tm-pin-face"<?= $m && isset($canOpen[(int) $m['id']]) ? ' data-member="' . (int) $m['id'] . '"' : '' ?>><?= $face($m, '96px') ?></span>
+                <span class="tm-pin-face"<?= isset($canOpen[(int) $m['id']]) ? ' data-member="' . (int) $m['id'] . '"' : '' ?>><?= $face($m, '96px') ?></span>
                 <span class="tm-pin-text">
                   <strong><?= h($m['name']) ?></strong>
-                  <small><?= h($countryOf($m)) ?></small>
+                  <small><?= h($p['label']) ?></small>
                   <?= $more($m) ?>
                 </span>
               <?php else: ?>
                 <span class="tm-pin-face"><span class="tm-pin-mark"><?= icon('leaf', 26) ?></span></span>
-                <span class="tm-pin-text"><strong>Uganda</strong><small>Where BetterLife began</small></span>
+                <span class="tm-pin-text"><strong>Uganda</strong><small><?= h($p['label']) ?></small></span>
               <?php endif; ?>
             </li>
           <?php endforeach; ?>
@@ -228,8 +238,8 @@ require __DIR__ . '/includes/header.php';
   </section>
   <?php endif; ?>
 
-  <?php if ($board): ?>
-  <!-- 5. Board of directors -->
+  <?php if ($board): $seats = count($board); ?>
+  <!-- 5. Board of directors: seated around a table; choose a seat (or watch them turn) to read about each member -->
   <section class="tm-board" id="board" aria-labelledby="tmBoardTitle">
     <div class="container">
       <div class="ab-head ab-head-split ab-reveal">
@@ -239,21 +249,29 @@ require __DIR__ . '/includes/header.php';
         </div>
         <p class="ab-head-sub">Our board provides oversight, experience and accountability as the organisation grows.</p>
       </div>
-      <ul class="tm-roll">
-        <?php foreach ($board as $i => $m): $bio = $bioOf($m); ?>
-          <li class="tm-roll-row ab-reveal" style="--i: <?= $i ?>">
-            <span class="tm-roll-face"><?= $face($m, '120px') ?></span>
-            <div class="tm-roll-name">
-              <h3><?= h($m['name']) ?></h3>
+      <div class="tm-council ab-reveal">
+        <div class="tm-council-table" aria-hidden="true"></div>
+        <div class="tm-seats" role="tablist" aria-label="Board members">
+          <?php foreach ($board as $k => $m):
+            // Seats on an arc over the table: 41% of the width out from its centre, which sits at the foot of a 2:1.1 stage
+            $a = M_PI + M_PI * ($k + 0.5) / $seats; $x = round(50 + 41 * cos($a), 2); $y = round(96 + 41 / 0.55 * sin($a), 2); ?>
+            <button type="button" role="tab" class="tm-seat" id="tmSeat-<?= (int) $m['id'] ?>" aria-controls="tmSeatPanel-<?= (int) $m['id'] ?>" aria-selected="<?= $k === 0 ? 'true' : 'false' ?>" tabindex="<?= $k === 0 ? '0' : '-1' ?>" data-key="<?= (int) $m['id'] ?>" style="--x: <?= $x ?>%; --y: <?= $y ?>%">
+              <span class="tm-seat-face"><?= $face($m, '120px') ?></span>
+              <span class="tm-seat-name"><?= h($m['name']) ?></span>
+            </button>
+          <?php endforeach; ?>
+        </div>
+        <div class="tm-seat-panels">
+          <?php foreach ($board as $k => $m): $bio = $bioOf($m); ?>
+            <div class="tm-seat-panel<?= $k === 0 ? ' is-active' : '' ?>" role="tabpanel" id="tmSeatPanel-<?= (int) $m['id'] ?>" aria-labelledby="tmSeat-<?= (int) $m['id'] ?>" tabindex="0">
               <span class="tm-role"><?= h($m['role']) ?></span>
+              <h3><?= h($m['name']) ?></h3>
+              <?php if ($bio): ?><p><?= h($lede($bio, 200)) ?></p><?php endif; ?>
+              <?= $bio && mb_strlen($bio) > mb_strlen($lede($bio, 200)) ? $more($m, 'Read full bio') : '' ?>
             </div>
-            <?php if ($bio): ?>
-              <p class="tm-roll-bio"><?= h($lede($bio, 190)) ?></p>
-              <?php if (mb_strlen($bio) > mb_strlen($lede($bio, 190))): ?><div class="tm-roll-more"><?= $more($m) ?></div><?php endif; ?>
-            <?php endif; ?>
-          </li>
-        <?php endforeach; ?>
-      </ul>
+          <?php endforeach; ?>
+        </div>
+      </div>
     </div>
   </section>
   <?php endif; ?>
