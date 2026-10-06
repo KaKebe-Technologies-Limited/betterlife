@@ -107,6 +107,8 @@ $beyond = [
     9  => 'Pan-African youth leader and climate justice advocate',
     13 => 'Author of Building Great Character',
     12 => 'Youth nutrition advocate',
+    17 => 'Acting Commissioner for Climate Change, Uganda',
+    14 => 'Co-founder, HBCU Green Fund',
 ];
 $beyond = array_filter($beyond, fn($text, $id) => isset($byId[$id]), ARRAY_FILTER_USE_BOTH);
 
