@@ -1,4 +1,4 @@
--- BetterLife International: live content sync, generated 2026-10-06 14:00 by tools/make_live_sync.php
+-- BetterLife International: live content sync, generated 2026-10-06 14:01 by tools/make_live_sync.php
 -- Replaces the site's content tables and updates site settings. Never touches orders, messages, subscribers,
 -- admin accounts, passwords or payment keys.
 
@@ -138,10 +138,10 @@ CREATE TABLE `projects` (
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO `projects` (`id`, `title`, `slug`, `category`, `description`, `image`, `sort_order`, `status`, `created_at`) VALUES
 ('1', 'Climate Education and Youth Empowerment', 'climate-education-youth-empowerment', 'Climate Education', 'Engaging students in debates, public speaking and Green Libraries that build climate literacy and leadership skills across partner schools.', 'assets/img/project-climate-education.jpg', '1', '1', '2026-09-28 20:26:27'),
-('2', 'BetterLife Spring Project', 'betterlife-spring-project', 'Renewable Energy & Agriculture', 'Sustainable Powered Resilient Irrigation for Next Generation Farming (SPRING) — giving South Sudanese farmers access to renewable-energy-powered irrigation so they can grow food despite unpredictable weather.', 'assets/img/project-spring.jpg', '2', '1', '2026-09-28 20:26:27'),
+('2', 'BetterLife Spring Project', 'betterlife-spring-project', 'Renewable Energy & Agriculture', 'Sustainable Powered Resilient Irrigation for Next Generation Farming (SPRING), giving South Sudanese farmers access to renewable-energy-powered irrigation so they can grow food despite unpredictable weather.', 'assets/img/project-spring.jpg', '2', '1', '2026-09-28 20:26:27'),
 ('3', 'RISE', 'rise', 'Empowering Refugees & Host Communities', 'A programme supporting social cohesion and livelihoods between refugee and host communities through shared training, resources and community dialogue.', 'assets/img/project-smiles.jpg', '3', '1', '2026-09-28 20:26:27'),
 ('4', 'BetterLife Renewable Pathways', 'betterlife-renewable-pathways', 'Plastic Pollution in Uganda', 'Turning plastic waste into fuel and other reusable materials, reducing pollution while creating green income opportunities for youth.', 'assets/img/project-renewable-pathways.jpg', '4', '1', '2026-09-28 20:26:27'),
-('5', 'BetterLife Agro-Tourism Farm', 'betterlife-agro-tourism-farm', 'Agriculture in Uganda', 'Our Rukungiri model farm training centre for organic dairy and crop farming — and the source of the honey, ghee and yoghurt sold under the BetterLife Farm brand.', 'assets/img/project-agro-tourism.jpg', '5', '1', '2026-09-28 20:26:27'),
+('5', 'BetterLife Agro-Tourism Farm', 'betterlife-agro-tourism-farm', 'Agriculture in Uganda', 'Our Rukungiri model farm training centre for organic dairy and crop farming, and the source of the honey, ghee and yoghurt sold under the BetterLife Farm brand.', 'assets/img/project-agro-tourism.jpg', '5', '1', '2026-09-28 20:26:27'),
 ('6', 'Empowering Refugee Women and IDPs Through Smart and Sustainable Agriculture', 'empowering-refugee-women-idps-agriculture', 'Driving Local Solutions for a Global Future', 'Equipping refugee and internally displaced women with climate-smart agricultural skills and small-scale farming techniques to build food security and income.', 'assets/img/project-women-idps.jpg', '6', '1', '2026-09-28 20:26:27'),
 ('7', 'Soilla App', 'soilla-app', 'AI & IoT Technology', 'A web and mobile platform that leverages AI and IoT technologies to help smallholder farmers monitor soil health and make better-informed farming decisions.', 'assets/img/project-soilla-app.jpg', '7', '1', '2026-09-28 20:26:27');
 
