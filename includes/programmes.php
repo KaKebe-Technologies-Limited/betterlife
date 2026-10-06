@@ -371,7 +371,7 @@ function pp_projects(): array
             'origin'   => [
                 'block' => ['climate-education-youth-leadership', 'Opening the Way for the Next Generation'],
                 'mark'  => 'Next Generation',
-                'photo' => ['assets/img/team/denise-ayebare.jpg', 'Denise Ayebare, smiling, in a BetterLife vest'],
+                'photo' => ['assets/img/programmes/academy-denise-moonshot-award.jpg', 'Denise Ayebare on stage, speaking into a microphone and holding the Moonshot Borderless Award'],
                 'name'  => 'Denise Ayebare',
                 'role'  => 'Founder and Executive Director, BetterLife International',
                 'award' => 'Moonshot Borderless Award',

@@ -249,7 +249,7 @@
 @media (max-height: 640px) { .pg-origin-portrait { position: relative; top: auto; } }
 .pg-origin-portrait .ab-strokes { inset: -6% -10%; width: 120%; height: 112%; }
 .pg-origin-photo { position: relative; z-index: 1; aspect-ratio: 4 / 5; border-radius: 999px 999px 28px 28px; overflow: hidden; background: var(--ab-sand); box-shadow: 0 24px 50px rgba(11, 61, 46, .18); }
-.pg-origin-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+.pg-origin-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; }
 .ab .pg-origin-award { position: absolute; z-index: 2; right: -22px; bottom: 96px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; width: 138px; aspect-ratio: 1; margin: 0; padding: 14px; border-radius: 50%; background: var(--ab-green); color: #fff; text-align: center; box-shadow: 0 0 0 8px rgba(8, 114, 45, .14), 0 14px 30px rgba(11, 61, 46, .26); transform: rotate(-6deg); }
 .pg-origin-award span { font: 700 10.5px/1 var(--font-body); letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
 .pg-origin-award strong { font-family: var(--ab-serif); font-weight: 600; font-size: 16px; line-height: 1.15; }
