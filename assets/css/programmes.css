@@ -237,6 +237,8 @@
 .pg-gallery li:first-child .ab-lb { border-radius: 28px 120px 28px 28px; }
 .pg-gallery.is-two { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: clamp(220px, 26vw, 360px); }
 .pg-gallery.is-two li:first-child { grid-row: auto; grid-column: auto; }
+/* Photo credit under a gallery (partners' photographs) */
+.ab .pg-credit { margin: 12px 0 0; font-size: 13px; color: var(--ab-soft); }
 .pg-story { max-width: 720px; }
 .pg-story p { font-size: 17.5px; line-height: 1.75; color: var(--ab-ink); }
 .pg-story > p:first-of-type { font-family: var(--ab-serif); font-size: clamp(21px, 2vw, 26px) !important; line-height: 1.4 !important; color: var(--ab-deep); }

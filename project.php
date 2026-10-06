@@ -137,6 +137,7 @@ require __DIR__ . '/includes/header.php';
             <li><?= ab_photo($gp, $cap, $cap, 'project', '', $i === 0 && count($gallery) > 2 ? '(max-width: 720px) 100vw, 800px' : '(max-width: 720px) 50vw, 600px') ?></li>
           <?php endforeach; ?>
         </ul>
+        <?php if (!empty($p['credit'])): ?><p class="pg-credit"><?= h($p['credit']) ?></p><?php endif; ?>
       </div>
     </section>
   <?php endif; ?>

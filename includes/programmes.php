@@ -342,7 +342,18 @@ function pp_projects(): array
                 ['30,000+', 'People reached through FADECO Radio', 'Empowering Communities Through Climate Action, by July 2025'],
                 ['25+', 'Young entrepreneurs trained in climate-smart and green business', 'Empowering Communities Through Climate Action, by July 2025'],
             ],
-            'gallery'  => [],
+            // Photographs from FADECO's Empowering Communities Through Climate Action, as published by AllPeopleBeHappy
+            'image'    => ['assets/img/programmes/tanzania-nursery-seedlings.jpg', 'Two men holding seedlings in a greenhouse tree nursery in Karagwe', '50% 40%'],
+            'hero'     => ['assets/img/programmes/tanzania-tree-nursery.jpg', 'A group working among the raised beds of a community tree nursery in Karagwe', '55% 55%'],
+            'gallery'  => [
+                ['assets/img/programmes/tanzania-launch-students.jpg', 'Students and teachers at the launch of Empowering Communities Through Climate Action in Karagwe'],
+                ['assets/img/programmes/tanzania-youth-training.jpg', 'Young people at a training session under a tent in Karagwe'],
+                ['assets/img/programmes/tanzania-compost.jpg', 'Preparing natural fertiliser in a compost heap'],
+                ['assets/img/programmes/tanzania-biogas-training.jpg', 'A group at a tubular biogas installation during training'],
+                ['assets/img/programmes/tanzania-nursery-seedlings.jpg', 'Two men holding seedlings in a greenhouse tree nursery'],
+                ['assets/img/programmes/tanzania-fadeco-group.jpg', 'Participants and partners gathered outside FADECO in Karagwe'],
+            ],
+            'credit'   => 'Photographs: FADECO / AllPeopleBeHappy',
         ],
         'climate-leadership-academy' => [
             'title'    => 'BetterLife Climate Leadership Academy',
