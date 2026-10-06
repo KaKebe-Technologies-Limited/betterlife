@@ -371,15 +371,25 @@ function pp_projects(): array
             'gallery'  => [],
         ],
         'climate-innovation-hackathons' => [
-            'title'    => 'Climate Innovation Hackathons',
+            'title'    => 'Climate Innovation Hackathons and Tech Camp',
             'area'     => 'climate-education-youth-leadership',
-            'location' => 'The IGAD region', 'country' => 'Regional',
-            'partner'  => 'ICPAC and IGAD’s IDDRSI',
-            'who'      => 'Young innovators, mentored by BetterLife',
-            'summary'  => 'Hackathons give young people a real problem, a team and room to build. BetterLife mentors teams in IGAD’s climate hackathons, hosted by ICPAC, as they use technology, entrepreneurship and local knowledge to develop practical responses to climate and community challenges.',
+            'location' => 'Lira, Uganda', 'country' => 'Uganda',
+            'partner'  => 'KaKebe Technologies',
+            'status'   => 'Kakebe Tech Camp 2025: 5 to 19 January',
+            'who'      => 'Young people from across East Africa',
+            'summary'  => 'With KaKebe Technologies, a youth-led tech company in Lira, we work on climate innovation hackathons and the Kakebe Tech Camp, where young people learn robotics, AI and software and build climate and eco solutions. Camp 2025 trained 257 young people from across East Africa.',
             'blocks'   => [['climate-education-youth-leadership', 'Climate Innovation Hackathons']],
-            'results'  => [],
-            'gallery'  => [],
+            'results'  => [
+                ['257', 'Young people trained at Kakebe Tech Camp 2025', 'Two weeks, residential, in Lira, January 2025'],
+            ],
+            // Photographs from KaKebe Technologies (kakebe.tech), downloaded with approval
+            'image'    => ['assets/img/programmes/kakebe-robotics.jpg', 'Tech Camp participants building a robotics prototype', '50% 50%'],
+            'hero'     => ['assets/img/programmes/kakebe-techcamp-graduation.jpg', 'Young people at the Kakebe Tech Camp 2025 graduation in Lira', '50% 45%'],
+            'gallery'  => [
+                ['assets/img/programmes/kakebe-robotics.jpg', 'Tech Camp participants building a robotics prototype'],
+                ['assets/img/programmes/kakebe-camp-mentors.jpg', 'Mentors and participants at the Kakebe Tech Camp in Lira'],
+            ],
+            'credit'   => 'Photographs: KaKebe Technologies',
         ],
         'betterlife-renewable-pathways' => [
             'title'    => 'BetterLife Renewable Pathways',

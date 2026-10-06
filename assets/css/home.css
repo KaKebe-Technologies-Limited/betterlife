@@ -275,7 +275,7 @@
 .ab .hm-partners { background: #fff; padding: clamp(44px, 5vw, 70px) 0; }
 .hm-partners-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px 24px; margin-bottom: 26px; }
 .ab .hm-partners-head h2 { font-size: clamp(24px, 2.2vw, 30px); }
-.hm-logos { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
+.hm-logos { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
 .hm-logos li { display: flex; align-items: center; justify-content: center; height: 92px; padding: 14px 16px; border-radius: 18px; background: #fff; border: 1px solid var(--ab-line); transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease; }
 .hm-logos li:hover { border-color: transparent; box-shadow: 0 14px 30px rgba(11, 61, 46, .1); transform: translateY(-2px); }
 .hm-logos img { max-width: 100%; max-height: 50px; width: auto; height: auto; object-fit: contain; }
@@ -293,7 +293,7 @@
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1100px) {
-  .hm-logos { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .hm-logos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 1000px) {
   .hm-hero-grid, .hm-origin-grid, .hm-film-grid, .hm-reach-grid, .hm-school-grid, .hm-farm-head, .hm-loop-grid { grid-template-columns: 1fr; }
@@ -344,7 +344,7 @@
   .hm-countries-list span { font-size: 13.5px; }
   .ab .hm-product h4 { margin: 12px 12px 3px; font-size: 16px; }
   .hm-product p { margin: 0 12px 14px !important; font-size: 12.5px !important; }
-  .hm-logos { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .hm-logos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
   .hm-logos li { height: 62px; padding: 8px; border-radius: 12px; }
   .hm-logos img { max-height: 34px; }
   .hm-logos .lg-fadeco img, .hm-logos .lg-world-food-programme img, .hm-logos .lg-icpac img { max-height: 44px; }

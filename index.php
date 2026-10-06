@@ -149,6 +149,7 @@ $partners = [
     ['world-food-programme.svg',        'World Food Programme'],
     ['hbcu-green-fund.png',             'HBCU Green Fund'],
     ['fadeco.png',                      'FADECO'],
+    ['kakebe.png',                      'KaKebe Technologies'],
     ['icpac.svg',                       'ICPAC, IGAD Climate Prediction and Applications Centre'],
     ['moonshot.svg',                    'Moonshot'],
 ];

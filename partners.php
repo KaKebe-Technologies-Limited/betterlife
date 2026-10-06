@@ -12,7 +12,8 @@ $partners = [
     ['dovetail-impact-foundation.webp', 'Dovetail Impact Foundation', 'Supports BetterLife through strategic acceleration and institutional strengthening, across all our programmes.', '#organisation'],
     ['world-food-programme.svg', 'World Food Programme', 'Our engagement has contributed to work around farmer information, verification and the responsible use of agricultural and climate data.', 'project.php?slug=soilla'],
     ['fadeco.png', 'FADECO', 'Our partner in Tanzania, reaching young people and communities through schools, community radio and practical training.', 'project.php?slug=tanzania-climate-education'],
-    ['icpac.svg', 'ICPAC, IGAD Climate Prediction and Applications Centre', 'Its innovation ecosystem has supported our youth climate-innovation work.', 'project.php?slug=climate-innovation-hackathons'],
+    ['kakebe.png', 'KaKebe Technologies', 'A youth-led tech company in Lira City. Together we work on climate innovation hackathons and the Kakebe Tech Camp, where young people build climate and eco solutions.', 'project.php?slug=climate-innovation-hackathons'],
+    ['icpac.svg', 'ICPAC, IGAD Climate Prediction and Applications Centre', '', ''],
     ['moonshot.svg', 'Moonshot', 'Supports the BetterLife Climate Leadership Academy for young people from Uganda and across Africa.', 'project.php?slug=climate-leadership-academy'],
     ['hbcu-green-fund.png', 'HBCU Green Fund', '', ''],
 ];
