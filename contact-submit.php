@@ -37,5 +37,9 @@ if ($problem) {
 $stmt = $pdo->prepare("INSERT INTO contact_messages (name, email, phone, subject, message) VALUES (?, ?, ?, ?, ?)");
 $stmt->execute([$name, $email, $phone, $subject, $message]);
 
+// Let the team know straight away; the message is saved either way
+require_once __DIR__ . '/includes/mailer.php';
+send_contact_message_alert($pdo, compact('name', 'email', 'phone', 'subject', 'message'));
+
 flash_set('success', 'Thank you, ' . $name . '. Your message has reached the BetterLife team.');
 redirect(SITE_URL . '/contact.php#write');

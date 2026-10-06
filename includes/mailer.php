@@ -16,7 +16,7 @@ use PHPMailer\PHPMailer\Exception as PHPMailerException;
  * Low-level sender. Returns true/false; never throws (logs instead) so a
  * failed email never breaks the checkout/order flow.
  */
-function send_email(PDO $pdo, string $toEmail, string $toName, string $subject, string $htmlBody, array $cc = []): bool
+function send_email(PDO $pdo, string $toEmail, string $toName, string $subject, string $htmlBody, array $cc = [], ?array $replyTo = null): bool
 {
     $host = setting($pdo, 'smtp_host');
     $user = setting($pdo, 'smtp_username');
@@ -41,6 +41,9 @@ function send_email(PDO $pdo, string $toEmail, string $toName, string $subject, 
 
         $mail->setFrom($user, $fromName);
         $mail->addAddress($toEmail, $toName);
+        if ($replyTo && filter_var($replyTo[0] ?? '', FILTER_VALIDATE_EMAIL)) {
+            $mail->addReplyTo($replyTo[0], $replyTo[1] ?? '');   // replying answers the person who wrote, not the site
+        }
         foreach ($cc as $ccEmail) {
             $ccEmail = trim($ccEmail);
             if ($ccEmail !== '' && filter_var($ccEmail, FILTER_VALIDATE_EMAIL) && strcasecmp($ccEmail, $toEmail) !== 0) {
@@ -157,4 +160,30 @@ function send_receipt_to_customer(PDO $pdo, array $order, array $items): bool
       <p style="font-size:13px;color:#6b7972;">This email serves as your official receipt. Our team will be in touch shortly to arrange delivery.</p>';
 
     return send_email($pdo, $order['customer_email'], $order['customer_name'], 'Receipt for order ' . $order['order_ref'], email_wrap($pdo, 'Payment Receipt', $body));
+}
+
+/**
+ * A new message from the contact page, sent to the organisation's public inbox (Site Settings, email).
+ * Replying to it answers the person who wrote. The message is already saved in Admin, Messages,
+ * so a failed email loses nothing.
+ */
+function send_contact_message_alert(PDO $pdo, array $m): bool
+{
+    $to = setting($pdo, 'email') ?: setting($pdo, 'admin_alert_email');
+    if ($to === '' || !filter_var($to, FILTER_VALIDATE_EMAIL)) return false;
+
+    $row = fn(string $label, string $value): string => $value === '' ? ''
+        : '<tr><td style="padding:6px 14px 6px 0;color:#6b7972;font-size:13px;vertical-align:top;white-space:nowrap;">' . h($label) . '</td><td style="padding:6px 0;font-size:14px;color:#16241d;">' . $value . '</td></tr>';
+    $body = '<table style="border-collapse:collapse;margin:0 0 18px;">'
+        . $row('Topic', h($m['subject']))
+        . $row('From', h($m['name']))
+        . $row('Email', '<a href="mailto:' . h($m['email']) . '" style="color:#007cad;">' . h($m['email']) . '</a>')
+        . $row('Phone', h($m['phone']))
+        . '</table>'
+        . '<div style="padding:16px 18px;border-radius:10px;background:#f7f6ef;font-size:15px;line-height:1.6;color:#16241d;">' . nl2br(h($m['message'])) . '</div>'
+        . '<p style="margin:18px 0 0;font-size:13px;color:#6b7972;">Reply to this email to answer ' . h($m['name']) . ' directly. The message is also saved in Admin, Messages.</p>';
+
+    return send_email($pdo, $to, setting($pdo, 'site_name', 'BetterLife International'),
+        'New message: ' . $m['subject'] . ' (from ' . $m['name'] . ')',
+        email_wrap($pdo, 'A new message from the website', $body), [], [$m['email'], $m['name']]);
 }

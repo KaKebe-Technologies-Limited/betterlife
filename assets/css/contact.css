@@ -165,11 +165,14 @@
   .ct-reach-icon { width: 40px; height: 40px; border-radius: 12px; }
   .ct-copy { padding: 12px; }
   .ct-copy-text { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  .ct-topics { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .ct-topic-card { padding: 14px; }
+  /* On phones the topics are compact rows: icon, name and tick side by side */
+  .ct-topics { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .ct-topic-card { flex-direction: row; align-items: center; gap: 10px; padding: 10px 30px 10px 10px; border-radius: 16px; }
+  .ct-topic-icon { width: 34px; height: 34px; margin: 0; flex-shrink: 0; border-radius: 10px; }
   .ct-topic small { display: none; }
-  .ct-topic strong { font-size: 16px; padding-right: 22px; }
-  .ct-topic-card::after { top: 12px; right: 12px; width: 18px; height: 18px; }
+  .ct-topic strong { font-size: 15px; line-height: 1.2; }
+  .ct-topic-card::after { top: 50%; right: 10px; width: 18px; height: 18px; margin-top: -9px; }
+  .ct-step legend { margin-bottom: 14px; }
   .ct-fields { grid-template-columns: 1fr; }
   .ct-step { border-radius: 22px; }
   .ct-send button { width: 100%; justify-content: center; }
