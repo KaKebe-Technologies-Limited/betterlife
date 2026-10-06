@@ -133,7 +133,7 @@ require __DIR__ . '/includes/header.php';
         <span class="ab-eyebrow">Women-led · Youth-led · Refugee-led</span>
         <h1 id="tmTitle">People who know the work and the <?= ab_mark('places', 31) ?> where it happens.</h1>
         <p class="ab-lead">BetterLife is led by an African team working to strengthen food security, bringing together expertise in agriculture, community development, climate action, law, finance, monitoring, communications and youth leadership.</p>
-        <p>Our country and programme teams bring professional knowledge together with a close understanding of the communities where we work. Our board provides oversight, experience and accountability as the organisation grows.</p>
+        <p>Our country and programme teams bring professional knowledge together with a close understanding of the communities where we work.</p>
         <ul class="tm-facts">
           <li><strong><?= $teamCount ?></strong><span>people on the team</span></li>
           <li><strong><?= $countryCount ?></strong><span>countries</span></li>
@@ -165,7 +165,7 @@ require __DIR__ . '/includes/header.php';
           <span class="ab-eyebrow">Who we are</span>
           <h2 id="tmWhoTitle">Women-led, youth-led and rooted in <?= ab_mark('lived experience', 47) ?></h2>
         </div>
-        <p class="ab-head-sub">BetterLife International was founded in Uganda by a refugee-led team of young people who had grown up facing many of the challenges our communities face today.</p>
+        <p class="ab-head-sub">Three things shape who leads BetterLife, and how we work alongside communities to strengthen food security.</p>
       </div>
       <ul class="tm-who-grid">
         <li class="tm-who-card ab-reveal" style="--i: 0">
