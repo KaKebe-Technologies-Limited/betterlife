@@ -4,6 +4,8 @@
  * Every link here was opened and checked to name BetterLife International (or its founder with it)
  * before it was added. Summaries are our own words, not quotes. Newest first within each list.
  * To add a link: copy an entry, keep the date as YYYY-MM-DD (or '' when the page has none).
+ * Press entries: date, outlet, headline, link, summary, and optionally where else the same article ran.
+ * Left out for now (October 2026): two Skika Daily News articles whose site sends readers to a login page.
  */
 return [
     // News and features
@@ -26,9 +28,47 @@ return [
         ['2026-06-19', 'Watchdog Uganda', 'Ugandan Climate Advocate Denise Ayebare Named in Forbes Africa 30 Under 30 Class of 2026',
             'https://www.watchdoguganda.com/news/20260619/193560/ugandan-climate-advocate-denise-ayebare-named-in-forbes-africa-30-under-30-class-of-2026.html',
             'Tells how BetterLife grew, from Soilla to biogas and water access, reaching more than 40,000 people in five countries.'],
+        ['2025-10-05', 'Facts Media Uganda', 'Empowering Refugees Through Climate-Smart Agriculture in Northern Uganda',
+            'https://factsmediauganda.com/2025/10/05/empowering-refugees-through-climate-smart-agriculture-in-northern-uganda/',
+            'Climate-smart farming training for refugee women in settlements in Northern Uganda, where the article reports 280 women trained.',
+            [['Lango News Network', 'https://langonewsnetwork.com/2025/10/05/empowering-refugees-through-climate-smart-agriculture-in-northern-uganda/']]],
+        ['2025-08-05', 'Lango News Network', 'Clean Cooking Revolution: BetterLife Champions Sustainable Energy in Uganda’s Kitchens',
+            'https://langonewsnetwork.com/2025/08/05/clean-cooking-revolution-betterlife-champions-sustainable-energy-in-ugandas-kitchens/',
+            'Biogas and clean cooking in Western Uganda, taking the smoke of wood fires out of household kitchens.',
+            [['Dokolo Post', 'https://dokolopost.com/clean-cooking-revolution-betterlife-champions-sustainable-energy-in-ugandas-kitchens/']]],
+        ['2025-04-14', 'Facts Media Uganda', 'BetterLife International at Five Years: Transforming 90,000 Lives Across East Africa',
+            'https://factsmediauganda.com/2025/04/14/betterlife-international-at-five-years-transforming-90000-lives-across-east-africa/',
+            'Looks back on BetterLife’s early years as a youth-led organisation working across Uganda, South Sudan, Tanzania and Ghana.'],
+        ['2025-02-28', 'Tayari News Uganda', 'From Field to Market: How BetterLife Is Helping Smallholder Farmers Get Fair Prices',
+            'https://tayarinewsuganda.com/2025/02/28/from-field-to-market-how-betterlife-is-helping-smallholder-farmers-get-fair-prices/',
+            'BetterLife’s market work with farmers: cooperative marketing, market information, post-harvest storage and agribusiness training.'],
+        ['2025-01-10', 'Lango News Network', 'Water, Life, and Dignity: How BetterLife’s Borehole Programme Transformed Eastern Uganda',
+            'https://langonewsnetwork.com/2025/01/10/water-life-and-dignity-how-betterlifes-borehole-programme-transformed-eastern-uganda/',
+            'How BetterLife built 65 boreholes across Eastern Uganda when the COVID-19 pandemic made safe water a matter of life and death.'],
+        ['2024-11-22', 'Dokolo Post', 'Women-Led Cooperatives: How BetterLife Is Building Economic Power from the Ground Up',
+            'https://dokolopost.com/women-led-cooperatives-how-betterlife-is-building-economic-power-from-the-ground-up/',
+            'BetterLife’s support for women-led farming cooperatives in refugee settlements and host communities in Northern Uganda.'],
         ['2024-11-11', 'Trend.Az', 'Youth organizations receive only small percentage of global climate funding: Betterlife founder',
             'https://en.trend.az/business/green-economy/3967863.html',
             'Reports from COP29 in Baku, where Denise spoke about how little global climate funding reaches youth organisations.'],
+        ['2024-07-08', 'Dokolo Post', 'Poultry Farming for Prosperity: How BetterLife Is Rebuilding Rural Livelihoods One Flock at a Time',
+            'https://dokolopost.com/poultry-farming-for-prosperity-how-betterlife-is-rebuilding-rural-livelihoods-one-flock-at-a-time/',
+            'BetterLife’s poultry training, from starting a flock to preventing disease, as a living where land is scarce and harvests uncertain.'],
+        ['2024-04-03', 'Facts Media Uganda', 'Sweetening Lives: How BetterLife Is Using Beekeeping to Build Economic Independence',
+            'https://factsmediauganda.com/2024/04/03/sweetening-lives-how-betterlife-is-using-beekeeping-to-build-economic-independence/',
+            'Beekeeping as income, food and conservation for refugee households and smallholder farmers in Northern and Western Uganda.'],
+        ['2024-02-14', 'Dokolo Post', 'From Settlement to Greenhouse: BetterLife’s Technology-Driven Approach to Refugee Farming',
+            'https://dokolopost.com/from-settlement-to-greenhouse-betterlifes-technology-driven-approach-to-refugee-farming/',
+            'Greenhouse farming and other proven technology brought to a refugee settlement in Northern Uganda.'],
+        ['2023-09-05', 'Facts Media Uganda', '48 Biogas Plants, One Vision: How BetterLife Is Bringing Clean Energy to Western Uganda',
+            'https://factsmediauganda.com/2023/09/05/48-biogas-plants-one-vision-how-betterlife-is-bringing-clean-energy-to-western-uganda/',
+            'Behind the 48 biogas plants in Western Uganda: how households are chosen and how local masons and plumbers build each digester.'],
+        ['2023-06-07', 'Dokolo Post', 'Growing Food, Growing Hope: How Mushroom Farming Is Transforming Livelihoods in Uganda',
+            'https://dokolopost.com/growing-food-growing-hope-how-mushroom-farming-is-transforming-livelihoods-in-uganda/',
+            'How BetterLife has brought mushroom growing to farming communities as a year-round source of food and income.'],
+        ['2023-03-14', 'Dokolo Post', 'From Plastic Waste to Building Blocks: How BetterLife Is Turning Uganda’s Trash Into Opportunity',
+            'https://dokolopost.com/from-plastic-waste-to-building-blocks-how-betterlife-is-turning-ugandas-trash-into-opportunity/',
+            'How BetterLife turns plastic waste into building materials, and into opportunity for the communities it works with.'],
     ],
 
     // Awards and lists, with where each is recorded

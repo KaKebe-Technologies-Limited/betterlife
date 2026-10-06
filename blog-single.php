@@ -48,7 +48,7 @@ require __DIR__ . '/includes/header.php';
     <header class="st-post-head">
       <div class="container st-post-head-inner">
         <nav class="st-crumb" aria-label="Breadcrumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span aria-hidden="true">/</span><a href="<?= SITE_URL ?>/blog.php">Stories</a><span aria-hidden="true">/</span><span aria-current="page"><?= h(excerpt($post['title'], 48)) ?></span></nav>
-        <?php if (!empty($post['cat_slug'])): ?><a class="st-post-cat" href="<?= SITE_URL ?>/blog.php?category=<?= h(rawurlencode($post['cat_slug'])) ?>#stories"><?= h($post['cat_name']) ?></a><?php endif; ?>
+        <?php if (!empty($post['cat_slug'])): ?><a class="st-post-cat" href="<?= SITE_URL ?>/blog.php?category=<?= h(rawurlencode($post['cat_slug'])) ?>#blog"><?= h($post['cat_name']) ?></a><?php endif; ?>
         <h1 id="stPostTitle"><?= h($post['title']) ?></h1>
         <p class="st-post-meta"><span><?= h($post['author'] && $post['author'] !== 'Admin' ? $post['author'] : 'BetterLife International') ?></span><span><?= h(format_date($post['published_at'], 'j F Y')) ?></span><span><?= $minutes($post) ?> min read</span></p>
       </div>
@@ -82,7 +82,7 @@ require __DIR__ . '/includes/header.php';
             <span class="ab-eyebrow">Keep reading</span>
             <h2 id="stMoreTitle">More stories</h2>
           </div>
-          <a class="st-all" href="<?= SITE_URL ?>/blog.php#stories">All stories <?= icon('arrow-right', 15) ?></a>
+          <a class="st-all" href="<?= SITE_URL ?>/blog.php#blog">All stories <?= icon('arrow-right', 15) ?></a>
         </div>
         <div class="st-grid">
           <?php foreach ($more as $p): ?>

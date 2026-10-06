@@ -45,7 +45,7 @@ $minutes = fn(array $p): int => max(1, (int) round(str_word_count(strip_tags((st
 $storyUrl = fn(array $p): string => SITE_URL . '/blog-single.php?slug=' . rawurlencode($p['slug']);
 $listUrl = function (array $set = []) use ($categorySlug, $search): string {
     $q = array_filter(array_merge(['category' => $categorySlug, 'q' => $search], $set), fn($v) => $v !== '' && $v !== null && $v !== 1);
-    return SITE_URL . '/blog.php' . ($q ? '?' . http_build_query($q) : '') . '#stories';
+    return SITE_URL . '/blog.php' . ($q ? '?' . http_build_query($q) : '') . '#blog';
 };
 
 $coverage = require __DIR__ . '/includes/coverage.php';
@@ -53,7 +53,17 @@ $press = $coverage['press'];
 $pressByYear = [];
 foreach ($press as $item) $pressByYear[substr($item[0], 0, 4)][] = $item;
 $outlets = array_values(array_unique(array_map(fn($i) => $i[1], $press)));
-$clips = [$press[0], $press[3], $press[6]];   // the opening's clippings: African Business, New Vision, Trend.Az
+// The opening's clippings: an international, a national and a local title
+$clipUrls = [
+    'https://african.business/2026/08/trade-investment/africas-young-disruptors-part-two',
+    'https://www.newvision.co.ug/category/agriculture/forbes-honours-21-year-old-ugandan-for-climat-NV_235908_062026',
+    'https://factsmediauganda.com/2025/04/14/betterlife-international-at-five-years-transforming-90000-lives-across-east-africa/',
+];
+$clips = array_values(array_filter(array_map(fn($u) => current(array_filter($press, fn($p) => $p[3] === $u)) ?: null, $clipUrls)));
+// Counts for the news section: every article, including those that ran in a second outlet
+$articleCount = count($press) + array_sum(array_map(fn($p) => count($p[5] ?? []), $press));
+$allOutlets = array_unique(array_merge($outlets, ...array_map(fn($p) => array_column($p[5] ?? [], 0), $press)));
+$firstYear = min(array_keys($pressByYear));
 $fmt = fn(string $d): string => $d === '' ? '' : date('j F Y', strtotime($d));
 $newTab = '<span class="sr-only"> (opens in a new tab)</span>';
 
@@ -77,12 +87,12 @@ require __DIR__ . '/includes/header.php';
         <nav class="st-crumb" aria-label="Breadcrumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span aria-hidden="true">/</span><span aria-current="page">Stories</span></nav>
         <p class="st-kicker">Stories</p>
         <h1 id="stTitle">Told from the <?= ab_mark('ground up', 57) ?></h1>
-        <p class="st-lead">Voices from the communities we work with, what we are learning along the way, and what others are writing about BetterLife International.</p>
+        <p class="st-lead">What others are writing about BetterLife International, the recognition along the way, and stories from our own team.</p>
         <nav class="st-jump" aria-label="On this page">
-          <a href="#stories"><?= icon('book', 15) ?> Our stories</a>
           <a href="#news"><?= icon('newspaper', 15) ?> In the news</a>
           <a href="#recognition"><?= icon('award', 15) ?> Recognition</a>
           <a href="#web"><?= icon('globe', 15) ?> Around the web</a>
+          <a href="#blog"><?= icon('book', 15) ?> Our blog</a>
         </nav>
       </div>
       <div class="st-clips" aria-label="From the coverage">
@@ -104,80 +114,10 @@ require __DIR__ . '/includes/header.php';
     <div class="st-ticker">
       <?php for ($copy = 0; $copy < 2; $copy++): ?>
         <ul class="st-ticker-row"<?= $copy ? ' aria-hidden="true"' : '' ?>>
-          <?php foreach ($outlets as $o): ?><li><?= h($o) ?></li><?php endforeach; ?>
+          <?php foreach ($allOutlets as $o): ?><li><?= h($o) ?></li><?php endforeach; ?>
           <li>Moonshot</li><li>Forbes Africa</li>
         </ul>
       <?php endfor; ?>
-    </div>
-  </section>
-
-  <!-- Our stories -->
-  <section class="st-stories" id="stories" aria-labelledby="stStoriesTitle">
-    <div class="container">
-      <div class="st-head-row ab-reveal">
-        <div class="ab-head">
-          <span class="ab-eyebrow">From our team</span>
-          <h2 id="stStoriesTitle">Our stories</h2>
-        </div>
-        <form class="st-search" method="get" action="<?= SITE_URL ?>/blog.php#stories" role="search">
-          <?php if ($categorySlug !== ''): ?><input type="hidden" name="category" value="<?= h($categorySlug) ?>"><?php endif; ?>
-          <label class="sr-only" for="stSearch">Search stories</label>
-          <input id="stSearch" type="search" name="q" value="<?= h($search) ?>" placeholder="Search stories">
-          <button type="submit" aria-label="Search"><?= icon('search', 17) ?></button>
-        </form>
-      </div>
-
-      <?php if ($categories): ?>
-        <nav class="st-cats" aria-label="Story topics">
-          <a href="<?= h($listUrl(['category' => '', 'page' => 1])) ?>"<?= $categorySlug === '' ? ' aria-current="true"' : '' ?>>All stories</a>
-          <?php foreach ($categories as $c): ?>
-            <a href="<?= h($listUrl(['category' => $c['slug'], 'page' => 1])) ?>"<?= $categorySlug === $c['slug'] ? ' aria-current="true"' : '' ?>><?= h($c['name']) ?> <small><?= (int) $c['cnt'] ?></small></a>
-          <?php endforeach; ?>
-        </nav>
-      <?php endif; ?>
-
-      <?php if ($filtered): ?>
-        <p class="st-count" role="status"><?= $total ?> <?= $total === 1 ? 'story' : 'stories' ?><?= $catName ? ' in ' . h($catName) : '' ?><?= $search !== '' ? ' matching “' . h($search) . '”' : '' ?> · <a href="<?= SITE_URL ?>/blog.php#stories">Show all stories</a></p>
-      <?php endif; ?>
-
-      <?php if ($lead): ?>
-        <article class="st-lead-story ab-reveal">
-          <div class="st-lead-media"><?= ab_img($lead['featured_image'], '', '', false, '', '(max-width: 900px) 100vw, 640px') ?></div>
-          <div class="st-lead-body">
-            <span class="st-tag"><?= h($lead['cat_name'] ?? 'Stories') ?></span>
-            <h3><a href="<?= h($storyUrl($lead)) ?>"><?= h($lead['title']) ?></a></h3>
-            <p><?= h(excerpt($lead['excerpt'] ?: $lead['content'], 220)) ?></p>
-            <p class="st-meta"><?= h(format_date($lead['published_at'], 'j F Y')) ?> · <?= $minutes($lead) ?> min read</p>
-            <span class="st-more" aria-hidden="true">Read the story <?= icon('arrow-right', 15) ?></span>
-          </div>
-        </article>
-      <?php endif; ?>
-
-      <?php if ($posts): ?>
-        <div class="st-grid">
-          <?php foreach ($posts as $p): ?>
-            <article class="st-card ab-reveal">
-              <div class="st-card-media"><?= ab_img($p['featured_image'], '', '', true, '', '(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 380px') ?></div>
-              <div class="st-card-body">
-                <span class="st-tag"><?= h($p['cat_name'] ?? 'Stories') ?></span>
-                <h3><a href="<?= h($storyUrl($p)) ?>"><?= h($p['title']) ?></a></h3>
-                <p><?= h(excerpt($p['excerpt'] ?: $p['content'], 150)) ?></p>
-                <p class="st-meta"><?= h(format_date($p['published_at'], 'j F Y')) ?> · <?= $minutes($p) ?> min read</p>
-              </div>
-            </article>
-          <?php endforeach; ?>
-        </div>
-      <?php elseif (!$lead): ?>
-        <p class="st-empty">No stories match<?= $search !== '' ? ' “' . h($search) . '”' : '' ?> yet. <a href="<?= SITE_URL ?>/blog.php#stories">Show all stories</a></p>
-      <?php endif; ?>
-
-      <?php if ($pg['pages'] > 1): ?>
-        <nav class="st-pages" aria-label="More stories">
-          <?php for ($i = 1; $i <= $pg['pages']; $i++): ?>
-            <?php if ($i === $pg['page']): ?><span aria-current="page"><?= $i ?></span><?php else: ?><a href="<?= h($listUrl(['page' => $i])) ?>"><?= $i ?></a><?php endif; ?>
-          <?php endfor; ?>
-        </nav>
-      <?php endif; ?>
     </div>
   </section>
 
@@ -191,11 +131,16 @@ require __DIR__ . '/includes/header.php';
         </div>
         <p class="st-head-note">Coverage of BetterLife International and its founder, Denise Ayebare. Each link opens the original article.</p>
       </div>
+      <ul class="st-news-stats ab-reveal" aria-label="The coverage in numbers">
+        <li><strong><?= $articleCount ?></strong> articles</li>
+        <li><strong><?= count($allOutlets) ?></strong> news outlets</li>
+        <li><strong><?= h($firstYear) ?></strong> the earliest</li>
+      </ul>
       <?php foreach ($pressByYear as $year => $items): ?>
         <div class="st-year ab-reveal">
           <h3 class="st-year-n"><?= h($year) ?></h3>
           <ul class="st-press">
-            <?php foreach ($items as [$d, $outlet, $headline, $url, $about]): ?>
+            <?php foreach ($items as $item): [$d, $outlet, $headline, $url, $about] = $item; ?>
               <li>
                 <a href="<?= h($url) ?>" target="_blank" rel="noopener">
                   <span class="st-press-top"><span class="st-press-outlet"><?= h($outlet) ?></span><span class="st-press-date"><?= h($fmt($d)) ?></span></span>
@@ -203,6 +148,7 @@ require __DIR__ . '/includes/header.php';
                   <span class="st-press-about"><?= h($about) ?></span>
                   <?= $newTab ?>
                 </a>
+                <?php if (!empty($item[5])): ?><p class="st-press-also">Also published by <?php foreach ($item[5] as $k => [$ao, $au]): ?><?= $k ? ', ' : '' ?><a href="<?= h($au) ?>" target="_blank" rel="noopener"><?= h($ao) ?><?= $newTab ?></a><?php endforeach; ?></p><?php endif; ?>
               </li>
             <?php endforeach; ?>
           </ul>
@@ -265,6 +211,76 @@ require __DIR__ . '/includes/header.php';
           </a>
         </li>
       </ul>
+    </div>
+  </section>
+
+  <!-- Our own writing comes last: first what others say about BetterLife -->
+  <section class="st-stories" id="blog" aria-labelledby="stStoriesTitle">
+    <div class="container">
+      <div class="st-head-row ab-reveal">
+        <div class="ab-head">
+          <span class="ab-eyebrow">In our own words</span>
+          <h2 id="stStoriesTitle">From our blog</h2>
+        </div>
+        <form class="st-search" method="get" action="<?= SITE_URL ?>/blog.php#blog" role="search">
+          <?php if ($categorySlug !== ''): ?><input type="hidden" name="category" value="<?= h($categorySlug) ?>"><?php endif; ?>
+          <label class="sr-only" for="stSearch">Search stories</label>
+          <input id="stSearch" type="search" name="q" value="<?= h($search) ?>" placeholder="Search stories">
+          <button type="submit" aria-label="Search"><?= icon('search', 17) ?></button>
+        </form>
+      </div>
+
+      <?php if ($categories): ?>
+        <nav class="st-cats" aria-label="Story topics">
+          <a href="<?= h($listUrl(['category' => '', 'page' => 1])) ?>"<?= $categorySlug === '' ? ' aria-current="true"' : '' ?>>All stories</a>
+          <?php foreach ($categories as $c): ?>
+            <a href="<?= h($listUrl(['category' => $c['slug'], 'page' => 1])) ?>"<?= $categorySlug === $c['slug'] ? ' aria-current="true"' : '' ?>><?= h($c['name']) ?> <small><?= (int) $c['cnt'] ?></small></a>
+          <?php endforeach; ?>
+        </nav>
+      <?php endif; ?>
+
+      <?php if ($filtered): ?>
+        <p class="st-count" role="status"><?= $total ?> <?= $total === 1 ? 'story' : 'stories' ?><?= $catName ? ' in ' . h($catName) : '' ?><?= $search !== '' ? ' matching “' . h($search) . '”' : '' ?> · <a href="<?= SITE_URL ?>/blog.php#blog">Show all stories</a></p>
+      <?php endif; ?>
+
+      <?php if ($lead): ?>
+        <article class="st-lead-story ab-reveal">
+          <div class="st-lead-media"><?= ab_img($lead['featured_image'], '', '', false, '', '(max-width: 900px) 100vw, 640px') ?></div>
+          <div class="st-lead-body">
+            <span class="st-tag"><?= h($lead['cat_name'] ?? 'Stories') ?></span>
+            <h3><a href="<?= h($storyUrl($lead)) ?>"><?= h($lead['title']) ?></a></h3>
+            <p><?= h(excerpt($lead['excerpt'] ?: $lead['content'], 220)) ?></p>
+            <p class="st-meta"><?= h(format_date($lead['published_at'], 'j F Y')) ?> · <?= $minutes($lead) ?> min read</p>
+            <span class="st-more" aria-hidden="true">Read the story <?= icon('arrow-right', 15) ?></span>
+          </div>
+        </article>
+      <?php endif; ?>
+
+      <?php if ($posts): ?>
+        <div class="st-grid">
+          <?php foreach ($posts as $p): ?>
+            <article class="st-card ab-reveal">
+              <div class="st-card-media"><?= ab_img($p['featured_image'], '', '', true, '', '(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 380px') ?></div>
+              <div class="st-card-body">
+                <span class="st-tag"><?= h($p['cat_name'] ?? 'Stories') ?></span>
+                <h3><a href="<?= h($storyUrl($p)) ?>"><?= h($p['title']) ?></a></h3>
+                <p><?= h(excerpt($p['excerpt'] ?: $p['content'], 150)) ?></p>
+                <p class="st-meta"><?= h(format_date($p['published_at'], 'j F Y')) ?> · <?= $minutes($p) ?> min read</p>
+              </div>
+            </article>
+          <?php endforeach; ?>
+        </div>
+      <?php elseif (!$lead): ?>
+        <p class="st-empty">No stories match<?= $search !== '' ? ' “' . h($search) . '”' : '' ?> yet. <a href="<?= SITE_URL ?>/blog.php#blog">Show all stories</a></p>
+      <?php endif; ?>
+
+      <?php if ($pg['pages'] > 1): ?>
+        <nav class="st-pages" aria-label="More stories">
+          <?php for ($i = 1; $i <= $pg['pages']; $i++): ?>
+            <?php if ($i === $pg['page']): ?><span aria-current="page"><?= $i ?></span><?php else: ?><a href="<?= h($listUrl(['page' => $i])) ?>"><?= $i ?></a><?php endif; ?>
+          <?php endfor; ?>
+        </nav>
+      <?php endif; ?>
     </div>
   </section>
 
