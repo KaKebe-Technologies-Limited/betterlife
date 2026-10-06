@@ -736,14 +736,15 @@
 .ab .pg-dir-list { padding-top: 0; }
 .pg-toolbar { position: relative; z-index: 2; display: grid; gap: 14px; margin: calc(-1 * clamp(64px, 6.5vw, 84px)) 0 22px; padding: clamp(16px, 2vw, 22px) clamp(16px, 2.2vw, 26px); border-radius: 24px; background: #fff; border: 1px solid var(--ab-line); box-shadow: 0 24px 50px rgba(11, 61, 46, .12); }
 .pg-toolbar-row { display: flex; align-items: center; gap: 14px; min-width: 0; }
-.pg-toolbar-label { flex-shrink: 0; width: 132px; font: 700 12px/1.2 var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--ab-green); }
-.pg-chips { display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; }
-.pg-fchip { display: inline-flex; align-items: center; gap: 7px; padding: 9px 14px; border-radius: 999px; background: var(--ab-cream); border: 1.5px solid transparent; color: var(--ab-deep); font-weight: 700; font-size: 14px; line-height: 1.15; white-space: nowrap; transition: background .2s ease, color .2s ease, border-color .2s ease; }
+.pg-toolbar-label { flex-shrink: 0; width: 116px; font: 700 12px/1.2 var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--ab-green); }
+.pg-chips { display: flex; flex-wrap: wrap; gap: 6px; min-width: 0; }
+.pg-fchip { display: inline-flex; align-items: center; gap: 6px; padding: 9px 12px; border-radius: 999px; background: var(--ab-cream); border: 1.5px solid transparent; color: var(--ab-deep); font-weight: 700; font-size: 14px; line-height: 1.15; white-space: nowrap; transition: background .2s ease, color .2s ease, border-color .2s ease; }
 .pg-fchip svg { flex-shrink: 0; color: var(--ab-green); }
 .pg-fchip small { font-size: 12px; font-weight: 600; opacity: .7; }
 .pg-fchip:hover { border-color: var(--ab-blue); }
 .pg-fchip[aria-current="true"] { background: var(--ab-deep); border-color: var(--ab-deep); color: #fff; }
 .pg-fchip[aria-current="true"] svg { color: #9fd6b2; }
+.pg-fchip.is-empty:not([aria-current]) { opacity: .45; }
 .pg-dir .pg-count { margin: 0 0 clamp(28px, 3.5vw, 44px) !important; }
 
 /* Groups: one per programme area */
@@ -764,7 +765,6 @@
 .pg-dcard-status svg { flex-shrink: 0; margin-top: 2px; }
 .pg-dcard .pg-dcard-sum { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
 .ab .pg-group { padding: 0; }
-.pg-group.is-two .pg-project-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
 /* Shown wide: the featured project, and any project alone in its group */
 .pg-dcard.is-feature, .pg-group.is-one .pg-dcard { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
@@ -823,8 +823,28 @@
   .ab .pg-group-head p { grid-column: 1 / -1; font-size: 15px; }
   .pg-group-side { grid-column: 1 / -1; flex-direction: row; align-items: center; justify-content: space-between; padding-top: 0; text-align: left; }
   .pg-dcard-results { grid-template-columns: 1fr 1fr; }
-  .pg-group.is-two .pg-project-grid { grid-template-columns: 1fr; }
   .pg-dcard.is-feature .pg-project-media, .pg-group.is-one .pg-dcard .pg-project-media { aspect-ratio: 4 / 3; }
   .pg-dcard-film { padding-right: 16px; font-size: 14px; }
   .pg-dcard-play { width: 40px; height: 40px; }
+}
+
+/* Balanced rows: counted over the cards on show (not the featured one), so they stay balanced while filtering.
+   Browsers without nth-child(... of S) keep the plain grid. */
+@media (min-width: 1101px) {
+  .pg-dir .pg-project-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .pg-dir .pg-dcard { grid-column: span 2; }
+  /* A last row of two shares the width */
+  .pg-dir .pg-dcard:nth-last-child(1 of .pg-dcard:not([hidden], .is-feature)):nth-child(3n+2 of .pg-dcard:not([hidden], .is-feature)),
+  .pg-dir .pg-dcard:nth-last-child(2 of .pg-dcard:not([hidden], .is-feature)):nth-child(3n+1 of .pg-dcard:not([hidden], .is-feature)) { grid-column: span 3; }
+  /* A last card on its own is shown wide */
+  .pg-dir .pg-dcard:nth-last-child(1 of .pg-dcard:not([hidden], .is-feature)):nth-child(3n+1 of .pg-dcard:not([hidden], .is-feature)) { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
+  .pg-dir .pg-dcard:nth-last-child(1 of .pg-dcard:not([hidden], .is-feature)):nth-child(3n+1 of .pg-dcard:not([hidden], .is-feature)) .pg-project-media { aspect-ratio: auto; height: 100%; min-height: 320px; }
+  .pg-dir .pg-dcard:nth-last-child(1 of .pg-dcard:not([hidden], .is-feature)):nth-child(3n+1 of .pg-dcard:not([hidden], .is-feature)) .pg-project-body { padding: clamp(26px, 3vw, 42px); }
+  .pg-dir .pg-dcard.is-feature, .pg-dir .pg-group.is-one .pg-dcard { grid-column: 1 / -1; }
+  .pg-dir .pg-group.is-one .pg-dcard .pg-project-media { min-height: 320px; }
+}
+@media (min-width: 721px) and (max-width: 1100px) {
+  /* Two columns: a last card on its own takes the row, photograph beside the text */
+  .pg-dir .pg-dcard:nth-last-child(1 of .pg-dcard:not([hidden], .is-feature)):nth-child(odd of .pg-dcard:not([hidden], .is-feature)) { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .pg-dir .pg-dcard:nth-last-child(1 of .pg-dcard:not([hidden], .is-feature)):nth-child(odd of .pg-dcard:not([hidden], .is-feature)) .pg-project-media { aspect-ratio: auto; height: 100%; min-height: 280px; }
 }

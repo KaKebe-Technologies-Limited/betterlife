@@ -33,12 +33,21 @@ $places = array_keys($byPlace);
 $listJoin = fn(array $xs): string => count($xs) > 1 ? implode(', ', array_slice($xs, 0, -1)) . ' and ' . end($xs) : ($xs[0] ?? '');
 $online = in_array('Regional', $countries, true);
 
-// Photographs for the opening, each one a way into its project
+// Photographs for the opening, each one a way into its project and none repeating a card below
 $tiles = [
     ['womens-climate-resilience-yumbe', 'hero'],
-    ['tanzania-climate-education', 'image'],
+    ['tanzania-climate-education', 'hero'],
     ['apala-youth-centre', 'hero'],
-    ['rise', 'image'],
+    ['betterlife-agro-tourism-farm', ['assets/img/farm/maize-women.jpg', '', '55% 40%']],
+];
+
+// Short names for the filter buttons; each group below carries the full programme name
+$chipNames = [
+    'climate-resilient-agriculture'      => 'Food Security',
+    'green-skills-livelihoods'           => 'RISE',
+    'climate-education-youth-leadership' => 'Climate Education',
+    'clean-energy-water-restoration'     => 'Clean Energy and Water',
+    'digital-innovation'                 => 'Digital Tools',
 ];
 
 // Projects grouped under their home programme area, in the order the areas are presented
@@ -111,7 +120,7 @@ require __DIR__ . '/includes/header.php';
         </ul>
       </div>
       <div class="pg-dir-mosaic">
-        <?php foreach ($tiles as $i => [$ts, $which]): $tp = $projects[$ts] ?? null; $pic = $tp[$which] ?? $tp['image'] ?? null; if (!$pic) continue; ?>
+        <?php foreach ($tiles as $i => [$ts, $which]): $tp = $projects[$ts] ?? null; $pic = is_array($which) ? $which : ($tp[$which] ?? $tp['image'] ?? null); if (!$tp || !$pic) continue; ?>
           <a class="pg-dir-tile pg-dir-tile-<?= $i + 1 ?>" href="<?= h(pp_project_url($ts, $tp)) ?>" aria-label="<?= h($tp['title']) ?>">
             <?= ab_img($pic[0], '', '', $i > 1, 'style="object-position: ' . h($pic[2] ?? '50% 50%') . '"', $tileSizes[$i]) ?>
             <span class="pg-dir-tile-tag" aria-hidden="true"><?= icon('map-pin', 12) ?> <?= h(($tp['location'] ?? '') ?: $tp['title']) ?></span>
@@ -128,9 +137,9 @@ require __DIR__ . '/includes/header.php';
         <div class="pg-toolbar-row">
           <span class="pg-toolbar-label" id="pgFilterArea">Programme area</span>
           <nav class="pg-chips" aria-labelledby="pgFilterArea">
-            <a href="<?= h($filterUrl('', $country)) ?>" class="pg-fchip" data-kind="area" data-value="" data-label=""<?= !$area ? ' aria-current="true"' : '' ?>>All areas <small>(<?= $countFor('', $country) ?>)</small></a>
+            <a href="<?= h($filterUrl('', $country)) ?>" class="pg-fchip" data-kind="area" data-value="" data-label=""<?= !$area ? ' aria-current="true"' : '' ?>>All areas</a>
             <?php foreach ($areas as $as => $a): ?>
-              <a href="<?= h($filterUrl($as, $country)) ?>" class="pg-fchip" data-kind="area" data-value="<?= h($as) ?>" data-label="<?= h($a['short']) ?>"<?= $area === $as ? ' aria-current="true"' : '' ?>><?= icon($a['icon'] ?? 'leaf', 15) ?> <?= h($a['short']) ?> <small>(<?= $countFor($as, $country) ?>)</small></a>
+              <a href="<?= h($filterUrl($as, $country)) ?>" class="pg-fchip<?= $countFor($as, $country) ? '' : ' is-empty' ?>" data-kind="area" data-value="<?= h($as) ?>" data-label="<?= h($a['short']) ?>" title="<?= h($a['short']) ?>"<?= $area === $as ? ' aria-current="true"' : '' ?>><?= icon($a['icon'] ?? 'leaf', 15) ?> <?= h($chipNames[$as] ?? $a['short']) ?></a>
             <?php endforeach; ?>
           </nav>
         </div>

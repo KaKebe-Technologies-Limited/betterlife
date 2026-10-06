@@ -43,6 +43,7 @@
       var kind = chip.getAttribute('data-kind'), value = chip.getAttribute('data-value');
       if (state[kind] === value) chip.setAttribute('aria-current', 'true'); else chip.removeAttribute('aria-current');
       var n = kind === 'area' ? count(value, state.country) : count(state.area, value);
+      chip.classList.toggle('is-empty', n === 0);
       var small = chip.querySelector('small');
       if (small) small.textContent = '(' + n + ')';
     });
