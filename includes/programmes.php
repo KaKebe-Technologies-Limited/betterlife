@@ -129,7 +129,7 @@ function pp_areas(): array
             'short'  => 'Clean Energy, Water and Restoration',
             'formal' => 'Clean Energy, Water and Environmental Restoration',
             'icon'   => 'sun',
-            'card'   => 'Energy poverty, water insecurity and environmental loss often sit inside the same household. We work with communities on tree nurseries, biogas, briquettes, waste recovery and water access, easing pressure on families and the land at the same time.',
+            'card'   => 'Energy poverty, water insecurity and environmental loss often sit inside the same household. We work with communities on tree nurseries, clean cooking and biogas, briquettes, waste recovery and water access, easing pressure on families and the land at the same time.',
             'image'  => ['assets/img/programmes/clean-cooking-cookoff.jpg', 'BetterLife team members with students at a clean cooking cook-off', '60% 40%'],
             'hero'   => ['assets/img/programmes/rukungiri-solar-sky.jpg', 'A solar panel under a wide sky in Rukungiri', '65% 40%'],
             'collage' => [
@@ -149,13 +149,13 @@ function pp_areas(): array
             // Activities with their own write-ups (from Admin -> Page Content)
             'blocks' => [
                 ['clean-energy-water-restoration', 'Community Tree Nurseries and Agroforestry'],
-                ['clean-energy-water-restoration', 'Community Biogas'],
+                ['clean-energy-water-restoration', 'Clean Cooking and Biogas'],
                 ['clean-energy-water-restoration', 'Water Access'],
                 ['clean-energy-water-restoration', 'Briquette-Making'],
             ],
             'evidence' => [
                 ['65', 'Community boreholes supported', 'Water Access'],
-                ['48+', 'Household biogas systems supported', 'Community Biogas'],
+                ['48+', 'Household biogas systems supported', 'Clean cooking and biogas', 'betterlife-renewable-pathways'],
                 ['20,000+', 'Tree seedlings distributed to schools, farmers and communities', 'From more than 50,000 raised in BetterLife-supported nurseries'],
             ],
             'gallery' => [
@@ -286,7 +286,8 @@ function pp_projects(): array
             'who'      => 'Refugees and host-community members',
             'summary'  => 'RISE brings refugees and host-community members into the same training groups and local economy. Participants learn practical trades, then receive mentorship, business support, market connections and access to small loans, building relationships as they train, save and trade together.',
             'image'    => ['assets/img/programmes/yumbe-poultry-care.jpg', 'A young man refilling a drinker in a poultry house in Yumbe, Uganda', '45% 8%'],
-            'hero'     => ['assets/img/programmes/rise-group-on-mat.jpg', 'BetterLife team members sitting together on a mat with women from the community, under a tree', '50% 72%'],
+            'hero'     => ['assets/img/betterlifeint-source/projects/project-smiles-alt.jpg', 'Participants holding rolled mats at a RISE activity', '50% 35%'],
+            'feature_photo' => ['assets/img/programmes/rise-group-on-mat.jpg', 'BetterLife team members sitting together on a mat with women from the community, under a tree', '50% 72%'],
             'blocks'   => [['green-skills-livelihoods', 'RISE']],
             'results'  => [
                 ['78%', 'Moved into sustainable income pathways', 'Reported across RISE target groups'],
@@ -410,12 +411,19 @@ function pp_projects(): array
             'title'    => 'BetterLife Renewable Pathways',
             'area'     => 'clean-energy-water-restoration',
             'location' => 'Uganda', 'country' => 'Uganda',
-            'who'      => 'Schools, learners and communities',
-            'summary'  => 'We work with schools and communities on waste separation, plastic banks, recycling and the responsible reuse of materials. Four school plastic banks give learners a practical way to keep plastics out of the environment.',
+            'who'      => 'Schools, learners, refugee communities and households',
+            'summary'  => 'We work on clean cooking in schools and refugee communities, including biogas, and on waste separation, plastic banks, recycling and reuse. More than 48 household biogas systems turn organic waste into cleaner cooking energy, and four school plastic banks help keep plastics out of the environment.',
             'image'    => ['assets/img/betterlifeint-source/projects/project-renewable-pathways-alt.jpg', 'A man adding a bottle to a plastic bank', '50% 25%'],
-            'blocks'   => [['clean-energy-water-restoration', 'BetterLife Renewable Pathways']],
-            'results'  => [['4', 'School plastic banks', 'Supported through Renewable Pathways']],
-            'gallery'  => [],
+            'hero'     => ['assets/img/programmes/clean-cooking-cookoff.jpg', 'BetterLife team members with students at a clean cooking cook-off', '50% 40%'],
+            // Clean cooking and biogas first, then the waste work
+            'blocks'   => [['clean-energy-water-restoration', 'Clean Cooking and Biogas'], ['clean-energy-water-restoration', 'BetterLife Renewable Pathways']],
+            'results'  => [
+                ['48+', 'Household biogas systems supported', 'Clean cooking: organic waste turned into cooking energy'],
+                ['4', 'School plastic banks', 'Supported through Renewable Pathways'],
+            ],
+            'gallery'  => [
+                ['assets/img/betterlifeint-source/projects/project-renewable-pathways-alt.jpg', 'Adding a bottle to a plastic bank'],
+            ],
             'related'  => [['project.php?slug=green-libraries-eco-labs', 'School climate clubs and Eco Labs']],
         ],
         'soilla' => [

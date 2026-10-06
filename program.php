@@ -140,7 +140,7 @@ require __DIR__ . '/includes/header.php';
           <a href="<?= SITE_URL ?>/projects.php?area=<?= h(rawurlencode($slug)) ?>" class="pg-link">Filter the project directory <?= icon('arrow-right', 15) ?></a>
         </div>
         <?php if ($feature): ?>
-          <?php $fPic = $feature['hero'] ?? $feature['image'] ?? null; ?>
+          <?php $fPic = $feature['feature_photo'] ?? $feature['hero'] ?? $feature['image'] ?? null; ?>
           <article class="pg-feature pg-feature-wide ab-reveal<?= $fPic ? '' : ' is-text' ?>">
             <?php if ($fPic): ?>
               <?= ab_img($fPic[0], $fPic[1], 'pg-feature-img', true, 'style="object-position: ' . h($fPic[2] ?? '50% 50%') . '"', '(max-width: 900px) 100vw, 1240px') ?>
