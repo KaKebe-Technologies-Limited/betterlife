@@ -1,17 +1,18 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
+require_once __DIR__ . '/includes/media.php';
 $activePage = 'blog';
 
-$slug = $_GET['slug'] ?? '';
+$slug = (string) ($_GET['slug'] ?? '');
 $stmt = $pdo->prepare("SELECT bp.*, bc.name AS cat_name, bc.slug AS cat_slug FROM blog_posts bp LEFT JOIN blog_categories bc ON bc.id = bp.category_id WHERE bp.slug = ? AND bp.status = 'published'");
 $stmt->execute([$slug]);
 $post = $stmt->fetch();
 
 if (!$post) {
     http_response_code(404);
-    $pageTitle = 'Article Not Found';
+    $pageTitle = 'Story Not Found';
     require __DIR__ . '/includes/header.php';
-    echo '<section class="container-narrow" style="padding:100px 24px;text-align:center;"><h1>Article Not Found</h1><p class="muted">This story may have been removed.</p><a href="' . SITE_URL . '/blog.php" class="btn btn-primary">Back to Stories</a></section>';
+    echo '<section class="container-narrow" style="padding:100px 24px;text-align:center;"><h1>Story not found</h1><p class="muted">This story may have moved.</p><a href="' . SITE_URL . '/blog.php" class="btn btn-primary">Back to Stories</a></section>';
     require __DIR__ . '/includes/footer.php';
     exit;
 }
@@ -23,99 +24,82 @@ $pageDescription = excerpt($post['excerpt'] ?: $post['content'], 160);
 $pageImage = $post['featured_image'];
 $ogType = 'article';
 
-$related = $pdo->prepare("SELECT * FROM blog_posts WHERE status = 'published' AND category_id <=> ? AND id != ? ORDER BY published_at DESC LIMIT 3");
-$related->execute([$post['category_id'], $post['id']]);
-$related = $related->fetchAll();
+// More stories: the same topic first, then the newest of the rest
+$more = $pdo->prepare("SELECT bp.*, bc.name AS cat_name FROM blog_posts bp LEFT JOIN blog_categories bc ON bc.id = bp.category_id WHERE bp.status = 'published' AND bp.id != ? ORDER BY (bp.category_id <=> ?) DESC, bp.published_at DESC LIMIT 3");
+$more->execute([$post['id'], $post['category_id']]);
+$more = $more->fetchAll();
 
-$recent = $pdo->prepare("SELECT title, slug, featured_image, published_at FROM blog_posts WHERE status='published' AND id != ? ORDER BY published_at DESC LIMIT 4");
-$recent->execute([$post['id']]);
-$recent = $recent->fetchAll();
+$minutes = fn(array $p): int => max(1, (int) round(str_word_count(strip_tags((string) $p['content'])) / 200));
+$storyUrl = fn(array $p): string => SITE_URL . '/blog-single.php?slug=' . rawurlencode($p['slug']);
+$postUrl = SITE_URL . '/blog-single.php?slug=' . rawurlencode($post['slug']);
+if (!preg_match('#^https?://#', $postUrl)) $postUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $postUrl;
 
-$categories = $pdo->query("SELECT bc.*, COUNT(bp.id) AS cnt FROM blog_categories bc LEFT JOIN blog_posts bp ON bp.category_id = bc.id AND bp.status='published' GROUP BY bc.id ORDER BY bc.name")->fetchAll();
-
-$postUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+$pageStyles  = ['assets/css/about.css', 'assets/css/stories.css'];
+$pageScripts = ['assets/js/about.js'];
+$pageHead = '<script>document.documentElement.classList.add("ab-js")</script>';
 
 require __DIR__ . '/includes/header.php';
 ?>
 
-<section class="page-header">
-  <div class="container">
-    <div class="crumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span>/</span><a href="<?= SITE_URL ?>/blog.php">Stories</a><span>/</span><?= h(excerpt($post['title'], 40)) ?></div>
-  </div>
-</section>
+<main class="ab st st-read" id="top">
+  <?= ab_brush_defs() ?>
 
-<section class="post-single">
-  <div class="container">
-    <div class="blog-layout">
-      <article>
-        <span class="cat-badge"><?= h($post['cat_name'] ?? 'General') ?></span>
-        <h1 class="post-title"><?= h($post['title']) ?></h1>
-        <div class="post-meta">
-          <span><?= icon('user', 14) ?> <?= h($post['author']) ?></span>
-          <span><?= icon('calendar', 14) ?> <?= format_date($post['published_at']) ?></span>
-          <span><?= icon('eye', 14) ?> <?= (int) $post['views'] ?> views</span>
-        </div>
-        <div class="featured-image"><img src="<?= asset_url($post['featured_image']) ?>" alt="<?= h($post['title']) ?>"></div>
-        <div class="post-content"><?= $post['content'] ?></div>
+  <article aria-labelledby="stPostTitle">
+    <header class="st-post-head">
+      <div class="container st-post-head-inner">
+        <nav class="st-crumb" aria-label="Breadcrumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span aria-hidden="true">/</span><a href="<?= SITE_URL ?>/blog.php">Stories</a><span aria-hidden="true">/</span><span aria-current="page"><?= h(excerpt($post['title'], 48)) ?></span></nav>
+        <?php if (!empty($post['cat_slug'])): ?><a class="st-post-cat" href="<?= SITE_URL ?>/blog.php?category=<?= h(rawurlencode($post['cat_slug'])) ?>#stories"><?= h($post['cat_name']) ?></a><?php endif; ?>
+        <h1 id="stPostTitle"><?= h($post['title']) ?></h1>
+        <p class="st-post-meta"><span><?= h($post['author'] && $post['author'] !== 'Admin' ? $post['author'] : 'BetterLife International') ?></span><span><?= h(format_date($post['published_at'], 'j F Y')) ?></span><span><?= $minutes($post) ?> min read</span></p>
+      </div>
+    </header>
 
-        <div class="share-box">
-          <strong><?= icon('share', 15) ?> Share this story:</strong>
-          <a href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode($postUrl) ?>" target="_blank" rel="noopener" aria-label="Share on Facebook"><?= icon('facebook', 16) ?></a>
-          <a href="https://twitter.com/intent/tweet?url=<?= urlencode($postUrl) ?>&text=<?= urlencode($post['title']) ?>" target="_blank" rel="noopener" aria-label="Share on X"><?= icon('x-twitter', 16) ?></a>
-          <a href="https://wa.me/?text=<?= urlencode($post['title'] . ' ' . $postUrl) ?>" target="_blank" rel="noopener" aria-label="Share on WhatsApp"><?= icon('whatsapp', 16) ?></a>
-          <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?= urlencode($postUrl) ?>" target="_blank" rel="noopener" aria-label="Share on LinkedIn"><?= icon('linkedin', 16) ?></a>
-          <a href="mailto:?subject=<?= urlencode($post['title']) ?>&body=<?= urlencode($postUrl) ?>" aria-label="Share by email"><?= icon('mail', 16) ?></a>
-        </div>
+    <?php if (!empty($post['featured_image'])): ?>
+      <div class="container st-post-figure"><?= ab_img($post['featured_image'], '', '', false, '', '(max-width: 1000px) 100vw, 1000px') ?></div>
+    <?php endif; ?>
 
-        <?php if ($related): ?>
-          <div style="margin-top:60px;">
-            <h3 style="margin-bottom:24px;">Related Stories</h3>
-            <div class="grid grid-3">
-              <?php foreach ($related as $r): ?>
-                <div class="card post-card">
-                  <div class="thumb"><a href="<?= SITE_URL ?>/blog-single.php?slug=<?= h($r['slug']) ?>"><img src="<?= asset_url($r['featured_image']) ?>" alt="<?= h($r['title']) ?>"></a></div>
-                  <div class="body">
-                    <h3 style="font-size:16px;"><a href="<?= SITE_URL ?>/blog-single.php?slug=<?= h($r['slug']) ?>"><?= h($r['title']) ?></a></h3>
-                    <div class="meta"><span><?= icon('calendar', 14) ?> <?= format_date($r['published_at']) ?></span></div>
-                  </div>
-                </div>
-              <?php endforeach; ?>
-            </div>
-          </div>
-        <?php endif; ?>
-      </article>
+    <div class="container st-post-body">
+      <div class="st-prose"><?= $post['content'] ?></div>
 
-      <aside>
-        <div class="sidebar-widget">
-          <h4>Search</h4>
-          <form class="search-box" method="get" action="<?= SITE_URL ?>/blog.php">
-            <input type="text" name="q" placeholder="Search articles…">
-            <button type="submit"><?= icon('search', 16) ?></button>
-          </form>
-        </div>
-        <div class="sidebar-widget">
-          <h4>Categories</h4>
-          <ul class="cat-list">
-            <?php foreach ($categories as $c): ?>
-              <li><a href="<?= SITE_URL ?>/blog.php?category=<?= h($c['slug']) ?>"><?= h($c['name']) ?> <span class="count">(<?= (int)$c['cnt'] ?>)</span></a></li>
-            <?php endforeach; ?>
-          </ul>
-        </div>
-        <div class="sidebar-widget">
-          <h4>More Stories</h4>
-          <?php foreach ($recent as $r): ?>
-            <a href="<?= SITE_URL ?>/blog-single.php?slug=<?= h($r['slug']) ?>" class="sidebar-post">
-              <img src="<?= asset_url($r['featured_image']) ?>" alt="<?= h($r['title']) ?>">
-              <div>
-                <div class="t"><?= h(excerpt($r['title'], 50)) ?></div>
-                <div class="d"><?= format_date($r['published_at']) ?></div>
-              </div>
-            </a>
-          <?php endforeach; ?>
+      <aside class="st-share" aria-label="Share this story">
+        <p>Share this story</p>
+        <div>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=<?= urlencode($postUrl) ?>" target="_blank" rel="noopener" aria-label="Share on Facebook (opens in a new tab)"><?= icon('facebook', 17) ?></a>
+          <a href="https://twitter.com/intent/tweet?url=<?= urlencode($postUrl) ?>&amp;text=<?= urlencode($post['title']) ?>" target="_blank" rel="noopener" aria-label="Share on X (opens in a new tab)"><?= icon('x-twitter', 17) ?></a>
+          <a href="https://wa.me/?text=<?= urlencode($post['title'] . ' ' . $postUrl) ?>" target="_blank" rel="noopener" aria-label="Share on WhatsApp (opens in a new tab)"><?= icon('whatsapp', 17) ?></a>
+          <a href="https://www.linkedin.com/sharing/share-offsite/?url=<?= urlencode($postUrl) ?>" target="_blank" rel="noopener" aria-label="Share on LinkedIn (opens in a new tab)"><?= icon('linkedin', 17) ?></a>
+          <a href="mailto:?subject=<?= rawurlencode($post['title']) ?>&amp;body=<?= rawurlencode($postUrl) ?>" aria-label="Share by email"><?= icon('mail', 17) ?></a>
         </div>
       </aside>
     </div>
-  </div>
-</section>
+  </article>
+
+  <?php if ($more): ?>
+    <section class="st-more-stories" aria-labelledby="stMoreTitle">
+      <div class="container">
+        <div class="st-head-row ab-reveal">
+          <div class="ab-head">
+            <span class="ab-eyebrow">Keep reading</span>
+            <h2 id="stMoreTitle">More stories</h2>
+          </div>
+          <a class="st-all" href="<?= SITE_URL ?>/blog.php#stories">All stories <?= icon('arrow-right', 15) ?></a>
+        </div>
+        <div class="st-grid">
+          <?php foreach ($more as $p): ?>
+            <article class="st-card ab-reveal">
+              <div class="st-card-media"><?= ab_img($p['featured_image'], '', '', true, '', '(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 380px') ?></div>
+              <div class="st-card-body">
+                <span class="st-tag"><?= h($p['cat_name'] ?? 'Stories') ?></span>
+                <h3><a href="<?= h($storyUrl($p)) ?>"><?= h($p['title']) ?></a></h3>
+                <p><?= h(excerpt($p['excerpt'] ?: $p['content'], 140)) ?></p>
+                <p class="st-meta"><?= h(format_date($p['published_at'], 'j F Y')) ?> · <?= $minutes($p) ?> min read</p>
+              </div>
+            </article>
+          <?php endforeach; ?>
+        </div>
+      </div>
+    </section>
+  <?php endif; ?>
+</main>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>
