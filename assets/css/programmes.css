@@ -254,7 +254,7 @@
 .pg-invite-card h2 { color: #fff; font-size: clamp(24px, 2.5vw, 32px); margin: 0 0 10px; }
 .pg-invite-card p { margin: 0 !important; color: rgba(255,255,255,.88) !important; max-width: 60ch; }
 .pg-invite-card .ab-strokes { opacity: .45; }
-.pg-invite-card > * { position: relative; }
+.pg-invite-card > :not(.ab-strokes) { position: relative; }
 .pg-area-nav { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; list-style: none; margin: 0; padding: 0; }
 .pg-area-nav a { display: flex; align-items: center; gap: 12px; height: 100%; padding: 16px 18px; border-radius: 16px; background: #fff; border: 1px solid var(--ab-line); color: var(--ab-deep); font-weight: 700; font-size: 15px; line-height: 1.3; transition: border-color .2s ease, transform .2s ease; }
 .pg-area-nav a:hover { border-color: var(--ab-blue); transform: translateY(-2px); }
