@@ -136,24 +136,30 @@ require __DIR__ . '/includes/header.php';
         <li><strong><?= count($allOutlets) ?></strong> news outlets</li>
         <li><strong><?= h($firstYear) ?></strong> the earliest</li>
       </ul>
-      <?php foreach ($pressByYear as $year => $items): ?>
-        <div class="st-year ab-reveal">
-          <h3 class="st-year-n"><?= h($year) ?></h3>
-          <ul class="st-press">
-            <?php foreach ($items as $item): [$d, $outlet, $headline, $url, $about] = $item; ?>
-              <li>
-                <a href="<?= h($url) ?>" target="_blank" rel="noopener">
-                  <span class="st-press-top"><span class="st-press-outlet"><?= h($outlet) ?></span><span class="st-press-date"><?= h($fmt($d)) ?></span></span>
-                  <span class="st-press-head"><?= h($headline) ?> <?= icon('external-link', 15) ?></span>
-                  <span class="st-press-about"><?= h($about) ?></span>
-                  <?= $newTab ?>
-                </a>
-                <?php if (!empty($item[5])): ?><p class="st-press-also">Also published by <?php foreach ($item[5] as $k => [$ao, $au]): ?><?= $k ? ', ' : '' ?><a href="<?= h($au) ?>" target="_blank" rel="noopener"><?= h($ao) ?><?= $newTab ?></a><?php endforeach; ?></p><?php endif; ?>
-              </li>
-            <?php endforeach; ?>
-          </ul>
-        </div>
-      <?php endforeach; ?>
+      <!-- Filter by what the coverage is about (shown once the script is running; without it every article shows) -->
+      <div class="st-topics" role="group" aria-label="Show coverage about" hidden>
+        <button type="button" aria-pressed="true" data-topic="">All</button>
+        <?php foreach ($coverage['topics'] as $tk => $tl): $tn = count(array_filter($press, fn($p) => in_array($tk, $p['topics'] ?? [], true))); if (!$tn) continue; ?>
+          <button type="button" aria-pressed="false" data-topic="<?= h($tk) ?>"><?= h($tl) ?> <small><?= $tn ?></small></button>
+        <?php endforeach; ?>
+      </div>
+
+      <!-- The coverage as a wall of clippings, newest first -->
+      <ul class="st-wall" data-show="9" data-show-small="5">
+        <?php foreach ($press as $i => $item): [$d, $outlet, $headline, $url, $about] = $item; ?>
+          <li class="st-cutting" data-topics="<?= h(implode(' ', $item['topics'] ?? [])) ?>">
+            <a href="<?= h($url) ?>" target="_blank" rel="noopener">
+              <span class="st-cutting-masthead"><?= h($outlet) ?></span>
+              <span class="st-cutting-head"><?= h($headline) ?></span>
+              <span class="st-cutting-about"><?= h($about) ?></span>
+              <span class="st-cutting-foot"><span><?= h($fmt($d)) ?></span><span class="st-cutting-read">Read <?= icon('external-link', 13) ?></span></span>
+              <?= $newTab ?>
+            </a>
+            <?php if (!empty($item[5])): ?><p class="st-cutting-also">Also published by <?php foreach ($item[5] as $k => [$ao, $au]): ?><?= $k ? ', ' : '' ?><a href="<?= h($au) ?>" target="_blank" rel="noopener"><?= h($ao) ?><?= $newTab ?></a><?php endforeach; ?></p><?php endif; ?>
+          </li>
+        <?php endforeach; ?>
+      </ul>
+      <p class="st-wall-more" hidden><button type="button">Show all <?= $articleCount ?> articles <?= icon('chevron-down', 16) ?></button></p>
     </div>
   </section>
 
