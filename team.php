@@ -3,7 +3,7 @@ require_once __DIR__ . '/includes/functions.php';
 require_once __DIR__ . '/includes/media.php';
 $pageTitle = 'Our Team';
 $activePage = 'team';
-$pageDescription = 'Meet the leadership, country teams, programme team and board of directors behind BetterLife International, working across five African countries.';
+$pageDescription = 'Meet the women-led, youth-led and refugee-led team behind BetterLife International, working to strengthen food security across five African countries.';
 
 // Everyone comes from Admin → Team; a photo added there appears here automatically
 $all = $pdo->query("SELECT * FROM team_members WHERE status = 1 ORDER BY sort_order, id")->fetchAll();
@@ -132,7 +132,7 @@ require __DIR__ . '/includes/header.php';
         <nav class="ab-crumb" aria-label="Breadcrumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span aria-hidden="true">/</span><span aria-current="page">Our Team</span></nav>
         <span class="ab-eyebrow">Women-led · Youth-led · Refugee-led</span>
         <h1 id="tmTitle">People who know the work and the <?= ab_mark('places', 31) ?> where it happens.</h1>
-        <p class="ab-lead">BetterLife is led by an African team working across community development, agriculture, law, climate action, finance, monitoring, communications and youth leadership.</p>
+        <p class="ab-lead">BetterLife is led by an African team working to strengthen food security, bringing together expertise in agriculture, community development, climate action, law, finance, monitoring, communications and youth leadership.</p>
         <p>Our country and programme teams bring professional knowledge together with a close understanding of the communities where we work. Our board provides oversight, experience and accountability as the organisation grows.</p>
         <ul class="tm-facts">
           <li><strong><?= $teamCount ?></strong><span>people on the team</span></li>
