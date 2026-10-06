@@ -61,12 +61,12 @@ $pct = fn(float $x, float $y): string => 'left: ' . round(($x - $vb[0]) / $vb[2]
 $pctNarrow = fn(float $x, float $y): string => 'left: ' . round(($x - $vbNarrow[0]) / $vbNarrow[2] * 100, 2) . '%; top: ' . round(($y - $vbNarrow[1]) / $vbNarrow[3] * 100, 2) . '%';
 // [wide: x, y, side the text sits], [narrow: x, y]
 $pinPlaces = [
-    'regional'                         => [[612, 104, 'right'], [548, 104]],
+    'regional'                         => [[612, 104, 'right'], [528, 96]],
     'Ghana'                            => [[96, 452, 'right'], [118, 214]],
     'Democratic Republic of the Congo' => [[232, 566, 'left'], [238, 528]],
-    'South Sudan'                      => [[612, 214, 'right'], [432, 168]],
-    'Uganda'                           => [[640, 334, 'right'], [540, 292]],
-    'Tanzania'                         => [[612, 474, 'right'], [528, 500]],
+    'South Sudan'                      => [[612, 214, 'right'], [404, 178]],
+    'Uganda'                           => [[640, 334, 'right'], [528, 300]],
+    'Tanzania'                         => [[612, 474, 'right'], [512, 500]],
 ];
 $regional = array_values(array_filter($leadership, fn($m) => preg_match('/^Regional\b/i', $m['role'])));
 $pins = [];
@@ -182,14 +182,18 @@ require __DIR__ . '/includes/header.php';
           <?php endforeach; ?>
         </svg>
         <!-- Narrower screens: the same people as portraits on the map (the full cards are listed beneath it) -->
-        <div class="tm-map-faces" aria-hidden="true">
-          <?php foreach ($pins as $p): [$ax, $ay] = $pinPlaces[$p['key']][1]; $m = $p['member']; ?>
-            <span class="tm-mface<?= $m ? '' : ' is-home' ?><?= $p['key'] === 'regional' ? ' is-regional' : '' ?>" data-key="<?= h($p['key']) ?>"<?= $m && isset($canOpen[(int) $m['id']]) ? ' data-member="' . (int) $m['id'] . '"' : '' ?> style="<?= $pctNarrow($ax, $ay) ?>">
-              <span class="tm-mface-img"><?= $m ? $face($m, '64px') : '<span class="tm-pin-mark">' . icon('leaf', 20) . '</span>' ?></span>
-              <span class="tm-mface-label"><?= h($p['short']) ?></span>
-            </span>
+        <!-- Narrower screens: the people on the map themselves, each a button that opens their bio (the wide-screen
+             cards below are hidden there, so nobody is listed twice) -->
+        <ul class="tm-map-faces" aria-label="Country teams">
+          <?php foreach ($pins as $p): [$ax, $ay] = $pinPlaces[$p['key']][1]; $m = $p['member']; $open = $m && isset($canOpen[(int) $m['id']]); $tag = $open ? 'button' : 'span'; ?>
+            <li class="tm-mface<?= $m ? '' : ' is-home' ?><?= $p['key'] === 'regional' ? ' is-regional' : '' ?>" data-key="<?= h($p['key']) ?>" style="<?= $pctNarrow($ax, $ay) ?>"<?= $m ? '' : ' aria-hidden="true"' ?>>
+              <<?= $tag ?> class="tm-mface-btn"<?php if ($open): ?> type="button" data-member="<?= (int) $m['id'] ?>" aria-haspopup="dialog" aria-label="<?= h('Read bio: ' . $m['name'] . ', ' . $p['label']) ?>"<?php endif; ?>>
+                <span class="tm-mface-img"><?= $m ? $face($m, '64px') : '<span class="tm-pin-mark">' . icon('leaf', 20) . '</span>' ?></span>
+                <span class="tm-mface-label"><?php if ($m): ?><strong><?= h($m['name']) ?></strong><?php endif; ?><small><?= h($p['short']) ?></small></span>
+              </<?= $tag ?>>
+            </li>
           <?php endforeach; ?>
-        </div>
+        </ul>
         </div>
         <ul class="tm-pins" aria-label="Country teams">
           <?php foreach ($pins as $p): [$ax, $ay, $side] = $pinPlaces[$p['key']][0]; $m = $p['member']; ?>
