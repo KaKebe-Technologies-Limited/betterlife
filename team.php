@@ -85,6 +85,31 @@ for ($i = 1; $i <= 8; $i++) $community[] = 'assets/img/about/yumbe-portrait-' . 
 // Cards per row on wide screens: one row for up to six people, otherwise two even rows (seven reads as four and three)
 $cols = fn(int $n): int => $n <= 6 ? max(3, $n) : (int) ceil($n / 2);
 
+// Who we are: women-led, refugee-led, youth-led (as Home and About say). Women on the team, by id, as their bios and
+// Denise confirm; update this list when someone joins.
+$women = [1, 12, 4, 19, 11, 7, 8, 14, 5, 16];
+$byId = [];
+foreach ($all as $m) $byId[(int) $m['id']] = $m;
+$womenFaces = array_values(array_filter(array_map(fn($id) => $byId[$id] ?? null, $women)));
+$share = fn(array $group): array => [count(array_filter($group, fn($m) => in_array((int) $m['id'], $women, true))), count($group)];
+[$womenLead, $allLead] = $share($leadership);
+[$womenBoard, $allBoard] = $share($board);
+// What our people lead beyond BetterLife, each taken from their bio (Shallon's from her Global Shapers introduction)
+$beyond = [
+    1  => 'Forbes Africa 30 Under 30, Class of 2026',
+    11 => 'Co-winner in speech, Uganda’s 2021 National Speech and Debate Championship',
+    19 => 'Focal Point, Ugandan Youth Parliament for Water',
+    20 => '22nd Guild Speaker, Gulu University',
+    18 => 'Climate justice advocate at COP26, COP27 and COP28',
+    4  => 'Global Shaper, Kampala',
+    7  => 'International debate adjudicator',
+    16 => 'beVisioneers Fellow and UNFCCC advocate',
+    9  => 'Pan-African youth leader and climate justice advocate',
+    13 => 'Author of Building Great Character',
+    12 => 'Youth nutrition advocate',
+];
+$beyond = array_filter($beyond, fn($text, $id) => isset($byId[$id]), ARRAY_FILTER_USE_BOTH);
+
 $teamCount = count($leadership) + count($managers) + count($programme);
 $countryCount = count($countryKeys);
 
@@ -103,7 +128,7 @@ require __DIR__ . '/includes/header.php';
     <div class="container tm-hero-grid">
       <div class="tm-hero-copy">
         <nav class="ab-crumb" aria-label="Breadcrumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span aria-hidden="true">/</span><span aria-current="page">Our Team</span></nav>
-        <span class="ab-eyebrow">Our team</span>
+        <span class="ab-eyebrow">Women-led · Youth-led · Refugee-led</span>
         <h1 id="tmTitle">People who know the work and the <?= ab_mark('places', 31) ?> where it happens.</h1>
         <p class="ab-lead">BetterLife is led by an African team working across community development, agriculture, law, climate action, finance, monitoring, communications and youth leadership.</p>
         <p>Our country and programme teams bring professional knowledge together with a close understanding of the communities where we work. Our board provides oversight, experience and accountability as the organisation grows.</p>
@@ -113,6 +138,7 @@ require __DIR__ . '/includes/header.php';
           <?php if ($board): ?><li><strong><?= count($board) ?></strong><span>board members</span></li><?php endif; ?>
         </ul>
         <nav class="tm-jump" aria-label="On this page">
+          <a href="#who">Who we are</a>
           <?php if ($leadership): ?><a href="#leadership">Leadership</a><?php endif; ?>
           <?php if ($managers): ?><a href="#countries">Country teams</a><?php endif; ?>
           <?php if ($programme): ?><a href="#programme">Programme team</a><?php endif; ?>
@@ -126,6 +152,62 @@ require __DIR__ . '/includes/header.php';
         <?= ab_img('assets/img/team/edwin-welcome.jpg', 'Edwin Namakanga, our Outreach Coordinator, greeting with open arms beside thatched homes', 'tm-hero-b', true, '', '(max-width: 900px) 34vw, 200px') ?>
         <figcaption>The BetterLife team in the field</figcaption>
       </figure>
+    </div>
+  </section>
+
+  <!-- Who we are: women-led, refugee-led and youth-led, then what our people lead beyond BetterLife -->
+  <section class="tm-who" id="who" aria-labelledby="tmWhoTitle">
+    <div class="container">
+      <div class="ab-head ab-head-split ab-reveal">
+        <div>
+          <span class="ab-eyebrow">Who we are</span>
+          <h2 id="tmWhoTitle">Women-led, youth-led and rooted in <?= ab_mark('lived experience', 47) ?></h2>
+        </div>
+        <p class="ab-head-sub">BetterLife International was founded in Uganda by a refugee-led team of young people who had grown up facing many of the challenges our communities face today.</p>
+      </div>
+      <ul class="tm-who-grid">
+        <li class="tm-who-card ab-reveal" style="--i: 0">
+          <div class="tm-who-art tm-who-faces" aria-hidden="true">
+            <?php foreach ($womenFaces as $m): ?><span class="tm-who-face"><?= $face($m, '64px') ?></span><?php endforeach; ?>
+          </div>
+          <span class="tm-who-tag">Women-led</span>
+          <h3>Led by women, from the founder to the board</h3>
+          <p>Founded and led by Denise Ayebare. Women hold <?= $womenLead ?> of our <?= $allLead ?> executive leadership roles and <?= $womenBoard ?> of <?= $allBoard ?> board seats.</p>
+        </li>
+        <li class="tm-who-card ab-reveal" style="--i: 1">
+          <div class="tm-who-art tm-who-photo"><?= ab_img('assets/img/programmes/bidibidi-fm-team.jpg', 'BetterLife team members at Bidi Bidi FM in Yumbe', '', true, 'style="object-position: 50% 60%"', '(max-width: 900px) 92vw, 380px') ?></div>
+          <span class="tm-who-tag">Refugee-led</span>
+          <h3>We know these challenges first-hand</h3>
+          <p>As a refugee-led team, we had grown up experiencing many of the challenges facing the communities we wanted to work alongside. That lived experience is where BetterLife began.</p>
+        </li>
+        <li class="tm-who-card ab-reveal" style="--i: 2">
+          <div class="tm-who-art tm-who-number" aria-hidden="true"><strong>19</strong><span>Denise’s age when she founded BetterLife</span></div>
+          <span class="tm-who-tag">Youth-led</span>
+          <h3>Started by young people, with USD&nbsp;200</h3>
+          <p>Denise Ayebare founded BetterLife International in 2021, at nineteen, with a small team of young people. It remains a youth-led organisation.</p>
+        </li>
+      </ul>
+      <?php if ($beyond): ?>
+        <div class="tm-beyond ab-reveal">
+          <p class="tm-beyond-title">Our people lead beyond BetterLife too</p>
+          <div class="tm-beyond-window">
+            <div class="tm-beyond-track">
+              <?php foreach ([false, true] as $copy): ?>
+                <ul class="tm-beyond-set"<?= $copy ? ' aria-hidden="true"' : '' ?>>
+                  <?php foreach ($beyond as $id => $text): $m = $byId[$id]; $open = isset($canOpen[$id]); ?>
+                    <li>
+                      <<?= $open ? 'button type="button" data-member="' . $id . '" aria-haspopup="dialog"' . ($copy ? ' tabindex="-1"' : ' aria-label="' . h('Read bio: ' . $m['name']) . '"') : 'span' ?> class="tm-beyond-chip">
+                        <span class="tm-beyond-face"><?= $face($m, '48px') ?></span>
+                        <span class="tm-beyond-text"><strong><?= h($m['name']) ?></strong><small><?= h($text) ?></small></span>
+                      </<?= $open ? 'button' : 'span' ?>>
+                    </li>
+                  <?php endforeach; ?>
+                </ul>
+              <?php endforeach; ?>
+            </div>
+          </div>
+        </div>
+      <?php endif; ?>
     </div>
   </section>
 
