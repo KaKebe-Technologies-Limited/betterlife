@@ -1,79 +1,59 @@
 <?php
 $logo = setting($pdo, 'logo', 'assets/img/logo.png');
-
-$footerPrograms = $pdo->query("SELECT title, slug FROM programs WHERE status = 1 ORDER BY sort_order LIMIT 5")->fetchAll();
+$legalName = setting($pdo, 'legal_name') ?: setting($pdo, 'site_name');
+$regNo = setting($pdo, 'ngo_reg_no');
+$permitNo = setting($pdo, 'ngo_permit_no');
+$footerEmail = setting($pdo, 'email');
+$footerPhone = setting($pdo, 'phone');
+$footerPlace = setting($pdo, 'postal_address') ?: setting($pdo, 'address');
+$footerLinks = [
+    'about.php' => 'About us', 'programs.php' => 'Our work', 'impact-reports.php' => 'Impact & reports', 'partners.php' => 'Partners',
+    'team.php' => 'Our team', 'blog.php' => 'Stories', 'farm.php' => 'BetterLife Farm',
+];
 ?>
 <footer class="site-footer">
   <div class="container">
     <div class="footer-grid">
-      <div>
-        <div class="footer-brand">
-          <img src="<?= asset_url($logo) ?>" alt="<?= h(setting($pdo, 'site_name')) ?>">
-        </div>
-        <p style="font-size:14px;"><?= h(setting($pdo, 'footer_about')) ?></p>
+      <div class="footer-about">
+        <a href="<?= SITE_URL ?>/index.php" class="footer-brand"><img src="<?= asset_url($logo) ?>" alt="<?= h(setting($pdo, 'site_name')) ?>, home" loading="lazy"></a>
+        <p><?= h(setting($pdo, 'footer_about')) ?></p>
         <div class="footer-social">
           <?php foreach (social_links($pdo) as [$sIcon, $sNetwork, $sHandle, $sUrl]): ?><a href="<?= h($sUrl) ?>" target="_blank" rel="noopener" aria-label="BetterLife on <?= h($sNetwork) ?> (opens in a new tab)"><?= icon($sIcon, 16) ?></a><?php endforeach; ?>
         </div>
       </div>
 
-      <div>
-        <h4>Quick Links</h4>
+      <nav class="footer-explore" aria-label="Footer">
+        <h2 class="footer-title">Explore</h2>
         <ul class="footer-links">
-          <li><a href="<?= SITE_URL ?>/about.php">About Us</a></li>
-          <li><a href="<?= SITE_URL ?>/programs.php">Our Work</a></li>
-          <li><a href="<?= SITE_URL ?>/impact-reports.php">Impact &amp; Reports</a></li>
-          <li><a href="<?= SITE_URL ?>/farm.php">BetterLife Farm</a></li>
-          <li><a href="<?= SITE_URL ?>/team.php">Our Team</a></li>
-          <li><a href="<?= SITE_URL ?>/blog.php">Stories</a></li>
-          <li><a href="<?= SITE_URL ?>/contact.php">Contact</a></li>
+          <?php foreach ($footerLinks as $href => $label): ?><li><a href="<?= SITE_URL ?>/<?= $href ?>"><?= h($label) ?></a></li><?php endforeach; ?>
+        </ul>
+      </nav>
+
+      <div class="footer-contact">
+        <h2 class="footer-title">Contact</h2>
+        <ul class="footer-links">
+          <?php if ($footerEmail): ?><li><a href="mailto:<?= h($footerEmail) ?>"><?= icon('mail', 15) ?> <?= h($footerEmail) ?></a></li><?php endif; ?>
+          <?php if ($footerPhone): ?><li><a href="tel:<?= h(preg_replace('/[^0-9+]/', '', $footerPhone)) ?>"><?= icon('phone', 15) ?> <?= h($footerPhone) ?></a></li><?php endif; ?>
+          <?php if ($footerPlace): ?><li class="footer-place"><?= icon('map-pin', 15) ?> <span><?= h($footerPlace) ?></span></li><?php endif; ?>
         </ul>
       </div>
 
-      <div>
-        <h4>Get In Touch</h4>
-        <ul class="footer-links">
-          <li class="ico-text"><?= icon('map-pin', 15) ?> <?= h(setting($pdo, 'address')) ?></li>
-          <li class="ico-text"><?= icon('mail', 15) ?> <a href="mailto:<?= h(setting($pdo, 'email')) ?>"><?= h(setting($pdo, 'email')) ?></a></li>
-          <li class="ico-text"><?= icon('phone', 15) ?> <a href="tel:<?= h(setting($pdo, 'phone')) ?>"><?= h(setting($pdo, 'phone')) ?></a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4>Our Programs</h4>
-        <ul class="footer-links">
-          <?php foreach ($footerPrograms as $p): ?>
-            <li><a href="<?= SITE_URL ?>/program.php?slug=<?= h($p['slug']) ?>"><?= h($p['title']) ?></a></li>
-          <?php endforeach; ?>
-        </ul>
-      </div>
-
-      <div>
-        <h4>Stay Connected</h4>
-        <p style="font-size:14px;">Get program updates, farm news and stories from the communities we work with.</p>
+      <div class="footer-news">
+        <h2 class="footer-title">Newsletter</h2>
+        <p>Programme updates, farm news and stories from the communities we work with.</p>
         <form class="footer-newsletter" action="<?= SITE_URL ?>/newsletter-submit.php" method="post">
-          <input type="email" name="email" placeholder="Your email address" required>
+          <label for="footerEmail" class="sr-only">Your email address</label>
+          <input type="email" id="footerEmail" name="email" placeholder="Your email address" autocomplete="email" required>
           <button type="submit" aria-label="Subscribe"><?= icon('arrow-right', 16) ?></button>
         </form>
       </div>
     </div>
 
-    <?php $legalName = setting($pdo, 'legal_name') ?: setting($pdo, 'site_name'); $regNo = setting($pdo, 'ngo_reg_no'); $permitNo = setting($pdo, 'ngo_permit_no'); $postal = setting($pdo, 'postal_address'); ?>
-    <?php if ($regNo): ?>
-      <!-- The organisation's legal standing, as on its certificate and permit from the National Bureau for NGOs -->
-      <div class="footer-legal">
-        <span class="footer-legal-badge"><?= icon('check', 14) ?> Registered NGO</span>
-        <p><?= h($legalName) ?> is an indigenous non-governmental organisation registered with Uganda’s National Bureau for Non-Governmental Organisations under the NGO Act, Cap. 109.</p>
-        <p class="footer-legal-ids">
-          <span>Registration No. <strong><?= h($regNo) ?></strong></span>
-          <?php if ($permitNo): ?><span>Permit No. <strong><?= h($permitNo) ?></strong></span><?php endif; ?>
-          <?php if ($postal): ?><span><?= h($postal) ?></span><?php endif; ?>
-        </p>
-      </div>
-    <?php endif; ?>
-
     <div class="footer-bottom">
-      <span>&copy; <?= date('Y') ?> <?= h($legalName) ?>. All rights reserved.</span>
-      <span>Built with purpose in Uganda &middot; <a href="<?= ADMIN_URL ?>/login.php">Admin</a></span>
+      <span>&copy; <?= date('Y') ?> <?= h($legalName) ?></span>
+      <?php if ($regNo): // Legal standing, as on the certificate and permit from the National Bureau for NGOs ?>
+        <span class="footer-legal"><span><?= icon('check', 13) ?> Registered NGO in Uganda</span><span>Reg. No. <?= h($regNo) ?></span><?php if ($permitNo): ?><span>Permit No. <?= h($permitNo) ?></span><?php endif; ?></span>
+      <?php endif; ?>
     </div>
   </div>
 </footer>

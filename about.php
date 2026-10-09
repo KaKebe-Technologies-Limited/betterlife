@@ -620,7 +620,6 @@ $partners = array_values(array_map(fn($p) => [$p[0], $p[1]], array_filter(requir
             <dl class="ab-legal-facts">
               <div><dt>Registration number</dt><dd><?= h($regNo) ?></dd></div>
               <?php if ($permit = setting($pdo, 'ngo_permit_no')): ?><div><dt>Permit to operate</dt><dd><?= h($permit) ?><?php if ($until = setting($pdo, 'ngo_permit_until')): ?> <small>Valid to <?= h($until) ?></small><?php endif; ?></dd></div><?php endif; ?>
-              <?php if ($since = setting($pdo, 'ngo_registered')): ?><div><dt>Registered</dt><dd><?= h($since) ?> <small>Founded <?= h(setting($pdo, 'founded_year', '2021')) ?></small></dd></div><?php endif; ?>
               <?php if ($postal = setting($pdo, 'postal_address')): ?><div><dt>Postal address</dt><dd><?= h($postal) ?></dd></div><?php endif; ?>
             </dl>
             <p class="ab-legal-links">
