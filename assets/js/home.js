@@ -96,30 +96,60 @@
     }, 3200);
   }
 
-  /* School kitchen: a short silent film in one mosaic tile, loaded when it comes near the screen
-     (wider screens only, never with reduced motion or data saving); pauses off screen and with the page's pause */
+  /* School kitchen: a short silent film (2.8 MB) in one mosaic tile, on phones too. It loads when it comes near
+     the screen and pauses off screen and with the page's pause. With reduced motion or data saving it waits for a
+     tap on its play button, which also appears when a phone will not start a film on its own (Low Power Mode). */
   function initTileFilm() {
     var tile = document.querySelector('[data-tile-film]');
     var video = tile && tile.querySelector('video');
-    if (!video || !('IntersectionObserver' in window)) return;
+    if (!video) return;
+    var root = document.documentElement;
     var saveData = navigator.connection && navigator.connection.saveData;
-    if (reduceMotion || saveData || !window.matchMedia('(min-width: 720px)').matches) return;
-    var visible = false;
-    function sync() {
-      if (!video.getAttribute('src')) return;
-      if (!visible || document.documentElement.classList.contains('ab-motion-paused')) video.pause(); else video.play().catch(function () {});
+    var hasIO = 'IntersectionObserver' in window;
+    var wanted = !reduceMotion && !saveData && hasIO;   // should play whenever it is on screen
+    var tapped = false, visible = !hasIO;
+    video.muted = true;
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'hm-tile-play';
+    btn.setAttribute('aria-label', 'Play the film from the school kitchen');
+    btn.innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>';
+    btn.hidden = wanted;
+    tile.appendChild(btn);
+
+    function load() {
+      if (video.getAttribute('src')) return;
+      video.addEventListener('playing', function () { tile.classList.add('has-video'); }, { once: true });
+      video.src = video.getAttribute('data-src');
     }
-    new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) {
-        visible = en.isIntersecting;
-        if (visible && !video.getAttribute('src')) {
-          video.addEventListener('playing', function () { tile.classList.add('has-video'); }, { once: true });
-          video.src = video.getAttribute('data-src');
-        }
-        sync();
-      });
-    }, { rootMargin: '150px 0px' }).observe(tile);
-    new MutationObserver(sync).observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+    function play() {
+      load();
+      var p = video.play();
+      // Only a phone that refuses to start films on its own needs the button (not a play cut short by scrolling away)
+      if (p && p.then) p.then(function () { btn.hidden = true; }, function (e) { if (e && e.name === 'NotAllowedError') btn.hidden = false; });
+    }
+    function sync() {
+      var held = root.classList.contains('ab-motion-paused') && !tapped;
+      if (wanted && visible && !held) play();
+      else if (video.getAttribute('src')) video.pause();
+      if (wanted && visible && held) btn.hidden = false;
+    }
+    btn.addEventListener('click', function () { wanted = true; tapped = true; visible = true; btn.hidden = true; play(); });
+    if (hasIO) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { visible = en.isIntersecting; sync(); });
+      }, { rootMargin: '150px 0px' }).observe(tile);
+    }
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) sync(); });   // back from another tab or app
+    var wasHeld = root.classList.contains('ab-motion-paused');
+    new MutationObserver(function () {
+      var held = root.classList.contains('ab-motion-paused');
+      if (held === wasHeld) return;   // another class on the page changed
+      wasHeld = held;
+      tapped = false;
+      sync();
+    }).observe(root, { attributes: true, attributeFilter: ['class'] });
   }
 
   /* Where we work: pointing at a country in the list or on the map lights up both */
