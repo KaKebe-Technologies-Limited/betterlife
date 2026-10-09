@@ -29,6 +29,15 @@ try {
 require __DIR__ . '/includes/header.php';
 ?>
 
+<?php if ($syncPending): ?>
+  <div class="panel" style="border-left:4px solid #c98a12;">
+    <div class="panel-head">
+      <h3>New website content is ready to load</h3>
+      <a href="<?= ADMIN_URL ?>/site-update.php" class="btn btn-primary btn-sm">Open Site Update →</a>
+    </div>
+  </div>
+<?php endif; ?>
+
 <div class="stat-cards">
   <div class="stat-card">
     <div class="ico" style="background:var(--a-green-100);color:var(--a-green-700);"><?= icon('shopping-bag', 22) ?></div>

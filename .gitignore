@@ -12,3 +12,6 @@ config/config.local.php
 # Full-resolution camera originals — kept locally only; the site serves the
 # optimized WebP copies in assets/img/. Too large for git (hundreds of MB).
 assets/img/originals/
+
+# Backups the admin Site Update takes before changing content (they hold live data)
+database/backups/

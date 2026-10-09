@@ -154,7 +154,7 @@
 .ab-purpose-head .ab-eyebrow::before { background: #9fd6b2; }
 .ab-purpose-head h2 { color: #fff; font-size: var(--fs-h2-feature); }
 .ab-purpose-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2vw, 24px); }
-.ab-purpose-card { padding: clamp(24px, 3vw, 40px); border-radius: var(--ab-radius); background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.16); backdrop-filter: blur(2px); }
+.ab-purpose-card { padding: clamp(24px, 3vw, 40px); border-radius: var(--ab-radius); background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.16); -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
 .ab-purpose-label { display: inline-flex; align-items: center; gap: 10px; font: 700 12.5px/1 var(--font-body); letter-spacing: .14em; text-transform: uppercase; color: #9fd6b2; }
 .ab-purpose-card p { margin: 16px 0 0; font-family: var(--ab-serif); font-size: clamp(19px, 1.6vw, 23px) !important; line-height: 1.4 !important; color: #fff !important; }
 
@@ -425,7 +425,7 @@
   .ab section { padding: 60px 0; }
   .ab p { font-size: 16px; }
   .ab-lead { font-size: 17px !important; }
-  .ab .ab-hero { min-height: 82svh; }
+  .ab .ab-hero { min-height: 82vh; min-height: 82svh; }
   .ab-hero-africa { display: none; }
   .ab-hero-inner { padding-top: 110px; }
   .ab-lead { font-size: 17.5px !important; }
@@ -512,7 +512,7 @@
 
 /* Join us: a path for each visitor */
 .ab-paths { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; list-style: none; margin: clamp(32px, 4vw, 48px) 0 0; padding: 0; }
-.ab-path { display: flex; flex-direction: column; align-items: flex-start; padding: 26px; border-radius: var(--ab-radius); background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.2); backdrop-filter: blur(4px); }
+.ab-path { display: flex; flex-direction: column; align-items: flex-start; padding: 26px; border-radius: var(--ab-radius); background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.2); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
 .ab-path-ico { width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,.14); color: #fff; margin-bottom: 16px; }
 .ab-path h3 { color: #fff; font-size: 20px; margin: 0 0 8px; }
 .ab-path p { margin: 0 0 20px !important; font-size: 15px !important; color: rgba(255,255,255,.82) !important; flex: 1; }

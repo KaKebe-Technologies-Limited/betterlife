@@ -1,6 +1,6 @@
--- BetterLife International: live content sync, generated 2026-10-09 19:14 by tools/make_live_sync.php
+-- BetterLife International: live content sync, generated 2026-10-09 20:06
 -- Replaces the site's content tables and updates site settings. Never touches orders, messages, subscribers,
--- admin accounts, passwords or payment keys.
+-- admin accounts, passwords or payment keys. Load it from Admin > Site Update.
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
@@ -21,8 +21,8 @@ CREATE TABLE `products` (
   `featured` tinyint(1) DEFAULT 0,
   `status` tinyint(1) DEFAULT 1,
   `sort_order` int(11) DEFAULT 0,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -50,7 +50,7 @@ CREATE TABLE `team_members` (
   `linkedin` varchar(255) DEFAULT NULL,
   `sort_order` int(11) DEFAULT 0,
   `status` tinyint(1) DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO `team_members` (`id`, `name`, `role`, `category`, `bio`, `photo`, `email`, `facebook`, `twitter`, `linkedin`, `sort_order`, `status`, `created_at`) VALUES
@@ -109,8 +109,8 @@ CREATE TABLE `programs` (
   `icon` varchar(50) DEFAULT NULL,
   `sort_order` int(11) DEFAULT 0,
   `status` tinyint(1) DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -132,7 +132,7 @@ CREATE TABLE `projects` (
   `image` varchar(255) DEFAULT NULL,
   `sort_order` int(11) DEFAULT 0,
   `status` tinyint(1) DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -175,8 +175,8 @@ CREATE TABLE `blog_posts` (
   `status` enum('draft','published') DEFAULT 'draft',
   `views` int(11) DEFAULT 0,
   `published_at` datetime DEFAULT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`),
   KEY `category_id` (`category_id`),
@@ -199,7 +199,7 @@ CREATE TABLE `testimonials` (
   `photo` varchar(255) DEFAULT NULL,
   `sort_order` int(11) DEFAULT 0,
   `status` tinyint(1) DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO `testimonials` (`id`, `quote`, `author_name`, `author_role`, `photo`, `sort_order`, `status`, `created_at`) VALUES
@@ -231,7 +231,7 @@ CREATE TABLE `reports` (
   `file_url` varchar(500) DEFAULT NULL,
   `sort_order` int(11) DEFAULT 0,
   `status` tinyint(1) DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 INSERT INTO `reports` (`id`, `title`, `year`, `file_url`, `sort_order`, `status`, `created_at`) VALUES
@@ -255,8 +255,8 @@ CREATE TABLE `content_items` (
   `extra` varchar(120) DEFAULT NULL,
   `sort_order` int(11) NOT NULL DEFAULT 0,
   `status` tinyint(1) NOT NULL DEFAULT 1,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `idx_page_section` (`page`,`section_key`,`sort_order`)
 ) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -381,5 +381,6 @@ INSERT INTO `settings` (`setting_key`, `setting_value`) VALUES ('twitter', 'http
 INSERT INTO `settings` (`setting_key`, `setting_value`) VALUES ('usd_rate', '3950') ON DUPLICATE KEY UPDATE `setting_value` = VALUES(`setting_value`);
 INSERT INTO `settings` (`setting_key`, `setting_value`) VALUES ('vision_text', 'We envision a world where every person, regardless of their background, has the opportunity to live a fulfilling and sustainable life.') ON DUPLICATE KEY UPDATE `setting_value` = VALUES(`setting_value`);
 INSERT INTO `settings` (`setting_key`, `setting_value`) VALUES ('youtube', 'https://www.youtube.com/@BetterLifeInt') ON DUPLICATE KEY UPDATE `setting_value` = VALUES(`setting_value`);
+UPDATE `settings` SET `setting_value` = '' WHERE `setting_key` = 'facebook';
 
 SET FOREIGN_KEY_CHECKS = 1;

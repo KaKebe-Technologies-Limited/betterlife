@@ -132,6 +132,7 @@
 .sh-bar.is-bump .sh-bar-inner { animation: sh-bump .45s ease; }
 @keyframes sh-bump { 40% { transform: scale(1.03); } }
 body:has(.sh-bar:not([hidden])) { padding-bottom: 86px; }   /* room for the basket bar at the foot of the page */
+body.sh-has-bar { padding-bottom: 86px; }                    /* the same, set by shop.js for browsers without :has() */
 
 /* A product */
 .ab .sh-item { padding: clamp(28px, 4vw, 56px) 0 clamp(48px, 6vw, 84px); background: linear-gradient(180deg, #fbf8f1 0%, var(--sh-paper) 100%); }
@@ -243,3 +244,4 @@ body:has(.sh-bar:not([hidden])) { padding-bottom: 86px; }   /* room for the bask
   .sh-done { flex-direction: column; }
 }
 body:has(.sh-bar:not([hidden])) .back-to-top { bottom: 96px; }   /* clear of the basket bar */
+body.sh-has-bar .back-to-top { bottom: 96px; }

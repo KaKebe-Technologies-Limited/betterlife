@@ -226,6 +226,8 @@
 }
 @media (max-width: 720px) {
   .st-grid, .st-links { grid-template-columns: 1fr; }
+  .st-grid .st-card:nth-last-child(1):nth-child(odd) { display: flex; }   /* a last odd card stacks like the rest */
+  .st-grid .st-card:nth-last-child(1):nth-child(odd) .st-card-media { aspect-ratio: 16 / 10; min-height: 0; }
   /* On phones the clippings stack in a gentle fan, each headline in full */
   .st-clips { display: grid; height: auto; padding-top: 10px; }
   .st-clip { position: relative; inset: auto; width: 92%; padding: 18px 18px 16px; }

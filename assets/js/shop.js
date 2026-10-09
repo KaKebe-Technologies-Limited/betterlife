@@ -19,6 +19,7 @@
 
   // 2. Adding to the basket in place, then showing the basket bar
   var bar = document.querySelector('[data-basket-bar]');
+  if (bar && !bar.hidden) document.body.classList.add('sh-has-bar');
   function toast(text) {
     var old = document.querySelector('.sh-toast');
     if (old) old.remove();
@@ -45,6 +46,7 @@
               bar.querySelector('[data-basket-count]').textContent = d.count + (d.count === 1 ? ' item' : ' items');
               bar.querySelector('[data-basket-total]').textContent = d.total;
               bar.hidden = false;
+              document.body.classList.add('sh-has-bar');
               bar.classList.remove('is-bump'); void bar.offsetWidth; bar.classList.add('is-bump');
             }
             toast(d.name + ' is in your basket');

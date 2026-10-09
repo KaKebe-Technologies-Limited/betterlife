@@ -108,6 +108,24 @@ checkout → `order-callback.php` (verifies status on return) / `order-ipn.php`
 (server-to-server webhook, the reliable source of truth) → `order-confirmation.php`
 (neat branded invoice/receipt, printable to PDF via the browser).
 
+## Updating the live site
+
+Content (page text, projects, team, products, stories, reports, site settings) is prepared
+in the local database. To publish it:
+
+1. `C:\xampp\php\php.exe tools/make_live_sync.php` writes `live-content-sync.sql` from the
+   local database. It stops if a row points to an image that is not in git.
+2. Commit and push, so the code and that file reach the server.
+3. On the live site: **Admin → Site Update** (marked *New*), tick the box, press
+   **Update the site content**.
+
+Site Update saves a backup of the live content first (in `database/backups/`, not reachable
+from the web; the ten most recent are kept, and any can be downloaded or put back). It
+loads the file into side tables before touching anything, so a bad file changes nothing.
+It never touches orders, messages, subscribers, admin accounts, passwords, payment keys,
+order alerts or maintenance mode. Importing `live-content-sync.sql` in phpMyAdmin does
+the same, without the backup.
+
 ## Security notes
 
 - Passwords are hashed with bcrypt (`password_hash`/`password_verify`).

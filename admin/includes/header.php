@@ -5,6 +5,8 @@
  */
 $admin = current_admin();
 $logo = setting($pdo, 'logo', 'assets/img/logo.png');
+require_once __DIR__ . '/../../includes/site-sync.php';
+$syncPending = site_sync_pending($pdo);
 
 $navItems = [
   ['group' => 'Overview', 'items' => [
@@ -33,6 +35,7 @@ $navItems = [
   ]],
   ['group' => 'Site', 'items' => [
     ['key' => 'settings', 'label' => 'Site Settings', 'icon' => 'settings', 'href' => ADMIN_URL . '/settings.php'],
+    ['key' => 'site-update', 'label' => 'Site Update', 'icon' => 'globe', 'href' => ADMIN_URL . '/site-update.php'],
   ]],
 ];
 
@@ -69,6 +72,9 @@ try {
             <span class="ico"><?= icon($item['icon'], 18) ?></span> <?= h($item['label']) ?>
             <?php if ($item['key'] === 'messages' && $unreadCount > 0): ?>
               <span class="badge badge-red" style="margin-left:auto;"><?= $unreadCount ?></span>
+            <?php endif; ?>
+            <?php if ($item['key'] === 'site-update' && $syncPending): ?>
+              <span class="badge badge-warn" style="margin-left:auto;">New</span>
             <?php endif; ?>
             <?php if ($item['key'] === 'orders' && $pendingOrders > 0): ?>
               <span class="badge badge-green" style="margin-left:auto;"><?= $pendingOrders ?></span>

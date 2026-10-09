@@ -214,7 +214,7 @@
   .im-figs { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: minmax(176px, auto); gap: 10px; }
   .im-fig { padding: 18px; border-radius: 20px; }
   .im-fig.is-lead { min-height: 300px; }
-  .im-fig strong { font-size: 34px; }
+  .im-fig strong { font-size: clamp(22px, calc(12vw - 16px), 34px); }   /* "50,000+" still fits a half-width tile on a 320px phone */
   .im-fig-label { font-size: 14px; }
   .im-dots { grid-template-columns: repeat(10, 6px); gap: 4px; }
   .im-dots i { width: 6px; height: 6px; }

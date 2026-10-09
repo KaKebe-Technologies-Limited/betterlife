@@ -15,6 +15,6 @@ return [
     ['icpac.svg', 'ICPAC, IGAD Climate Prediction and Applications Centre', '', ''],
     ['moonshot.svg', 'Moonshot', 'Supports the BetterLife Climate Leadership Academy for young people from Uganda and across Africa.', 'project.php?slug=climate-leadership-academy'],
     ['hbcu-green-fund.png', 'HBCU Green Fund', '', ''],
-    ['environmental-hub-uganda.png', 'Environmental Hub Uganda', 'A registered Ugandan NGO working on climate change adaptation, disaster risk reduction and eco-tourism.', ''],
+    ['environmental-hub-uganda.webp', 'Environmental Hub Uganda', 'A youth-led Ugandan NGO promoting sustainability and resilience through climate action, conservation, education and research.', 'https://ehubuganda.org/'],
     [null, 'The Diana Award', 'Recognised BetterLife’s founder, Denise Ayebare, with the Diana Award in 2024.', 'https://diana-award.org.uk/'],
 ];
