@@ -142,17 +142,8 @@ $products = [
     ['assets/img/product-organic-boost.jpg', 'Organic manure', 'BetterLife Organic Boost liquid fertiliser', 'Containers of BetterLife Organic Boost organic fertiliser'],
 ];
 
-$partners = [
-    ['foundation-s.png',                'Foundation S, The Sanofi Collective'],
-    ['farm-radio-international.jpg',    'Farm Radio International'],
-    ['dovetail-impact-foundation.webp', 'Dovetail Impact Foundation'],
-    ['world-food-programme.svg',        'World Food Programme'],
-    ['hbcu-green-fund.png',             'HBCU Green Fund'],
-    ['fadeco.png',                      'FADECO'],
-    ['kakebe.png',                      'KaKebe Technologies'],
-    ['icpac.svg',                       'ICPAC, IGAD Climate Prediction and Applications Centre'],
-    ['moonshot.svg',                    'Moonshot'],
-];
+// Partners with a logo, from the shared list (includes/partners-list.php)
+$partners = array_values(array_map(fn($p) => [$p[0], $p[1]], array_filter(require __DIR__ . '/includes/partners-list.php', fn($p) => $p[0] && is_file(__DIR__ . '/assets/img/partners/' . $p[0]))));
 
 $heroImg = 'assets/img/farm-field-3.jpg';
 $heroV = ab_variants($heroImg);
@@ -518,7 +509,7 @@ require __DIR__ . '/includes/header.php';
         <h2 id="hmPartnersTitle">Working alongside</h2>
         <a href="<?= SITE_URL ?>/partners.php" class="pg-link">Meet our partners <?= icon('arrow-right', 15) ?></a>
       </div>
-      <ul class="hm-logos ab-reveal">
+      <ul class="hm-logos ab-reveal" style="--n: <?= count($partners) ?>">
         <?php foreach ($partners as [$file, $name]): ?>
           <li class="lg-<?= h(pathinfo($file, PATHINFO_FILENAME)) ?>"><img src="<?= h(asset_url('assets/img/partners/' . $file)) ?>" alt="<?= h($name) ?>" loading="lazy"></li>
         <?php endforeach; ?>

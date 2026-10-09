@@ -619,19 +619,21 @@
 
 /* Partners: logos in their own colours */
 .ab .ab-partners { padding-bottom: clamp(48px, 6vw, 80px); }
-.ab-logos { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); align-items: center; gap: clamp(16px, 2.2vw, 32px); list-style: none; margin: 0; padding: clamp(22px, 2.6vw, 32px) 0; border-top: 1px solid var(--ab-line); border-bottom: 1px solid var(--ab-line); }
+.ab-logos { display: grid; grid-template-columns: repeat(var(--n, 9), minmax(0, 1fr)); align-items: center; gap: clamp(16px, 2.2vw, 32px); list-style: none; margin: 0; padding: clamp(22px, 2.6vw, 32px) 0; border-top: 1px solid var(--ab-line); border-bottom: 1px solid var(--ab-line); }
 .ab-logos li { display: flex; align-items: center; justify-content: center; height: 54px; }
 .ab-logos img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; transition: transform .2s ease; }
 .ab-logos li:hover img { transform: scale(1.05); }
 .ab-logos .ab-logo-icpac img, .ab-logos .ab-logo-icpac:hover img { filter: brightness(0); opacity: .72; }
-.ab-logos .ab-logo-fadeco, .ab-logos .ab-logo-world-food-programme { height: 64px; }
+.ab-logos .ab-logo-fadeco, .ab-logos .ab-logo-world-food-programme, .ab-logos .ab-logo-environmental-hub-uganda { height: 64px; }
 .ab-partners-links { display: flex; flex-wrap: wrap; gap: 12px 30px; margin: 22px 0 0 !important; }
 @media (max-width: 900px) {
-  .ab-logos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px 18px; }
+  .ab-logos { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px 18px; }
+  .ab-logos li { flex: 0 0 calc((100% - 36px) / 3); }
   .ab-logos li { height: 46px; }
 }
 @media (max-width: 420px) {
-  .ab-logos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px 16px; }
+  .ab-logos { gap: 20px 16px; }
+  .ab-logos li { flex-basis: calc((100% - 32px) / 3); }
 }
 
 /* Silent film over the opening photographs (fades in once playing) */

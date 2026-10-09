@@ -5,18 +5,8 @@ $pageTitle = 'Our Partners';
 $activePage = 'partners';
 $pageDescription = 'The organisations that work alongside BetterLife International, and how each partnership supports the work.';
 
-// What each partnership involves, from BetterLife's own programme material
-$partners = [
-    ['foundation-s.png', 'Foundation S, The Sanofi Collective', 'Supports Women’s Climate Resilience in Yumbe, our programme with refugee, displaced and host-community women.', 'project.php?slug=womens-climate-resilience-yumbe'],
-    ['farm-radio-international.jpg', 'Farm Radio International', 'Our partner in Green Leaf Platforms Uganda, connecting radio and digital farming content to Women’s Action Circles across 12 districts.', 'project.php?slug=green-leaf-platforms-uganda'],
-    ['dovetail-impact-foundation.webp', 'Dovetail Impact Foundation', 'Supports BetterLife through strategic acceleration and institutional strengthening, across all our programmes.', '#organisation'],
-    ['world-food-programme.svg', 'World Food Programme', 'Our engagement has contributed to work around farmer information, verification and the responsible use of agricultural and climate data.', 'project.php?slug=soilla'],
-    ['fadeco.png', 'FADECO', 'Our partner in Tanzania, reaching young people and communities through schools, community radio and practical training.', 'project.php?slug=tanzania-climate-education'],
-    ['kakebe.png', 'KaKebe Technologies', 'A youth-led tech company in Lira City. Together we work on climate innovation hackathons and the Kakebe Tech Camp, where young people build climate and eco solutions.', 'project.php?slug=climate-innovation-hackathons'],
-    ['icpac.svg', 'ICPAC, IGAD Climate Prediction and Applications Centre', '', ''],
-    ['moonshot.svg', 'Moonshot', 'Supports the BetterLife Climate Leadership Academy for young people from Uganda and across Africa.', 'project.php?slug=climate-leadership-academy'],
-    ['hbcu-green-fund.png', 'HBCU Green Fund', '', ''],
-];
+// What each partnership involves, from BetterLife's own programme material (shared with About and Home)
+$partners = require __DIR__ . '/includes/partners-list.php';
 
 try {
     $org = $pdo->query("SELECT subtitle, body FROM content_items WHERE page = 'programs' AND section_key = 'our-projects' AND title = 'Dovetail Impact Foundation' AND status = 1 LIMIT 1")->fetch();
@@ -50,11 +40,16 @@ require __DIR__ . '/includes/header.php';
       <ul class="pg-partner-list">
         <?php foreach ($partners as [$logo, $name, $what, $link]): ?>
           <li class="pg-partner-card ab-reveal">
-            <div class="pg-partner-logo pg-logo-<?= h(pathinfo($logo, PATHINFO_FILENAME)) ?>"><img src="<?= h(asset_url('assets/img/partners/' . $logo)) ?>" alt="<?= h($name) ?> logo" loading="lazy" decoding="async"></div>
+            <?php if ($logo && is_file(__DIR__ . '/assets/img/partners/' . $logo)): ?>
+              <div class="pg-partner-logo pg-logo-<?= h(pathinfo($logo, PATHINFO_FILENAME)) ?>"><img src="<?= h(asset_url('assets/img/partners/' . $logo)) ?>" alt="<?= h($name) ?> logo" loading="lazy" decoding="async"></div>
+            <?php else: ?>
+              <div class="pg-partner-logo is-name" aria-hidden="true"><span><?= h($name) ?></span></div>
+            <?php endif; ?>
             <div>
               <h3><?= h($name) ?></h3>
               <?php if ($what): ?><p><?= h($what) ?></p><?php endif; ?>
-              <?php if ($link): ?><a href="<?= h(str_starts_with($link, '#') ? $link : SITE_URL . '/' . $link) ?>" class="pg-link"><?= str_starts_with($link, '#') ? 'How this support works' : 'See the work' ?> <?= icon('arrow-right', 15) ?></a><?php endif; ?>
+              <?php if ($link && preg_match('#^https?://#', $link)): ?><a href="<?= h($link) ?>" class="pg-link" target="_blank" rel="noopener">Visit their website <?= icon('external-link', 14) ?><span class="sr-only"> (opens in a new tab)</span></a>
+              <?php elseif ($link): ?><a href="<?= h(str_starts_with($link, '#') ? $link : SITE_URL . '/' . $link) ?>" class="pg-link"><?= str_starts_with($link, '#') ? 'How this support works' : 'See the work' ?> <?= icon('arrow-right', 15) ?></a><?php endif; ?>
             </div>
           </li>
         <?php endforeach; ?>
