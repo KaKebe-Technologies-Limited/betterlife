@@ -21,33 +21,45 @@ $items = $pdo->prepare("SELECT * FROM order_items WHERE order_id = ?");
 $items->execute([$order['id']]);
 $items = $items->fetchAll();
 
+$pageStyles  = ['assets/css/about.css', 'assets/css/shop.css'];
+$pageHead = '<script>document.documentElement.classList.add("ab-js")</script>';
+$paid = $order['status'] === 'paid';
+$failed = $order['status'] === 'failed';
+
 require __DIR__ . '/includes/header.php';
 ?>
 
-<section class="page-header">
-  <div class="container">
-    <div class="crumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span>/</span>Order <?= h($order['order_ref']) ?></div>
-    <h1><?= $order['status'] === 'paid' ? 'Payment Successful' : ($order['status'] === 'failed' ? 'Payment Not Completed' : 'Order Received') ?></h1>
-  </div>
-</section>
+<main class="ab sh" id="top">
+  <section class="sh-flow" aria-labelledby="shDoneTitle">
+    <div class="container">
+      <ol class="sh-progress" aria-label="Your order">
+        <li class="is-done"><span><?= icon('check', 13) ?></span> Basket</li>
+        <li class="is-done"><span><?= icon('check', 13) ?></span> Your details</li>
+        <li<?= $paid ? ' class="is-done"' : ' aria-current="step"' ?>><span><?= $paid ? icon('check', 13) : '3' ?></span> Payment</li>
+      </ol>
+      <div class="sh-done<?= $failed ? ' is-failed' : '' ?>" role="status">
+        <span class="sh-done-icon" aria-hidden="true"><?= icon($failed ? 'x' : 'check', 32) ?></span>
+        <div>
+          <h1 id="shDoneTitle"><?= $paid ? 'Thank you. Your order is paid.' : ($failed ? 'Your payment did not go through' : 'Thank you. Your order is in.') ?></h1>
+          <?php if ($paid): ?>
+            <p>A receipt is on its way to <?= h($order['customer_email']) ?>. Our team will call you to arrange delivery. Order <?= h($order['order_ref']) ?>.</p>
+          <?php elseif ($failed): ?>
+            <p>The payment was not completed. You can try again, or contact us and we will help you complete order <?= h($order['order_ref']) ?>.</p>
+          <?php else: ?>
+            <p>We are waiting for the payment to be confirmed. Order <?= h($order['order_ref']) ?>.</p>
+          <?php endif; ?>
+        </div>
+      </div>
 
-<section>
-  <div class="container">
-    <?php if ($order['status'] === 'paid'): ?>
-      <div class="alert alert-success" style="max-width:720px;margin:0 auto 24px;">Thank you! Your payment was received and a receipt has been emailed to <?= h($order['customer_email']) ?>.</div>
-    <?php elseif ($order['status'] === 'failed'): ?>
-      <div class="alert alert-error" style="max-width:720px;margin:0 auto 24px;">Your payment did not go through. You can try again or contact us for help completing your order.</div>
-    <?php else: ?>
-      <div class="alert alert-success" style="max-width:720px;margin:0 auto 24px;">Your order has been received and is awaiting payment confirmation.</div>
-    <?php endif; ?>
+      <?= render_invoice_html($pdo, $order, $items) ?>
 
-    <?= render_invoice_html($pdo, $order, $items) ?>
-
-    <div style="text-align:center;margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-      <button onclick="window.print()" class="btn btn-outline-dark"><?= icon('file-text', 16) ?> Print / Save PDF</button>
-      <a href="<?= SITE_URL ?>/products.php" class="btn btn-primary">Continue Shopping →</a>
+      <div class="sh-done-actions">
+        <button type="button" onclick="window.print()" class="sh-btn is-quiet"><?= icon('file-text', 16) ?> Print or save as PDF</button>
+        <?php if ($failed): ?><a class="sh-btn is-quiet" href="<?= SITE_URL ?>/contact.php?subject=<?= rawurlencode('Product order') ?>#write">Contact us</a><?php endif; ?>
+        <a class="sh-btn" href="<?= SITE_URL ?>/products.php#products">Back to the farm shop <?= icon('arrow-right', 16) ?></a>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+</main>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>

@@ -11,7 +11,7 @@ $productId = (int) ($_POST['product_id'] ?? 0);
 if (!empty($_SESSION['cart'][$productId])) {
     if ($action === 'remove') {
         unset($_SESSION['cart'][$productId]);
-        flash_set('success', 'Item removed from cart.');
+        flash_set('success', 'Removed from your basket.');
     } elseif ($action === 'update') {
         $qty = max(1, (int) ($_POST['qty'] ?? 1));
         $_SESSION['cart'][$productId]['qty'] = $qty;

@@ -66,53 +66,55 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
+require_once __DIR__ . '/includes/shop.php';
+$usd = format_usd($pdo, $subtotal);
+$pageStyles  = ['assets/css/about.css', 'assets/css/shop.css'];
+$pageScripts = ['assets/js/about.js', 'assets/js/shop.js'];
+$pageHead = '<script>document.documentElement.classList.add("ab-js")</script>';
+
 require __DIR__ . '/includes/header.php';
 ?>
 
-<section class="page-header">
-  <div class="container">
-    <div class="crumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span>/</span><a href="<?= SITE_URL ?>/cart.php">Cart</a><span>/</span>Checkout</div>
-    <h1>Checkout</h1>
-  </div>
-</section>
+<main class="ab sh" id="top">
+  <section class="sh-flow" aria-labelledby="shCheckoutTitle">
+    <div class="container">
+      <nav class="sh-crumb is-dark" aria-label="Breadcrumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span aria-hidden="true">/</span><a href="<?= SITE_URL ?>/products.php">Farm shop</a><span aria-hidden="true">/</span><a href="<?= SITE_URL ?>/cart.php">Basket</a><span aria-hidden="true">/</span><span aria-current="page">Your details</span></nav>
+      <ol class="sh-progress" aria-label="Your order">
+        <li class="is-done"><span><?= icon('check', 13) ?></span> Basket</li>
+        <li aria-current="step"><span>2</span> Your details</li>
+        <li><span>3</span> Payment</li>
+      </ol>
+      <h1 id="shCheckoutTitle">Your details</h1>
 
-<section>
-  <div class="container">
-    <div class="split" style="align-items:flex-start;">
-      <div class="contact-card fade-up">
-        <h3>Delivery &amp; Contact Details</h3>
-        <?php if ($error): ?><div class="alert alert-error"><?= h($error) ?></div><?php endif; ?>
-        <form method="post">
+      <div class="sh-flow-grid">
+        <form class="sh-form" method="post">
           <?= csrf_field() ?>
-          <div class="grid grid-2" style="gap:18px;">
-            <div class="form-group"><label>Full Name *</label><input type="text" name="name" class="form-control" required value="<?= h($_POST['name'] ?? '') ?>"></div>
-            <div class="form-group"><label>Email Address *</label><input type="email" name="email" class="form-control" required value="<?= h($_POST['email'] ?? '') ?>"></div>
+          <?php if ($error): ?><p class="sh-flash is-error" role="alert"><?= h($error) ?></p><?php endif; ?>
+          <div class="sh-fields">
+            <div class="sh-field"><label for="coName">Full name <span aria-hidden="true">*</span></label><input id="coName" type="text" name="name" required autocomplete="name" value="<?= h($_POST['name'] ?? '') ?>"></div>
+            <div class="sh-field"><label for="coEmail">Email address <span aria-hidden="true">*</span></label><input id="coEmail" type="email" name="email" required autocomplete="email" value="<?= h($_POST['email'] ?? '') ?>"><small>Your confirmation and receipt are sent here.</small></div>
+            <div class="sh-field"><label for="coPhone">Phone number <span aria-hidden="true">*</span></label><input id="coPhone" type="tel" name="phone" required autocomplete="tel" value="<?= h($_POST['phone'] ?? '') ?>" placeholder="e.g. 0700 000 000"><small>Our team calls this number to arrange delivery.</small></div>
+            <div class="sh-field"><label for="coPlace">Delivery location <span aria-hidden="true">*</span></label><input id="coPlace" type="text" name="location" required autocomplete="address-level2" value="<?= h($_POST['location'] ?? '') ?>" placeholder="District, town or address"></div>
+            <div class="sh-field is-full"><label for="coNotes">Notes for our team <small>(optional)</small></label><textarea id="coNotes" name="notes" rows="3" placeholder="A good time to deliver, a landmark, anything else we should know"><?= h($_POST['notes'] ?? '') ?></textarea></div>
           </div>
-          <div class="grid grid-2" style="gap:18px;">
-            <div class="form-group"><label>Phone Number *</label><input type="text" name="phone" class="form-control" required value="<?= h($_POST['phone'] ?? '') ?>" placeholder="e.g. 0700 000 000"></div>
-            <div class="form-group"><label>Delivery Location *</label><input type="text" name="location" class="form-control" required value="<?= h($_POST['location'] ?? '') ?>" placeholder="District / town / address"></div>
-          </div>
-          <div class="form-group"><label>Order Notes</label><textarea name="notes" class="form-control" placeholder="Preferred delivery time, landmark, special instructions…"><?= h($_POST['notes'] ?? '') ?></textarea></div>
-          <button type="submit" class="btn btn-primary btn-block">Continue to Payment (Card / Mobile Money) <?= icon('arrow-right', 16) ?></button>
-          <p class="hint" style="margin-top:12px;">You'll be redirected to our secure payment page to complete payment by card or mobile money.</p>
+          <button type="submit" class="sh-btn is-wide"><?= icon('phone', 16) ?> Continue to payment</button>
+          <p class="sh-form-note"><?= icon('check', 14) ?> You will pay on our secure payment page, by mobile money or card.</p>
         </form>
-      </div>
 
-      <div class="cart-summary fade-up" style="max-width:none;">
-        <h4 style="margin-bottom:16px;">Order Summary</h4>
-        <?php foreach ($cart as $item): ?>
-          <div style="display:flex;justify-content:space-between;font-size:14px;margin-bottom:10px;">
-            <span><?= h($item['name']) ?> × <?= (int) $item['qty'] ?></span>
-            <strong><?= format_price($item['price'] * $item['qty']) ?></strong>
-          </div>
-        <?php endforeach; ?>
-        <div class="cart-summary-row" style="border-top:1px solid var(--border);padding-top:14px;margin-top:10px;">
-          <span>Total</span><strong><?= format_price($subtotal) ?></strong>
-        </div>
-        <?php if ($usd = format_usd($pdo, $subtotal)): ?><p class="price-usd">That is <?= h($usd) ?>. Payment is in Uganda shillings.</p><?php endif; ?>
+        <aside class="sh-summary" aria-labelledby="shOrderTitle">
+          <h2 id="shOrderTitle">Your order</h2>
+          <ul class="sh-mini">
+            <?php foreach ($cart as $item): ?>
+              <li><span class="sh-mini-media"><?= ab_img($item['image'], '', '', true, '', '56px') ?></span><span><?= h($item['name']) ?> <small>× <?= (int) $item['qty'] ?></small></span><strong><?= h(format_price($item['price'] * $item['qty'])) ?></strong></li>
+            <?php endforeach; ?>
+          </ul>
+          <p class="sh-summary-row is-total"><span>Total</span><strong><?= h(format_price($subtotal)) ?></strong></p>
+          <?php if ($usd): ?><p class="sh-summary-note">That is <?= h($usd) ?>. Payment is in Uganda shillings.</p><?php endif; ?>
+          <a class="sh-summary-back" href="<?= SITE_URL ?>/cart.php">Change your basket</a>
+        </aside>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</main>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>
