@@ -35,5 +35,15 @@
   Require all denied
 </FilesMatch>
 
+# Developer files never belong on the public web. Visiting a migration would run it and reset the
+# site's content; the database dumps include the admin account. Pages still load these folders
+# from disk; only browsers are turned away.
+<IfModule mod_alias.c>
+  RedirectMatch 404 ^/(?:.*/)?(migrations|tools|database|design-preview|config|vendor|includes)(/|$)
+</IfModule>
+<FilesMatch "\.(sql|md|log|lock|sh|bak)$">
+  Require all denied
+</FilesMatch>
+
 # Friendly 404s stay inside the site's own design
 ErrorDocument 404 /404.php
