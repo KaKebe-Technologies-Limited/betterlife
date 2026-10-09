@@ -189,6 +189,7 @@ require __DIR__ . '/includes/header.php';
             <li class="ab-reveal">
               <h3><?= h($cname) ?></h3>
               <p><?= h($where) ?></p>
+              <?php if ($cname === 'Uganda' && ($postal = setting($pdo, 'postal_address'))): ?><p class="ct-postal"><?= icon('mail', 14) ?> Write to us: <?= h($postal) ?></p><?php endif; ?>
               <?php if ($lead): ?>
                 <p class="ct-lead-person"><?= ab_img($lead['photo'], '', '', true, '', '44px') ?><span><strong><?= h($lead['name']) ?></strong> <?= h($lead['role']) ?></span></p>
               <?php endif; ?>

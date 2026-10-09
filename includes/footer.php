@@ -57,8 +57,22 @@ $footerPrograms = $pdo->query("SELECT title, slug FROM programs WHERE status = 1
       </div>
     </div>
 
+    <?php $legalName = setting($pdo, 'legal_name') ?: setting($pdo, 'site_name'); $regNo = setting($pdo, 'ngo_reg_no'); $permitNo = setting($pdo, 'ngo_permit_no'); $postal = setting($pdo, 'postal_address'); ?>
+    <?php if ($regNo): ?>
+      <!-- The organisation's legal standing, as on its certificate and permit from the National Bureau for NGOs -->
+      <div class="footer-legal">
+        <span class="footer-legal-badge"><?= icon('check', 14) ?> Registered NGO</span>
+        <p><?= h($legalName) ?> is an indigenous non-governmental organisation registered with Uganda’s National Bureau for Non-Governmental Organisations under the NGO Act, Cap. 109.</p>
+        <p class="footer-legal-ids">
+          <span>Registration No. <strong><?= h($regNo) ?></strong></span>
+          <?php if ($permitNo): ?><span>Permit No. <strong><?= h($permitNo) ?></strong></span><?php endif; ?>
+          <?php if ($postal): ?><span><?= h($postal) ?></span><?php endif; ?>
+        </p>
+      </div>
+    <?php endif; ?>
+
     <div class="footer-bottom">
-      <span>&copy; <?= date('Y') ?> <?= h(setting($pdo, 'site_name')) ?>. All rights reserved.</span>
+      <span>&copy; <?= date('Y') ?> <?= h($legalName) ?>. All rights reserved.</span>
       <span>Built with purpose in Uganda &middot; <a href="<?= ADMIN_URL ?>/login.php">Admin</a></span>
     </div>
   </div>

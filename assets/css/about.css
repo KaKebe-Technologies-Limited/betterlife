@@ -659,3 +659,22 @@
 /* Comfortable tap targets */
 .ab-who-toggle { min-height: 40px; }
 .ab-map-reset { min-height: 40px; }
+
+/* Registered and accountable: the organisation's legal standing (About, inside Partners and accountability) */
+.ab-legal { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(20px, 3vw, 40px); align-items: start; margin-top: clamp(40px, 5vw, 64px); padding: clamp(24px, 3.4vw, 44px); border-radius: 28px; background: var(--ab-cream); border: 1px solid var(--ab-line); }
+.ab-legal-seal { display: grid; place-items: center; align-content: center; gap: 6px; width: 132px; height: 132px; border-radius: 50%; background: var(--ab-green); color: #fff; text-align: center; box-shadow: 0 0 0 8px rgba(8, 114, 45, .12), inset 0 0 0 4px rgba(255,255,255,.25); transform: rotate(-8deg); }
+.ab-legal-seal span { font: 800 12px/1.2 var(--font-body); letter-spacing: .12em; text-transform: uppercase; }
+.ab .ab-legal h3 { font-family: var(--ab-serif); font-weight: 500; font-size: clamp(24px, 2.4vw, 32px); color: var(--ab-deep); margin: 0 0 12px; }
+.ab .ab-legal-body > p { max-width: 74ch; margin: 0 0 22px; }
+.ab-legal-facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 0 0 18px; }
+.ab-legal-facts div { padding: 14px 16px; border-radius: 16px; background: #fff; border: 1px solid var(--ab-line); }
+.ab-legal-facts dt { margin-bottom: 6px; font: 700 11.5px/1.2 var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--ab-green); }
+.ab-legal-facts dd { margin: 0; font-weight: 700; font-size: 15.5px; line-height: 1.35; color: var(--ab-deep); overflow-wrap: anywhere; }
+.ab-legal-facts small { display: block; margin-top: 4px; font-weight: 500; font-size: 13px; color: var(--ab-soft); }
+.ab-legal-links { display: flex; flex-wrap: wrap; gap: 10px 26px; margin: 0 !important; }
+@media (max-width: 1100px) { .ab-legal-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 720px) {
+  .ab-legal { grid-template-columns: 1fr; }
+  .ab-legal-seal { width: 104px; height: 104px; }
+  .ab-legal-facts { grid-template-columns: 1fr; }
+}

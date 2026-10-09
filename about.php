@@ -618,6 +618,27 @@ require __DIR__ . '/includes/header.php';
         <a href="<?= SITE_URL ?>/partners.php" class="ab-link">How each partner supports the work <?= icon('arrow-right', 15) ?></a>
         <a href="<?= h($contact('Partnership enquiry')) ?>" class="ab-link">Become a partner <?= icon('arrow-right', 15) ?></a>
       </p>
+
+      <?php if ($regNo = setting($pdo, 'ngo_reg_no')): ?>
+        <!-- Legal standing, as on the Certificate of Registration and the Permit to Operate -->
+        <div class="ab-legal ab-reveal" aria-labelledby="abLegalTitle">
+          <div class="ab-legal-seal" aria-hidden="true"><?= icon('check', 30) ?><span>Registered<br>NGO</span></div>
+          <div class="ab-legal-body">
+            <h3 id="abLegalTitle">Registered and accountable</h3>
+            <p><?= h(setting($pdo, 'legal_name') ?: setting($pdo, 'site_name')) ?> is an indigenous non-governmental organisation, registered with Uganda’s National Bureau for Non-Governmental Organisations under the NGO Act, Cap. 109, and holding a permit to operate countrywide. Our permit covers innovative environmental solutions that reduce carbon footprint, sustainable practices, preserving biodiversity, and climate change education and awareness.</p>
+            <dl class="ab-legal-facts">
+              <div><dt>Registration number</dt><dd><?= h($regNo) ?></dd></div>
+              <?php if ($permit = setting($pdo, 'ngo_permit_no')): ?><div><dt>Permit to operate</dt><dd><?= h($permit) ?><?php if ($until = setting($pdo, 'ngo_permit_until')): ?> <small>Valid to <?= h($until) ?></small><?php endif; ?></dd></div><?php endif; ?>
+              <?php if ($since = setting($pdo, 'ngo_registered')): ?><div><dt>Registered</dt><dd><?= h($since) ?> <small>Founded <?= h(setting($pdo, 'founded_year', '2021')) ?></small></dd></div><?php endif; ?>
+              <?php if ($postal = setting($pdo, 'postal_address')): ?><div><dt>Postal address</dt><dd><?= h($postal) ?></dd></div><?php endif; ?>
+            </dl>
+            <p class="ab-legal-links">
+              <a href="<?= SITE_URL ?>/impact-reports.php#imYears" class="ab-link">Annual reports <?= icon('arrow-right', 15) ?></a>
+              <a href="<?= SITE_URL ?>/team.php#board" class="ab-link">Our board <?= icon('arrow-right', 15) ?></a>
+            </p>
+          </div>
+        </div>
+      <?php endif; ?>
     </div>
   </section>
 

@@ -70,6 +70,13 @@ INSERT INTO settings (setting_key, setting_value) VALUES
 ('instagram', 'https://www.instagram.com/betterlife_int/'),
 ('linkedin', 'https://ug.linkedin.com/company/betterlife-international-organization'),
 ('youtube', 'https://www.youtube.com/@BetterLifeInt'),
+('legal_name', 'BetterLife International Organization'),
+('ngo_reg_no', 'INDR172656571NB'),
+('ngo_permit_no', 'INDP0006571NB'),
+('ngo_file_no', 'MIA/NB/2024/09/6571'),
+('ngo_registered', '27 September 2024'),
+('ngo_permit_until', 'September 2029'),
+('postal_address', 'P.O. Box 410167, Rukungiri, Uganda'),
 ('footer_about', 'BetterLife International works with communities across five African countries to build food security, livelihoods and practical climate resilience.'),
 ('map_embed', ''),
 ('board_quote', 'BetterLife International is changing lives at every level, empowering youth, building resilient communities, and inspiring hope where it''s needed most.'),
@@ -161,8 +168,8 @@ CREATE TABLE products (
 INSERT INTO products (name, slug, category, price, unit, short_desc, description, image, featured, sort_order) VALUES
 ('BetterLife Honey', 'betterlife-honey', 'Honey', 30000.00, '1 kg jar', 'Sweet, natural honey from BetterLife Agro Tourism Farm.', 'BetterLife Honey is packed by BetterLife Agro Tourism Farm. Like everything from BetterLife Agro Tourism Farm, it is made from what community farmers produce. The farm buys their surplus, adds value and sells it, so every purchase helps keep that market open for refugee, displaced and host-community families.', 'assets/img/product-honey-real.jpg', 1, 1),
 ('BetterLife Ghee', 'betterlife-ghee', 'Ghee', 30000.00, '1 kg jar', 'Organic ghee made from 100% pure cow butter.', 'BetterLife Organic Ghee is made from 100% pure cow butter and is a natural source of energy for cooking. Contains milk. Like everything from BetterLife Agro Tourism Farm, it is made from what community farmers produce. The farm buys their surplus, adds value and sells it, so every purchase helps keep that market open for refugee, displaced and host-community families.', 'assets/img/product-ghee-real.jpg', 1, 2),
-('BetterLife Yoghurt, Strawberry', 'betterlife-yoghurt-strawberry', 'Yoghurt', 7000.00, '1 litre', 'BetterLife Yoghurt in strawberry flavour.', 'BetterLife Yoghurt in strawberry flavour, also available in vanilla. Like everything from BetterLife Agro Tourism Farm, it is made from what community farmers produce. The farm buys their surplus, adds value and sells it, so every purchase helps keep that market open for refugee, displaced and host-community families.', 'assets/img/product-yoghurt-real.jpg', 1, 3),
-('BetterLife Yoghurt, Vanilla', 'betterlife-yoghurt-vanilla', 'Yoghurt', 7000.00, '1 litre', 'BetterLife Yoghurt in vanilla flavour.', 'BetterLife Yoghurt in vanilla flavour, also available in strawberry. Like everything from BetterLife Agro Tourism Farm, it is made from what community farmers produce. The farm buys their surplus, adds value and sells it, so every purchase helps keep that market open for refugee, displaced and host-community families.', 'assets/img/product-yoghurt-real.jpg', 1, 4),
+('BetterLife Yoghurt, Strawberry', 'betterlife-yoghurt-strawberry', 'Yoghurt', 7000.00, '1 litre', 'BetterLife Yoghurt in strawberry flavour.', 'BetterLife Yoghurt in strawberry flavour, also available in vanilla. Like everything from BetterLife Agro Tourism Farm, it is made from what community farmers produce. The farm buys their surplus, adds value and sells it, so every purchase helps keep that market open for refugee, displaced and host-community families.', 'assets/img/product-yoghurt-strawberry.jpg', 1, 3),
+('BetterLife Yoghurt, Vanilla', 'betterlife-yoghurt-vanilla', 'Yoghurt', 7000.00, '1 litre', 'BetterLife Yoghurt in vanilla flavour.', 'BetterLife Yoghurt in vanilla flavour, also available in strawberry. Like everything from BetterLife Agro Tourism Farm, it is made from what community farmers produce. The farm buys their surplus, adds value and sells it, so every purchase helps keep that market open for refugee, displaced and host-community families.', 'assets/img/product-yoghurt-vanilla.jpg', 1, 4),
 ('BetterLife Organic Boost', 'betterlife-organic-boost', 'Farm Inputs', 100000.00, '20 litre jerrycan', 'Organic liquid fertilizer that improves soil fertility and boosts crop yield naturally.', 'BetterLife Organic Boost is an eco-friendly, organic liquid fertilizer produced at BetterLife Agro Tourism Farm. Safe for plants, people and the planet, it improves soil fertility and boosts crop yield naturally: the same climate-smart, sustainable approach we teach farmers across our programs, now bottled for your own garden or farm.', 'assets/img/product-organic-boost.jpg', 1, 5);
 
 -- ----------------------------------------------------------------------

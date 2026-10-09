@@ -65,10 +65,18 @@ foreach ($pageStyles ?? [] as $css): ?>
     '@context' => 'https://schema.org',
     '@type' => 'NGO',
     'name' => $siteName,
+    'legalName' => setting($pdo, 'legal_name') ?: $siteName,
     'url' => public_base_url() . SITE_URL . '/index.php',
     'logo' => full_asset_url($logo),
     'description' => $pageDescription,
-    'address' => ['@type' => 'PostalAddress', 'addressLocality' => setting($pdo, 'address')],
+    'foundingDate' => setting($pdo, 'founded_year'),
+    // Registration with Uganda's National Bureau for Non-Governmental Organisations
+    'identifier' => array_values(array_filter([
+        setting($pdo, 'ngo_reg_no') ? ['@type' => 'PropertyValue', 'propertyID' => 'NGO Registration Number (Uganda)', 'value' => setting($pdo, 'ngo_reg_no')] : null,
+        setting($pdo, 'ngo_permit_no') ? ['@type' => 'PropertyValue', 'propertyID' => 'NGO Permit Number (Uganda)', 'value' => setting($pdo, 'ngo_permit_no')] : null,
+    ])),
+    'address' => array_filter(['@type' => 'PostalAddress', 'postOfficeBoxNumber' => preg_match('/Box\s+(\d+)/i', setting($pdo, 'postal_address'), $bx) ? $bx[1] : null,
+        'addressLocality' => 'Rukungiri', 'addressCountry' => 'UG']),
     'email' => setting($pdo, 'email'),
     'telephone' => setting($pdo, 'phone'),
     'sameAs' => array_values(array_filter([
@@ -97,7 +105,7 @@ $cartLink = function (int $size) use ($cartCount): string {
     return '<a href="' . SITE_URL . '/cart.php" class="cart-link" aria-label="Cart' . ($cartCount ? " ($cartCount items)" : '') . '">' . icon('shopping-bag', $size) . $badge . '</a>';
 };
 ?>
-<!-- Utility bar: contact details, social links, shop & cart -->
+<!-- Utility bar: contact details, social links and the farm shop; the basket appears only once something is in it -->
 <div class="topbar">
   <div class="container">
     <div class="topbar-contact">
@@ -113,7 +121,7 @@ $cartLink = function (int $size) use ($cartCount): string {
         </div>
       <?php endif; ?>
       <a href="<?= SITE_URL ?>/products.php" class="topbar-shop"><?= icon('basket', 14) ?> Shop the Farm</a>
-      <?= $cartLink(17) ?>
+      <?= $cartCount ? $cartLink(17) : '' ?>
     </div>
   </div>
 </div>
@@ -126,7 +134,7 @@ $cartLink = function (int $size) use ($cartCount): string {
       <?php if ($tagline): ?><span class="brand-tagline"><?= h($tagline) ?></span><?php endif; ?>
     </a>
     <div class="header-actions">
-      <span class="mobile-cart"><?= $cartLink(21) ?></span>
+      <?php if ($cartCount): ?><span class="mobile-cart"><?= $cartLink(21) ?></span><?php endif; ?>
       <a href="<?= SITE_URL ?>/contact.php?subject=Partnership enquiry" class="btn-pill-accent header-cta"><?= icon('heart', 15) ?> Support Our Work</a>
       <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-controls="mainNav" aria-expanded="false"><?= icon('menu', 24) ?></button>
     </div>
@@ -158,7 +166,7 @@ $cartLink = function (int $size) use ($cartCount): string {
       <a href="<?= SITE_URL ?>/contact.php" class="<?= $activePage === 'contact' ? 'active' : '' ?>">Contact</a>
       <div class="main-nav-foot">
         <a href="<?= SITE_URL ?>/contact.php?subject=Partnership enquiry" class="btn-pill-accent"><?= icon('heart', 15) ?> Support Our Work</a>
-        <a href="<?= SITE_URL ?>/products.php" class="btn btn-primary btn-sm"><?= icon('basket', 15) ?> Shop the Farm</a>
+        <a href="<?= SITE_URL ?>/products.php" class="main-nav-contact"><?= icon('basket', 15) ?> Shop the farm</a>
         <?php if ($phone): ?><a href="tel:<?= h(preg_replace('/\s+/', '', $phone)) ?>" class="main-nav-contact"><?= icon('phone', 15) ?> <?= h($phone) ?></a><?php endif; ?>
         <?php if ($email): ?><a href="mailto:<?= h($email) ?>" class="main-nav-contact"><?= icon('mail', 15) ?> <?= h($email) ?></a><?php endif; ?>
       </div>

@@ -182,3 +182,5 @@
   .ct-links { grid-template-columns: 1fr; }
   .ct-sent { flex-direction: column; }
 }
+.ab .ct-postal { display: flex; align-items: center; gap: 8px; margin-top: 10px !important; font-size: 14px !important; font-weight: 600; color: var(--ab-deep); }
+.ct-postal svg { color: var(--ab-green); flex-shrink: 0; }

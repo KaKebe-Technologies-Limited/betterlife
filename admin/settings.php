@@ -11,6 +11,7 @@ $textFields = [
     'address', 'phone', 'email', 'shop_email', 'usd_rate',
     'facebook', 'twitter', 'instagram', 'linkedin', 'youtube',
     'footer_about', 'board_quote', 'board_quote_author', 'map_embed',
+    'legal_name', 'ngo_reg_no', 'ngo_permit_no', 'ngo_file_no', 'ngo_registered', 'ngo_permit_until', 'postal_address',
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -199,6 +200,22 @@ $maintenanceOn = setting($pdo, 'maintenance_mode') === '1';
           <input type="file" name="farm_image" class="form-control" accept="image/*">
         </div>
         <div class="form-group full"><label>Farm Description</label><textarea name="farm_text" class="form-control" style="min-height:140px;"><?= h(setting($pdo, 'farm_text')) ?></textarea></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head"><h3>NGO Registration</h3></div>
+    <div class="panel-body">
+      <p class="hint" style="margin-top:0;">As on the Certificate of Registration and the Permit to Operate from the National Bureau for Non-Governmental Organisations. Shown in the footer of every page, on the About page and to search engines. Update these when the permit is renewed.</p>
+      <div class="form-grid">
+        <div class="form-group"><label>Legal Name</label><input type="text" name="legal_name" class="form-control" value="<?= $v('legal_name') ?>"></div>
+        <div class="form-group"><label>Postal Address</label><input type="text" name="postal_address" class="form-control" value="<?= $v('postal_address') ?>"></div>
+        <div class="form-group"><label>Registration Number</label><input type="text" name="ngo_reg_no" class="form-control" value="<?= $v('ngo_reg_no') ?>"></div>
+        <div class="form-group"><label>Permit Number</label><input type="text" name="ngo_permit_no" class="form-control" value="<?= $v('ngo_permit_no') ?>"></div>
+        <div class="form-group"><label>File Number</label><input type="text" name="ngo_file_no" class="form-control" value="<?= $v('ngo_file_no') ?>"></div>
+        <div class="form-group"><label>Date Registered</label><input type="text" name="ngo_registered" class="form-control" value="<?= $v('ngo_registered') ?>" placeholder="e.g. 27 September 2024"></div>
+        <div class="form-group"><label>Permit Valid Until</label><input type="text" name="ngo_permit_until" class="form-control" value="<?= $v('ngo_permit_until') ?>" placeholder="e.g. September 2029"></div>
       </div>
     </div>
   </div>
