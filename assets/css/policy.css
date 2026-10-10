@@ -1,0 +1,24 @@
+/* Privacy and Safeguarding: a quiet title band, then easy-to-read sections with a contents list beside them */
+.pl-head { padding: clamp(36px, 5vw, 72px) 0 clamp(28px, 4vw, 48px); background: var(--ab-cream); border-bottom: 1px solid var(--ab-line); }
+.ab .pl-head h1 { font-family: var(--ab-serif); font-weight: 500; font-size: clamp(36px, 4.4vw, 56px); line-height: 1.06; color: var(--ab-deep); margin: 6px 0 14px; }
+.ab .pl-lead { max-width: 60ch; margin: 0; font-size: clamp(17px, 1.4vw, 19px); color: var(--ab-ink); }
+.ab .pl-date { margin: 14px 0 0; font-size: 13.5px; color: var(--ab-soft); }
+.pl-body { padding: clamp(36px, 5vw, 72px) 0 clamp(56px, 7vw, 100px); }
+.pl-grid { display: grid; grid-template-columns: 240px minmax(0, 720px); gap: clamp(28px, 5vw, 72px); align-items: start; }
+.pl-toc { position: sticky; top: 110px; }
+.ab .pl-toc p { margin: 0 0 10px; font-size: 12.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ab-green); }
+.pl-toc ol { list-style: none; margin: 0; padding: 0; border-left: 2px solid var(--ab-line); }
+.pl-toc a { display: block; padding: 6px 0 6px 14px; margin-left: -2px; border-left: 2px solid transparent; font-size: 14.5px; color: var(--ab-soft); }
+.pl-toc a:hover { color: var(--ab-deep); border-left-color: var(--ab-green); }
+.pl-text section { scroll-margin-top: 110px; padding-bottom: 28px; margin-bottom: 28px; border-bottom: 1px solid var(--ab-line); }
+.pl-text section:last-child { border-bottom: 0; margin-bottom: 0; }
+.ab .pl-text h2 { font-family: var(--ab-serif); font-weight: 500; font-size: clamp(22px, 2vw, 27px); line-height: 1.2; color: var(--ab-deep); margin: 0 0 12px; }
+.ab .pl-text p, .pl-text li { font-size: 16.5px; line-height: 1.7; color: var(--ab-ink); }
+.ab .pl-text p { margin: 0 0 12px; }
+.pl-text ul { margin: 0 0 12px; padding-left: 20px; }
+.pl-text li { margin-bottom: 6px; }
+.pl-text a { color: var(--ab-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 900px) {
+  .pl-grid { grid-template-columns: 1fr; }
+  .pl-toc { position: static; }
+}

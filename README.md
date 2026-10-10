@@ -126,6 +126,31 @@ It never touches orders, messages, subscribers, admin accounts, passwords, payme
 order alerts or maintenance mode. Importing `live-content-sync.sql` in phpMyAdmin does
 the same, without the backup.
 
+## Donations
+
+`donate.php` takes gifts by mobile money or card through Pesapal, using the same keys as the
+farm shop (Admin → Site Settings → Payments & Email). Without keys, the page asks people to
+write instead. A gift is confirmed with Pesapal itself, on return (`donate-thanks.php`) and by
+the IPN (`order-ipn.php` serves orders and gifts); the giver's receipt and the alert to
+BetterLife go out once, when it is paid. Gifts are listed, totalled and downloadable under
+Admin → Donations. The `donations` table creates itself on first use.
+
+## Is email working?
+
+Every email the site sends records whether it went out. If the last one failed, the admin
+dashboard says so, and Admin → Site Settings → "Check that emails are going out" shows the
+error and sends a test.
+
+## Policies, statistics and phone films
+
+- `privacy.php` and `safeguarding.php`: text in Admin → Page Content → Policies. Contact
+  details are filled in from Site Settings ({email}, {phone}, {postal}, {concern}).
+- Site Settings → Visitor Statistics & Google: paste a Cloudflare Web Analytics token
+  (cookieless) and the Google Search Console verification tag; then submit `sitemap.php`.
+- Films have a lighter `-360.mp4` copy beside each `-720.mp4`, chosen on phones, data saving
+  and slow connections. To make one: `powershell -File tools/make_phone_video.ps1`, then
+  `tools/mp4_faststart.php` (so playback starts while it downloads).
+
 ## Security notes
 
 - Passwords are hashed with bcrypt (`password_hash`/`password_verify`).

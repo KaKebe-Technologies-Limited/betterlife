@@ -133,7 +133,7 @@ require __DIR__ . '/includes/header.php';
           <span class="ab-eyebrow">Watch the film</span>
           <h2 id="pgFilmTitle"><?= h($film['title']) ?></h2>
         </div>
-        <div class="pg-film-inline ab-reveal"><video controls playsinline preload="none" poster="<?= h(asset_url($film['poster'])) ?>" aria-label="<?= h($film['title']) ?>"><source src="<?= h(pp_film_src($film)) ?>" type="video/mp4"></video></div>
+        <div class="pg-film-inline ab-reveal"><video controls playsinline preload="none" poster="<?= h(asset_url($film['poster'])) ?>" aria-label="<?= h($film['title']) ?>"><?php if ($filmSmall = pp_film_small_src($film['src'])): ?><source src="<?= h($filmSmall) ?>" type="video/mp4" media="(max-width: 720px)"><?php endif; ?><source src="<?= h(pp_film_src($film)) ?>" type="video/mp4"></video></div>
         <p class="pg-film-caption ab-reveal"><?= h($film['summary']) ?> <?= (int) $film['minutes'] ?> minutes, with sound.</p>
       </div>
     </section>

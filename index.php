@@ -420,19 +420,19 @@ require __DIR__ . '/includes/header.php';
         <div class="hm-cinema">
           <?= ab_img('assets/img/home/yumbe-tour-poster.jpg', 'A woman stands to speak at a training session', 'hm-cinema-img', true, 'style="object-position: 50% 30%"', '(max-width: 900px) 100vw, 720px') ?>
           <?php if ($hasTour): ?>
-            <button type="button" class="hm-cinema-play" data-film="<?= h(asset_url($tour['src'])) ?>?v=<?= filemtime(__DIR__ . '/' . $tour['src']) ?>" data-film-title="<?= h($tour['title']) ?>">
+            <button type="button" class="hm-cinema-play" data-film="<?= h(asset_url($tour['src'])) ?>?v=<?= filemtime(__DIR__ . '/' . $tour['src']) ?>"<?= pp_film_small_attr($tour['src']) ?> data-film-title="<?= h($tour['title']) ?>">
               <span class="pg-film-play-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5Z"/></svg></span>
               <span class="hm-cinema-label">Take a <?= h($tour['length']) ?> tour<small>Training sessions and a demonstration farm in Yumbe, with sound</small></span>
             </button>
           <?php elseif (is_file(__DIR__ . '/' . $film['src'])): ?>
-            <button type="button" class="hm-cinema-play" data-film="<?= h(pp_film_src($film)) ?>" data-film-title="<?= h($film['title']) ?>">
+            <button type="button" class="hm-cinema-play" data-film="<?= h(pp_film_src($film)) ?>"<?= pp_film_small_attr($film['src']) ?> data-film-title="<?= h($film['title']) ?>">
               <span class="pg-film-play-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5Z"/></svg></span>
               <span class="hm-cinema-label">Watch the film<small><?= h($film['title']) ?> &middot; <?= (int) $film['minutes'] ?> minutes, with sound</small></span>
             </button>
           <?php endif; ?>
         </div>
         <?php if ($hasTour && is_file(__DIR__ . '/' . $film['src'])): ?>
-          <p class="hm-film-more">Have longer? <button type="button" class="hm-film-alt" data-film="<?= h(pp_film_src($film)) ?>" data-film-title="<?= h($film['title']) ?>"><?= icon('arrow-right', 14) ?> Watch the full <?= (int) $film['minutes'] ?>-minute film</button>, with the women, local leaders and our team in their own words.</p>
+          <p class="hm-film-more">Have longer? <button type="button" class="hm-film-alt" data-film="<?= h(pp_film_src($film)) ?>"<?= pp_film_small_attr($film['src']) ?> data-film-title="<?= h($film['title']) ?>"><?= icon('arrow-right', 14) ?> Watch the full <?= (int) $film['minutes'] ?>-minute film</button>, with the women, local leaders and our team in their own words.</p>
         <?php endif; ?>
       </div>
     </div>
@@ -526,8 +526,8 @@ require __DIR__ . '/includes/header.php';
         <h2 id="hmCloseTitle">Help families plan beyond the <?= ab_mark('next meal', 77) ?></h2>
         <p>Funding, technical expertise, equipment and market connections all help communities build on work that is already under way.</p>
         <div class="hm-actions">
-          <a href="<?= SITE_URL ?>/contact.php?subject=<?= rawurlencode('Partnership enquiry') ?>" class="pg-btn">Support our work <?= icon('arrow-right', 16) ?></a>
-          <a href="<?= SITE_URL ?>/contact.php" class="pg-btn pg-btn-ghost">Talk to our team</a>
+          <a href="<?= SITE_URL ?>/donate.php" class="pg-btn">Give now <?= icon('arrow-right', 16) ?></a>
+          <a href="<?= SITE_URL ?>/contact.php?subject=<?= rawurlencode('Partnership enquiry') ?>" class="pg-btn pg-btn-ghost">Partner with us</a>
         </div>
       </div>
     </div>

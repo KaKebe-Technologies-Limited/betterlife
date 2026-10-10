@@ -8,7 +8,7 @@ $footerPhone = setting($pdo, 'phone');
 $footerPlace = setting($pdo, 'postal_address') ?: setting($pdo, 'address');
 $footerLinks = [
     'about.php' => 'About us', 'programs.php' => 'Our work', 'impact-reports.php' => 'Impact & reports', 'partners.php' => 'Partners',
-    'team.php' => 'Our team', 'blog.php' => 'Stories', 'farm.php' => 'BetterLife Farm',
+    'team.php' => 'Our team', 'blog.php' => 'Stories', 'farm.php' => 'BetterLife Farm', 'donate.php' => 'Donate',
 ];
 ?>
 <footer class="site-footer">
@@ -50,7 +50,7 @@ $footerLinks = [
     </div>
 
     <div class="footer-bottom">
-      <span>&copy; <?= date('Y') ?> <?= h($legalName) ?></span>
+      <span class="footer-small-links">&copy; <?= date('Y') ?> <?= h($legalName) ?> <a href="<?= SITE_URL ?>/privacy.php">Privacy</a> <a href="<?= SITE_URL ?>/safeguarding.php">Safeguarding</a></span>
       <?php if ($regNo): // Legal standing, as on the certificate and permit from the National Bureau for NGOs ?>
         <span class="footer-legal"><span><?= icon('check', 13) ?> Registered NGO in Uganda</span><span>Reg. No. <?= h($regNo) ?></span><?php if ($permitNo): ?><span>Permit No. <?= h($permitNo) ?></span><?php endif; ?></span>
       <?php endif; ?>

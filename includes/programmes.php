@@ -686,12 +686,29 @@ function pp_film_src(array $f): string
     return asset_url($f['src']) . (is_file($path) ? '?v=' . filemtime($path) : '');
 }
 
+/**
+ * The lighter copy of a film for phones and slow connections (a "-360" file beside the "-720" one),
+ * its address, and as a data-film-small attribute for the player buttons; empty when there is none.
+ */
+function pp_film_small_src(string $src): string
+{
+    $small = preg_replace('/-720\.mp4$/', '-360.mp4', $src);
+    $path = dirname(__DIR__) . '/' . $small;
+    return $small !== $src && is_file($path) ? asset_url($small) . '?v=' . filemtime($path) : '';
+}
+
+function pp_film_small_attr(string $src): string
+{
+    $small = pp_film_small_src($src);
+    return $small !== '' ? ' data-film-small="' . h($small) . '"' : '';
+}
+
 /** A play button that opens the film in the player dialog (sits on the Yumbe feature on the overview). */
 function pp_film_button(): string
 {
     $f = pp_film();
     if (!is_file(dirname(__DIR__) . '/' . $f['src'])) return '';
-    return '<button type="button" class="pg-film-play" data-film="' . h(pp_film_src($f)) . '" data-film-title="' . h($f['title']) . '">'
+    return '<button type="button" class="pg-film-play" data-film="' . h(pp_film_src($f)) . '"' . pp_film_small_attr($f['src']) . ' data-film-title="' . h($f['title']) . '">'
         . '<span class="pg-film-play-ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l10.5-6.5Z"/></svg></span>'
         . '<span class="pg-film-play-text">Watch the film<small>' . (int) $f['minutes'] . ' minutes, with sound</small></span></button>';
 }

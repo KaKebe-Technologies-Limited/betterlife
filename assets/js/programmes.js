@@ -42,10 +42,14 @@
     if (!dlg || !buttons.length || typeof dlg.showModal !== 'function') return;
     var video = dlg.querySelector('video'), close = dlg.querySelector('.pg-film-close'), opener = null;
     var heroFilm = document.querySelector('.pg-hero-video, .hm-window-video'), heroWasPlaying = false;
+    // Phones, data saving and slow connections get the lighter copy of a film when there is one
+    var conn = navigator.connection || {};
+    var light = conn.saveData || /(^|-)(2g|3g)$/.test(conn.effectiveType || '') || window.matchMedia('(max-width: 720px)').matches;
     buttons.forEach(function (b) {
       b.addEventListener('click', function () {
         opener = b;
-        if (video.getAttribute('src') !== b.getAttribute('data-film')) video.src = b.getAttribute('data-film');
+        var src = (light && b.getAttribute('data-film-small')) || b.getAttribute('data-film');
+        if (video.getAttribute('src') !== src) video.src = src;
         video.setAttribute('aria-label', b.getAttribute('data-film-title') || 'Film');
         if (heroFilm) { heroWasPlaying = !heroFilm.paused; heroFilm.pause(); }
         dlg.showModal();

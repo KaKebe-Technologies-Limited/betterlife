@@ -20,6 +20,10 @@ if ($trackingId === '' && $merchantRef === '') {
     exit;
 }
 
+// Gifts from the Donate page come through this same notification address
+require_once __DIR__ . '/includes/donations.php';
+if (donation_handle_ipn($pdo, (string) $trackingId, (string) $merchantRef)) exit;
+
 $stmt = $merchantRef !== ''
     ? $pdo->prepare("SELECT * FROM orders WHERE order_ref = ? LIMIT 1")
     : $pdo->prepare("SELECT * FROM orders WHERE pesapal_tracking_id = ? LIMIT 1");

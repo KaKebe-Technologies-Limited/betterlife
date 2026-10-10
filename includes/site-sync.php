@@ -6,7 +6,7 @@
  * the code, and Admin → Site Update loads it with site_sync_apply(). The same format is used for the backup
  * taken just before an update, so a backup can be put back the same way.
  *
- * Only the content tables below and the site settings can change. Orders, messages, subscribers and admin
+ * Only the content tables below and the site settings can change. Orders, donations, messages, subscribers and admin
  * accounts are not in the list, and passwords, payment keys, order alerts and maintenance mode are never
  * written, whatever a file contains.
  */

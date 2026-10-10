@@ -16,11 +16,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $subscribers = $pdo->query("SELECT * FROM newsletter_subscribers ORDER BY created_at DESC")->fetchAll();
+
+// The list as a spreadsheet, to import into a newsletter service (Mailchimp, Brevo) or open in Excel
+if (($_GET['export'] ?? '') === 'csv') {
+    header('Content-Type: text/csv; charset=utf-8');
+    header('Content-Disposition: attachment; filename="betterlife-subscribers-' . date('Y-m-d') . '.csv"');
+    $out = fopen('php://output', 'w');
+    fwrite($out, "\xEF\xBB\xBF");   // so Excel reads it as UTF-8
+    fputcsv($out, ['Email Address', 'Subscribed']);
+    foreach ($subscribers as $s) fputcsv($out, [$s['email'], date('Y-m-d', strtotime($s['created_at']))]);
+    exit;
+}
 require __DIR__ . '/includes/header.php';
 ?>
 <div class="panel">
   <div class="panel-head">
     <h3>All Subscribers (<?= count($subscribers) ?>)</h3>
+    <?php if ($subscribers): ?><a href="<?= ADMIN_URL ?>/subscribers.php?export=csv" class="btn btn-outline btn-sm">Download list (CSV)</a><?php endif; ?>
+  </div>
+  <div class="panel-body" style="padding-bottom:0;">
+    <p class="help-text" style="margin:0;">To send a newsletter, download the list and import it into a free newsletter service such as Brevo or Mailchimp, which handle unsubscribes for you. Only email people who signed up here.</p>
   </div>
   <div class="table-wrap">
     <table class="data-table">

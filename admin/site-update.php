@@ -141,7 +141,7 @@ require __DIR__ . '/includes/header.php';
       </div>
 
       <p class="help-text" style="margin:0 0 6px;">These sections are replaced in full, so anything changed in this admin since <?= h($when($stamp)) ?> in them will be replaced too. A backup of what the site shows now is saved first, and you can put it back below.</p>
-      <p class="help-text" style="margin:0 0 18px;">Never touched: orders, contact messages, newsletter subscribers, admin accounts, email and payment passwords, order alerts and maintenance mode.</p>
+      <p class="help-text" style="margin:0 0 18px;">Never touched: orders, donations, contact messages, newsletter subscribers, admin accounts, email and payment passwords, order alerts and maintenance mode.</p>
 
       <form method="post">
         <?= csrf_field() ?>

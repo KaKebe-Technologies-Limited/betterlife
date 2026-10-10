@@ -16,6 +16,9 @@ $staticPages = [
     ['url' => '/team.php', 'priority' => '0.6', 'freq' => 'monthly'],
     ['url' => '/blog.php', 'priority' => '0.8', 'freq' => 'daily'],
     ['url' => '/contact.php', 'priority' => '0.6', 'freq' => 'yearly'],
+    ['url' => '/donate.php', 'priority' => '0.8', 'freq' => 'monthly'],
+    ['url' => '/privacy.php', 'priority' => '0.3', 'freq' => 'yearly'],
+    ['url' => '/safeguarding.php', 'priority' => '0.4', 'freq' => 'yearly'],
 ];
 
 $products = $pdo->query("SELECT slug, updated_at FROM products WHERE status = 1")->fetchAll();

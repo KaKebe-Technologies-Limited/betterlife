@@ -11,5 +11,6 @@ return [
     'Product order'       => ['Order from the farm', 'shopping-bag', 'Honey, ghee, yoghurt and more', 'Which products would you like, how many, and where should they go?'],
     'Media and speaking'  => ['Media and speaking', 'newspaper', 'Interviews, stories or a speaker', 'Tell us about your story, publication or event, and any deadline.'],
     'Volunteer enquiry'   => ['Volunteer with us', 'users', 'Give your time or your skills', 'What would you like to offer, and when are you available?'],
+    'Safeguarding concern' => ['Report a safeguarding concern', 'eye', 'Worried about someone’s safety', 'Tell us what happened or what worries you, and who is involved if you know. We handle every concern in confidence.'],
     'General enquiry'     => ['Something else', 'message', 'Any other question', 'How can we help?'],
 ];

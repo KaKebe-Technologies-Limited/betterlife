@@ -26,8 +26,9 @@ $navItems = [
     ['key' => 'blog', 'label' => 'Blog Posts', 'icon' => 'newspaper', 'href' => ADMIN_URL . '/blog.php'],
     ['key' => 'blog-categories', 'label' => 'Categories', 'icon' => 'tag', 'href' => ADMIN_URL . '/blog-categories.php'],
   ]],
-  ['group' => 'Sales', 'items' => [
+  ['group' => 'Orders & Gifts', 'items' => [
     ['key' => 'orders', 'label' => 'Orders', 'icon' => 'box', 'href' => ADMIN_URL . '/orders.php'],
+    ['key' => 'donations', 'label' => 'Donations', 'icon' => 'heart', 'href' => ADMIN_URL . '/donations.php'],
   ]],
   ['group' => 'Engagement', 'items' => [
     ['key' => 'messages', 'label' => 'Messages', 'icon' => 'mail', 'href' => ADMIN_URL . '/messages.php'],

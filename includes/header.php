@@ -31,6 +31,20 @@ $ogType          = $ogType ?? 'website';
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title><?= h($pageTitle) ?> | <?= h($siteName) ?></title>
 <meta name="description" content="<?= h($pageDescription) ?>">
+<?php
+// Google Search Console and Cloudflare Web Analytics, from Site Settings > Visitor Statistics & Google.
+// Either the bare value or the whole snippet may be pasted there; only the code itself is used.
+$gsv = setting($pdo, 'google_site_verification');
+if (preg_match('/content=["\']([^"\']+)/i', $gsv, $m)) $gsv = $m[1];
+$gsv = preg_replace('/[^A-Za-z0-9_-]/', '', $gsv);
+$cfToken = setting($pdo, 'analytics_cf_token');
+if (preg_match('/"token"\s*:\s*"([^"]+)"/i', $cfToken, $m)) $cfToken = $m[1];
+$cfToken = preg_replace('/[^a-f0-9]/i', '', $cfToken);
+?>
+<?php if ($gsv !== ''): ?><meta name="google-site-verification" content="<?= h($gsv) ?>">
+<?php endif; ?>
+<?php if ($cfToken !== ''): ?><script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "<?= h($cfToken) ?>"}'></script>
+<?php endif; ?>
 <link rel="canonical" href="<?= h($canonicalUrl) ?>">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#0b3d2e">
@@ -135,7 +149,7 @@ $cartLink = function (int $size) use ($cartCount): string {
     </a>
     <div class="header-actions">
       <?php if ($cartCount): ?><span class="mobile-cart"><?= $cartLink(21) ?></span><?php endif; ?>
-      <a href="<?= SITE_URL ?>/contact.php?subject=Partnership enquiry" class="btn-pill-accent header-cta"><?= icon('heart', 15) ?> Support Our Work</a>
+      <a href="<?= SITE_URL ?>/donate.php" class="btn-pill-accent header-cta"><?= icon('heart', 15) ?> Support Our Work</a>
       <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-controls="mainNav" aria-expanded="false"><?= icon('menu', 24) ?></button>
     </div>
   </div>
@@ -165,7 +179,7 @@ $cartLink = function (int $size) use ($cartCount): string {
       <a href="<?= SITE_URL ?>/blog.php" class="<?= $activePage === 'blog' ? 'active' : '' ?>">Stories</a>
       <a href="<?= SITE_URL ?>/contact.php" class="<?= $activePage === 'contact' ? 'active' : '' ?>">Contact</a>
       <div class="main-nav-foot">
-        <a href="<?= SITE_URL ?>/contact.php?subject=Partnership enquiry" class="btn-pill-accent"><?= icon('heart', 15) ?> Support Our Work</a>
+        <a href="<?= SITE_URL ?>/donate.php" class="btn-pill-accent"><?= icon('heart', 15) ?> Support Our Work</a>
         <a href="<?= SITE_URL ?>/products.php" class="main-nav-contact"><?= icon('basket', 15) ?> Shop the farm</a>
         <?php if ($phone): ?><a href="tel:<?= h(preg_replace('/\s+/', '', $phone)) ?>" class="main-nav-contact"><?= icon('phone', 15) ?> <?= h($phone) ?></a><?php endif; ?>
         <?php if ($email): ?><a href="mailto:<?= h($email) ?>" class="main-nav-contact"><?= icon('mail', 15) ?> <?= h($email) ?></a><?php endif; ?>

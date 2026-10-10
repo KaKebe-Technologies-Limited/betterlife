@@ -1,0 +1,82 @@
+/* Donate: the gift form beside why it matters, then where gifts go and other ways to help */
+.dn-hero { padding: clamp(40px, 6vw, 88px) 0 clamp(48px, 6vw, 88px); background: linear-gradient(180deg, var(--ab-cream) 0%, #fff 100%); }
+.dn-hero-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 480px); gap: clamp(28px, 5vw, 72px); align-items: start; }
+.dn-hero-copy { padding-top: clamp(0px, 2vw, 24px); }
+.ab .dn-hero h1 { font-family: var(--ab-serif); font-weight: 500; font-size: clamp(40px, 5vw, 64px); line-height: 1.04; letter-spacing: -.015em; color: var(--ab-deep); margin: 10px 0 20px; }
+.ab .dn-lead { max-width: 52ch; font-size: clamp(17px, 1.4vw, 19px); line-height: 1.65; color: var(--ab-ink); margin: 0 0 26px; }
+.dn-trust { list-style: none; margin: 0 0 24px; padding: 0; display: grid; gap: 10px; }
+.dn-trust li { display: flex; align-items: flex-start; gap: 10px; font-size: 15.5px; font-weight: 600; color: var(--ab-deep); }
+.dn-trust svg { flex-shrink: 0; margin-top: 3px; color: var(--ab-green); }
+.ab .dn-links { display: flex; flex-wrap: wrap; gap: 10px 26px; margin: 0; }
+
+.dn-card { padding: clamp(22px, 3vw, 34px); border-radius: 28px; background: #fff; border: 1px solid var(--ab-line); box-shadow: 0 24px 60px rgba(11, 61, 46, .1); }
+.ab .dn-card h2 { font-family: var(--ab-serif); font-weight: 500; font-size: 26px; line-height: 1.2; color: var(--ab-deep); margin: 0 0 18px; }
+.dn-amounts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0 0 14px; padding: 0; border: 0; }
+.dn-amount { position: relative; display: block; cursor: pointer; }
+.dn-amount.is-other { grid-column: 1 / -1; }
+.dn-amount input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.dn-amount span { display: flex; align-items: center; justify-content: center; min-height: 54px; padding: 10px 14px; border-radius: 16px; border: 1.5px solid var(--ab-line); background: #fbfaf6; font-weight: 800; font-size: 16.5px; color: var(--ab-deep); transition: border-color .2s ease, background .2s ease, color .2s ease; }
+.dn-amount span small { font-size: inherit; font-weight: inherit; }
+.dn-amount:hover span { border-color: var(--ab-green); }
+.dn-amount input:checked + span { background: var(--ab-green); border-color: var(--ab-green); color: #fff; }
+.dn-amount input:focus-visible + span { outline: 3px solid var(--ab-blue); outline-offset: 2px; }
+.dn-other { margin-bottom: 8px; }
+.dn-other[hidden] { display: none; }
+.ab .dn-usd { min-height: 20px; margin: 0 0 18px; font-size: 14px; color: var(--ab-soft); }
+.dn-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.dn-soon p { margin: 0 0 20px; }
+
+.dn-areas { padding: clamp(56px, 7vw, 96px) 0; }
+.ab .dn-areas h2, .ab .dn-ways h2 { margin: 8px 0 28px; }
+.dn-area-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+.dn-area a { display: flex; flex-direction: column; height: 100%; border-radius: 22px; overflow: hidden; background: #fff; border: 1px solid var(--ab-line); transition: transform .3s ease, box-shadow .3s ease; }
+.dn-area a:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(11, 61, 46, .12); }
+.dn-area-media { display: block; aspect-ratio: 4 / 3; overflow: hidden; background: var(--ab-sand); }
+.dn-area-media img { width: 100%; height: 100% !important; object-fit: cover; }
+.dn-area-body { display: flex; flex-direction: column; gap: 8px; padding: 16px 18px 20px; }
+.dn-area-body strong { font-family: var(--ab-serif); font-weight: 600; font-size: 18px; line-height: 1.25; color: var(--ab-deep); }
+.dn-area-body span { font-size: 14.5px; line-height: 1.55; color: var(--ab-soft); }
+
+.dn-ways { padding: 0 0 clamp(64px, 8vw, 110px); }
+.dn-way-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.dn-way-list a { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; align-items: start; height: 100%; padding: 20px; border-radius: 20px; background: var(--ab-cream); border: 1px solid transparent; transition: border-color .2s ease, background .2s ease; }
+.dn-way-list a:hover { border-color: var(--ab-green); background: #fff; }
+.dn-way-list svg { grid-row: span 2; margin-top: 2px; color: var(--ab-green); }
+.dn-way-list strong { font-size: 16px; color: var(--ab-deep); }
+.dn-way-list span { font-size: 14px; line-height: 1.5; color: var(--ab-soft); }
+
+@media (max-width: 1100px) {
+  .dn-area-list { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .dn-way-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .dn-hero-grid { grid-template-columns: 1fr; }
+  .dn-card { max-width: 560px; }
+}
+@media (max-width: 720px) {
+  .dn-area-list { grid-template-columns: 1fr; gap: 12px; }
+  .dn-area a { flex-direction: row; }
+  .dn-area-media { flex: 0 0 34%; aspect-ratio: auto; min-height: 120px; }
+  .dn-area-body { padding: 14px 16px; }
+  .dn-area-body strong { font-size: 16.5px; }
+  .dn-area-body span { font-size: 13.5px; }
+  .dn-way-list { grid-template-columns: 1fr; }
+  .dn-amount span { min-height: 50px; font-size: 15.5px; }
+}
+@media (max-width: 400px) {
+  .dn-amount span { flex-direction: column; gap: 1px; min-height: 58px; line-height: 1.15; }   /* a small UGX above the number */
+  .dn-amount span small { font-size: 11.5px; font-weight: 700; letter-spacing: .08em; opacity: .8; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dn-area a, .dn-area a:hover { transition: none; transform: none; }
+}
+
+/* After paying */
+.dn-thanks { max-width: 640px; margin: 0 auto; text-align: center; }
+.dn-thanks-icon { display: inline-flex; align-items: center; justify-content: center; width: 64px; height: 64px; margin-bottom: 14px; border-radius: 50%; background: var(--ab-cream); color: var(--ab-blue); }
+.dn-thanks-icon.is-paid { background: var(--ab-green); color: #fff; }
+.dn-thanks-icon.is-failed { background: #fbe9e7; color: #b03024; }
+.ab .dn-thanks h1 { font-family: var(--ab-serif); font-weight: 500; font-size: clamp(32px, 4vw, 44px); line-height: 1.1; color: var(--ab-deep); margin: 0 0 14px; }
+.ab .dn-thanks p { font-size: 17px; }
+.ab .dn-thanks .dn-thanks-ref { margin: 10px 0 22px; font-size: 13.5px; letter-spacing: .04em; color: var(--ab-soft); }
+.dn-thanks .dn-links { justify-content: center; }

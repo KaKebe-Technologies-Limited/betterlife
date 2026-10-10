@@ -26,6 +26,7 @@ function send_email(PDO $pdo, string $toEmail, string $toName, string $subject, 
 
     if ($host === '' || $user === '' || $pass === '') {
         error_log('Email not sent (SMTP not configured): ' . $subject);
+        mail_status_record($pdo, 'Outgoing email is not set up (Site Settings > Payments & Email).');
         return false;
     }
 
@@ -56,11 +57,42 @@ function send_email(PDO $pdo, string $toEmail, string $toName, string $subject, 
         $mail->AltBody = trim(strip_tags(preg_replace('/<br\s*\/?>/i', "\n", $htmlBody)));
 
         $mail->send();
+        mail_status_record($pdo, null);
         return true;
     } catch (PHPMailerException $e) {
         error_log('Email send failed: ' . $mail->ErrorInfo);
+        mail_status_record($pdo, $mail->ErrorInfo ?: $e->getMessage());
         return false;
     }
+}
+
+/**
+ * Remembers whether the last email went out, so the admin can see when emails are failing
+ * (a revoked Gmail app password otherwise fails silently). Kept as smtp_* settings, which the
+ * live content update never copies.
+ */
+function mail_status_record(PDO $pdo, ?string $error): void
+{
+    try {
+        $up = $pdo->prepare('INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)');
+        if ($error === null) {
+            $up->execute(['smtp_last_ok_at', date('Y-m-d H:i:s')]);
+        } else {
+            $up->execute(['smtp_last_error', mb_substr($error, 0, 500)]);
+            $up->execute(['smtp_last_error_at', date('Y-m-d H:i:s')]);
+        }
+    } catch (Throwable $e) {
+        error_log('Could not record email status: ' . $e->getMessage());
+    }
+}
+
+/** The last email failure when it is more recent than the last success, as [when, error], or null. */
+function mail_status_problem(PDO $pdo): ?array
+{
+    $row = $pdo->query("SELECT setting_key, setting_value FROM settings WHERE setting_key IN ('smtp_last_ok_at', 'smtp_last_error_at', 'smtp_last_error')")->fetchAll(PDO::FETCH_KEY_PAIR);
+    $failed = $row['smtp_last_error_at'] ?? '';
+    if ($failed === '' || $failed <= ($row['smtp_last_ok_at'] ?? '')) return null;
+    return [$failed, $row['smtp_last_error'] ?? ''];
 }
 
 /**

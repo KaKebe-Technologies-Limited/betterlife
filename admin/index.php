@@ -29,6 +29,16 @@ try {
 require __DIR__ . '/includes/header.php';
 ?>
 
+<?php require_once __DIR__ . '/../includes/mailer.php'; if ($mailProblem = mail_status_problem($pdo)): ?>
+  <div class="panel" style="border-left:4px solid #c0392b;">
+    <div class="panel-head">
+      <h3>Emails are not going out</h3>
+      <a href="<?= ADMIN_URL ?>/settings.php#email-check" class="btn btn-primary btn-sm">Fix in Site Settings →</a>
+    </div>
+    <div class="panel-body"><p class="help-text" style="margin:0;">The last email (<?= h(date('j F Y, H:i', strtotime($mailProblem[0]))) ?>) failed: <?= h($mailProblem[1]) ?> Contact-form alerts, order emails and donation receipts are not reaching people until this is fixed. Messages are still saved under Messages.</p></div>
+  </div>
+<?php endif; ?>
+
 <?php if ($syncPending): ?>
   <div class="panel" style="border-left:4px solid #c98a12;">
     <div class="panel-head">

@@ -8,6 +8,13 @@ $stmt = $pdo->prepare("SELECT bp.*, bc.name AS cat_name, bc.slug AS cat_slug FRO
 $stmt->execute([$slug]);
 $post = $stmt->fetch();
 
+// A post taken back to draft (retired) sends old links to the stories rather than to a dead end
+if (!$post && $slug !== '') {
+    $retired = $pdo->prepare("SELECT 1 FROM blog_posts WHERE slug = ? AND status = 'draft'");
+    $retired->execute([$slug]);
+    if ($retired->fetchColumn()) redirect(SITE_URL . '/blog.php');
+}
+
 if (!$post) {
     http_response_code(404);
     $pageTitle = 'Story Not Found';

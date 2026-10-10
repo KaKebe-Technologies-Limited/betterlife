@@ -12,6 +12,7 @@ $textFields = [
     'facebook', 'twitter', 'instagram', 'linkedin', 'youtube',
     'footer_about', 'board_quote', 'board_quote_author', 'map_embed',
     'legal_name', 'ngo_reg_no', 'ngo_permit_no', 'ngo_file_no', 'ngo_permit_until', 'postal_address',
+    'analytics_cf_token', 'google_site_verification',
 ];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -28,6 +29,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ? 'Maintenance mode is ON. Visitors now see the holding page; you still have full access.'
             : 'Maintenance mode is OFF. The site is live for everyone.');
         redirect(ADMIN_URL . '/settings.php');
+    }
+
+    if (($_POST['form'] ?? '') === 'testmail') {
+        require_once __DIR__ . '/../includes/mailer.php';
+        $to = trim($_POST['test_to'] ?? '');
+        if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
+            flash_set('error', 'Please enter a valid email address to send the test to.');
+        } elseif (send_email($pdo, $to, '', 'Test email from the BetterLife website', email_wrap($pdo, 'Emails are working', '<p>This is a test from Admin &gt; Site Settings. If it reached you, contact-form alerts, order emails and donation receipts can reach people too.</p>'))) {
+            flash_set('success', "Test email sent to $to. If it is not in the inbox within a few minutes, look in Spam.");
+        } else {
+            $problem = mail_status_problem($pdo);
+            flash_set('error', 'The test email could not be sent: ' . ($problem[1] ?? 'unknown error') . ' If Gmail rejects the login, make a new app password at myaccount.google.com/apppasswords and save it above.');
+        }
+        redirect(ADMIN_URL . '/settings.php#email-check');
     }
 
     if (($_POST['form'] ?? '') === 'payments') {
@@ -239,6 +254,24 @@ $maintenanceOn = setting($pdo, 'maintenance_mode') === '1';
     </div>
   </div>
 
+  <div class="panel">
+    <div class="panel-head"><h3>Visitor Statistics &amp; Google</h3></div>
+    <div class="panel-body">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Cloudflare Web Analytics token</label>
+          <input type="text" name="analytics_cf_token" class="form-control" value="<?= $v('analytics_cf_token') ?>" placeholder="e.g. 0a1b2c3d4e5f…" autocomplete="off">
+          <p class="hint">Counts visits without cookies, free. At dash.cloudflare.com choose Analytics &amp; Logs, then Web Analytics, add betterlifeint.org, and paste the token from the code it shows (the value after "token"). Leave empty to count nothing.</p>
+        </div>
+        <div class="form-group">
+          <label>Google Search Console verification code</label>
+          <input type="text" name="google_site_verification" class="form-control" value="<?= $v('google_site_verification') ?>" autocomplete="off">
+          <p class="hint">At search.google.com/search-console add betterlifeint.org as a URL-prefix property, choose the HTML tag method, and paste the tag (or just its content value) here, save, then press Verify there. Then submit betterlifeint.org/sitemap.php as the sitemap.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <button type="submit" class="btn btn-primary ico-text"><?= icon('save', 16) ?> Save All Settings</button>
 </form>
 
@@ -275,6 +308,28 @@ $maintenanceOn = setting($pdo, 'maintenance_mode') === '1';
         </div>
       </div>
       <button type="submit" class="btn btn-accent ico-text"><?= icon('save', 16) ?> Save Payment &amp; Email Settings</button>
+    </form>
+  </div>
+</div>
+
+<?php require_once __DIR__ . '/../includes/mailer.php'; $mailProblem = mail_status_problem($pdo); $mailOk = setting($pdo, 'smtp_last_ok_at'); ?>
+<div class="panel" id="email-check" style="margin-top:26px;border-left:4px solid <?= $mailProblem ? '#c0392b' : 'var(--a-green-600)' ?>;">
+  <div class="panel-head">
+    <h3>Check that emails are going out</h3>
+    <span class="badge <?= $mailProblem ? 'badge-red' : ($mailOk ? 'badge-green' : 'badge-gray') ?>"><?= $mailProblem ? 'Last email failed' : ($mailOk ? 'Working' : 'Not tested yet') ?></span>
+  </div>
+  <div class="panel-body">
+    <?php if ($mailProblem): ?>
+      <p style="margin:0 0 12px;"><strong>The last email, on <?= h(date('j F Y, H:i', strtotime($mailProblem[0]))) ?>, did not go out:</strong> <?= h($mailProblem[1]) ?></p>
+      <p class="help-text" style="margin:0 0 16px;">When Gmail rejects the login, make a new app password at myaccount.google.com/apppasswords (2-Step Verification must be on), paste it into SMTP App Password above, save, then send a test.</p>
+    <?php elseif ($mailOk): ?>
+      <p class="help-text" style="margin:0 0 16px;">The last email went out on <?= h(date('j F Y, H:i', strtotime($mailOk))) ?>.</p>
+    <?php endif; ?>
+    <form method="post" style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;max-width:560px;">
+      <?= csrf_field() ?>
+      <input type="hidden" name="form" value="testmail">
+      <div class="form-group" style="flex:1 1 260px;margin:0;"><label>Send a test email to</label><input type="email" name="test_to" class="form-control" required value="<?= h(setting($pdo, 'admin_alert_email') ?: setting($pdo, 'email')) ?>"></div>
+      <button type="submit" class="btn btn-primary ico-text"><?= icon('send', 16) ?> Send test email</button>
     </form>
   </div>
 </div>

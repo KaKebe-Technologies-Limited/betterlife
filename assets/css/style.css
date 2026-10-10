@@ -818,6 +818,8 @@ textarea.form-control { resize: vertical; min-height: 130px; }
 .footer-legal > span { display: inline-flex; align-items: center; gap: 6px; }
 .footer-legal > span + span::before { content: " b7"; margin: 0 9px; opacity: .7; }
 .footer-legal svg { color: #9fd6b2; }
+.footer-small-links a { margin-left: 16px; color: #cfe3d8; text-decoration: underline; text-decoration-color: rgba(207, 227, 216, .35); text-underline-offset: 3px; }
+.footer-small-links a:hover { color: #fff; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 @media (max-width: 1000px) {
   .site-footer .footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
