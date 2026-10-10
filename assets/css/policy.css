@@ -22,3 +22,15 @@
   .pl-grid { grid-template-columns: 1fr; }
   .pl-toc { position: static; }
 }
+
+/* Sub-headings, numbered and lettered lists, and the label above a policy (e.g. Annex I) */
+.ab .pl-label { margin: 0 0 4px; font-size: 12.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ab-green); }
+.ab .pl-text h3 { margin: 22px 0 8px; font-family: var(--font-body, inherit); font-size: 17px; font-weight: 700; color: var(--ab-deep); }
+.pl-text ol { margin: 0 0 12px; padding-left: 26px; }
+.pl-text ol li::marker { font-weight: 700; color: var(--ab-green); }
+.pl-text strong { color: var(--ab-deep); }
+.pl-text section:first-child { padding: 22px 24px; border: 1px solid var(--ab-line); border-left: 4px solid var(--ab-green); border-radius: 18px; background: var(--ab-cream); }
+.ab .pl-text ul { list-style: disc; padding-left: 20px; }
+.pl-text ol[type="a"] { list-style-type: lower-alpha; }
+.pl-text ol[type="I"] { list-style-type: upper-roman; }
+.pl-text ul li::marker { color: var(--ab-green); }

@@ -19,26 +19,41 @@ function policy_defaults(string $page): array
         ['Your choices', "You can ask to see the information we hold about you, to correct it, or to have it deleted, by writing to {email}. You can leave our newsletter at any time, through the link in any newsletter we send or by writing to us. These rights are set out in Uganda's Data Protection and Privacy Act, 2019."],
         ['Changes', "If we change how we use personal information, we will update this page."],
     ];
+    // BetterLife's own policies (Annexes I to III of its policy document), word for word, after a way to report
     $safeguarding = [
-        ['Our commitment', "BetterLife works with women, children and young people, refugees, displaced families and farming communities. Everyone who takes part in our work has the right to be safe from harm, abuse and exploitation, including sexual exploitation and abuse. Keeping people safe comes before any other part of our work."],
-        ['Who this covers', "This commitment applies to everyone who works with or represents BetterLife: our staff, board members, volunteers, partners and visitors to our programmes."],
-        ['How we work', "- We treat the people we work with with respect, and never ask for anything in return for help or support.\n- We ask for consent before we photograph people or share their stories, and we do not share details that could put anyone at risk.\n- We take extra care with children and young people, in schools and community activities."],
-        ['Raise a concern', "If you are worried about the safety or treatment of anyone connected with our work, or about the behaviour of anyone who works with us, please tell us. You can:\n\n- write to {email}\n- call {phone}\n- use {concern}\n- write to us at {postal}\n\nIf someone is in immediate danger, call the police on 999 or 112. In Uganda, 116 is the free national child helpline."],
-        ['What happens next', "Every concern is taken seriously. We handle it in confidence, sharing it only with the people who need to know in order to keep someone safe, and we will not treat anyone unfairly for raising a concern in good faith."],
+        ['Raise a concern', "If you are worried about the safety of a child or anyone connected with our work, or you suspect fraud, corruption or other misconduct, please tell us. You can:\n\n- write to ethics@betterlifeint.org\n- write to {email} or call {phone}\n- use {concern}\n- write to us at {postal}\n\nUnder the policies below, you may report anonymously, identities are protected, and no one who reports a concern will face retaliation.\n\nIf someone is in immediate danger, call the police on 999 or 112. In Uganda, 116 is the free national child helpline.", ''],
+        ['Child Safeguarding Policy', "## 1. Purpose\nTo ensure all children who come into contact with BetterLife International Organization (BIO) are protected from harm, abuse, exploitation, or neglect, and to promote their safety, dignity, and rights.\n\n## 2. Scope\nApplies to all BIO staff, volunteers, consultants, partners, donors, and affiliates in contact with children, directly or indirectly.\n\n## 3. Principles\n- **Zero tolerance** for abuse, exploitation, or neglect.\n- **Best interest of the child** is paramount.\n- **Non-discrimination** irrespective of gender, disability, or background.\n- **Participation** of children in safe and meaningful ways.\n\n## 4. Definitions\n- **Child**: Anyone under 18 years.\n- **Child Abuse**: Physical, emotional, sexual harm, neglect, or exploitation.\n\n## 5. Expected Conduct\na. Avoid being alone with a child in private settings.\nb. Do not touch children inappropriately.\nc. No exchange of money or gifts for favours.\nd. Use appropriate language and behaviour.\ne. Take immediate action if a child is at risk.\n\n## 6. Reporting\n- All concerns must be reported within 24 hours to the Safeguarding Focal Point.\n- Confidentiality must be maintained, except for child safety.\n- Investigations will follow established safeguarding protocols.\n\n## 7. Implementation\n- All personnel sign a child safeguarding declaration.\n- Annual training and refresher courses are mandatory.\n- Partner organizations must adhere to this policy.", 'Annex I'],
+        ['Anti-Fraud and Corruption Policy', "## 1. Purpose\nTo safeguard BetterLife International’s resources and reputation by preventing, detecting, and responding to fraud and corruption in all forms.\n\n## 2. Definitions\na) **Fraud**: Deliberate deception for personal or organizational gain.\nb) **Corruption**: Abuse of entrusted power for private gain.\nc) **Bribery**: Offering, giving, receiving, or soliciting anything of value to influence a decision.\n\n## 3. Prohibited Actions\nI. Falsifying records or invoices.\nII. Misuse of donor funds.\nIII. Offering or accepting bribes or kickbacks.\nIV. Colluding with vendors for inflated pricing.\nV. Misrepresentation of credentials.\n\n## 4. Roles & Responsibilities\nI. **All staff** must report suspicions.\nII. **Finance & Compliance Unit** oversees audits and investigations.\nIII. **Managers** must foster transparency and internal control.\n\n## 5. Prevention Measures\na) Separation of duties in finance and procurement.\nb) Regular internal and external audits.\nc) Whistleblower protections (see Annex III).\nd) Anti-fraud clauses in all contracts.\n\n## 6. Reporting & Investigation\n- Report anonymously or to ethics@betterlifeint.org.\n- Investigations are confidential and fair.\n- Proven fraud leads to termination and legal action.", 'Annex II'],
+        ['Whistleblower Protection Policy', "## 1. Purpose\nTo encourage reporting of misconduct without fear of retaliation and to protect the integrity of the organization.\n\n## 2. Scope\nCovers all reports relating to:\n\nI. Fraud\nII. Misconduct\nIII. Abuse\nIV. Violations of laws or policies\n\n## 3. Principles\na) **Confidentiality**: Identities are protected.\nb) **Non-retaliation**: Any retaliation will result in disciplinary action.\nc) **Fair process**: Accused individuals are given a chance to respond.\n\n## 4. Reporting Mechanisms\n- Internal: Supervisor or HR\n- Ethics hotline (confidential)\n- Email: ethics@betterlifeint.org\n\n## 5. Handling Reports\na. Acknowledge within 7 days.\nb. Investigations conclude within 30 working days.\nc. Actions taken include warnings, dismissal, or referral to law enforcement.\n\n## 6. Protection Measures\n- No demotion, discrimination, or harassment of whistleblowers.\n- Support offered through HR and legal aid (if applicable).", 'Annex III'],
     ];
     return ['privacy' => $privacy, 'safeguarding' => $safeguarding][$page] ?? [];
 }
 
-/** The page's sections from Page Content, or the starting text: [[heading, text], ...] and the date last changed. */
+/**
+ * The page's sections from Page Content, or the starting text: [[heading, text, label], ...] and the date
+ * last changed. The label is the small line above a heading (e.g. "Annex I").
+ */
 function policy_sections(PDO $pdo, string $page): array
 {
     $rows = content_items($pdo, $page, 'sections');
-    if (!$rows) return [policy_defaults($page), null];
+    if (!$rows) return [array_map(fn($s) => [$s[0], $s[1], $s[2] ?? ''], policy_defaults($page)), null];
     $updated = max(array_map(fn($r) => (string) $r['updated_at'], $rows));
-    return [array_map(fn($r) => [$r['title'], (string) $r['body']], $rows), $updated];
+    return [array_map(fn($r) => [$r['title'], (string) $r['body'], (string) ($r['subtitle'] ?? '')], $rows), $updated];
 }
 
-/** A section's text as HTML: paragraphs, "- " lists, and the contact details filled in. */
+/** One line of text as HTML: escaped, **bold** kept, email addresses linked, contact details filled in. */
+function policy_inline(string $line, array $fill): string
+{
+    $html = h($line);
+    $html = preg_replace('/\*\*(.+?)\*\*/', '<strong>$1</strong>', $html);
+    $html = preg_replace('/(?<![\w.@-])([A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,})(?![\w@-])/', '<a href="mailto:$1">$1</a>', $html);
+    return strtr($html, $fill);
+}
+
+/**
+ * A section's text as HTML. A blank line starts a new block; "## " makes a sub-heading; lines starting "- "
+ * make a list; lines starting "a. ", "a) " or "I. " make a lettered or numbered list; **bold** is kept.
+ */
 function policy_html(PDO $pdo, string $text): string
 {
     $email = setting($pdo, 'email');
@@ -52,11 +67,18 @@ function policy_html(PDO $pdo, string $text): string
     $out = '';
     foreach (preg_split('/\R\s*\R/', trim(str_replace("\r", '', $text))) as $block) {
         $lines = array_values(array_filter(array_map('trim', explode("\n", $block)), 'strlen'));
+        while ($lines && str_starts_with($lines[0], '## ')) {
+            $out .= '<h3>' . policy_inline(substr(array_shift($lines), 3), $fill) . '</h3>';
+        }
         if (!$lines) continue;
-        if (count(array_filter($lines, fn($l) => str_starts_with($l, '- '))) === count($lines)) {
-            $out .= '<ul>' . implode('', array_map(fn($l) => '<li>' . strtr(h(substr($l, 2)), $fill) . '</li>', $lines)) . '</ul>';
+        $all = fn($re) => count(preg_grep($re, $lines)) === count($lines);
+        if ($all('/^- /')) {
+            $out .= '<ul>' . implode('', array_map(fn($l) => '<li>' . policy_inline(substr($l, 2), $fill) . '</li>', $lines)) . '</ul>';
+        } elseif ($all('/^(?:[a-z]|[IVX]+)[.)] /')) {
+            $type = preg_match('/^[IVX]+[.)] /', $lines[0]) ? 'I' : 'a';
+            $out .= '<ol type="' . $type . '">' . implode('', array_map(fn($l) => '<li>' . policy_inline(preg_replace('/^(?:[a-z]|[IVX]+)[.)] /', '', $l), $fill) . '</li>', $lines)) . '</ol>';
         } else {
-            $out .= '<p>' . strtr(h(implode(' ', $lines)), $fill) . '</p>';
+            $out .= '<p>' . policy_inline(implode(' ', $lines), $fill) . '</p>';
         }
     }
     return $out;
@@ -84,8 +106,8 @@ function policy_page(PDO $pdo, string $page, string $title, string $lead): void
         <ol><?php foreach ($sections as [$h]): ?><li><a href="#<?= h($slug($h)) ?>"><?= h($h) ?></a></li><?php endforeach; ?></ol>
       </nav>
       <div class="pl-text">
-        <?php foreach ($sections as [$h, $text]): ?>
-          <section id="<?= h($slug($h)) ?>"><h2><?= h($h) ?></h2><?= policy_html($pdo, $text) ?></section>
+        <?php foreach ($sections as [$h, $text, $label]): ?>
+          <section id="<?= h($slug($h)) ?>"><?php if ($label !== ''): ?><p class="pl-label"><?= h($label) ?></p><?php endif; ?><h2><?= h($h) ?></h2><?= policy_html($pdo, $text) ?></section>
         <?php endforeach; ?>
       </div>
     </div>

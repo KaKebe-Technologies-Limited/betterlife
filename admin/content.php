@@ -48,7 +48,7 @@ $SECTIONS = [
     'privacy:sections' => ['page' => 'privacy', 'section' => 'sections', 'group' => 'Policies', 'label' => 'Privacy Notice', 'page_url' => 'privacy.php',
         'fields' => ['title' => 'Heading', 'body' => 'Text (a blank line starts a new paragraph; start lines with "- " for a list; {email}, {phone} and {postal} are filled in from Site Settings; {concern} links to the contact form)']],
     'safeguarding:sections' => ['page' => 'safeguarding', 'section' => 'sections', 'group' => 'Policies', 'label' => 'Safeguarding', 'page_url' => 'safeguarding.php',
-        'fields' => ['title' => 'Heading', 'body' => 'Text (a blank line starts a new paragraph; start lines with "- " for a list; {email}, {phone} and {postal} are filled in from Site Settings; {concern} links to the contact form)']],
+        'fields' => ['subtitle' => 'Label above the heading (optional, e.g. Annex I)', 'title' => 'Heading', 'body' => 'Text (a blank line starts a new paragraph; "## " starts a sub-heading; start lines with "- " for a list, or "a. " / "I. " for a lettered or numbered list; **bold**; {email}, {phone} and {postal} are filled in from Site Settings; {concern} links to the contact form)']],
 ];
 
 $sectionKeyParam = $_GET['s'] ?? array_key_first($SECTIONS);
