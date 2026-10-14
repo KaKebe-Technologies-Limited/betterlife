@@ -129,12 +129,13 @@ the same, without the backup.
 ## Clean addresses
 
 Pages are shared and indexed without ".php": `/about`, `/programmes/<slug>`, `/projects/<slug>`,
-`/impact`, `/stories/<slug>`, `/shop/<slug>`, `/basket`, `/donate` and so on. `.htaccess` maps them
-to the PHP pages; `clean_routes()` in `includes/functions.php` is the one list. Links in every
+`/impact`, `/stories/<slug>`, `/shop/<slug>`, `/basket`, `/donate`, the receipt `/order/<ref>`, the
+gift thank-you `/donate/thank-you/<ref>`, and every admin page as `/admin/<page>`. `.htaccess` maps
+them to the PHP pages; `clean_routes()` in `includes/functions.php` is the one list. Links in every
 page are tidied to the clean form as the page is sent (`clean_links`), `redirect()` uses them, and
-an old `.php` address gets a permanent (301) redirect, so links shared before keep working. Form
-and payment endpoints (`cart-add.php`, `contact-submit.php`, `order-ipn.php`, `donate-thanks.php`…)
-keep their addresses. Code can keep linking to `about.php`; it goes out as `/about`.
+an old `.php` address gets a permanent (301) redirect, so links shared before keep working.
+Endpoints no one sees in the address bar (`cart-add.php`, `contact-submit.php`, `order-callback.php`,
+`order-ipn.php`…) keep their addresses. Code can keep linking to `about.php`; it goes out as `/about`.
 
 ## Donations
 
