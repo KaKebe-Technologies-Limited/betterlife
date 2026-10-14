@@ -58,7 +58,7 @@ $outlets = array_values(array_unique(array_map(fn($i) => $i[1], $press)));
 $clipUrls = [
     'https://en.trend.az/business/green-economy/3967863.html',
     'https://langonewsnetwork.com/2025/01/10/water-life-and-dignity-how-betterlifes-borehole-programme-transformed-eastern-uganda/',
-    'http://factsmediauganda.com/2023/09/05/48-biogas-plants-one-vision-how-betterlife-is-bringing-clean-energy-to-western-uganda/',
+    'https://factsmediauganda.com/.redirect-to-http?/2023/09/05/48-biogas-plants-one-vision-how-betterlife-is-bringing-clean-energy-to-western-uganda/',
 ];
 $clips = array_values(array_filter(array_map(fn($u) => current(array_filter($press, fn($p) => $p[3] === $u)) ?: null, $clipUrls)));
 // Counts for the news section: every article, including those that ran in a second outlet

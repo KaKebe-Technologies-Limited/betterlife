@@ -7,6 +7,10 @@
  * Press entries: date, outlet, headline, link, 'topics' (keys from the topics list below), summary, and
  * optionally where else the same article ran.
  * Left out for now (October 2026): two Skika Daily News articles whose site sends readers to a login page.
+ * Facts Media Uganda's host has no working HTTPS: its https address shows a "HTTPS not enabled" notice, and
+ * browsers now turn plain http links into https. So its articles link through the host's own
+ * "/.redirect-to-http?" address (its "Continue via HTTP" button), which opens the article in every browser.
+ * When Facts Media enables HTTPS, these can go back to plain https://factsmediauganda.com/... links.
  */
 return [
     // News and features
@@ -30,7 +34,7 @@ return [
             'https://www.watchdoguganda.com/news/20260619/193560/ugandan-climate-advocate-denise-ayebare-named-in-forbes-africa-30-under-30-class-of-2026.html', 'topics' => ['profile'],
             'Tells how BetterLife grew, from Soilla to biogas and water access, reaching more than 40,000 people in five countries.'],
         ['2025-10-05', 'Facts Media Uganda', 'Empowering Refugees Through Climate-Smart Agriculture in Northern Uganda',
-            'http://factsmediauganda.com/2025/10/05/empowering-refugees-through-climate-smart-agriculture-in-northern-uganda/', 'topics' => ['farming', 'refugees'],
+            'https://factsmediauganda.com/.redirect-to-http?/2025/10/05/empowering-refugees-through-climate-smart-agriculture-in-northern-uganda/', 'topics' => ['farming', 'refugees'],
             'Climate-smart farming training for refugee women in settlements in Northern Uganda, where the article reports 280 women trained.',
             [['Lango News Network', 'https://langonewsnetwork.com/2025/10/05/empowering-refugees-through-climate-smart-agriculture-in-northern-uganda/']]],
         ['2025-08-05', 'Lango News Network', 'Clean Cooking Revolution: BetterLife Champions Sustainable Energy in Uganda’s Kitchens',
@@ -38,7 +42,7 @@ return [
             'Biogas and clean cooking in Western Uganda, taking the smoke of wood fires out of household kitchens.',
             [['Dokolo Post', 'https://dokolopost.com/clean-cooking-revolution-betterlife-champions-sustainable-energy-in-ugandas-kitchens/']]],
         ['2025-04-14', 'Facts Media Uganda', 'BetterLife International at Five Years: Transforming 90,000 Lives Across East Africa',
-            'http://factsmediauganda.com/2025/04/14/betterlife-international-at-five-years-transforming-90000-lives-across-east-africa/', 'topics' => ['profile'],
+            'https://factsmediauganda.com/.redirect-to-http?/2025/04/14/betterlife-international-at-five-years-transforming-90000-lives-across-east-africa/', 'topics' => ['profile'],
             'Looks back on BetterLife’s early years as a youth-led organisation working across Uganda, South Sudan, Tanzania and Ghana.'],
         ['2025-02-28', 'Tayari News Uganda', 'From Field to Market: How BetterLife Is Helping Smallholder Farmers Get Fair Prices',
             'https://tayarinewsuganda.com/2025/02/28/from-field-to-market-how-betterlife-is-helping-smallholder-farmers-get-fair-prices/', 'topics' => ['farming'],
@@ -56,13 +60,13 @@ return [
             'https://dokolopost.com/poultry-farming-for-prosperity-how-betterlife-is-rebuilding-rural-livelihoods-one-flock-at-a-time/', 'topics' => ['farming'],
             'BetterLife’s poultry training, from starting a flock to preventing disease, as a living where land is scarce and harvests uncertain.'],
         ['2024-04-03', 'Facts Media Uganda', 'Sweetening Lives: How BetterLife Is Using Beekeeping to Build Economic Independence',
-            'http://factsmediauganda.com/2024/04/03/sweetening-lives-how-betterlife-is-using-beekeeping-to-build-economic-independence/', 'topics' => ['farming', 'refugees'],
+            'https://factsmediauganda.com/.redirect-to-http?/2024/04/03/sweetening-lives-how-betterlife-is-using-beekeeping-to-build-economic-independence/', 'topics' => ['farming', 'refugees'],
             'Beekeeping as income, food and conservation for refugee households and smallholder farmers in Northern and Western Uganda.'],
         ['2024-02-14', 'Dokolo Post', 'From Settlement to Greenhouse: BetterLife’s Technology-Driven Approach to Refugee Farming',
             'https://dokolopost.com/from-settlement-to-greenhouse-betterlifes-technology-driven-approach-to-refugee-farming/', 'topics' => ['farming', 'refugees'],
             'Greenhouse farming and other proven technology brought to a refugee settlement in Northern Uganda.'],
         ['2023-09-05', 'Facts Media Uganda', '48 Biogas Plants, One Vision: How BetterLife Is Bringing Clean Energy to Western Uganda',
-            'http://factsmediauganda.com/2023/09/05/48-biogas-plants-one-vision-how-betterlife-is-bringing-clean-energy-to-western-uganda/', 'topics' => ['energy'],
+            'https://factsmediauganda.com/.redirect-to-http?/2023/09/05/48-biogas-plants-one-vision-how-betterlife-is-bringing-clean-energy-to-western-uganda/', 'topics' => ['energy'],
             'Behind the 48 biogas plants in Western Uganda: how households are chosen and how local masons and plumbers build each digester.'],
         ['2023-06-07', 'Dokolo Post', 'Growing Food, Growing Hope: How Mushroom Farming Is Transforming Livelihoods in Uganda',
             'https://dokolopost.com/growing-food-growing-hope-how-mushroom-farming-is-transforming-livelihoods-in-uganda/', 'topics' => ['farming'],
