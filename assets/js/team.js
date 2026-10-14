@@ -43,7 +43,9 @@
         bio.appendChild(para);
       });
       count.textContent = (index + 1) + ' of ' + bios.length;
+      // Each bio starts at its top (the text scrolls on wide screens, the whole card on phones)
       dialog.querySelector('.tm-dialog-body').scrollTop = 0;
+      dialog.querySelector('.tm-dialog-card').scrollTop = 0;
     }
 
     document.addEventListener('click', function (e) {

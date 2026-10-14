@@ -320,10 +320,11 @@
   .hm-legend { display: block; margin: 6px auto 0 !important; text-align: center; font-size: 12.5px !important; font-weight: 700; letter-spacing: .06em; color: var(--ab-soft) !important; }
   .hm-stat { display: none; }
   .hm-stat > span:last-child { font-size: 11.5px; }
-  .hm-ribbon-track { width: auto; animation: none; overflow-x: auto; scrollbar-width: none; }
-  .hm-ribbon-track::-webkit-scrollbar { display: none; }
-  .hm-ribbon-list[aria-hidden="true"] { display: none; }
-  .hm-ribbon-list { padding: 18px 20px 18px 0; }
+  /* The figures keep moving on phones too, a little smaller and quicker (a tap pauses them) */
+  .hm-ribbon-track { animation-duration: 50s; }
+  .hm-ribbon-list { padding: 16px 0; }
+  .hm-ribbon-list li { gap: 8px; padding-left: 22px; font-size: 14px; }
+  .hm-ribbon-list i { margin-left: 14px; }
   .hm-steps.is-js li[data-i]:not(.is-on), .hm-steps.is-js .hm-steps-again { display: none; }
   .hm-film-fig { gap: 14px; padding: 14px 16px; }
   .hm-cinema { border-radius: 80px 22px 22px 22px; }

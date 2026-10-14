@@ -201,15 +201,16 @@ button.tm-mface-btn { cursor: pointer; }
 .tm-close .pg-btn-ghost:hover { background: rgba(11, 61, 46, .06); color: var(--ab-deep); }
 
 /* ---------- Reading panel ---------- */
-.tm-dialog { width: min(980px, calc(100vw - 32px)); max-height: calc(100vh - 32px); padding: 0; border: 0; border-radius: 28px; background: #fff; color: var(--ab-ink); box-shadow: 0 40px 120px rgba(0, 0, 0, .35); overflow: hidden; }
+.tm-dialog { width: min(980px, calc(100vw - 32px)); max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px); padding: 0; border: 0; border-radius: 28px; background: #fff; color: var(--ab-ink); box-shadow: 0 40px 120px rgba(0, 0, 0, .35); overflow: hidden; }
 .tm-dialog::backdrop { background: rgba(6, 22, 15, .72); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
 .tm-dialog[open] { animation: tmIn .35s ease; }
 @keyframes tmIn { from { opacity: 0; transform: translateY(16px) scale(.98); } to { opacity: 1; transform: none; } }
-.tm-dialog-card { position: relative; display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); max-height: calc(100vh - 32px); }
+.tm-dialog-card { position: relative; display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px); }
 .tm-dialog-photo { position: relative; min-height: 460px; overflow: hidden; background: var(--ab-deep); }
 .tm-dialog-photo > * { position: absolute; inset: 0; width: 100%; height: 100% !important; object-fit: cover; object-position: 50% 25%; }
 .tm-dialog-photo .tm-mono span { font-size: 26cqi; }
-.tm-dialog-body { display: flex; flex-direction: column; padding: clamp(28px, 4vw, 52px); overflow-y: auto; }
+/* The text column scrolls on its own, so a long bio can be read to the end beside the photo */
+.tm-dialog-body { display: flex; flex-direction: column; max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px); padding: clamp(28px, 4vw, 52px); overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
 .ab.tm-dialog h2 { margin: 10px 0 18px; font-family: var(--ab-serif); font-weight: 500; font-size: clamp(28px, 3vw, 38px); line-height: 1.15; color: var(--ab-deep); }
 .ab.tm-dialog p { margin: 0; font-size: 16.5px; line-height: 1.75; color: var(--ab-ink); }
 .ab.tm-dialog .tm-dialog-bio p + p { margin-top: 14px; }
@@ -250,9 +251,9 @@ button.tm-mface-btn { cursor: pointer; }
   .tm-seat { --fs: clamp(52px, 12vw, 84px); }
   .tm-seat-name { display: none; }
   .tm-seat-panels { position: relative; left: auto; right: auto; bottom: auto; height: auto; margin-top: 10px; padding: 34px 22px 26px; border-radius: 160px 160px 24px 24px / 70px 70px 24px 24px; background: radial-gradient(circle at 50% 0%, #17694d, var(--ab-deep) 75%); }
-  .tm-dialog-card { grid-template-columns: 1fr; overflow-y: auto; }
+  .tm-dialog-card { grid-template-columns: 1fr; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; }
   .tm-dialog-photo { min-height: 0; aspect-ratio: 16 / 10; }
-  .tm-dialog-body { overflow: visible; }
+  .tm-dialog-body { max-height: none; overflow: visible; }
 }
 @media (max-width: 720px) {
   .tm-who-grid { grid-template-columns: 1fr; }
@@ -279,8 +280,8 @@ button.tm-mface-btn { cursor: pointer; }
   .tm-hero-a, .tm-hero-b { border-width: 5px; }
   .tm-hero-main { border-radius: 90px 20px 20px 20px; }
   .tm-hero-photo figcaption { display: none; }
-  .tm-dialog { width: calc(100vw - 20px); max-height: calc(100vh - 20px); border-radius: 22px; }
-  .tm-dialog-card { max-height: calc(100vh - 20px); }
+  .tm-dialog { width: calc(100vw - 20px); max-height: calc(100vh - 20px); max-height: calc(100dvh - 20px); border-radius: 22px; }
+  .tm-dialog-card { max-height: calc(100vh - 20px); max-height: calc(100dvh - 20px); }   /* dvh: the screen above the browser bar */
   .ab.tm-dialog p { font-size: 15.5px; line-height: 1.7; }
   .tm-dialog-nav button span { display: none; }
 }

@@ -191,8 +191,8 @@ require __DIR__ . '/includes/header.php';
           <?= ab_img($heroImg, 'A mother carrying her baby in a farm field', 'hm-window-img', false, 'style="object-position: 62% 40%"', '(max-width: 900px) 90vw, 46vw') ?>
           <?php if (is_file(__DIR__ . '/assets/video/home-africa.mp4')): ?>
             <!-- Silent loop from BetterLife's Yumbe film: a woman carrying a basin, women at a training session,
-                 peppers on the plant, two girls laughing, a young man in Yumbe town. Loaded after the page on wider screens. -->
-            <video class="hm-window-video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-src="<?= h(asset_url('assets/video/home-africa.mp4')) ?>?v=<?= filemtime(__DIR__ . '/assets/video/home-africa.mp4') ?>"></video>
+                 peppers on the plant, two girls laughing, a young man in Yumbe town. Loaded after the page; phones get a lighter copy. -->
+            <video class="hm-window-video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-src="<?= h(asset_url('assets/video/home-africa.mp4')) ?>?v=<?= filemtime(__DIR__ . '/assets/video/home-africa.mp4') ?>"<?php if (is_file(__DIR__ . '/assets/video/home-africa-phone.mp4')): ?> data-src-small="<?= h(asset_url('assets/video/home-africa-phone.mp4')) ?>?v=<?= filemtime(__DIR__ . '/assets/video/home-africa-phone.mp4') ?>"<?php endif; ?>></video>
           <?php endif; ?>
         </div>
 

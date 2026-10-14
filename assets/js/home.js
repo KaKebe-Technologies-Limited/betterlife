@@ -12,15 +12,18 @@
     initMap();
   });
 
-  /* Silent loop inside the outline of Africa: loads after the page on wider screens, never with
-     reduced motion or data saving; can be paused (remembered with the other pages' films). */
+  /* Silent loop inside the outline of Africa: loads after the page (phones get the lighter copy), never
+     with reduced motion or data saving; can be paused (remembered with the other pages' films). */
   function initHeroFilm() {
     var art = document.querySelector('.hm-art');
     var video = art && art.querySelector('.hm-window-video');
     var btn = art && art.querySelector('.hm-motion');
     if (!video || !btn) return;
     var saveData = navigator.connection && navigator.connection.saveData;
-    if (reduceMotion || saveData || !window.matchMedia('(min-width: 720px)').matches) return;
+    if (reduceMotion || saveData) return;
+    var small = video.getAttribute('data-src-small');
+    if (small && window.matchMedia('(max-width: 720px)').matches) video.setAttribute('data-src', small);
+    video.muted = true;
 
     var root = document.documentElement, offscreen = false;
     var paused = function () { return root.classList.contains('ab-motion-paused'); };
