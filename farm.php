@@ -95,7 +95,7 @@ require __DIR__ . '/includes/header.php';
       <?php if (is_file(__DIR__ . '/assets/video/farm-hero-720.mp4')): ?>
         <!-- Silent film from the farm in Rukungiri, one shot per index item; loaded after the page on wider screens only
              (see programmes.js); the photograph stays as the fallback -->
-        <video class="pg-hero-video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-cues="0,3.2,6,8.8,11.6" data-src="<?= h(asset_url('assets/video/farm-hero-720.mp4')) ?>?v=<?= filemtime(__DIR__ . '/assets/video/farm-hero-720.mp4') ?>"<?php if (is_file(__DIR__ . '/assets/video/farm-hero-1080.mp4')): ?> data-src-hd="<?= h(asset_url('assets/video/farm-hero-1080.mp4')) ?>?v=<?= filemtime(__DIR__ . '/assets/video/farm-hero-1080.mp4') ?>"<?php endif; ?>></video>
+        <video class="pg-hero-video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-cues="0,3.2,6,8.8,11.6" data-src="<?= h(asset_url('assets/video/farm-hero-720.mp4')) ?>?v=<?= filemtime(__DIR__ . '/assets/video/farm-hero-720.mp4') ?>"<?php if (is_file(__DIR__ . '/assets/video/farm-hero-1080.mp4')): ?> data-src-hd="<?= h(asset_url('assets/video/farm-hero-1080.mp4')) ?>?v=<?= filemtime(__DIR__ . '/assets/video/farm-hero-1080.mp4') ?>"<?php endif; ?><?= ab_video_small('assets/video/farm-hero-phone.mp4') ?>></video>
       <?php endif; ?>
     </div>
     <button type="button" class="ab-motion-toggle pg-film-toggle" aria-pressed="false" aria-label="Pause background film" hidden>

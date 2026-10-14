@@ -192,7 +192,7 @@ require __DIR__ . '/includes/header.php';
           <?php if (is_file(__DIR__ . '/assets/video/home-africa.mp4')): ?>
             <!-- Silent loop from BetterLife's Yumbe film: a woman carrying a basin, women at a training session,
                  peppers on the plant, two girls laughing, a young man in Yumbe town. Loaded after the page; phones get a lighter copy. -->
-            <video class="hm-window-video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-src="<?= h(asset_url('assets/video/home-africa.mp4')) ?>?v=<?= filemtime(__DIR__ . '/assets/video/home-africa.mp4') ?>"<?php if (is_file(__DIR__ . '/assets/video/home-africa-phone.mp4')): ?> data-src-small="<?= h(asset_url('assets/video/home-africa-phone.mp4')) ?>?v=<?= filemtime(__DIR__ . '/assets/video/home-africa-phone.mp4') ?>"<?php endif; ?>></video>
+            <video class="hm-window-video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1" data-src="<?= h(asset_url('assets/video/home-africa.mp4')) ?>?v=<?= filemtime(__DIR__ . '/assets/video/home-africa.mp4') ?>"<?= ab_video_small('assets/video/home-africa-phone.mp4') ?>></video>
           <?php endif; ?>
         </div>
 

@@ -6,6 +6,18 @@
  */
 require_once __DIR__ . '/brush.php';
 
+if (!function_exists('ab_video_small')) {
+    /**
+     * The lighter phone copy of an opening film (made with tools/make_phone_video.ps1), as a
+     * data-src-small attribute for its <video>; empty when there is no such file.
+     */
+    function ab_video_small(string $path): string
+    {
+        $file = dirname(__DIR__) . '/' . $path;
+        return is_file($file) ? ' data-src-small="' . h(asset_url($path) . '?v=' . filemtime($file)) . '"' : '';
+    }
+}
+
 if (!function_exists('ab_variants')) {
     /** Resized copies made by tools/make_sized_images.php live in assets/img/sized/. */
     function ab_variants(string $path): array

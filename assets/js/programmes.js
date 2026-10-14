@@ -67,14 +67,15 @@
   }
 
   /* Opening film: one shot per programme area; the index along the hero follows the shot on screen.
-     Loads after the page on wider screens, never with reduced motion or data saving; can be paused. */
+     Loads after the page (phones get the lighter copy), never with reduced motion or data saving; can be paused. */
   function initHeroFilm() {
     var hero = document.querySelector('.pg-hero.has-index');
     var video = hero && hero.querySelector('.pg-hero-video');
     var btn = hero && hero.querySelector('.pg-film-toggle');
     if (!video || !btn) return;
     var saveData = navigator.connection && navigator.connection.saveData;
-    if (reduceMotion || saveData || !window.matchMedia('(min-width: 720px)').matches) return;
+    if (reduceMotion || saveData) return;
+    video.muted = true;
 
     var root = document.documentElement;
     var links = hero.querySelectorAll('.pg-hero-index a');
@@ -112,8 +113,12 @@
 
     function start() {
       video.addEventListener('playing', function () { hero.classList.add('has-video'); btn.hidden = false; mark(); }, { once: true });
-      var hd = video.getAttribute('data-src-hd');
-      video.src = hd && hero.offsetWidth * (window.devicePixelRatio || 1) > 1400 ? hd : video.getAttribute('data-src');
+      if (window.abFilmSrc) {
+        video.src = window.abFilmSrc(video, hero);
+      } else {
+        var hd = video.getAttribute('data-src-hd');
+        video.src = hd && hero.offsetWidth * (window.devicePixelRatio || 1) > 1400 ? hd : video.getAttribute('data-src');
+      }
       sync();
     }
     if (document.readyState === 'complete') setTimeout(start, 300); else window.addEventListener('load', function () { setTimeout(start, 300); });

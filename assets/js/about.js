@@ -5,6 +5,16 @@
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var hasIO = 'IntersectionObserver' in window;
 
+  /* Which copy of an opening film to load: the lighter phone copy on narrow screens, full HD where the
+     opening is drawn with more than ~1400 device pixels across, 720p otherwise. Shared with programmes.js. */
+  function ab_film_src(video, box) {
+    var small = video.getAttribute('data-src-small');
+    if (small && window.matchMedia('(max-width: 720px)').matches) return small;
+    var hd = video.getAttribute('data-src-hd');
+    return hd && box.offsetWidth * (window.devicePixelRatio || 1) > 1400 ? hd : video.getAttribute('data-src');
+  }
+  window.abFilmSrc = ab_film_src;
+
   document.addEventListener('DOMContentLoaded', function () {
     initHeroMotion();
     initReveal();
@@ -45,15 +55,14 @@
         entries.forEach(function (en) { offscreen = !en.isIntersecting; hero.classList.toggle('is-offscreen', offscreen); syncVideo(); });
       }).observe(hero);
     }
-    // The film loads only after the page has finished loading, on wider screens, without
-    // reduced motion or data saving; it fades in over the photographs once it is playing.
+    // The film loads only after the page has finished loading, without reduced motion or data saving;
+    // it fades in over the photographs once it is playing (a phone that will not autoplay keeps the photographs).
     var saveData = navigator.connection && navigator.connection.saveData;
-    if (video && !reduceMotion && !saveData && window.matchMedia('(min-width: 720px)').matches) {
+    if (video && !reduceMotion && !saveData) {
       var start = function () {
         video.addEventListener('playing', function () { hero.classList.add('has-video'); }, { once: true });
-        // Full HD where the opening is drawn with more than ~1400 device pixels across, 720p otherwise
-        var hd = video.getAttribute('data-src-hd');
-        video.src = hd && hero.offsetWidth * (window.devicePixelRatio || 1) > 1400 ? hd : video.getAttribute('data-src');
+        video.muted = true;
+        video.src = ab_film_src(video, hero);
         syncVideo();
       };
       if (document.readyState === 'complete') setTimeout(start, 300); else window.addEventListener('load', function () { setTimeout(start, 300); });
