@@ -116,7 +116,8 @@
   /* ---------- Figures: brief one-time count-up; final values already in the HTML ---------- */
   function initCounters() {
     var counters = document.querySelectorAll('.ab-count[data-count]');
-    if (reduceMotion || !hasIO || !counters.length) return;
+    // Phones show the real figure straight away: a count from 0 can be caught at "0 people reached"
+    if (reduceMotion || !hasIO || !counters.length || window.matchMedia('(max-width: 720px)').matches) return;
     var fmt = function (n) { return Math.round(n).toLocaleString('en-US'); };
     var run = function (el) {
       var target = parseInt(el.getAttribute('data-count'), 10), finalText = el.textContent, start = null, dur = 1300;

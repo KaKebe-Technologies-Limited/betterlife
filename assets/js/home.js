@@ -20,16 +20,30 @@
     var btn = art && art.querySelector('.hm-motion');
     if (!video || !btn) return;
     var saveData = navigator.connection && navigator.connection.saveData;
-    if (reduceMotion || saveData) return;
     var small = video.getAttribute('data-src-small');
     if (small && window.matchMedia('(max-width: 720px)').matches) video.setAttribute('data-src', small);
     video.muted = true;
 
     var root = document.documentElement, offscreen = false;
     var paused = function () { return root.classList.contains('ab-motion-paused'); };
+
+    // A play button over the film whenever it will not start by itself: reduced motion, data saving,
+    // films paused earlier on the site, or a phone that blocks autoplay (Low Power Mode, in-app browsers)
+    var tap = document.createElement('button');
+    tap.type = 'button';
+    tap.className = 'hm-film-tap';
+    tap.setAttribute('aria-label', 'Play the film');
+    tap.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>';
+    tap.hidden = true;
+    art.appendChild(tap);
+
+    function play() {
+      var p = video.play();
+      if (p && p.then) p.then(function () { tap.hidden = true; }, function (e) { if (e && e.name === 'NotAllowedError') tap.hidden = false; });
+    }
     function sync() {
       if (!video.getAttribute('src')) return;
-      if (paused() || offscreen) video.pause(); else video.play().catch(function () {});
+      if (paused() || offscreen) video.pause(); else play();
     }
     function setPaused(p) {
       root.classList.toggle('ab-motion-paused', p);
@@ -45,11 +59,21 @@
         entries.forEach(function (en) { offscreen = !en.isIntersecting; sync(); });
       }).observe(art);
     }
-    function start() {
-      video.addEventListener('playing', function () { art.classList.add('has-video'); btn.hidden = false; }, { once: true });
+    function load() {
+      if (video.getAttribute('src')) return;
+      video.addEventListener('playing', function () { art.classList.add('has-video'); btn.hidden = false; tap.hidden = true; }, { once: true });
       video.src = video.getAttribute('data-src');
-      sync();
     }
+    function start() {
+      load();
+      if (paused()) tap.hidden = false; else sync();
+    }
+    tap.addEventListener('click', function () {
+      tap.hidden = true;
+      load();
+      if (paused()) setPaused(false); else play();
+    });
+    if (reduceMotion || saveData) { tap.hidden = false; return; }   // the visitor chooses
     if (document.readyState === 'complete') setTimeout(start, 300); else window.addEventListener('load', function () { setTimeout(start, 300); });
   }
 

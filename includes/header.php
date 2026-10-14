@@ -155,6 +155,7 @@ $cartLink = function (int $size) use ($cartCount): string {
     <div class="header-actions">
       <?php if ($cartCount): ?><span class="mobile-cart"><?= $cartLink(21) ?></span><?php endif; ?>
       <a href="<?= SITE_URL ?>/donate.php" class="btn-pill-accent header-cta"><?= icon('heart', 15) ?> Support Our Work</a>
+      <a href="<?= SITE_URL ?>/donate.php" class="btn-pill-accent header-give"><?= icon('heart', 13) ?> Give</a>
       <button type="button" class="nav-toggle" id="navToggle" aria-label="Open menu" aria-controls="mainNav" aria-expanded="false"><?= icon('menu', 24) ?></button>
     </div>
   </div>

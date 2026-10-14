@@ -52,7 +52,9 @@ document.addEventListener('DOMContentLoaded', function () {
     stickyBars.forEach(function (bar) { bar.classList.toggle('scrolled', window.scrollY > 10); });
 
     var btt = document.querySelector('.back-to-top');
-    if (btt) btt.classList.toggle('show', window.scrollY > 500);
+    // On phones it waits until the reader is well down the page, so it does not sit over the text early on
+    var far = window.matchMedia('(max-width: 720px)').matches ? window.innerHeight * 2.5 : 500;
+    if (btt) btt.classList.toggle('show', window.scrollY > far);
   });
 
   // Back to top
@@ -66,7 +68,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Animated counters
   var counters = document.querySelectorAll('[data-count]');
-  if (counters.length) {
+  // Phones (and reduced motion) show the real figure straight away rather than counting up from 0
+  var countUp = !window.matchMedia('(max-width: 720px)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (counters.length && countUp && 'IntersectionObserver' in window) {
     var observer = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (!entry.isIntersecting) return;

@@ -379,12 +379,14 @@ require __DIR__ . '/includes/header.php';
         <ol class="hm-steps ab-reveal">
           <?php foreach ($loop as $i => $s): ?>
             <li class="<?= $i === 0 ? 'is-on' : '' ?>" data-i="<?= $i ?>">
+              <span class="hm-step-photo" aria-hidden="true"><?= ab_img($s['img'][0], '', '', true, 'style="object-position: ' . h($s['img'][2]) . '"', '(max-width: 720px) 78vw, 1px') ?></span>
               <span class="hm-step-num" aria-hidden="true"><?= $i + 1 ?></span>
               <div><h3><?= h($s['title']) ?></h3><p><?= h($s['text']) ?></p></div>
             </li>
           <?php endforeach; ?>
           <li class="hm-steps-again" aria-hidden="true"><?= icon('trending-up', 16) ?> And the loop starts again.</li>
         </ol>
+        <p class="hm-swipe hm-steps-swipe" aria-hidden="true">Swipe to see all four steps <?= icon('arrow-right', 14) ?></p>
       </div>
 
       <div class="hm-shelf-head ab-reveal">

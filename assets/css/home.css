@@ -325,7 +325,6 @@
   .hm-ribbon-list { padding: 16px 0; }
   .hm-ribbon-list li { gap: 8px; padding-left: 22px; font-size: 14px; }
   .hm-ribbon-list i { margin-left: 14px; }
-  .hm-steps.is-js li[data-i]:not(.is-on), .hm-steps.is-js .hm-steps-again { display: none; }
   .hm-film-fig { gap: 14px; padding: 14px 16px; }
   .hm-cinema { border-radius: 80px 22px 22px 22px; }
   .hm-cinema-play .pg-film-play-ico { width: 56px; height: 56px; }
@@ -377,4 +376,62 @@
   .hm-stat-brush { left: -14px; top: -14px; width: 70px; height: 44px; }
   .hm-stat strong { font-size: 26px; }
   .hm-stat > span:last-child { margin-top: 4px; font-size: 12px; }
+}
+
+/* Film play button (all screens): shown when the film will not start by itself */
+.hm-film-tap { position: absolute; z-index: 4; left: 50%; top: 50%; width: 64px; height: 64px; margin: -32px 0 0 -32px; padding: 0 0 0 4px; display: flex; align-items: center; justify-content: center; border: 0; border-radius: 50%; background: rgba(255, 255, 255, .94); color: var(--ab-deep); box-shadow: 0 12px 30px rgba(6, 22, 15, .3); cursor: pointer; transition: transform .2s ease; }
+.hm-film-tap:hover { transform: scale(1.06); }
+.hm-film-tap:focus-visible { outline: 3px solid var(--ab-blue); outline-offset: 3px; }
+.hm-film-tap[hidden] { display: none; }
+/* Step photos and the swipe hint belong to the phone layout below */
+.hm-step-photo, .hm-steps-swipe { display: none; }
+
+/* =========================================================
+   Phones: the film first, then the words; a shorter page
+   ========================================================= */
+@media (max-width: 720px) {
+  /* 1. Opening: the Yumbe film fills the top of the screen, edge to edge; the headline and buttons follow,
+        so both fit on the first screen. The map of Africa appears once, further down (Where we work). */
+  .ab .hm-hero { padding: 0 0 30px; background: var(--ab-cream); }
+  .hm-hero-grid { display: flex; flex-direction: column; gap: 0; }
+  .hm-art { order: -1; width: 100vw; max-width: none; height: clamp(240px, 40vh, 380px); height: clamp(240px, 40svh, 380px); aspect-ratio: auto; margin: 0 calc(50% - 50vw) 22px; }
+  .hm-art-back, .hm-art-front, .hm-stat-brush { display: none; }
+  .hm-window { left: 0 !important; top: 0 !important; width: 100% !important; height: 100% !important; -webkit-mask: none; mask: none; border-radius: 0 0 26px 26px; }
+  .hm-window::after { background: linear-gradient(180deg, rgba(6, 22, 15, 0) 50%, rgba(6, 22, 15, .45) 100%); }
+  .hm-stat { display: flex; left: 16px; bottom: 16px; padding: 9px 13px 8px; }
+  .hm-motion { right: 16px; bottom: 16px; }
+  .hm-legend { display: none !important; }
+  .hm-hero-copy { display: flex; flex-direction: column; }
+  .hm-kicker { order: 1; align-self: flex-start; margin: 0 0 14px !important; font-size: 12.5px; }
+  .hm-hero h1 { order: 2; font-size: clamp(30px, 8.4vw, 38px); }
+  .hm-actions { order: 3; flex-wrap: nowrap; gap: 10px; margin-top: 20px; }
+  .hm-actions .pg-btn, .hm-actions .hm-btn-line { padding: 12px 16px; font-size: 14px; white-space: nowrap; }
+  .hm-lead { order: 4; margin: 20px 0 0 !important; }
+  .hm-led { order: 5; margin-top: 18px; }
+
+  /* 3. Who we are: the opening paragraph and the links; two rows of photographs (the full story is on About) */
+  .hm-origin-text p:not(.ab-lead) { display: none; }
+  .hm-gallery .ab-glide-row:nth-child(n+2) { display: none; }   /* one row of photographs */
+
+  /* 3. The farm model: the four steps as a swipeable row of photo cards (the circle diagram stays on wide screens) */
+  .hm-loop { display: none; }
+  .hm-steps { display: flex; gap: 12px; margin: 0 calc(50% - 50vw); padding: 4px clamp(20px, 5vw, 56px) 14px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 clamp(20px, 5vw, 56px); scrollbar-width: none; }
+  .hm-steps::-webkit-scrollbar { display: none; }
+  .hm-steps li[data-i] { flex: 0 0 80%; scroll-snap-align: start; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; align-content: start; padding: 0 16px 18px; background: #fff; border-radius: 22px; box-shadow: 0 14px 30px rgba(11, 61, 46, .08); }
+  .hm-steps .hm-steps-again { display: none; }
+  .hm-step-photo { display: block; grid-column: 1 / -1; margin: 0 -16px 4px; aspect-ratio: 2 / 1; overflow: hidden; border-radius: 22px 22px 0 0; background: var(--ab-sand); }
+  .hm-step-photo img { width: 100%; height: 100% !important; object-fit: cover; }
+  .hm-steps .hm-step-num { width: 34px; height: 34px; font-size: 16px; }
+  .ab .hm-steps h3 { font-size: 18px; }
+  .hm-steps p { font-size: 14.5px !important; }
+  .hm-steps-swipe { display: flex; margin-top: 6px !important; }
+
+  /* Tighter lists: the school reasons and the five countries */
+  .hm-why { gap: 12px; margin: 20px 0 22px; }
+  .hm-why li { grid-template-columns: 34px minmax(0, 1fr); gap: 12px; font-size: 14.5px; line-height: 1.5; }
+  .hm-why-ico { width: 34px; height: 34px; }
+  .hm-countries-list { margin: 20px 0 22px; }
+  .hm-countries-list li { padding: 8px 4px; }
+  .hm-countries-list b { font-size: 17px; }
+  .hm-countries-list span { font-size: 13.5px; line-height: 1.45; }
 }
