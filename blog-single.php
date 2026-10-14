@@ -38,8 +38,8 @@ $more = $more->fetchAll();
 
 $minutes = fn(array $p): int => max(1, (int) round(str_word_count(strip_tags((string) $p['content'])) / 200));
 $storyUrl = fn(array $p): string => SITE_URL . '/blog-single.php?slug=' . rawurlencode($p['slug']);
-$postUrl = SITE_URL . '/blog-single.php?slug=' . rawurlencode($post['slug']);
-if (!preg_match('#^https?://#', $postUrl)) $postUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . $postUrl;
+// The address the share buttons send: the story's clean, full address (https://.../stories/<slug>)
+$postUrl = clean_url(public_base_url() . SITE_URL . '/blog-single.php?slug=' . rawurlencode($post['slug']));
 
 $pageStyles  = ['assets/css/about.css', 'assets/css/stories.css'];
 $pageScripts = ['assets/js/about.js'];
