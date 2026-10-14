@@ -59,7 +59,7 @@ $logo = setting($pdo, 'logo', 'assets/img/logo.png');
       </div>
       <button type="submit" class="btn btn-primary btn-block">Sign In →</button>
     </form>
-    <p class="help-text" style="margin-top:20px;text-align:center;"><a href="<?= SITE_URL ?>/index.php">← Back to website</a></p>
+    <p class="help-text" style="margin-top:20px;text-align:center;"><a href="<?= SITE_URL ?>/">← Back to website</a></p>
   </div>
 </div>
 </body>

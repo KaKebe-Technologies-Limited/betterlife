@@ -63,4 +63,9 @@ ErrorDocument 404 /404.php
   RewriteRule ^shop/?$ products.php [L,QSA]
   RewriteRule ^shop/([a-z0-9-]+)/?$ product.php?slug=$1 [L,QSA]
   RewriteRule ^basket/?$ cart.php [L,QSA]
+  RewriteRule ^order/([A-Za-z0-9-]+)/?$ order-confirmation.php?ref=$1 [L,QSA]
+  RewriteRule ^donate/thank-you/([A-Za-z0-9-]+)/?$ donate-thanks.php?ref=$1 [L,QSA]
+  # Admin pages: /admin/settings is admin/settings.php (when that file exists)
+  RewriteCond %{REQUEST_FILENAME}.php -f
+  RewriteRule ^admin/([a-z-]+)$ admin/$1.php [L,QSA]
 </IfModule>

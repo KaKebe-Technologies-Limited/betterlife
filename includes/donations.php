@@ -2,7 +2,7 @@
 /**
  * Gifts made on donate.php, paid through Pesapal (mobile money or card) like farm-shop orders.
  * A gift is stored as pending, the giver pays on Pesapal's page, and the status is confirmed with
- * Pesapal itself (on return to donate-thanks.php and by the IPN in order-ipn.php), never from the
+ * Pesapal itself (on return to /donate/thank-you/<ref>, donate-thanks.php, and by the IPN in order-ipn.php), never from the
  * redirect alone. The receipt and the alert go out once, when Pesapal reports the gift as completed.
  *
  * The donations table is created here on first use, so the live site needs no separate migration.
@@ -79,7 +79,7 @@ function donation_initiate_payment(PDO $pdo, array $d): string
         'currency'        => $d['currency'],
         'amount'          => (float) $d['amount'],
         'description'     => 'Gift to BetterLife International ' . $d['donation_ref'],
-        'callback_url'    => public_base_url() . SITE_URL . '/donate-thanks.php?ref=' . urlencode($d['donation_ref']),
+        'callback_url'    => clean_url(public_base_url() . SITE_URL . '/donate-thanks.php?ref=' . urlencode($d['donation_ref'])),   // /donate/thank-you/DN...
         'billing_address' => [
             'email_address' => $d['donor_email'],
             'phone_number'  => preg_replace('/[^0-9]/', '', (string) $d['donor_phone']),

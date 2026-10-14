@@ -336,12 +336,13 @@ function icon(string $name, int $size = 20): string
 }
 
 /* ---------------------------------------------------------------------
- * Clean addresses: /about, /projects/rise, /stories/<slug>, /shop/<slug>
+ * Clean addresses: /about, /projects/rise, /stories/<slug>, /shop/<slug>,
+ * /order/<ref>, /donate/thank-you/<ref>, and /admin/<page> for every admin page.
  * The .htaccess rewrites them to the PHP pages; links in every page are
  * tidied to them as the page is sent (clean_links), and an old .php link
- * is sent on to its clean address for good (clean_url_redirect). Form and
- * payment endpoints (cart-add.php, order-ipn.php, donate-thanks.php...) are
- * not in the list and keep their addresses.
+ * is sent on to its clean address for good (clean_url_redirect). Endpoints
+ * no one sees in the address bar (cart-add.php, contact-submit.php,
+ * order-callback.php, order-ipn.php...) keep their addresses.
  * ------------------------------------------------------------------- */
 function clean_routes(): array
 {
@@ -352,6 +353,7 @@ function clean_routes(): array
         'contact.php' => 'contact', 'farm.php' => 'farm', 'products.php' => 'shop', 'product.php' => 'shop/{slug}',
         'cart.php' => 'basket', 'checkout.php' => 'checkout', 'donate.php' => 'donate',
         'privacy.php' => 'privacy', 'safeguarding.php' => 'safeguarding',
+        'order-confirmation.php' => 'order/{ref}', 'donate-thanks.php' => 'donate/thank-you/{ref}',
     ];
 }
 
@@ -372,14 +374,19 @@ function clean_url(string $url): string
     else return $url . ($query !== '' ? "?$query" : '') . $fragment;
 
     $routes = clean_routes();
+    if (preg_match('~^admin/([a-z-]+)\.php$~', $file, $am) && is_file(dirname(__DIR__) . '/' . $file)) {
+        $routes[$file] = $am[1] === 'index' ? 'admin/' : 'admin/' . $am[1];   // every admin page
+    }
     if (!isset($routes[$file])) return $url . ($query !== '' ? "?$query" : '') . $fragment;
     parse_str($query, $params);
     $path = $routes[$file];
-    if (str_contains($path, '{slug}')) {
-        $slug = (string) ($params['slug'] ?? '');
-        if (!preg_match('/^[a-z0-9-]+$/', $slug)) return $url . ($query !== '' ? "?$query" : '') . $fragment;
-        $path = str_replace('{slug}', $slug, $path);
-        unset($params['slug']);
+    // A slug (lower case) or a reference (BL..., DN...) moves from the query into the path
+    if (preg_match('/\{(slug|ref)\}/', $path, $pm)) {
+        $value = (string) ($params[$pm[1]] ?? '');
+        $ok = $pm[1] === 'slug' ? '/^[a-z0-9-]+$/' : '/^[A-Za-z0-9-]+$/';
+        if (!preg_match($ok, $value)) return $url . ($query !== '' ? "?$query" : '') . $fragment;
+        $path = str_replace('{' . $pm[1] . '}', $value, $path);
+        unset($params[$pm[1]]);
     }
     $rest = http_build_query($params, '', '&', PHP_QUERY_RFC3986);
     return $prefix . '/' . $path . ($rest !== '' ? "?$rest" : '') . $fragment;

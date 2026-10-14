@@ -5,6 +5,7 @@
  */
 $admin = current_admin();
 $logo = setting($pdo, 'logo', 'assets/img/logo.png');
+ob_start('clean_links');   // admin links go out clean too (/admin/settings rather than /admin/settings.php)
 require_once __DIR__ . '/../../includes/site-sync.php';
 $syncPending = site_sync_pending($pdo);
 
