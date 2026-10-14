@@ -384,23 +384,19 @@
 .hm-film-tap:focus-visible { outline: 3px solid var(--ab-blue); outline-offset: 3px; }
 .hm-film-tap[hidden] { display: none; }
 /* Step photos and the swipe hint belong to the phone layout below */
-.hm-step-photo, .hm-steps-swipe { display: none; }
+.hm-step-photo, .hm-steps-swipe, .hm-legend-phone { display: none; }
 
 /* =========================================================
    Phones: the film first, then the words; a shorter page
    ========================================================= */
 @media (max-width: 720px) {
-  /* 1. Opening: the Yumbe film fills the top of the screen, edge to edge; the headline and buttons follow,
-        so both fit on the first screen. The map of Africa appears once, further down (Where we work). */
-  .ab .hm-hero { padding: 0 0 30px; background: var(--ab-cream); }
+  /* 1. Opening: the map of Africa, with the Yumbe film playing inside its outline, comes first; the headline
+        and buttons follow, so both fit on the first screen. The country names sit in a line under the map. */
+  .ab .hm-hero { padding: 10px 0 30px; }
   .hm-hero-grid { display: flex; flex-direction: column; gap: 0; }
-  .hm-art { order: -1; width: 100vw; max-width: none; height: clamp(240px, 40vh, 380px); height: clamp(240px, 40svh, 380px); aspect-ratio: auto; margin: 0 calc(50% - 50vw) 22px; }
-  .hm-art-back, .hm-art-front, .hm-stat-brush { display: none; }
-  .hm-window { left: 0 !important; top: 0 !important; width: 100% !important; height: 100% !important; -webkit-mask: none; mask: none; border-radius: 0 0 26px 26px; }
-  .hm-window::after { background: linear-gradient(180deg, rgba(6, 22, 15, 0) 50%, rgba(6, 22, 15, .45) 100%); }
-  .hm-stat { display: flex; left: 16px; bottom: 16px; padding: 9px 13px 8px; }
-  .hm-motion { right: 16px; bottom: 16px; }
+  .hm-art { order: -1; width: min(100%, 460px); margin: 0 auto; }
   .hm-legend { display: none !important; }
+  .hm-legend-phone { order: -1; display: block; margin: 6px 0 16px !important; text-align: center; font-size: 12.5px !important; font-weight: 700; letter-spacing: .06em; color: var(--ab-soft) !important; }
   .hm-hero-copy { display: flex; flex-direction: column; }
   .hm-kicker { order: 1; align-self: flex-start; margin: 0 0 14px !important; font-size: 12.5px; }
   .hm-hero h1 { order: 2; font-size: clamp(30px, 8.4vw, 38px); }
@@ -434,4 +430,12 @@
   .hm-countries-list li { padding: 8px 4px; }
   .hm-countries-list b { font-size: 17px; }
   .hm-countries-list span { font-size: 13.5px; line-height: 1.45; }
+}
+
+/* Short phones (iPhone SE, older Androids): a slightly smaller map so the buttons stay on the first screen */
+@media (max-width: 720px) and (max-height: 700px) {
+  .hm-art { width: min(100%, 290px); }
+}
+@media (max-width: 720px) and (max-height: 600px) {
+  .hm-art { width: min(100%, 220px); }
 }

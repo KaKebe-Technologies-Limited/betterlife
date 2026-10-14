@@ -230,6 +230,7 @@ require __DIR__ . '/includes/header.php';
           <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5Z"/></svg>
         </button>
       </div>
+      <p class="hm-legend-phone" aria-hidden="true">Uganda · South Sudan · Tanzania · DR Congo · Ghana</p>
     </div>
     <p class="hm-legend container" aria-hidden="true">Uganda · South Sudan · Tanzania · DR Congo · Ghana</p>
   </section>
