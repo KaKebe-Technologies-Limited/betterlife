@@ -142,7 +142,7 @@ function format_usd(PDO $pdo, ?float $ugx): string
 
 function redirect(string $url): never
 {
-    header('Location: ' . $url);
+    header('Location: ' . clean_url($url));   // a page goes straight to its clean address
     exit;
 }
 
@@ -334,3 +334,77 @@ function icon(string $name, int $size = 20): string
     $d = $paths[$name] ?? $paths['leaf'];
     return '<svg width="' . $size . '" height="' . $size . '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' . $d . '</svg>';
 }
+
+/* ---------------------------------------------------------------------
+ * Clean addresses: /about, /projects/rise, /stories/<slug>, /shop/<slug>
+ * The .htaccess rewrites them to the PHP pages; links in every page are
+ * tidied to them as the page is sent (clean_links), and an old .php link
+ * is sent on to its clean address for good (clean_url_redirect). Form and
+ * payment endpoints (cart-add.php, order-ipn.php, donate-thanks.php...) are
+ * not in the list and keep their addresses.
+ * ------------------------------------------------------------------- */
+function clean_routes(): array
+{
+    return [
+        'index.php' => '', 'about.php' => 'about', 'programs.php' => 'programmes', 'program.php' => 'programmes/{slug}',
+        'projects.php' => 'projects', 'project.php' => 'projects/{slug}', 'impact-reports.php' => 'impact',
+        'team.php' => 'team', 'partners.php' => 'partners', 'blog.php' => 'stories', 'blog-single.php' => 'stories/{slug}',
+        'contact.php' => 'contact', 'farm.php' => 'farm', 'products.php' => 'shop', 'product.php' => 'shop/{slug}',
+        'cart.php' => 'basket', 'checkout.php' => 'checkout', 'donate.php' => 'donate',
+        'privacy.php' => 'privacy', 'safeguarding.php' => 'safeguarding',
+    ];
+}
+
+/** A link to one of the site's pages, in its clean form; any other address comes back unchanged. */
+function clean_url(string $url): string
+{
+    if (!str_contains($url, '.php')) return $url;
+    $fragment = '';
+    if (($h = strpos($url, '#')) !== false) { $fragment = substr($url, $h); $url = substr($url, 0, $h); }
+    $query = '';
+    if (($q = strpos($url, '?')) !== false) { $query = substr($url, $q + 1); $url = substr($url, 0, $q); }
+
+    // Where the link points: the site root by full address, by path, or relative to it
+    $base = public_base_url() . SITE_URL . '/';
+    if (str_starts_with($url, $base)) { $prefix = public_base_url() . SITE_URL; $file = substr($url, strlen($base)); }
+    elseif (str_starts_with($url, SITE_URL . '/')) { $prefix = SITE_URL; $file = substr($url, strlen(SITE_URL) + 1); }
+    elseif (!preg_match('~^([a-z][a-z0-9+.-]*:|/)~i', $url)) { $prefix = SITE_URL; $file = $url; }
+    else return $url . ($query !== '' ? "?$query" : '') . $fragment;
+
+    $routes = clean_routes();
+    if (!isset($routes[$file])) return $url . ($query !== '' ? "?$query" : '') . $fragment;
+    parse_str($query, $params);
+    $path = $routes[$file];
+    if (str_contains($path, '{slug}')) {
+        $slug = (string) ($params['slug'] ?? '');
+        if (!preg_match('/^[a-z0-9-]+$/', $slug)) return $url . ($query !== '' ? "?$query" : '') . $fragment;
+        $path = str_replace('{slug}', $slug, $path);
+        unset($params['slug']);
+    }
+    $rest = http_build_query($params, '', '&', PHP_QUERY_RFC3986);
+    return $prefix . '/' . $path . ($rest !== '' ? "?$rest" : '') . $fragment;
+}
+
+/** Tidies every page link in a page's HTML to its clean address (used as the page is sent). */
+function clean_links(string $html): string
+{
+    return preg_replace_callback('/\b(href|action)="([^"]*\.php[^"]*)"/', function ($m) {
+        $url = html_entity_decode($m[2], ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $clean = clean_url($url);
+        return $clean === $url ? $m[0] : $m[1] . '="' . htmlspecialchars($clean, ENT_QUOTES, 'UTF-8') . '"';
+    }, $html) ?? $html;
+}
+
+/** An old .php address of a page (shared before, or found on Google) goes on to its clean address for good. */
+function clean_url_redirect(): void
+{
+    if (PHP_SAPI === 'cli' || ($_SERVER['REQUEST_METHOD'] ?? 'GET') !== 'GET') return;
+    $uri = (string) ($_SERVER['REQUEST_URI'] ?? '');
+    if (!preg_match('~\.php(\?|$)~', $uri)) return;
+    $clean = clean_url($uri);
+    if ($clean !== $uri) {
+        header('Location: ' . $clean, true, 301);
+        exit;
+    }
+}
+clean_url_redirect();

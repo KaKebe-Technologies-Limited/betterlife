@@ -126,6 +126,16 @@ It never touches orders, messages, subscribers, admin accounts, passwords, payme
 order alerts or maintenance mode. Importing `live-content-sync.sql` in phpMyAdmin does
 the same, without the backup.
 
+## Clean addresses
+
+Pages are shared and indexed without ".php": `/about`, `/programmes/<slug>`, `/projects/<slug>`,
+`/impact`, `/stories/<slug>`, `/shop/<slug>`, `/basket`, `/donate` and so on. `.htaccess` maps them
+to the PHP pages; `clean_routes()` in `includes/functions.php` is the one list. Links in every
+page are tidied to the clean form as the page is sent (`clean_links`), `redirect()` uses them, and
+an old `.php` address gets a permanent (301) redirect, so links shared before keep working. Form
+and payment endpoints (`cart-add.php`, `contact-submit.php`, `order-ipn.php`, `donate-thanks.php`…)
+keep their addresses. Code can keep linking to `about.php`; it goes out as `/about`.
+
 ## Donations
 
 `donate.php` takes gifts by mobile money or card through Pesapal, using the same keys as the

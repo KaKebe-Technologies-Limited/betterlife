@@ -34,21 +34,21 @@ echo '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <?php foreach ($staticPages as $p): ?>
   <url>
-    <loc><?= h($base . $p['url']) ?></loc>
+    <loc><?= h(clean_url($base . $p['url'])) ?></loc>
     <changefreq><?= $p['freq'] ?></changefreq>
     <priority><?= $p['priority'] ?></priority>
   </url>
 <?php endforeach; ?>
 <?php foreach ($products as $p): ?>
   <url>
-    <loc><?= h($base . '/product.php?slug=' . urlencode($p['slug'])) ?></loc>
+    <loc><?= h(clean_url($base . '/product.php?slug=' . urlencode($p['slug']))) ?></loc>
     <lastmod><?= date('Y-m-d', strtotime($p['updated_at'])) ?></lastmod>
     <priority>0.7</priority>
   </url>
 <?php endforeach; ?>
 <?php foreach ($posts as $p): ?>
   <url>
-    <loc><?= h($base . '/blog-single.php?slug=' . urlencode($p['slug'])) ?></loc>
+    <loc><?= h(clean_url($base . '/blog-single.php?slug=' . urlencode($p['slug']))) ?></loc>
     <lastmod><?= date('Y-m-d', strtotime($p['updated_at'])) ?></lastmod>
     <priority>0.6</priority>
   </url>

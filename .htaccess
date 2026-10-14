@@ -47,3 +47,20 @@
 
 # Friendly 404s stay inside the site's own design
 ErrorDocument 404 /404.php
+
+# Clean addresses: /about, /programmes/<slug>, /projects/<slug>, /stories/<slug>, /shop/<slug>.
+# Each is served by its PHP page; old .php links are sent on to these by includes/functions.php.
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteRule ^(about|team|partners|contact|farm|donate|privacy|safeguarding|checkout)/?$ $1.php [L,QSA]
+  RewriteRule ^programmes/?$ programs.php [L,QSA]
+  RewriteRule ^programmes/([a-z0-9-]+)/?$ program.php?slug=$1 [L,QSA]
+  RewriteRule ^projects/?$ projects.php [L,QSA]
+  RewriteRule ^projects/([a-z0-9-]+)/?$ project.php?slug=$1 [L,QSA]
+  RewriteRule ^impact/?$ impact-reports.php [L,QSA]
+  RewriteRule ^stories/?$ blog.php [L,QSA]
+  RewriteRule ^stories/([a-z0-9-]+)/?$ blog-single.php?slug=$1 [L,QSA]
+  RewriteRule ^shop/?$ products.php [L,QSA]
+  RewriteRule ^shop/([a-z0-9-]+)/?$ product.php?slug=$1 [L,QSA]
+  RewriteRule ^basket/?$ cart.php [L,QSA]
+</IfModule>

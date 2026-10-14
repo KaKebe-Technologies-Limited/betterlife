@@ -54,7 +54,7 @@
       + (state.country ? ' · ' + label('country', state.country) : '');
     if (state.area || state.country) {
       var clear = document.createElement('a');
-      clear.href = 'projects.php#directory';
+      clear.href = location.pathname + '#directory';
       clear.setAttribute('data-clear', '');
       clear.textContent = 'Clear filters';
       status.appendChild(document.createTextNode(' · '));

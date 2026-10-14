@@ -115,7 +115,7 @@ document.addEventListener('DOMContentLoaded', function () {
   var heroPhoto = document.getElementById('heroOverlapPhoto');
 
   if (heroPhoto && window.fetch) {
-    fetch('hero-gallery.php')
+    fetch(heroPhoto.getAttribute('data-gallery') || 'hero-gallery.php')   // an absolute address set by the page
       .then(function (res) { return res.ok ? res.json() : []; })
       .then(function (photos) {
         photos = (photos || []).filter(function (p) { return p && p.src; });

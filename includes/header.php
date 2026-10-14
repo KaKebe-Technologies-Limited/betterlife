@@ -13,6 +13,9 @@ if (setting($pdo, 'maintenance_mode') === '1' && !is_logged_in()) {
     exit;
 }
 
+// Every page link in the page goes out in its clean form (/about rather than /about.php)
+ob_start('clean_links');
+
 $pageTitle       = $pageTitle ?? setting($pdo, 'site_name', 'BetterLife International');
 $activePage      = $activePage ?? '';
 $siteName        = setting($pdo, 'site_name', 'BetterLife International');
@@ -20,8 +23,10 @@ $logo            = setting($pdo, 'logo', 'assets/img/logo.png');
 $pageDescription = $pageDescription ?? excerpt(setting($pdo, 'hero_subtitle'), 160);
 $pageImage       = $pageImage ?? setting($pdo, 'hero_image_1', $logo);
 $requestPath     = '/' . ltrim($_SERVER['REQUEST_URI'] ?? '', '/');
-// REQUEST_URI already includes the site folder when the site lives in a subfolder (e.g. /betterlife)
+// REQUEST_URI already includes the site folder when the site lives in a subfolder (e.g. /betterlife).
+// The address shared and indexed is the page's clean one, without tracking codes (?fbclid=...) or filters.
 $canonicalUrl    = public_base_url() . (SITE_URL !== '' && str_starts_with($requestPath, SITE_URL . '/') ? '' : SITE_URL) . $requestPath;
+$canonicalUrl    = strtok($canonicalUrl, '?#');
 $ogType          = $ogType ?? 'website';
 ?>
 <!DOCTYPE html>
