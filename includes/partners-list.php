@@ -16,5 +16,7 @@ return [
     ['moonshot.svg', 'Moonshot', 'Supports the BetterLife Climate Leadership Academy for young people from Uganda and across Africa.', 'project.php?slug=climate-leadership-academy'],
     ['hbcu-green-fund.png', 'HBCU Green Fund', 'Our technical partner, supporting our work with technical guidance and recommendations. Its co-founder, Felicia Davis, serves on BetterLife’s board.', 'https://hbcugreenfund.org/'],
     ['environmental-hub-uganda.webp', 'Environmental Hub Uganda', 'A youth-led Ugandan NGO promoting sustainability and resilience through climate action, conservation, education and research.', 'https://ehubuganda.org/'],
+    ['abayuuti-climate-action-network.webp', 'Abayuuti Climate Action Network', '', ''],
+    ['nutrigrab.webp', 'Nutrigrab', 'Our market access partner for the farmers who come through our trainings.', ''],
     ['diana-award.webp', 'The Diana Award', 'Recognised BetterLife’s founder, Denise Ayebare, with the Diana Award in 2024.', 'https://diana-award.org.uk/'],
 ];

@@ -851,5 +851,6 @@
 
 /* A partner without a logo file yet: the name, set in the serif, in the logo box */
 .pg-partner-logo.is-name { padding: 12px 14px; background: linear-gradient(145deg, var(--ab-cream), #eef3e9); }
-.pg-partner-logo.pg-logo-environmental-hub-uganda { padding: 4px; }   /* a round emblem reads small beside wordmarks */
+.pg-partner-logo.pg-logo-environmental-hub-uganda, .pg-partner-logo.pg-logo-abayuuti-climate-action-network,
+.pg-partner-logo.pg-logo-nutrigrab { padding: 4px; }   /* emblems read small beside wordmarks */
 .pg-partner-logo.is-name span { font-family: var(--ab-serif); font-weight: 600; font-size: 18px; line-height: 1.2; text-align: center; color: var(--ab-deep); }
