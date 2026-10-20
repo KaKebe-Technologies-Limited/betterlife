@@ -99,3 +99,24 @@ if (!function_exists('ab_variants')) {
             . '<button type="button" class="ab-lb-btn ab-lb-next" aria-label="Next photo">' . icon('arrow-right', 20) . '</button></dialog>';
     }
 }
+
+if (!function_exists('story_html')) {
+    /**
+     * A story's stored text, ready for its page. Photos written as
+     * <figure><img src="assets/img/..." alt="..."><figcaption>...</figcaption></figure> become responsive
+     * images that open in the photo viewer with their caption ($photos tells the page to add the viewer),
+     * and addresses written without the host (project.php?slug=..., assets/...) work on any host.
+     */
+    function story_html(string $html, bool &$photos = false): string
+    {
+        $html = preg_replace_callback('~<figure([^>]*)>\s*<img src="(assets/img/[^"]+)" alt="([^"]*)"\s*/?>\s*(?:<figcaption>(.*?)</figcaption>)?\s*</figure>~s', function ($m) use (&$photos) {
+            $photos = true;
+            $alt = html_entity_decode($m[3], ENT_QUOTES, 'UTF-8');
+            $caption = trim(html_entity_decode(strip_tags($m[4] ?? ''), ENT_QUOTES, 'UTF-8'));
+            $sizes = str_contains($m[1], 'st-fig-portrait') ? '(max-width: 760px) 92vw, 260px' : '(max-width: 760px) 100vw, 680px';
+            return '<figure' . $m[1] . '>' . ab_photo($m[2], $alt, $caption ?: $alt, 'story', '', $sizes)
+                . (($m[4] ?? '') !== '' ? '<figcaption>' . $m[4] . '</figcaption>' : '') . '</figure>';
+        }, $html);
+        return preg_replace('~\b(href|src)="(?!https?:|mailto:|tel:|#|/|data:)([^"]+)"~', '$1="' . SITE_URL . '/$2"', $html);
+    }
+}

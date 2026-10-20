@@ -162,6 +162,23 @@ error and sends a test.
   and slow connections. To make one: `powershell -File tools/make_phone_video.ps1`, then
   `tools/mp4_faststart.php` (so playback starts while it downloads).
 
+## Newsletters
+
+A newsletter is a story in the **Newsletter** category (Stories shows it as a filter, and the
+footer links to past issues once one is published). Its text is HTML that can use:
+
+- `<p class="st-issue">Partnership News | October 2026</p>` and `<p class="st-hero-caption">…</p>`
+  at the very top: shown above the title and under the main photo.
+- `<figure class="st-fig"><img src="assets/img/stories/….jpg" alt="…"><figcaption>…</figcaption></figure>`:
+  a photo that opens larger when tapped. Put photos in `assets/img/stories/` and make their
+  lighter copies with `php -d extension=gd tools/make_sized_images.php <file listing the photos>`.
+- `div.st-voice` (portrait beside a quote, `st-fig-portrait`), `blockquote.st-quote`,
+  `ol.st-areas` (numbered cards), `aside.st-glance` (key facts), `div.st-help` with
+  `a.st-btn`, `div.st-about` and `aside.st-contact`. See the October 2026 issue for examples.
+- Links written as `project.php?slug=…` or `contact.php` work on any host.
+
+Stories with this layout open as HTML in Admin → Blog, so saving them keeps the layout.
+
 ## Security notes
 
 - Passwords are hashed with bcrypt (`password_hash`/`password_verify`).

@@ -6,6 +6,12 @@ $permitNo = setting($pdo, 'ngo_permit_no');
 $footerEmail = setting($pdo, 'email');
 $footerPhone = setting($pdo, 'phone');
 $footerPlace = setting($pdo, 'postal_address') ?: setting($pdo, 'address');
+// "Read past newsletters" shows once a newsletter has been published
+try {
+    $hasNewsletter = (bool) $pdo->query("SELECT 1 FROM blog_posts bp JOIN blog_categories bc ON bc.id = bp.category_id WHERE bc.slug = 'newsletter' AND bp.status = 'published' LIMIT 1")->fetchColumn();
+} catch (PDOException $e) {
+    $hasNewsletter = false;
+}
 $footerLinks = [
     'about.php' => 'About us', 'programs.php' => 'Our work', 'impact-reports.php' => 'Impact & reports', 'partners.php' => 'Partners',
     'team.php' => 'Our team', 'blog.php' => 'Stories', 'farm.php' => 'BetterLife Farm', 'donate.php' => 'Donate',
@@ -46,6 +52,7 @@ $footerLinks = [
           <input type="email" id="footerEmail" name="email" placeholder="Your email address" autocomplete="email" required>
           <button type="submit" aria-label="Subscribe"><?= icon('arrow-right', 16) ?></button>
         </form>
+        <?php if ($hasNewsletter): ?><a class="footer-news-link" href="<?= SITE_URL ?>/blog.php?category=newsletter#blog">Read past newsletters <?= icon('arrow-right', 13) ?></a><?php endif; ?>
       </div>
     </div>
 

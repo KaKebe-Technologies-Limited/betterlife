@@ -108,6 +108,11 @@ if (in_array($action, ['add', 'edit'], true)) {
 
             <div class="form-group full">
               <label>Content *</label>
+              <?php // The rich editor would strip a newsletter's photos, quotes and boxes, so those stories are edited as HTML
+              if (str_contains((string) ($editing['content'] ?? ''), 'class="st-')): ?>
+              <p class="hint">This story uses the newsletter layout (photos, quotes and boxes), so its text is edited here as HTML to keep that layout. Change the words between the tags and leave the tags as they are.</p>
+              <textarea name="content" class="form-control" style="min-height:560px;font-family:Consolas,monospace;font-size:13px;line-height:1.5;"><?= h($editing['content']) ?></textarea>
+              <?php else: ?>
               <div id="quillToolbar">
                 <span class="ql-formats">
                   <select class="ql-header"><option value="2"></option><option value="3"></option><option selected></option></select>
@@ -127,6 +132,7 @@ if (in_array($action, ['add', 'edit'], true)) {
               </div>
               <div id="quillEditor"><?= $editing['content'] ?? '' ?></div>
               <input type="hidden" name="content" id="contentInput">
+              <?php endif; ?>
             </div>
 
             <div class="form-group">
@@ -155,10 +161,12 @@ if (in_array($action, ['add', 'edit'], true)) {
 
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
     <script>
-      var quill = new Quill('#quillEditor', { theme: 'snow', modules: { toolbar: '#quillToolbar' } });
-      document.getElementById('postForm').addEventListener('submit', function () {
-        document.getElementById('contentInput').value = quill.root.innerHTML;
-      });
+      if (document.getElementById('quillEditor')) {
+        var quill = new Quill('#quillEditor', { theme: 'snow', modules: { toolbar: '#quillToolbar' } });
+        document.getElementById('postForm').addEventListener('submit', function () {
+          document.getElementById('contentInput').value = quill.root.innerHTML;
+        });
+      }
     </script>
     <?php
     require __DIR__ . '/includes/footer.php';

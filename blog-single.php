@@ -36,6 +36,18 @@ $more = $pdo->prepare("SELECT bp.*, bc.name AS cat_name FROM blog_posts bp LEFT 
 $more->execute([$post['id'], $post['category_id']]);
 $more = $more->fetchAll();
 
+// A newsletter can open with its issue line and a caption for the main photo (<p class="st-issue">,
+// <p class="st-hero-caption">): both belong in the header, so they are taken out of the text
+$content = (string) $post['content'];
+$lead = [];
+while (preg_match('~^\s*<p class="st-(issue|hero-caption)">(.*?)</p>~s', $content, $m)) {
+    $lead[$m[1]] = trim(html_entity_decode(strip_tags($m[2]), ENT_QUOTES, 'UTF-8'));
+    $content = substr($content, strlen($m[0]));
+}
+$hasPhotos = false;
+$content = story_html($content, $hasPhotos);
+$isNewsletter = ($post['cat_slug'] ?? '') === 'newsletter';
+
 $minutes = fn(array $p): int => max(1, (int) round(str_word_count(strip_tags((string) $p['content'])) / 200));
 $storyUrl = fn(array $p): string => SITE_URL . '/blog-single.php?slug=' . rawurlencode($p['slug']);
 // The address the share buttons send: the story's clean, full address (https://.../stories/<slug>)
@@ -55,18 +67,40 @@ require __DIR__ . '/includes/header.php';
     <header class="st-post-head">
       <div class="container st-post-head-inner">
         <nav class="st-crumb" aria-label="Breadcrumb"><a href="<?= SITE_URL ?>/index.php">Home</a><span aria-hidden="true">/</span><a href="<?= SITE_URL ?>/blog.php">Stories</a><span aria-hidden="true">/</span><span aria-current="page"><?= h(excerpt($post['title'], 48)) ?></span></nav>
-        <?php if (!empty($post['cat_slug'])): ?><a class="st-post-cat" href="<?= SITE_URL ?>/blog.php?category=<?= h(rawurlencode($post['cat_slug'])) ?>#blog"><?= h($post['cat_name']) ?></a><?php endif; ?>
+        <?php if (!empty($post['cat_slug']) || isset($lead['issue'])): ?>
+          <p class="st-post-kicker">
+            <?php if (!empty($post['cat_slug'])): ?><a class="st-post-cat" href="<?= SITE_URL ?>/blog.php?category=<?= h(rawurlencode($post['cat_slug'])) ?>#blog"><?= h($post['cat_name']) ?></a><?php endif; ?>
+            <?php if (isset($lead['issue'])): ?><span class="st-post-issue"><?= h($lead['issue']) ?></span><?php endif; ?>
+          </p>
+        <?php endif; ?>
         <h1 id="stPostTitle"><?= h($post['title']) ?></h1>
         <p class="st-post-meta"><span><?= h($post['author'] && $post['author'] !== 'Admin' ? $post['author'] : 'BetterLife International') ?></span><span><?= h(format_date($post['published_at'], 'j F Y')) ?></span><span><?= $minutes($post) ?> min read</span></p>
       </div>
     </header>
 
     <?php if (!empty($post['featured_image'])): ?>
-      <div class="container st-post-figure"><?= ab_img($post['featured_image'], '', '', false, '', '(max-width: 1000px) 100vw, 1000px') ?></div>
+      <figure class="container st-post-figure"><?= ab_img($post['featured_image'], $lead['hero-caption'] ?? '', '', false, '', '(max-width: 1000px) 100vw, 1000px') ?>
+        <?php if (isset($lead['hero-caption'])): ?><figcaption><?= h($lead['hero-caption']) ?></figcaption><?php endif; ?></figure>
     <?php endif; ?>
 
     <div class="container st-post-body">
-      <div class="st-prose"><?= $post['content'] ?></div>
+      <div>
+        <div class="st-prose"><?= $content ?></div>
+        <?php if ($isNewsletter): ?>
+          <aside class="st-nl-signup" aria-labelledby="stSignupTitle">
+            <div>
+              <h2 id="stSignupTitle">Get the next issue by email</h2>
+              <p>Programme updates, farm news and stories from the communities we work with.</p>
+            </div>
+            <form action="<?= SITE_URL ?>/newsletter-submit.php" method="post">
+              <label for="stSignupEmail" class="sr-only">Your email address</label>
+              <input type="email" id="stSignupEmail" name="email" placeholder="Your email address" autocomplete="email" required>
+              <button type="submit">Subscribe</button>
+            </form>
+            <a href="<?= SITE_URL ?>/blog.php?category=newsletter#blog">All newsletters <?= icon('arrow-right', 14) ?></a>
+          </aside>
+        <?php endif; ?>
+      </div>
 
       <aside class="st-share" aria-label="Share this story">
         <p>Share this story</p>
@@ -107,6 +141,7 @@ require __DIR__ . '/includes/header.php';
       </div>
     </section>
   <?php endif; ?>
+  <?= $hasPhotos ? ab_lightbox() : '' ?>
 </main>
 
 <?php require __DIR__ . '/includes/footer.php'; ?>

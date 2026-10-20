@@ -23,7 +23,8 @@ if (!is_dir($outDir)) mkdir($outDir, 0755, true);
 // Collect every assets/img/... photo referenced by the given pages
 $paths = [];
 foreach ($pages as $page) {
-    preg_match_all('~assets/img/[A-Za-z0-9_./-]+\.(?:jpe?g|png|webp)~i', file_get_contents("$root/$page"), $m);
+    // A page of the site, or any other file that names photos (such as a story saved as HTML)
+    preg_match_all('~assets/img/[A-Za-z0-9_./-]+\.(?:jpe?g|png|webp)~i', file_get_contents(is_file("$root/$page") ? "$root/$page" : $page), $m);
     foreach ($m[0] as $p) if (strpos($p, '/sized/') === false && strpos($p, '/partners/') === false) $paths[$p] = true;
 }
 
