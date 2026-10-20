@@ -272,6 +272,12 @@ function site_sync_apply(PDO $pdo, string $sql, bool $takeBackup = true): array
             if (isset($plan['expected'][$t]) && $plan['expected'][$t] !== $n) {
                 throw new RuntimeException(SITE_SYNC_TABLES[$t] . ": the file lists {$plan['expected'][$t]} rows but $n loaded.");
             }
+            // How often each story was read belongs to the live site: stories it already has keep their counts
+            if ($t === 'blog_posts') {
+                try {
+                    $pdo->exec('UPDATE `' . $side($t) . '` s JOIN `blog_posts` b ON b.slug = s.slug SET s.views = b.views');
+                } catch (Throwable $e) {}
+            }
             $r['tables'][$t] = [site_sync_count($pdo, $t), $n, false];
         }
     } catch (Throwable $e) {
